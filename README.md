@@ -1,4 +1,4 @@
-# brandsafer
+# brandsafer_front
 
 ## Project setup
 ```
