@@ -1,4 +1,4 @@
-# tnt_v1
+# brandsafer_front
 
 ## Project setup
 ```
