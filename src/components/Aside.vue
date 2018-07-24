@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>gkgkgk</h1>
+    <h1>aside</h1>
   </div>
 </template>
 
