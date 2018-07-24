@@ -1,10 +1,28 @@
 <template>
   <div id="app">
+    <aside-tab></aside-tab>
     <router-view/>
   </div>
 </template>
+<script>
+import AsideTab from "./components/Aside.vue";
+
+export default {
+  components: { AsideTab }
+};
+</script>
 
 <style lang="scss">
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
