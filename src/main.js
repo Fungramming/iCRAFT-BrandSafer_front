@@ -1,4 +1,5 @@
 import Vue from "vue";
+import Vuetify from "vuetify";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -6,6 +7,11 @@ import axios from "axios";
 import ES6Promise from "es6-promise";
 ES6Promise.polyfill();
 
+// MODULE CSS
+import "vuetify/dist/vuetify.min.css";
+import "material-design-icons-iconfont/dist/material-design-icons.css"
+
+Vue.use(Vuetify);
 Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
 
