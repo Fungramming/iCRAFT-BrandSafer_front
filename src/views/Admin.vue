@@ -1,11 +1,16 @@
 <template>
-    <div>
-      <h1>hellow world</h1>
-    </div>
+  <div id="admin">
+    <admin-customer></admin-customer>
+  </div>
 </template>
 
 <script>
+import AdminCustomer from '../components/Admin/AdminCustomer'
+
 export default {
+  components: {
+    AdminCustomer,
+  },
   data() {
     return {
       key: ""
@@ -14,5 +19,8 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  #admin {
+    margin: 25px;
+  }
 </style>
