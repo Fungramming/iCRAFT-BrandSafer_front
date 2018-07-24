@@ -1,16 +1,108 @@
 <template>
-  <div>
-      <img src="../assets/logo.png" alt="">
+  <div class="login">
+      <h1 class="logo">
+        <img  src="../assets/logo.png" alt="브렌드세이퍼">
+      </h1>
+      <div class="login-bottom">       
+        <strong>추적관리시스템</strong>
+        <span>Welcome, please login.</span>       
+          <v-text-field
+            v-model="id"
+            class="input-text"
+            label="ID"
+            clearable
+          ></v-text-field>
+          <v-text-field
+            v-model="password"
+            :type="password"
+            class="input-text"
+            label="PASSWORD"
+            clearable
+          ></v-text-field>             
+          <v-radio-group v-model="selectedLang" class="lang-group" row>
+            <v-radio class="lang-option" label="한국어" value="Korean"></v-radio>
+            <v-radio class="lang-option" label="中文版" value="Chinese"></v-radio>
+            <v-radio class="lang-option" label="English" value="English"></v-radio>
+          </v-radio-group>              
+          <v-btn class="login-btn" ><v-icon style="">launch</v-icon></v-btn>          
+      </div>
+      <footer>© iCraft21</footer>
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {};
+    return {
+      id: "",
+      password: "",
+      selectedLang: "Korean"
+    };
+  },
+  mounted() {
+    if (this.$route.query.redirect) {
+      this.errors.push("로그인후 이용하실 수 있습니다.");
+    }
   }
 };
 </script>
 
-<style scoped>
+<style lang="scss">
+$primary-color: #173857;
+.login {
+  width: 600px;
+  height: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -300px;
+  margin-top: -200px;
+  .logo {
+    background-color: $primary-color;
+    display: inline-block;
+    width: 100%;
+    padding: 15px 20px;
+    img {
+      float: left;
+    }
+  }
+  .login-bottom {
+    background-color: #fff;
+    margin-bottom: 30px;
+    padding: 40px 50px;
+    height: 330px;
+    position: relative;
+    > * {
+      display: block;
+      text-align: left;
+    }
+    > strong {
+      color: #646464;
+      font-size: 30px;
+    }
+    > span {
+      margin: 5px 0 30px 0;
+      color: #646464;
+    }
+    .lang-group {
+      margin: 0;
+      padding-top: 10px;
+    }
+    .login-btn {
+      background-color: $primary-color;
+      color: #fff;
+      float: right !important;
+      margin: 0;
+      font-size: 18px;
+      position: absolute;
+      bottom: 30px;
+      right: 50px;
+    }
+  }
+  footer {
+    color: #999999;
+    font-size: 15px;
+    letter-spacing: -1px;
+  }
+}
 </style>

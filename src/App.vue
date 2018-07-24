@@ -1,15 +1,27 @@
 <template>
   <div id="app">
+    <aside-tab></aside-tab>
     <router-view/>
   </div>
 </template>
+<script>
+import AsideTab from "./components/Aside.vue";
+
+export default {
+  components: { AsideTab }
+};
+</script>
 
 <style lang="scss">
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
+
 * {
+  font-family: "Spoqa Han Sans", "Spoqa Han Sans JP", "Sans-serif";
   box-sizing: border-box;
 }
 html,
 body {
+  background-color: #f5f5f5;
   height: 100%;
   width: 100%;
   margin: 0;
