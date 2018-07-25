@@ -1,34 +1,26 @@
 <template>
-  <div class="admin-customer">
-    <div class="admin-customer-header">
+  <div class="tableBs">
+    <!-- table header -->
+    <div class="tableBs-header">
       <h2>고객사 관리</h2>
     </div>
-    <div class="admin-customer-top">
+    <!-- table top menu -->
+    <div class="tableBs-top">
       <p>검색 조건</p>
       <span>검색어</span>
-      <v-flex xs12 sm6 d-flex>
-        <!-- <v-select class="input-select"
-          :items="items"
-          label="검색어"
-          solo
-        ></v-select> -->
-        <v-select
-          v-model="items"
-          :items="items"
-          :label="`${items[0]}`"
-          persistent-hint
-          return-object
-          single-line
-        ></v-select>
-        <!-- <v-text-field
-          single-line
-          box
-          clearable
-        ></v-text-field> -->
-        <input class="input-text" type="text">
-      </v-flex>
+      <div class="selectbox">
+        <select id="select1" name="searchType" class="form-control" size="1">
+          <option selected value="고객사">고객사</option>
+          <option value="대표자">대표자</option>
+        </select>
+      </div>
+      <input class="input-text" type="text">
+      <span class="text-xs-center">
+          <v-btn color="primary" dark>검색</v-btn>
+      </span>
     </div>
-    <v-app id="inspire">
+    <!-- table wrap -->
+    <v-app class="inspire">
       <div>
         <v-data-table
           :headers="headers"
@@ -70,9 +62,226 @@
         </v-data-table>
         <div class="text-xs-center pt-2">
           <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+          <v-btn color="primary" dark @click.stop="dialog = true">등록</v-btn>
+          <v-btn color="error" dark>삭제</v-btn>
         </div>
       </div>
     </v-app>
+    <!-- modal dialog -->
+    <v-dialog
+      v-model="dialog"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+      scrollable
+    >
+      <!-- start modal -->
+      <v-card tile>
+        <v-toolbar card dark color="primary">
+          <v-btn icon dark @click.native="dialog = false">
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>고객사 등록</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn dark flat @click.native="dialog = false">저장</v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
+        <!-- 내용이 많을경우 왼쪽, 오른쪽 면 분할 -->
+        <!-- left side modal -->
+        <div class="card-left">
+          <v-card-text>
+            <v-list three-line subheader>
+              <v-list-tile avatar>
+                <label class="input-title">고객사코드
+                  <span class="text-danger">*</span>
+                </label>
+                <input class="input-text" type="text" required="required" placeholder="고객사코드">
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">고객사(한국어)
+                  <span class="text-danger">*</span>
+                </label>
+                <input class="input-text" type="text" required="required" placeholder="고객사(한국어)">
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">고객사(영어)</label>
+                <input class="input-text" type="text">
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">고객사(중국어)</label>
+                <input class="input-text" type="text">
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">주소(한국어)
+                  <span class="text-danger">*</span>
+                </label>
+                <input class="input-text" type="text" required="required" placeholder="주소(한국어)">
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">주소(영어)</label>
+                <input class="input-text" type="text">
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">주소(중국어)</label>
+                <input class="input-text" type="text">
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">전화번호</label>
+                <span class="selectbox">
+                  <select class="form-control" id="telephone1" name="telephone1">
+                    <option value="02">02</option>
+                    <option value="031">031</option>
+                    <option value="032">032</option>
+                    <option value="033">033</option>
+                    <option value="041">041</option>
+                    <option value="042">042</option>
+                    <option value="043">043</option>
+                    <option value="044">044</option>
+                    <option value="051">051</option>
+                    <option value="052">052</option>
+                    <option value="053">053</option>
+                    <option value="054">054</option>
+                    <option value="055">055</option>
+                    <option value="061">061</option>
+                    <option value="062">062</option>
+                    <option value="063">063</option>
+                    <option value="064">064</option>
+                    <option value="070">070</option>
+                    <option value="080">080</option>
+                  </select>
+                </span>
+                <input class="input-text input-tel" type="tel">
+                <input class="input-text input-tel" type="tel">
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">팩스번호</label>
+                <span class="selectbox">
+                  <select class="form-control" id="telephone1" name="telephone1">
+                    <option value="02">02</option>
+                    <option value="031">031</option>
+                    <option value="032">032</option>
+                    <option value="033">033</option>
+                    <option value="041">041</option>
+                    <option value="042">042</option>
+                    <option value="043">043</option>
+                    <option value="044">044</option>
+                    <option value="051">051</option>
+                    <option value="052">052</option>
+                    <option value="053">053</option>
+                    <option value="054">054</option>
+                    <option value="055">055</option>
+                    <option value="061">061</option>
+                    <option value="062">062</option>
+                    <option value="063">063</option>
+                    <option value="064">064</option>
+                    <option value="070">070</option>
+                    <option value="080">080</option>
+                  </select>
+                </span>
+                <input class="input-text input-tel" type="tel">
+                <input class="input-text input-tel" type="tel">
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">대표자(한국어)
+                  <span class="text-danger">*</span>
+                </label>
+                <input class="input-text" type="text" required="required" placeholder="대표자(한국어)">
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">대표자(영어)</label>
+                <input class="input-text" type="text" required="required">
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">대표자(중국어)</label>
+                <input class="input-text" type="text" required="required">
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title input-mr">사업자등록번호
+                  <span class="text-danger">*</span>
+                </label>
+                <input class="input-text input-tel" type="tel">
+                <input class="input-text input-tel" type="tel">
+                <input class="input-text input-tel" type="tel">
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">사업자등록증
+                  <span class="text-danger">*</span>
+                </label>
+                <input class="input-file" type="file" required="required">
+                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">CI
+                  <span class="text-danger">*</span>
+                </label>
+                <input class="input-file" type="file" required="required">
+                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">URL
+                  <span class="text-danger">*</span>
+                </label>
+                <input class="input-text" type="text" required="required">
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">TnT로고이미지
+                  <span class="text-danger">*</span>
+                </label>
+                <input class="input-file" type="file" required="required">
+                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">설명(한국어)
+                  <span class="text-danger">*</span>
+                </label>
+                <input class="input-text" type="text" required="required" placeholder="설명(한국어)">
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">설명(영어)</label>
+                <input class="input-text" type="text" required="required">
+              </v-list-tile>
+              <v-list-tile avatar>
+                <label class="input-title">설명(중국어)</label>
+                <input class="input-text" type="text" required="required">
+              </v-list-tile>
+            </v-list>
+          </v-card-text>
+        </div>
+        <!-- right side modal -->
+        <div class="card-right">
+          <v-card-text class="card-text-right">
+            <v-list three-line subheader>
+                <v-list-tile-content>
+                  <v-list-tile-title>계약 정보</v-list-tile-title>
+                </v-list-tile-content>
+                <div class="contract-wrap">
+                  <v-list-tile avatar>
+                    <label class="input-title">계약서명
+                      <span class="text-danger">*</span>
+                    </label>
+                    <input class="input-text" type="text" required="required">
+                  </v-list-tile>
+                  <v-list-tile avatar>
+                    <label class="input-title">계약기간
+                      <span class="text-danger">*</span>
+                    </label>
+                    <input class="input-text" type="text" required="required">
+                  </v-list-tile>
+                  <v-list-tile avatar>
+                    <label class="input-title">사업자등록증
+                      <span class="text-danger">*</span>
+                    </label>
+                    <input class="input-file" type="file" required="required">
+                    <span class="file-txt">(사용가능한 파일 형식 : pdf)</span>
+                  </v-list-tile>
+                </div>
+            </v-list>
+          </v-card-text>
+        </div>
+        <!-- <div style="flex: 1 1 auto;"></div> -->
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -80,15 +289,8 @@
 export default {
   data() {
     return {
-      // items: [
-      //   { state: 'Florida', abbr: 'FL' },
-      //   { state: 'Georgia', abbr: 'GA' },
-      //   { state: 'Nebraska', abbr: 'NE' },
-      //   { state: 'California', abbr: 'CA' },
-      //   { state: 'New York', abbr: 'NY' }
-      // ],
-      items: ['고객사', '대표자'],
       search: '',
+      dialog: false,
       pagination: {
         page: 1,
         rowsPerPage: 10,
@@ -320,53 +522,180 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .admin-customer {
-    &-header {
-      text-align: left;
-      h2 {
-        font-weight: 500;
-        color: #333;
-      }
-    }
-    &-top {
-      text-align: left;
-      margin: 25px 0;
-      padding: 25px;
-      background-color: #fff;
-      p, span {
-        font-size: 16px;
-        font-weight: 600;
-      }
-      .sm6 {
-        max-width: 250px;
-        .input-select {
-          width: 50%;
-        }
-        .input-text {
-          border: 1px solid #ccc;
-          height: 50px;
-          margin-left: 5px;
-          // -webkit-box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
-          // box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
-        }
-      }
-    }
-    #inspire {
-      background: #fff;
-      -webkit-box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12)!important;
-      box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12)!important;
-      height: 500px;
-      .elevation-1 {
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
-        // .item-headers {
-        //   font-weight: 700;
-        //   font-size: 14px;
-        //   color: #333;
-        // }
-      }
-    }
-  }
+@import '../../scss/table';
+@import '../../scss/modal';
+  // .tableBs {
+  //   &-header {
+  //     text-align: left;
+  //     h2 {
+  //       font-weight: 500;
+  //       color: #646464;
+  //     }
+  //   }
+  //   &-top {
+  //     text-align: left;
+  //     margin: 25px 0;
+  //     padding: 25px;
+  //     background-color: #fff;
+  //     -webkit-box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
+  //     box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
+  //     p, span {
+  //       color: #646464;
+  //       font-size: 16px;
+  //       font-weight: 600;
+  //     }
+  //     .sm6 {
+  //       max-width: 250px;
+  //       .input-select {
+  //         width: 50%;
+  //       }
+  //     }
+  //     .selectbox {
+  //       display: inline-block;
+  //       position: relative;
+  //       width: 100px;
+  //       border: 1px solid #e6e6e6;
+  //       border-radius: 5px;
+  //       z-index: 1;
+  //       margin-left: 10px;
+  //       &:before {
+  //         content: "";
+  //         position: absolute;
+  //         top: 50%;
+  //         right: 5px;
+  //         width: 0;
+  //         height: 0;
+  //         margin-top: -1px;
+  //         border-left: 5px solid transparent;
+  //         border-right: 5px solid transparent;
+  //         border-top: 5px solid #999;
+  //       }
+  //       select {
+  //         width: 100%;
+  //         height: auto;
+  //         padding: 5px;
+  //         border-radius: 5px;
+  //         -webkit-appearance: none;
+  //         -moz-appearance: none;
+  //         appearance: none;
+  //       }
+  //     }
+  //     .input-text {
+  //       border: 1px solid #e6e6e6;
+  //       padding: 5px;
+  //       border-radius: 5px;
+  //       margin-left: 10px;
+  //     }
+  //     button {
+  //       border-radius: 5px;
+  //       height: 32px;
+  //       margin: -5px 0 -1px 5px;
+  //       float: right;
+  //     }
+  //   }
+  //   .inspire {
+  //     background: #fff;
+  //     -webkit-box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
+  //     box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
+  //     height: 537px;
+  //     .elevation-1 {
+  //       -webkit-box-shadow: none !important;
+  //       box-shadow: none !important;
+  //     }
+  //     .text-xs-center {
+  //       margin-top: 25px;
+  //       button {
+  //         float: right;
+  //         border-radius: 5px;
+  //       }
+  //     }
+  //   }
+
+  //   //=============================== 모달
+  //   .v-dialog {
+  //     .card-right {
+  //       width: 40%;
+  //       position: absolute;
+  //       top: 75px;
+  //       right: 20%;
+  //       .contract-wrap {
+  //         > div {
+  //           height: 45px;
+  //         }
+  //       }
+  //     }
+  //     .v-list {
+  //       padding: 0 0 50px 0;
+  //     }
+  //     .v-list--three-line {
+  //       > div {
+  //         height: 45px;
+  //       }
+  //       .input-title {
+  //         color: #646464;
+  //         font-size: 14px;
+  //         text-align: right;
+  //         width: 120px;
+  //       }
+  //       .input-mr {
+  //         margin-right: 15px;
+  //       }
+  //       .text-danger {
+  //         color: #d26a5c;
+  //       }
+  //       .input-text {
+  //         border: 1px solid #e6e6e6;
+  //         padding: 5px;
+  //         border-radius: 5px;
+  //         margin-left: 25px;
+  //         width: 350px;
+  //       }
+  //       .input-file {
+  //         font-size: 12px;
+  //         margin-left: 25px;
+  //         width: 150px;
+  //       }
+  //       .input-tel {
+  //         width: 110px;
+  //         margin-left: 10px;
+  //       }
+  //       .file-txt {
+  //         font-size: 10px;
+  //         margin-left: 20px;
+  //       }
+  //       .selectbox {
+  //         display: inline-block;
+  //         position: relative;
+  //         width: 110px;
+  //         border: 1px solid #e6e6e6;
+  //         border-radius: 5px;
+  //         z-index: 1;
+  //         margin-left: 25px;
+  //         &:before {
+  //           content: "";
+  //           position: absolute;
+  //           top: 50%;
+  //           right: 5px;
+  //           width: 0;
+  //           height: 0;
+  //           margin-top: -1px;
+  //           border-left: 5px solid transparent;
+  //           border-right: 5px solid transparent;
+  //           border-top: 5px solid #999;
+  //         }
+  //         select {
+  //           width: 100%;
+  //           height: auto;
+  //           padding: 5px;
+  //           border-radius: 5px;
+  //           -webkit-appearance: none;
+  //           -moz-appearance: none;
+  //           appearance: none;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 </style>
 
 
