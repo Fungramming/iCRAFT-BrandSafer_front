@@ -6,6 +6,8 @@ import Product from "./views/Product.vue";
 import Appv from "./views/Appv.vue";
 import Admin from "./views/Admin.vue";
 import NotFound from "./views/NotFound.vue";
+import CustomerManagement from "./components/Admin/CustomerManagement.vue";
+import CustomerAccount from "./components/Admin/CustomerAccount.vue";
 
 Vue.use(Router);
 
@@ -38,7 +40,19 @@ export default new Router({
     {
       path: "/admin",
       name: "admin",
-      component: Admin
+      component: Admin,
+      children: [
+        {
+          path: "/admin/customerManagement",
+          name: "customerManagement",
+          component: CustomerManagement
+        },
+        {
+          path: "/admin/customerAccount",
+          name: "customerAccount",
+          component: CustomerAccount
+        }
+      ]
     },
     { path: "*", component: NotFound }
   ],

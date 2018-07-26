@@ -18,6 +18,9 @@ const store = new Vuex.Store({
   getters: {
     isAuthenticated(state) {
       return !!state.token;
+    },
+    isSelectedTab(state) {
+      return state.selectedTaB;
     }
   }
 });
