@@ -5,7 +5,7 @@ import ES6Promise from "es6-promise";
 
 import state from "./state.js";
 import mutations from "./mutations.js";
-// import actions from "./actions.js";
+import actions from "./actions.js";
 
 ES6Promise.polyfill();
 Vue.use(Vuex);
@@ -13,8 +13,8 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state,
   mutations,
-  // actions,
-  plugins: [createPersistedState()],
+  actions,
+  plugins: [createPersistedState({})],
   getters: {
     isAuthenticated(state) {
       return !!state.token;

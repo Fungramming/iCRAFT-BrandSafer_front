@@ -1,15 +1,16 @@
 <template>
   <div id="app">
-    <aside-tab></aside-tab>
+    <aside-tab v-if="this.isAuthenticated" style="width:230px;"></aside-tab>
     <router-view/>
-           
   </div>
 </template>
 <script>
 import AsideTab from "./components/Aside.vue";
+import { mapGetters } from "vuex";
 
 export default {
-  components: { AsideTab }
+  components: { AsideTab },
+  computed: mapGetters(["isAuthenticated"])
 };
 </script>
 
@@ -44,5 +45,13 @@ body {
       color: #42b983;
     }
   }
+}
+ul,
+li {
+  list-style: none;
+}
+a {
+  color: black;
+  text-decoration: none;
 }
 </style>
