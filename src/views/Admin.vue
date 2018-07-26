@@ -1,15 +1,18 @@
 <template>
   <div id="admin">
-    <admin-customer></admin-customer>
+    <customer-management></customer-management>
+    <customer-account></customer-account>
   </div>
 </template>
 
 <script>
-import AdminCustomer from '../components/Admin/AdminCustomer'
+import CustomerManagement from '../components/Admin/CustomerManagement'
+import CustomerAccount from '../components/Admin/CustomerAccount'
 
 export default {
   components: {
-    AdminCustomer,
+    CustomerManagement,
+    CustomerAccount,
   },
   data() {
     return {
