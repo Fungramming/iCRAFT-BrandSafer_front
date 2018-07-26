@@ -1,70 +1,73 @@
 <template>
   <div class="tableBs">
-    <!-- table header -->
-    <div class="tableBs-header">
-      <h2>고객사 관리</h2>
-    </div>
     <!-- table top menu -->
     <div class="tableBs-top">
       <p>검색 조건</p>
-      <span>검색어</span>
-      <div class="selectbox">
-        <select id="select1" name="searchType" class="form-control" size="1">
-          <option selected value="고객사">고객사</option>
-          <option value="대표자">대표자</option>
-        </select>
-      </div>
-      <input class="input-text" type="text">
-      <span class="text-xs-center">
-          <v-btn color="primary" dark>검색</v-btn>
+      <v-layout row wrap>
+        <v-flex d-flex xs12 sm12 md12>
+          <div class="selectbox select-search">
+            <span>검색어</span>
+            <select id="select1" name="searchType" class="form-control" size="1">
+              <option selected value="고객사">고객사</option>
+              <option value="대표자">대표자</option>
+            </select>
+          </div>
+          <input class="input-text" type="text">
+        </v-flex>
+      </v-layout>
+      <span class="text-xs-center search-btn">
+        <v-btn color="primary" dark>검색</v-btn>
       </span>
     </div>
     <!-- table wrap -->
     <v-app class="inspire">
-      <div>
-        <v-data-table
-          :headers="headers"
-          :items="desserts"
-          :search="search"
-          :pagination.sync="pagination"
-          v-model="selected"
-          item-key="number"
-          select-all
-          hide-actions
-          class="elevation-1"
-        >
-          <template slot="headerCell" slot-scope="props">
-            <v-tooltip bottom>
-              <span class="item-headers" slot="activator">
-                {{ props.header.text }}
-              </span>
-              <span>
-                {{ props.header.text }}
-              </span>
-            </v-tooltip>
-          </template>
-          <template slot="items" slot-scope="props">
-            <td>
-              <v-checkbox
-                v-model="props.selected"
-                primary
-                hide-details
-              ></v-checkbox>
-            </td>
-            <td class="text-xs-left">{{ props.item.number }}</td>
-            <td class="text-xs-left">{{ props.item.customer }}</td>
-            <td class="text-xs-right">{{ props.item.customer_code }}</td>
-            <td class="text-xs-right">{{ props.item.address }}</td>
-            <td class="text-xs-right">{{ props.item.exponent }}</td>
-            <td class="text-xs-right">{{ props.item.call_number }}</td>
-            <td class="text-xs-right">{{ props.item.date }}</td>
-          </template>
-        </v-data-table>
-        <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+      <v-data-table
+        :headers="headers"
+        :items="desserts"
+        :search="search"
+        :pagination.sync="pagination"
+        v-model="selected"
+        item-key="number"
+        select-all
+        hide-actions
+        class="elevation-1"
+      >
+        <template slot="headerCell" slot-scope="props">
+          <!-- <v-tooltip bottom> -->
+            <span class="item-headers" slot="activator">
+              {{ props.header.text }}
+            </span>
+            <!-- <span>
+              {{ props.header.text }}
+            </span> -->
+          <!-- </v-tooltip> -->
+        </template>
+        <template slot="items" slot-scope="props">
+          <td>
+            <v-checkbox
+              v-model="props.selected"
+              primary
+              hide-details
+            ></v-checkbox>
+          </td>
+          <td class="text-xs-left">{{ props.item.number }}</td>
+          <td class="text-xs-left">{{ props.item.customer }}</td>
+          <td class="text-xs-right">{{ props.item.customer_code }}</td>
+          <td class="text-xs-right">{{ props.item.address }}</td>
+          <td class="text-xs-right">{{ props.item.exponent }}</td>
+          <td class="text-xs-right">{{ props.item.call_number }}</td>
+          <td class="text-xs-right">{{ props.item.date }}</td>
+        </template>
+      </v-data-table>
+      <div class="bottom-contents-wrap">
+        <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
+        <div class="bottom-btn-wrap">
           <v-btn color="primary" dark @click.stop="dialog = true">등록</v-btn>
           <v-btn color="error" dark>삭제</v-btn>
         </div>
+      </div>
+      <div class="text-xs-center pt-2">
+        <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
       </div>
     </v-app>
     <!-- modal dialog -->

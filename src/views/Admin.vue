@@ -1,8 +1,11 @@
 <template>
-  <div id="admin">
-    <customer-management></customer-management>
-    <customer-account></customer-account>
-  </div>
+  <v-container fluid grid-list-md>
+    <!-- <div id="admin"> -->
+      <!-- <customer-management></customer-management> -->
+      <customer-account></customer-account>
+      <!-- <router-view></router-view> -->
+    <!-- </div> -->
+  </v-container>
 </template>
 
 <script>
@@ -23,7 +26,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  #admin {
-    margin: 25px;
-  }
+
 </style>

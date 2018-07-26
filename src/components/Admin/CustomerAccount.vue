@@ -1,287 +1,122 @@
 <template>
   <div class="tableBs">
-    <!-- table header -->
-    <div class="tableBs-header">
-      <h2>고객사 관리</h2>
-    </div>
     <!-- table top menu -->
     <div class="tableBs-top">
       <p>검색 조건</p>
-      <span>검색어</span>
-      <div class="selectbox">
-        <select id="select1" name="searchType" class="form-control" size="1">
-          <option selected value="고객사">고객사</option>
-          <option value="대표자">대표자</option>
-        </select>
-      </div>
-      <input class="input-text" type="text">
-      <span class="text-xs-center">
-          <v-btn color="primary" dark>검색</v-btn>
+      <v-layout row wrap>
+        <v-flex d-flex xs12 sm12 md3>
+        <!-- <v-flex d-flex xs3 order-xs3> -->
+          <div class="selectbox">
+            <span>고객사</span> 
+            <select id="select1" name="searchType" class="form-control" size="1">
+              <option selected value="고객사 전체">고객사 전체</option>
+              <option value="블랙야크">블랙야크</option>
+              <option value="CJ E&M">CJ E&M</option>
+              <option value="브랜드세이퍼">브랜드세이퍼</option>
+              <option value="LF">LF</option>
+              <option value="아모레퍼시픽">아모레퍼시픽</option>
+              <option value="카버코리아">카버코리아</option>
+              <option value="엘앤피코스메틱">엘앤피코스메틱</option>
+              <option value="파파레서피">파파레서피</option>
+              <option value="젬나컴퍼니">젬나컴퍼니</option>
+              <option value="(주)차바이오에프앤씨">(주)차바이오에프앤씨</option>
+              <option value="AUDIO BANK">AUDIO BANK</option>
+              <option value="제이준메딕스㈜">제이준메딕스㈜</option>
+              <option value="아이시드">아이시드</option>
+              <option value="난수발권테스트">난수발권테스트</option>
+              <option value="TWOTSP">TWOTSP</option>
+              <option value="엘앤피코스메틱㈜">엘앤피코스메틱㈜</option>
+              <option value="(주)노드메이슨">(주)노드메이슨</option>
+              <option value="제이준코스메틱㈜">제이준코스메틱㈜</option>
+              <option value="BrandSafer">BrandSafer</option>
+              <option value="문경오미자">문경오미자</option>
+              <option value="문경 테스트">문경 테스트</option>
+              <option value="오감 바이오">오감 바이오</option>
+            </select>
+          </div>
+        </v-flex>
+        <v-flex d-flex xs12 sm12 md3>
+          <div class="selectbox">
+            <span>구분</span>
+            <select id="select1" name="searchType" class="form-control" size="1">
+              <option selected value="전체">전체</option>
+              <option value="관리자">관리자</option>
+              <option value="운영자">운영자</option>
+            </select>
+          </div>
+        </v-flex>
+        <v-flex d-flex xs12 sm12 md3>
+          <div class="selectbox">
+            <span>상태</span>
+            <select id="select1" name="searchType" class="form-control" size="1">
+              <option selected value="전체">전체</option>
+              <option value="등록">등록</option>
+              <option value="일시정지">일시정지</option>
+            </select>
+          </div>
+        </v-flex>
+        <v-flex d-flex xs12 sm12 md3>
+          <div class="selectbox select-search">
+            <span>검색어</span>
+            <select id="select1" name="searchType" class="form-control" size="1">
+              <option selected value="부서">부서</option>
+              <option value="아이디">아이디</option>
+              <option value="이름">이름</option>
+            </select>
+          </div>
+          <input class="input-text" type="text">
+        </v-flex>
+      </v-layout>
+      <span class="text-xs-center search-btn">
+        <v-btn color="primary" dark>검색</v-btn>
       </span>
     </div>
     <!-- table wrap -->
     <v-app class="inspire">
-      <div>
-        <v-data-table
-          :headers="headers"
-          :items="desserts"
-          :search="search"
-          :pagination.sync="pagination"
-          v-model="selected"
-          item-key="number"
-          select-all
-          hide-actions
-          class="elevation-1"
-        >
-          <template slot="headerCell" slot-scope="props">
-            <v-tooltip bottom>
-              <span class="item-headers" slot="activator">
-                {{ props.header.text }}
-              </span>
-              <span>
-                {{ props.header.text }}
-              </span>
-            </v-tooltip>
-          </template>
-          <template slot="items" slot-scope="props">
-            <td>
-              <v-checkbox
-                v-model="props.selected"
-                primary
-                hide-details
-              ></v-checkbox>
-            </td>
-            <td class="text-xs-left">{{ props.item.number }}</td>
-            <td class="text-xs-left">{{ props.item.customer }}</td>
-            <td class="text-xs-right">{{ props.item.customer_code }}</td>
-            <td class="text-xs-right">{{ props.item.address }}</td>
-            <td class="text-xs-right">{{ props.item.exponent }}</td>
-            <td class="text-xs-right">{{ props.item.call_number }}</td>
-            <td class="text-xs-right">{{ props.item.date }}</td>
-          </template>
-        </v-data-table>
-        <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
-          <v-btn color="primary" dark @click.stop="dialog = true">등록</v-btn>
+      <v-data-table
+        :headers="headers"
+        :items="desserts"
+        :search="search"
+        :pagination.sync="pagination"
+        v-model="selected"
+        item-key="number"
+        select-all
+        hide-actions
+        class="elevation-1"
+      >
+        <template slot="headerCell" slot-scope="props">
+          <span class="item-headers" slot="activator">
+            {{ props.header.text }}
+          </span>
+        </template>
+        <template slot="items" slot-scope="props">
+          <td>
+            <v-checkbox
+              v-model="props.selected"
+              primary
+              hide-details
+            ></v-checkbox>
+          </td>
+          <td class="text-xs-left">{{ props.item.number }}</td>
+          <td class="text-xs-left">{{ props.item.customer }}</td>
+          <td class="text-xs-right">{{ props.item.customer_code }}</td>
+          <td class="text-xs-right">{{ props.item.address }}</td>
+          <td class="text-xs-right">{{ props.item.exponent }}</td>
+          <td class="text-xs-right">{{ props.item.call_number }}</td>
+          <td class="text-xs-right">{{ props.item.date }}</td>
+        </template>
+      </v-data-table>
+      <div class="bottom-contents-wrap">
+        <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
+        <div class="bottom-btn-wrap">
+          <!-- <v-btn color="primary" dark @click.stop="dialog = true">등록</v-btn> -->
           <v-btn color="error" dark>삭제</v-btn>
         </div>
       </div>
+      <div class="text-xs-center pt-2">
+        <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+      </div>
     </v-app>
-    <!-- modal dialog -->
-    <v-dialog
-      v-model="dialog"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-      scrollable
-    >
-      <!-- start modal -->
-      <v-card tile>
-        <v-toolbar card dark color="primary">
-          <v-btn icon dark @click.native="dialog = false">
-            <v-icon>close</v-icon>
-          </v-btn>
-          <v-toolbar-title>고객사 등록</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark flat @click.native="dialog = false">저장</v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-        <!-- 내용이 많을경우 왼쪽, 오른쪽 면 분할 -->
-        <!-- left side modal -->
-        <div class="card-left">
-          <v-card-text>
-            <v-list three-line subheader>
-              <v-list-tile avatar>
-                <label class="input-title">고객사코드
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="고객사코드">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">고객사(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="고객사(한국어)">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">고객사(영어)</label>
-                <input class="input-text" type="text">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">고객사(중국어)</label>
-                <input class="input-text" type="text">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">주소(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="주소(한국어)">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">주소(영어)</label>
-                <input class="input-text" type="text">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">주소(중국어)</label>
-                <input class="input-text" type="text">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">전화번호</label>
-                <span class="selectbox">
-                  <select class="form-control" id="telephone1" name="telephone1">
-                    <option value="02">02</option>
-                    <option value="031">031</option>
-                    <option value="032">032</option>
-                    <option value="033">033</option>
-                    <option value="041">041</option>
-                    <option value="042">042</option>
-                    <option value="043">043</option>
-                    <option value="044">044</option>
-                    <option value="051">051</option>
-                    <option value="052">052</option>
-                    <option value="053">053</option>
-                    <option value="054">054</option>
-                    <option value="055">055</option>
-                    <option value="061">061</option>
-                    <option value="062">062</option>
-                    <option value="063">063</option>
-                    <option value="064">064</option>
-                    <option value="070">070</option>
-                    <option value="080">080</option>
-                  </select>
-                </span>
-                <input class="input-text input-tel" type="tel">
-                <input class="input-text input-tel" type="tel">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">팩스번호</label>
-                <span class="selectbox">
-                  <select class="form-control" id="telephone1" name="telephone1">
-                    <option value="02">02</option>
-                    <option value="031">031</option>
-                    <option value="032">032</option>
-                    <option value="033">033</option>
-                    <option value="041">041</option>
-                    <option value="042">042</option>
-                    <option value="043">043</option>
-                    <option value="044">044</option>
-                    <option value="051">051</option>
-                    <option value="052">052</option>
-                    <option value="053">053</option>
-                    <option value="054">054</option>
-                    <option value="055">055</option>
-                    <option value="061">061</option>
-                    <option value="062">062</option>
-                    <option value="063">063</option>
-                    <option value="064">064</option>
-                    <option value="070">070</option>
-                    <option value="080">080</option>
-                  </select>
-                </span>
-                <input class="input-text input-tel" type="tel">
-                <input class="input-text input-tel" type="tel">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">대표자(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="대표자(한국어)">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">대표자(영어)</label>
-                <input class="input-text" type="text" required="required">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">대표자(중국어)</label>
-                <input class="input-text" type="text" required="required">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title input-mr">사업자등록번호
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text input-tel" type="tel">
-                <input class="input-text input-tel" type="tel">
-                <input class="input-text input-tel" type="tel">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">사업자등록증
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">CI
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">URL
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">TnT로고이미지
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">설명(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="설명(한국어)">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">설명(영어)</label>
-                <input class="input-text" type="text" required="required">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">설명(중국어)</label>
-                <input class="input-text" type="text" required="required">
-              </v-list-tile>
-            </v-list>
-          </v-card-text>
-        </div>
-        <!-- right side modal -->
-        <div class="card-right">
-          <v-card-text class="card-text-right">
-            <v-list three-line subheader>
-                <v-list-tile-content>
-                  <v-list-tile-title>계약 정보</v-list-tile-title>
-                </v-list-tile-content>
-                <div class="contract-wrap">
-                  <v-list-tile avatar>
-                    <label class="input-title">계약서명
-                      <span class="text-danger">*</span>
-                    </label>
-                    <input class="input-text" type="text" required="required">
-                  </v-list-tile>
-                  <v-list-tile avatar>
-                    <label class="input-title">계약기간
-                      <span class="text-danger">*</span>
-                    </label>
-                    <input class="input-text" type="text" required="required">
-                  </v-list-tile>
-                  <v-list-tile avatar>
-                    <label class="input-title">사업자등록증
-                      <span class="text-danger">*</span>
-                    </label>
-                    <input class="input-file" type="file" required="required">
-                    <span class="file-txt">(사용가능한 파일 형식 : pdf)</span>
-                  </v-list-tile>
-                </div>
-            </v-list>
-          </v-card-text>
-        </div>
-        <!-- <div style="flex: 1 1 auto;"></div> -->
-      </v-card>
-    </v-dialog>
   </div>
 </template>
 
@@ -290,7 +125,6 @@ export default {
   data() {
     return {
       search: '',
-      dialog: false,
       pagination: {
         page: 1,
         rowsPerPage: 10,
@@ -299,11 +133,11 @@ export default {
       headers: [
         { text: '번호', align: 'left', value: '번호', sortable: false, },
         { text: '고객사', align: 'left', value: '고객사', sortable: false, },
-        { text: '고객사코드', align: 'right', value: '고객사코드', sortable: false, },
-        { text: '주소', align: 'right', value: '주소', sortable: false, },
-        { text: '대표자', align: 'right', value: '대표자', sortable: false, },
-        { text: '전화번호', align: 'right', value: '전화번호', sortable: false, },
-        { text: '가입일자', align: 'right', value: '가입일자', sortable: false, }
+        { text: '구분', align: 'right', value: '구분', sortable: false, },
+        { text: '이름', align: 'right', value: '이름', sortable: false, },
+        { text: '부서', align: 'right', value: '부서', sortable: false, },
+        { text: '최종로그인', align: 'right', value: '최종로그인', sortable: false, },
+        { text: '상태', align: 'right', value: '상태', sortable: false, },
       ],
       desserts: [
         {
@@ -315,196 +149,6 @@ export default {
           exponent: 4.0,
           call_number: '1%',
           date: '1%'
-        },
-        {
-          value: false,
-          number: '2',
-          customer: 237,
-          customer_code: 9.0,
-          address: 37,
-          exponent: 4.3,
-          call_number: '1%',
-          date: '1%'
-        },
-        {
-          value: false,
-          number: '3',
-          customer: 262,
-          customer_code: 16.0,
-          address: 23,
-          exponent: 6.0,
-          call_number: '7%',
-          date: '7%'
-        },
-        {
-          value: false,
-          number: '4',
-          customer: 305,
-          customer_code: 3.7,
-          address: 67,
-          exponent: 4.3,
-          call_number: '8%',
-          date: '8%'
-        },
-        {
-          value: false,
-          number: '5',
-          customer: 356,
-          customer_code: 16.0,
-          address: 49,
-          exponent: 3.9,
-          call_number: '16%',
-          date: '16%'
-        },
-        {
-          value: false,
-          number: '6',
-          customer: 375,
-          customer_code: 0.0,
-          address: 94,
-          exponent: 0.0,
-          call_number: '0%',
-          date: '0%'
-        },
-        {
-          value: false,
-          number: '7',
-          customer: 392,
-          customer_code: 0.2,
-          address: 98,
-          exponent: 0,
-          call_number: '2%',
-          date: '2%'
-        },
-        {
-          value: false,
-          number: '8',
-          customer: 408,
-          customer_code: 3.2,
-          address: 87,
-          exponent: 6.5,
-          call_number: '45%',
-          date: '45%'
-        },
-        {
-          value: false,
-          number: '9',
-          customer: 452,
-          customer_code: 25.0,
-          address: 51,
-          exponent: 4.9,
-          call_number: '22%',
-          date: '22%'
-        },
-        {
-          value: false,
-          number: '10',
-          customer: 518,
-          customer_code: 26.0,
-          address: 65,
-          exponent: 7,
-          call_number: '6%',
-          date: '6%'
-        },
-        {
-          value: false,
-          number: '11',
-          customer: 159,
-          customer_code: 6.0,
-          address: 24,
-          exponent: 4.0,
-          call_number: '1%',
-          date: '1%'
-        },
-        {
-          value: false,
-          number: '12',
-          customer: 237,
-          customer_code: 9.0,
-          address: 37,
-          exponent: 4.3,
-          call_number: '1%',
-          date: '1%'
-        },
-        {
-          value: false,
-          number: '13',
-          customer: 262,
-          customer_code: 16.0,
-          address: 23,
-          exponent: 6.0,
-          call_number: '7%',
-          date: '7%'
-        },
-        {
-          value: false,
-          number: '14',
-          customer: 305,
-          customer_code: 3.7,
-          address: 67,
-          exponent: 4.3,
-          call_number: '8%',
-          date: '8%'
-        },
-        {
-          value: false,
-          number: '15',
-          customer: 356,
-          customer_code: 16.0,
-          address: 49,
-          exponent: 3.9,
-          call_number: '16%',
-          date: '16%'
-        },
-        {
-          value: false,
-          number: '16',
-          customer: 375,
-          customer_code: 0.0,
-          address: 94,
-          exponent: 0.0,
-          call_number: '0%',
-          date: '0%'
-        },
-        {
-          value: false,
-          number: '17',
-          customer: 392,
-          customer_code: 0.2,
-          address: 98,
-          exponent: 0,
-          call_number: '2%',
-          date: '2%'
-        },
-        {
-          value: false,
-          number: '18',
-          customer: 408,
-          customer_code: 3.2,
-          address: 87,
-          exponent: 6.5,
-          call_number: '45%',
-          date: '45%'
-        },
-        {
-          value: false,
-          number: '19',
-          customer: 452,
-          customer_code: 25.0,
-          address: 51,
-          exponent: 4.9,
-          call_number: '22%',
-          date: '22%'
-        },
-        {
-          value: false,
-          number: '20',
-          customer: 518,
-          customer_code: 26.0,
-          address: 65,
-          exponent: 7,
-          call_number: '6%',
-          date: '6%'
         },
       ]
     }
