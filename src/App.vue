@@ -67,6 +67,6 @@ a {
 .contents {
   padding-left: 230px;
   height: 97%;
-  overflow: hidden;
+  // overflow: hidden;
 }
 </style>
