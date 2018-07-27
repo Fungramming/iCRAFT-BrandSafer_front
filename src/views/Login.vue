@@ -3,45 +3,77 @@
       <h1 class="logo">
         <img  src="../assets/logo.png" alt="브렌드세이퍼">
       </h1>
-      <div class="login-bottom">       
+      <div class="login-bottom">
         <strong>추적관리시스템</strong>
-        <span>Welcome, please login.</span>       
-          <v-text-field
-            v-model="id"
-            class="input-text"
-            label="ID"
-            clearable
-          ></v-text-field>
-          <v-text-field
-            v-model="password"
-            :type="password"
-            class="input-text"
-            label="PASSWORD"
-            clearable
-          ></v-text-field>             
-          <v-radio-group v-model="selectedLang" class="lang-group" row>
-            <v-radio class="lang-option" label="한국어" value="Korean"></v-radio>
-            <v-radio class="lang-option" label="中文版" value="Chinese"></v-radio>
-            <v-radio class="lang-option" label="English" value="English"></v-radio>
-          </v-radio-group>              
-          <v-btn class="login-btn" ><v-icon style="">launch</v-icon></v-btn>          
+        <span>Welcome, please login.</span>
+        <v-text-field
+          v-model="id"
+          label="ID"
+          clearable
+        ></v-text-field>
+        <v-text-field
+          v-model="password"
+          :type="'password'"
+          label="PASSWORD"
+          clearable
+        ></v-text-field>
+        <v-radio-group v-model="selectedLang" class="lang-group" row>
+          <v-radio class="lang-option" label="한국어" value="Korean"></v-radio>
+          <v-radio class="lang-option" label="中文版" value="Chinese"></v-radio>
+          <v-radio class="lang-option" label="English" value="English"></v-radio>
+        </v-radio-group>
+        <v-btn class="login-btn" @click.stop="onSubmit"><v-icon style="">launch</v-icon></v-btn>          
       </div>
       <footer>© iCraft21</footer>
   </div>
 </template>
 
 <script>
+import Constant from "../constant.js";
+
 export default {
   data() {
     return {
       id: "",
       password: "",
+      token: "1234",
       selectedLang: "Korean"
     };
   },
   mounted() {
     if (this.$route.query.redirect) {
       this.errors.push("로그인후 이용하실 수 있습니다.");
+    } else if (this.$store.getters.isAuthenticated) {
+      this.$router.replace({ name: "dashboard" });
+    }
+  },
+  methods: {
+    onSubmit() {
+      if (this.id && this.password) {
+        this.$store
+          .dispatch(Constant.LOG_IN, {
+            userId: this.id,
+            userPassword: this.password,
+            token: this.token
+          })
+          .then(() => {
+            // if (resp.status == 200) {
+            this.$router.push({ name: "dashboard" });
+            // }
+          });
+        // .catch(err => {
+        //   if (err.status == 401) {
+        //     alert(
+        //       `접속 실패!\n이메일이나 비밀번호를 다시 한번 확인해주세요.`
+        //     );
+        //   } else {
+        //     alert(
+        //       `접속실패!\n에러 코드: ${err.response.status}\n
+        //       에러 메세지: ${err.response.message}`
+        //     );
+        //   }
+        // });
+      }
     }
   }
 };
@@ -53,7 +85,7 @@ $primary-color: #173857;
   width: 600px;
   height: 400px;
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 50%;
   margin-left: -300px;
   margin-top: -200px;

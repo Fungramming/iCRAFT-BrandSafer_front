@@ -132,7 +132,7 @@
               <v-list-tile avatar>
                 <label class="input-title">전화번호</label>
                 <span class="selectbox">
-                  <select class="form-control" id="telephone1" name="telephone1">
+                  <select id="telephone1" class="form-control" name="telephone1">
                     <option value="02">02</option>
                     <option value="031">031</option>
                     <option value="032">032</option>
@@ -160,7 +160,7 @@
               <v-list-tile avatar>
                 <label class="input-title">팩스번호</label>
                 <span class="selectbox">
-                  <select class="form-control" id="telephone1" name="telephone1">
+                  <select id="telephone1" class="form-control" name="telephone1">
                     <option value="02">02</option>
                     <option value="031">031</option>
                     <option value="032">032</option>
@@ -292,413 +292,425 @@
 export default {
   data() {
     return {
-      search: '',
+      search: "",
       dialog: false,
       pagination: {
         page: 1,
-        rowsPerPage: 10,
+        rowsPerPage: 10
       },
       selected: [],
       headers: [
-        { text: '번호', align: 'left', value: '번호', sortable: false, },
-        { text: '고객사', align: 'left', value: '고객사', sortable: false, },
-        { text: '고객사코드', align: 'right', value: '고객사코드', sortable: false, },
-        { text: '주소', align: 'right', value: '주소', sortable: false, },
-        { text: '대표자', align: 'right', value: '대표자', sortable: false, },
-        { text: '전화번호', align: 'right', value: '전화번호', sortable: false, },
-        { text: '가입일자', align: 'right', value: '가입일자', sortable: false, }
+        { text: "번호", align: "left", value: "번호", sortable: false },
+        { text: "고객사", align: "left", value: "고객사", sortable: false },
+        {
+          text: "고객사코드",
+          align: "right",
+          value: "고객사코드",
+          sortable: false
+        },
+        { text: "주소", align: "right", value: "주소", sortable: false },
+        { text: "대표자", align: "right", value: "대표자", sortable: false },
+        {
+          text: "전화번호",
+          align: "right",
+          value: "전화번호",
+          sortable: false
+        },
+        { text: "가입일자", align: "right", value: "가입일자", sortable: false }
       ],
       desserts: [
         {
           value: false,
-          number: '1',
+          number: "1",
           customer: 159,
           customer_code: 6.0,
           address: 24,
           exponent: 4.0,
-          call_number: '1%',
-          date: '1%'
+          call_number: "1%",
+          date: "1%"
         },
         {
           value: false,
-          number: '2',
+          number: "2",
           customer: 237,
           customer_code: 9.0,
           address: 37,
           exponent: 4.3,
-          call_number: '1%',
-          date: '1%'
+          call_number: "1%",
+          date: "1%"
         },
         {
           value: false,
-          number: '3',
+          number: "3",
           customer: 262,
           customer_code: 16.0,
           address: 23,
           exponent: 6.0,
-          call_number: '7%',
-          date: '7%'
+          call_number: "7%",
+          date: "7%"
         },
         {
           value: false,
-          number: '4',
+          number: "4",
           customer: 305,
           customer_code: 3.7,
           address: 67,
           exponent: 4.3,
-          call_number: '8%',
-          date: '8%'
+          call_number: "8%",
+          date: "8%"
         },
         {
           value: false,
-          number: '5',
+          number: "5",
           customer: 356,
           customer_code: 16.0,
           address: 49,
           exponent: 3.9,
-          call_number: '16%',
-          date: '16%'
+          call_number: "16%",
+          date: "16%"
         },
         {
           value: false,
-          number: '6',
+          number: "6",
           customer: 375,
           customer_code: 0.0,
           address: 94,
           exponent: 0.0,
-          call_number: '0%',
-          date: '0%'
+          call_number: "0%",
+          date: "0%"
         },
         {
           value: false,
-          number: '7',
+          number: "7",
           customer: 392,
           customer_code: 0.2,
           address: 98,
           exponent: 0,
-          call_number: '2%',
-          date: '2%'
+          call_number: "2%",
+          date: "2%"
         },
         {
           value: false,
-          number: '8',
+          number: "8",
           customer: 408,
           customer_code: 3.2,
           address: 87,
           exponent: 6.5,
-          call_number: '45%',
-          date: '45%'
+          call_number: "45%",
+          date: "45%"
         },
         {
           value: false,
-          number: '9',
+          number: "9",
           customer: 452,
           customer_code: 25.0,
           address: 51,
           exponent: 4.9,
-          call_number: '22%',
-          date: '22%'
+          call_number: "22%",
+          date: "22%"
         },
         {
           value: false,
-          number: '10',
+          number: "10",
           customer: 518,
           customer_code: 26.0,
           address: 65,
           exponent: 7,
-          call_number: '6%',
-          date: '6%'
+          call_number: "6%",
+          date: "6%"
         },
         {
           value: false,
-          number: '11',
+          number: "11",
           customer: 159,
           customer_code: 6.0,
           address: 24,
           exponent: 4.0,
-          call_number: '1%',
-          date: '1%'
+          call_number: "1%",
+          date: "1%"
         },
         {
           value: false,
-          number: '12',
+          number: "12",
           customer: 237,
           customer_code: 9.0,
           address: 37,
           exponent: 4.3,
-          call_number: '1%',
-          date: '1%'
+          call_number: "1%",
+          date: "1%"
         },
         {
           value: false,
-          number: '13',
+          number: "13",
           customer: 262,
           customer_code: 16.0,
           address: 23,
           exponent: 6.0,
-          call_number: '7%',
-          date: '7%'
+          call_number: "7%",
+          date: "7%"
         },
         {
           value: false,
-          number: '14',
+          number: "14",
           customer: 305,
           customer_code: 3.7,
           address: 67,
           exponent: 4.3,
-          call_number: '8%',
-          date: '8%'
+          call_number: "8%",
+          date: "8%"
         },
         {
           value: false,
-          number: '15',
+          number: "15",
           customer: 356,
           customer_code: 16.0,
           address: 49,
           exponent: 3.9,
-          call_number: '16%',
-          date: '16%'
+          call_number: "16%",
+          date: "16%"
         },
         {
           value: false,
-          number: '16',
+          number: "16",
           customer: 375,
           customer_code: 0.0,
           address: 94,
           exponent: 0.0,
-          call_number: '0%',
-          date: '0%'
+          call_number: "0%",
+          date: "0%"
         },
         {
           value: false,
-          number: '17',
+          number: "17",
           customer: 392,
           customer_code: 0.2,
           address: 98,
           exponent: 0,
-          call_number: '2%',
-          date: '2%'
+          call_number: "2%",
+          date: "2%"
         },
         {
           value: false,
-          number: '18',
+          number: "18",
           customer: 408,
           customer_code: 3.2,
           address: 87,
           exponent: 6.5,
-          call_number: '45%',
-          date: '45%'
+          call_number: "45%",
+          date: "45%"
         },
         {
           value: false,
-          number: '19',
+          number: "19",
           customer: 452,
           customer_code: 25.0,
           address: 51,
           exponent: 4.9,
-          call_number: '22%',
-          date: '22%'
+          call_number: "22%",
+          date: "22%"
         },
         {
           value: false,
-          number: '20',
+          number: "20",
           customer: 518,
           customer_code: 26.0,
           address: 65,
           exponent: 7,
-          call_number: '6%',
-          date: '6%'
-        },
+          call_number: "6%",
+          date: "6%"
+        }
       ]
-    }
+    };
   },
   computed: {
-    pages () {
-      if (this.pagination.rowsPerPage == null ||
+    pages() {
+      if (
+        this.pagination.rowsPerPage == null ||
         this.pagination.totalItems == null
-      ) return 0
+      )
+        return 0;
 
-      return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
+      return Math.ceil(
+        this.pagination.totalItems / this.pagination.rowsPerPage
+      );
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '../../scss/table';
-@import '../../scss/modal';
-  // .tableBs {
-  //   &-header {
-  //     text-align: left;
-  //     h2 {
-  //       font-weight: 500;
-  //       color: #646464;
-  //     }
-  //   }
-  //   &-top {
-  //     text-align: left;
-  //     margin: 25px 0;
-  //     padding: 25px;
-  //     background-color: #fff;
-  //     -webkit-box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
-  //     box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
-  //     p, span {
-  //       color: #646464;
-  //       font-size: 16px;
-  //       font-weight: 600;
-  //     }
-  //     .sm6 {
-  //       max-width: 250px;
-  //       .input-select {
-  //         width: 50%;
-  //       }
-  //     }
-  //     .selectbox {
-  //       display: inline-block;
-  //       position: relative;
-  //       width: 100px;
-  //       border: 1px solid #e6e6e6;
-  //       border-radius: 5px;
-  //       z-index: 1;
-  //       margin-left: 10px;
-  //       &:before {
-  //         content: "";
-  //         position: absolute;
-  //         top: 50%;
-  //         right: 5px;
-  //         width: 0;
-  //         height: 0;
-  //         margin-top: -1px;
-  //         border-left: 5px solid transparent;
-  //         border-right: 5px solid transparent;
-  //         border-top: 5px solid #999;
-  //       }
-  //       select {
-  //         width: 100%;
-  //         height: auto;
-  //         padding: 5px;
-  //         border-radius: 5px;
-  //         -webkit-appearance: none;
-  //         -moz-appearance: none;
-  //         appearance: none;
-  //       }
-  //     }
-  //     .input-text {
-  //       border: 1px solid #e6e6e6;
-  //       padding: 5px;
-  //       border-radius: 5px;
-  //       margin-left: 10px;
-  //     }
-  //     button {
-  //       border-radius: 5px;
-  //       height: 32px;
-  //       margin: -5px 0 -1px 5px;
-  //       float: right;
-  //     }
-  //   }
-  //   .inspire {
-  //     background: #fff;
-  //     -webkit-box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
-  //     box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
-  //     height: 537px;
-  //     .elevation-1 {
-  //       -webkit-box-shadow: none !important;
-  //       box-shadow: none !important;
-  //     }
-  //     .text-xs-center {
-  //       margin-top: 25px;
-  //       button {
-  //         float: right;
-  //         border-radius: 5px;
-  //       }
-  //     }
-  //   }
+@import "../../scss/table";
+@import "../../scss/modal";
+// .tableBs {
+//   &-header {
+//     text-align: left;
+//     h2 {
+//       font-weight: 500;
+//       color: #646464;
+//     }
+//   }
+//   &-top {
+//     text-align: left;
+//     margin: 25px 0;
+//     padding: 25px;
+//     background-color: #fff;
+//     -webkit-box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
+//     box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
+//     p, span {
+//       color: #646464;
+//       font-size: 16px;
+//       font-weight: 600;
+//     }
+//     .sm6 {
+//       max-width: 250px;
+//       .input-select {
+//         width: 50%;
+//       }
+//     }
+//     .selectbox {
+//       display: inline-block;
+//       position: relative;
+//       width: 100px;
+//       border: 1px solid #e6e6e6;
+//       border-radius: 5px;
+//       z-index: 1;
+//       margin-left: 10px;
+//       &:before {
+//         content: "";
+//         position: absolute;
+//         top: 50%;
+//         right: 5px;
+//         width: 0;
+//         height: 0;
+//         margin-top: -1px;
+//         border-left: 5px solid transparent;
+//         border-right: 5px solid transparent;
+//         border-top: 5px solid #999;
+//       }
+//       select {
+//         width: 100%;
+//         height: auto;
+//         padding: 5px;
+//         border-radius: 5px;
+//         -webkit-appearance: none;
+//         -moz-appearance: none;
+//         appearance: none;
+//       }
+//     }
+//     .input-text {
+//       border: 1px solid #e6e6e6;
+//       padding: 5px;
+//       border-radius: 5px;
+//       margin-left: 10px;
+//     }
+//     button {
+//       border-radius: 5px;
+//       height: 32px;
+//       margin: -5px 0 -1px 5px;
+//       float: right;
+//     }
+//   }
+//   .inspire {
+//     background: #fff;
+//     -webkit-box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
+//     box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
+//     height: 537px;
+//     .elevation-1 {
+//       -webkit-box-shadow: none !important;
+//       box-shadow: none !important;
+//     }
+//     .text-xs-center {
+//       margin-top: 25px;
+//       button {
+//         float: right;
+//         border-radius: 5px;
+//       }
+//     }
+//   }
 
-  //   //=============================== 모달
-  //   .v-dialog {
-  //     .card-right {
-  //       width: 40%;
-  //       position: absolute;
-  //       top: 75px;
-  //       right: 20%;
-  //       .contract-wrap {
-  //         > div {
-  //           height: 45px;
-  //         }
-  //       }
-  //     }
-  //     .v-list {
-  //       padding: 0 0 50px 0;
-  //     }
-  //     .v-list--three-line {
-  //       > div {
-  //         height: 45px;
-  //       }
-  //       .input-title {
-  //         color: #646464;
-  //         font-size: 14px;
-  //         text-align: right;
-  //         width: 120px;
-  //       }
-  //       .input-mr {
-  //         margin-right: 15px;
-  //       }
-  //       .text-danger {
-  //         color: #d26a5c;
-  //       }
-  //       .input-text {
-  //         border: 1px solid #e6e6e6;
-  //         padding: 5px;
-  //         border-radius: 5px;
-  //         margin-left: 25px;
-  //         width: 350px;
-  //       }
-  //       .input-file {
-  //         font-size: 12px;
-  //         margin-left: 25px;
-  //         width: 150px;
-  //       }
-  //       .input-tel {
-  //         width: 110px;
-  //         margin-left: 10px;
-  //       }
-  //       .file-txt {
-  //         font-size: 10px;
-  //         margin-left: 20px;
-  //       }
-  //       .selectbox {
-  //         display: inline-block;
-  //         position: relative;
-  //         width: 110px;
-  //         border: 1px solid #e6e6e6;
-  //         border-radius: 5px;
-  //         z-index: 1;
-  //         margin-left: 25px;
-  //         &:before {
-  //           content: "";
-  //           position: absolute;
-  //           top: 50%;
-  //           right: 5px;
-  //           width: 0;
-  //           height: 0;
-  //           margin-top: -1px;
-  //           border-left: 5px solid transparent;
-  //           border-right: 5px solid transparent;
-  //           border-top: 5px solid #999;
-  //         }
-  //         select {
-  //           width: 100%;
-  //           height: auto;
-  //           padding: 5px;
-  //           border-radius: 5px;
-  //           -webkit-appearance: none;
-  //           -moz-appearance: none;
-  //           appearance: none;
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
+//   //=============================== 모달
+//   .v-dialog {
+//     .card-right {
+//       width: 40%;
+//       position: absolute;
+//       top: 75px;
+//       right: 20%;
+//       .contract-wrap {
+//         > div {
+//           height: 45px;
+//         }
+//       }
+//     }
+//     .v-list {
+//       padding: 0 0 50px 0;
+//     }
+//     .v-list--three-line {
+//       > div {
+//         height: 45px;
+//       }
+//       .input-title {
+//         color: #646464;
+//         font-size: 14px;
+//         text-align: right;
+//         width: 120px;
+//       }
+//       .input-mr {
+//         margin-right: 15px;
+//       }
+//       .text-danger {
+//         color: #d26a5c;
+//       }
+//       .input-text {
+//         border: 1px solid #e6e6e6;
+//         padding: 5px;
+//         border-radius: 5px;
+//         margin-left: 25px;
+//         width: 350px;
+//       }
+//       .input-file {
+//         font-size: 12px;
+//         margin-left: 25px;
+//         width: 150px;
+//       }
+//       .input-tel {
+//         width: 110px;
+//         margin-left: 10px;
+//       }
+//       .file-txt {
+//         font-size: 10px;
+//         margin-left: 20px;
+//       }
+//       .selectbox {
+//         display: inline-block;
+//         position: relative;
+//         width: 110px;
+//         border: 1px solid #e6e6e6;
+//         border-radius: 5px;
+//         z-index: 1;
+//         margin-left: 25px;
+//         &:before {
+//           content: "";
+//           position: absolute;
+//           top: 50%;
+//           right: 5px;
+//           width: 0;
+//           height: 0;
+//           margin-top: -1px;
+//           border-left: 5px solid transparent;
+//           border-right: 5px solid transparent;
+//           border-top: 5px solid #999;
+//         }
+//         select {
+//           width: 100%;
+//           height: auto;
+//           padding: 5px;
+//           border-radius: 5px;
+//           -webkit-appearance: none;
+//           -moz-appearance: none;
+//           appearance: none;
+//         }
+//       }
+//     }
+//   }
+// }
 </style>
-
-
