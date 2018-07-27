@@ -67,9 +67,9 @@
           <input class="input-text" type="text">
         </v-flex>
       </v-layout>
-      <span class="text-xs-center search-btn">
-        <v-btn color="primary" dark>검색</v-btn>
-      </span>
+      <v-flex d-flex xs12 sm12 md1 offset-md11>
+        <v-btn class="search-btn" color="primary" dark>검색</v-btn>
+      </v-flex>
     </div>
     <!-- table wrap -->
     <v-app class="inspire">
@@ -106,15 +106,16 @@
           <td class="text-xs-right">{{ props.item.date }}</td>
         </template>
       </v-data-table>
+      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
       <div class="bottom-contents-wrap">
-        <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
-        <div class="bottom-btn-wrap">
-          <!-- <v-btn color="primary" dark @click.stop="dialog = true">등록</v-btn> -->
-          <v-btn color="error" dark>삭제</v-btn>
+        <v-layout row wrap btn-group>
+          <v-flex d-flex xs12 sm12 md1 offset-md11>
+            <v-btn color="error" dark>삭제</v-btn>
+          </v-flex>
+        </v-layout>
+        <div class="text-xs-center pt-2">
+          <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
         </div>
-      </div>
-      <div class="text-xs-center pt-2">
-        <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
       </div>
     </v-app>
   </div>

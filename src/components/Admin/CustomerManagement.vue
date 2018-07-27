@@ -4,7 +4,7 @@
     <div class="tableBs-top">
       <p>검색 조건</p>
       <v-layout row wrap>
-        <v-flex d-flex xs12 sm12 md12>
+        <v-flex d-flex xs12 sm12 md2>
           <div class="selectbox select-search">
             <span>검색어</span>
             <select id="select1" name="searchType" class="form-control" size="1">
@@ -12,12 +12,14 @@
               <option value="대표자">대표자</option>
             </select>
           </div>
+        </v-flex>
+        <v-flex d-flex xs12 sm12 md5>
           <input class="input-text" type="text">
         </v-flex>
       </v-layout>
-      <span class="text-xs-center search-btn">
-        <v-btn color="primary" dark>검색</v-btn>
-      </span>
+      <v-flex d-flex xs12 sm12 md1 offset-md11>
+        <v-btn class="search-btn" color="primary" dark>검색</v-btn>
+      </v-flex>
     </div>
     <!-- table wrap -->
     <v-app class="inspire">
@@ -59,17 +61,23 @@
           <td class="text-xs-right">{{ props.item.date }}</td>
         </template>
       </v-data-table>
+      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
       <div class="bottom-contents-wrap">
-        <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
-        <div class="bottom-btn-wrap">
-          <v-btn color="primary" dark @click.stop="dialog = true">등록</v-btn>
-          <v-btn color="error" dark>삭제</v-btn>
+        <v-layout row wrap btn-group>
+          <v-flex d-flex xs12 sm12 md1 offset-md10>
+            <v-btn color="error" dark>삭제</v-btn>
+          </v-flex>
+          <v-flex d-flex xs12 sm12 md1>
+            <v-btn color="primary" dark @click.stop="dialog = true">등록</v-btn>
+          </v-flex>
+        </v-layout>
+        <div class="text-xs-center pt-2">
+          <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
         </div>
       </div>
-      <div class="text-xs-center pt-2">
-        <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
-      </div>
     </v-app>
+
+    <v-flex d-flex xs12 sm12 md12>
     <!-- modal dialog -->
     <v-dialog
       v-model="dialog"
@@ -90,201 +98,232 @@
             <v-btn dark flat @click.native="dialog = false">저장</v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <!-- 내용이 많을경우 왼쪽, 오른쪽 면 분할 -->
-        <!-- left side modal -->
-        <div class="card-left">
-          <v-card-text>
-            <v-list three-line subheader>
-              <v-list-tile avatar>
-                <label class="input-title">고객사코드
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="고객사코드">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">고객사(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="고객사(한국어)">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">고객사(영어)</label>
-                <input class="input-text" type="text">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">고객사(중국어)</label>
-                <input class="input-text" type="text">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">주소(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="주소(한국어)">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">주소(영어)</label>
-                <input class="input-text" type="text">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">주소(중국어)</label>
-                <input class="input-text" type="text">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">전화번호</label>
-                <span class="selectbox">
-                  <select id="telephone1" class="form-control" name="telephone1">
-                    <option value="02">02</option>
-                    <option value="031">031</option>
-                    <option value="032">032</option>
-                    <option value="033">033</option>
-                    <option value="041">041</option>
-                    <option value="042">042</option>
-                    <option value="043">043</option>
-                    <option value="044">044</option>
-                    <option value="051">051</option>
-                    <option value="052">052</option>
-                    <option value="053">053</option>
-                    <option value="054">054</option>
-                    <option value="055">055</option>
-                    <option value="061">061</option>
-                    <option value="062">062</option>
-                    <option value="063">063</option>
-                    <option value="064">064</option>
-                    <option value="070">070</option>
-                    <option value="080">080</option>
-                  </select>
-                </span>
-                <input class="input-text input-tel" type="tel">
-                <input class="input-text input-tel" type="tel">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">팩스번호</label>
-                <span class="selectbox">
-                  <select id="telephone1" class="form-control" name="telephone1">
-                    <option value="02">02</option>
-                    <option value="031">031</option>
-                    <option value="032">032</option>
-                    <option value="033">033</option>
-                    <option value="041">041</option>
-                    <option value="042">042</option>
-                    <option value="043">043</option>
-                    <option value="044">044</option>
-                    <option value="051">051</option>
-                    <option value="052">052</option>
-                    <option value="053">053</option>
-                    <option value="054">054</option>
-                    <option value="055">055</option>
-                    <option value="061">061</option>
-                    <option value="062">062</option>
-                    <option value="063">063</option>
-                    <option value="064">064</option>
-                    <option value="070">070</option>
-                    <option value="080">080</option>
-                  </select>
-                </span>
-                <input class="input-text input-tel" type="tel">
-                <input class="input-text input-tel" type="tel">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">대표자(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="대표자(한국어)">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">대표자(영어)</label>
-                <input class="input-text" type="text" required="required">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">대표자(중국어)</label>
-                <input class="input-text" type="text" required="required">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title input-mr">사업자등록번호
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text input-tel" type="tel">
-                <input class="input-text input-tel" type="tel">
-                <input class="input-text input-tel" type="tel">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">사업자등록증
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">CI
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">URL
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">TnT로고이미지
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">설명(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="설명(한국어)">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">설명(영어)</label>
-                <input class="input-text" type="text" required="required">
-              </v-list-tile>
-              <v-list-tile avatar>
-                <label class="input-title">설명(중국어)</label>
-                <input class="input-text" type="text" required="required">
-              </v-list-tile>
-            </v-list>
-          </v-card-text>
-        </div>
-        <!-- right side modal -->
-        <div class="card-right">
-          <v-card-text class="card-text-right">
-            <v-list three-line subheader>
-                <v-list-tile-content>
-                  <v-list-tile-title>계약 정보</v-list-tile-title>
-                </v-list-tile-content>
-                <div class="contract-wrap">
-                  <v-list-tile avatar>
-                    <label class="input-title">계약서명
-                      <span class="text-danger">*</span>
-                    </label>
-                    <input class="input-text" type="text" required="required">
-                  </v-list-tile>
-                  <v-list-tile avatar>
-                    <label class="input-title">계약기간
-                      <span class="text-danger">*</span>
-                    </label>
-                    <input class="input-text" type="text" required="required">
-                  </v-list-tile>
-                  <v-list-tile avatar>
-                    <label class="input-title">사업자등록증
-                      <span class="text-danger">*</span>
-                    </label>
-                    <input class="input-file" type="file" required="required">
-                    <span class="file-txt">(사용가능한 파일 형식 : pdf)</span>
-                  </v-list-tile>
-                </div>
-            </v-list>
-          </v-card-text>
-        </div>
+
+          <!-- 내용이 많을경우 왼쪽, 오른쪽 면 분할 -->
+          <!-- left side modal -->
+            <!-- <v-flex d-flex xs12 sm12 md1> -->
+              <div class="card-left">
+                <v-card-text>
+                  <v-list three-line subheader>
+                    <!-- <v-layout row wrap> -->
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">고객사코드
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input class="input-text" type="text" required="required" placeholder="고객사코드">
+                    </v-flex>    
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">고객사(한국어)
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input class="input-text" type="text" required="required" placeholder="고객사(한국어)">
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">고객사(영어)</label>
+                      <input class="input-text" type="text">
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">고객사(중국어)</label>
+                      <input class="input-text" type="text">
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">주소(한국어)
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input class="input-text" type="text" required="required" placeholder="주소(한국어)">
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">주소(영어)</label>
+                      <input class="input-text" type="text">
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">주소(중국어)</label>
+                      <input class="input-text" type="text">
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">전화번호</label>
+                      <span class="selectbox">
+                        <select id="telephone1" class="form-control" name="telephone1">
+                          <option value="02">02</option>
+                          <option value="031">031</option>
+                          <option value="032">032</option>
+                          <option value="033">033</option>
+                          <option value="041">041</option>
+                          <option value="042">042</option>
+                          <option value="043">043</option>
+                          <option value="044">044</option>
+                          <option value="051">051</option>
+                          <option value="052">052</option>
+                          <option value="053">053</option>
+                          <option value="054">054</option>
+                          <option value="055">055</option>
+                          <option value="061">061</option>
+                          <option value="062">062</option>
+                          <option value="063">063</option>
+                          <option value="064">064</option>
+                          <option value="070">070</option>
+                          <option value="080">080</option>
+                        </select>
+                      </span>
+                      <input class="input-text input-tel" type="tel">
+                      <input class="input-text input-tel" type="tel">
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">팩스번호</label>
+                      <span class="selectbox">
+                        <select id="telephone1" class="form-control" name="telephone1">
+                          <option value="02">02</option>
+                          <option value="031">031</option>
+                          <option value="032">032</option>
+                          <option value="033">033</option>
+                          <option value="041">041</option>
+                          <option value="042">042</option>
+                          <option value="043">043</option>
+                          <option value="044">044</option>
+                          <option value="051">051</option>
+                          <option value="052">052</option>
+                          <option value="053">053</option>
+                          <option value="054">054</option>
+                          <option value="055">055</option>
+                          <option value="061">061</option>
+                          <option value="062">062</option>
+                          <option value="063">063</option>
+                          <option value="064">064</option>
+                          <option value="070">070</option>
+                          <option value="080">080</option>
+                        </select>
+                      </span>
+                      <input class="input-text input-tel" type="tel">
+                      <input class="input-text input-tel" type="tel">
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">대표자(한국어)
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input class="input-text" type="text" required="required" placeholder="대표자(한국어)">
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">대표자(영어)</label>
+                      <input class="input-text" type="text" required="required">
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">대표자(중국어)</label>
+                      <input class="input-text" type="text" required="required">
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title input-mr">사업자등록번호
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input class="input-text input-tel" type="tel">
+                      <input class="input-text input-tel" type="tel">
+                      <input class="input-text input-tel" type="tel">
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">사업자등록증
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input class="input-file" type="file" required="required">
+                      <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">CI
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input class="input-file" type="file" required="required">
+                      <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">URL
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input class="input-text" type="text" required="required">
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">TnT로고이미지
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input class="input-file" type="file" required="required">
+                      <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">설명(한국어)
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input class="input-text" type="text" required="required" placeholder="설명(한국어)">
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">설명(영어)</label>
+                      <input class="input-text" type="text" required="required">
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md5>
+                      <label class="input-title">설명(중국어)</label>
+                      <input class="input-text" type="text" required="required">
+                    </v-flex>
+                    <v-divider></v-divider>
+                    <!-- <v-list three-line subheader> -->
+                      <v-subheader>계약 정보</v-subheader>
+                      <v-flex d-flex xs12 sm12 md5>
+                        <label class="input-title">계약서명
+                          <span class="text-danger">*</span>
+                        </label>
+                        <input class="input-text" type="text" required="required">
+                      </v-flex>
+                      <v-flex d-flex xs12 sm12 md5>
+                        <label class="input-title">계약기간
+                          <span class="text-danger">*</span>
+                        </label>
+                        <input class="input-text" type="text" required="required">
+                      </v-flex>
+                      <v-flex d-flex xs12 sm12 md5>
+                        <label class="input-title">사업자등록증
+                          <span class="text-danger">*</span>
+                        </label>
+                        <input class="input-file" type="file" required="required">
+                        <span class="file-txt">(사용가능한 파일 형식 : pdf)</span>
+                      </v-flex>
+                    <!-- </v-list> -->
+                    <!-- </v-layout> -->
+                  </v-list>
+                </v-card-text>
+              </div>
+            <!-- </v-flex> -->
+            <!-- right side modal -->
+            <!-- <v-flex d-flex xs12 sm12 md12>
+              <div class="card-right">
+                <v-card-text class="card-text-right">
+                  <v-list three-line subheader>
+                      <v-list-tile-content>
+                        <v-list-tile-title>계약 정보</v-list-tile-title>
+                      </v-list-tile-content>
+                      <div class="contract-wrap">
+                        <v-list-tile avatar>
+                          <label class="input-title">계약서명
+                            <span class="text-danger">*</span>
+                          </label>
+                          <input class="input-text" type="text" required="required">
+                        </v-list-tile>
+                        <v-list-tile avatar>
+                          <label class="input-title">계약기간
+                            <span class="text-danger">*</span>
+                          </label>
+                          <input class="input-text" type="text" required="required">
+                        </v-list-tile>
+                        <v-list-tile avatar>
+                          <label class="input-title">사업자등록증
+                            <span class="text-danger">*</span>
+                          </label>
+                          <input class="input-file" type="file" required="required">
+                          <span class="file-txt">(사용가능한 파일 형식 : pdf)</span>
+                        </v-list-tile>
+                      </div>
+                  </v-list>
+                </v-card-text>
+              </div>
+            </v-flex> -->
         <!-- <div style="flex: 1 1 auto;"></div> -->
       </v-card>
     </v-dialog>
+    </v-flex>
   </div>
 </template>
 
@@ -518,7 +557,7 @@ export default {
           exponent: 7,
           call_number: "6%",
           date: "6%"
-        }
+        },
       ]
     };
   },

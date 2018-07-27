@@ -3,11 +3,11 @@
   // 검색조건 및 검색어 입력 창 wrap
   &-top {
     text-align: left;
-    margin: 25px 0;
+    margin: 65px 0 25px 0;
     padding: 25px;
     background-color: #fff;
-    -webkit-box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
-    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
+    // -webkit-box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
+    // box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
     p {
       color: #646464;
       font-size: 16px;
@@ -16,7 +16,7 @@
     }
     .d-flex {
       margin-bottom: 10px;
-      // 검색조건
+      // 검색조건 - 검색어
       .selectbox {
         display: inline-block;
         position: relative;
@@ -25,7 +25,7 @@
         border: 1px solid #e6e6e6;
         border-radius: 5px;
         z-index: 1;
-        margin: 0 25px 25px 0;
+        margin-bottom: 10px;
         &:before {
           content: "";
           position: absolute;
@@ -58,40 +58,32 @@
           appearance: none;
         }
       }
-      // 검색조건 - 검색어
-      .select-search {
-        width: 40%;
-        margin-right: 0;
-      }
       // 검색어 창 
       .input-text {
-        // width: 50%;
+        width: 100%;
         border: 1px solid #e6e6e6;
         padding: 5px;
         border-radius: 5px;
-        margin-left: 10px;
         height: 32px;
       }
     }
     // 검색 버튼
     .search-btn {
-      button {
-        border-radius: 5px;
-        height: 32px;
-        margin: -5px 0 -1px 5px;
-        float: right;
-      }
-      &:after {
-        content: '';
-        clear: both;
-        display: block;
-      }
+      border-radius: 5px;
+      height: 32px;
+      margin: -5px 0px -1px 0;
+      // float: right;
+      // &:after {
+      //   content: '';
+      //   clear: both;
+      //   display: block;
+      // }
     }
   }
   
   // table 최상위 wrap
   .inspire {
-    // background: #fff;
+    background: none;
     // -webkit-box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
     // box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
     height: 0;
@@ -105,22 +97,18 @@
         -webkit-box-shadow: none !important;
         box-shadow: none !important;
       }
-    }
-    // 삭제, 등록 버튼 wrap
-    .bottom-contents-wrap {
+      // 페이지네이션, 삭제, 등록 버튼 wrap
       .bottom-total {
-        float: left;
+        text-align: left;
+        margin-top: 10px;
         &-result {
           font-weight: 600;
           color: blue;
         }
-        text-align: left;
-        margin-top: 10px;
       }
-      .bottom-btn-wrap {
-        margin-top: 10px;
+      .bottom-contents-wrap {
         button {
-          float: right;
+          // float: right;
           border-radius: 5px;
         }
       }
