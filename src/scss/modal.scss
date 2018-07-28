@@ -1,29 +1,26 @@
 // modal wrap
 .v-dialog {
-  // 좌우 나눴을시, 오른쪽 본문
-  .card-right {
-    width: 40%;
-    position: absolute;
-    top: 75px;
-    right: 20%;
-    .contract-wrap {
-      > div {
-        height: 45px;
-      }
-    }
-  }
   // 본문 텍스트 wrap (v-list, v-list--subheader)
   .v-list--three-line {
     // 각 리스트 wrap (v-list__tile, v-list__tile--avatar)
     > div {
-      height: 45px;
+      height: 25px;
     }
+    .d-flex {
+      margin-bottom: 7px;
+    }
+    .v-subheader {
+      margin-top: 15px;
+    }
+    // .input-group {
+    //   width: 350px;
+    // }
     // label text title
     .input-title {
       color: #646464;
       font-size: 14px;
-      text-align: right;
-      width: 120px;
+      text-align: left;
+      width: 100px;
     }
     // margin-right 15px이 필요한 Input
     .input-mr {
@@ -47,7 +44,7 @@
     .input-file {
       font-size: 12px;
       margin-left: 25px;
-      width: 150px;
+      width: 175px;
     }
     // input type tel
     .input-tel {

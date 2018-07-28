@@ -65,8 +65,8 @@ a {
   left: 0;
 }
 .contents {
-  padding-left: 280px;
+  padding-left: 230px;
   height: 97%;
-  overflow: hidden;
+  // overflow: hidden;
 }
 </style>
