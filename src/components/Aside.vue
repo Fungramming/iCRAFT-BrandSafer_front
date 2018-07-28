@@ -22,85 +22,89 @@
         <img src="../assets/logo_small.png" alt="">
         <span>추적관리시스템</span>
       </div>
-      <v-list class="tab">
-          <router-link :to="{ name: 'dashboard' }" >
-            <v-list-tile @click="isActived">
+      <ul class="tab">
+        <li class="active" @click="isActived">
+          <router-link :to="{ name: 'dashboard' }" class="tab-btn" >
               <v-icon>dashboard</v-icon>
-              <v-list-tile-content>
-                  <v-list-tile-title ref="a">
-                    Dashboard
-                  </v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
+              <span>Dashboard</span>
           </router-link>
-           <router-link :to="{ name: 'product' }">
-            <v-list-tile>
+        </li>
+        <li @click="isActived">
+          <router-link :to="{ name: 'product' }" class="tab-btn" >
               <v-icon>label</v-icon>
-              <v-list-tile-content>
-                  <v-list-tile-title>
-                    제품
-                  </v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
+              <span>제품</span>
           </router-link>
-           <router-link :to="{ name: 'appv' }">
-            <v-list-tile>
+        </li>
+        <li @click="isActived">
+          <router-link :to="{ name: 'appv' }" class="tab-btn" >
               <v-icon>public</v-icon>
-              <v-list-tile-content>
-                  <v-list-tile-title>
-                    App
-                  </v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
+              <span>App</span>
           </router-link>
-          <v-list-group
-            no-action
-          >
-            <v-list-tile slot="activator">
-                <v-icon>settings</v-icon>
-                <v-list-tile-content>
-                  <v-list-tile-title>관리자</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <router-link :to="{ name: 'customerManagement'}">
-              <v-list-tile>
-                  <v-list-tile-content>
-                    <v-list-tile-title>고객사관리</v-list-tile-title>
-                  </v-list-tile-content>
-              </v-list-tile>
-            </router-link>
-            <v-list-tile>
-                <v-list-tile-content>
-                  <v-list-tile-title>계정</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-                <v-list-tile-content>
-                  <v-list-tile-title>블랙리스트 App</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-                <v-list-tile-content>
-                  <v-list-tile-title>과다인증 알림</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-                <v-list-tile-content>
-                  <v-list-tile-title>난수관리</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-                <v-list-tile-content>
-                  <v-list-tile-title>유동업체 관리</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-                <v-list-tile-content>
-                  <v-list-tile-title>태그타입 관리</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-          </v-list-group>         
-        </v-list>
+        </li>
+        <li class="expandable" @click="isActived">
+          <router-link to="" class="tab-btn">
+              <v-icon>settings</v-icon>
+              <span>관리자</span>
+              <v-icon class="plus">keyboard_arrow_down</v-icon>
+          </router-link>
+          <ul class="sub-tab">
+            <li class="active">
+              <router-link :to="{ name: 'customerManagement'}" class="tab-btn" >
+                  <span>고객사관리</span>
+              </router-link>
+            </li>
+            <li class="expandable sub-sub-tab-title">
+              <router-link to="" class="tab-btn" >
+                  <span>계정</span>
+                  <v-icon class="plus">keyboard_arrow_down</v-icon>
+              </router-link>
+              <ul class="sub-sub-tab">
+                <li @click="isActived">
+                  <router-link to="" class="tab-btn" >
+                    <span>고객사 계정</span>
+                  </router-link>
+                </li>
+                <li @click="isActived">
+                  <router-link to="" class="tab-btn" >
+                    <span>iCraft 계정관리</span>
+                  </router-link>
+                </li>
+                <li @click="isActived">
+                  <router-link to="" class="tab-btn" >
+                    <span>계정 로그</span>
+                  </router-link>
+                </li>             
+              </ul>
+            </li>         
+            <li>
+              <router-link to="" class="tab-btn" >
+                  <span>블랙리스트 App</span>
+              </router-link>
+            </li>
+            <li>
+            <router-link to="" class="tab-btn" >
+                  <span>과다인증 알림</span>
+              </router-link>
+            </li>
+            <li>
+              <router-link to="" class="tab-btn" >
+                  <span>난수관리</span>
+              </router-link>
+            </li>
+            <li>
+              <router-link to="" class="tab-btn" >
+                  <span>유통업체</span>
+              </router-link>
+            </li>
+            <li>
+              <router-link to="" class="tab-btn" >
+                  <span>태그타입 관리</span>
+              </router-link>
+            </li>
+          </ul>
+        </li>
+      </ul>
+     
     </div>
     <v-footer color="blue-grey" class="footer" app>
       <v-spacer></v-spacer>
@@ -114,7 +118,8 @@ import Constant from "../constant";
 export default {
   data() {
     return {
-      compTitle: "Dashboard"
+      compTitle: "Dashboard",
+      event: ""
     };
   },
   methods: {
@@ -124,16 +129,43 @@ export default {
         this.$router.replace({ name: "login" });
       }
     },
-    isTitle: function(e) {
-      let _this = e.path[0];
-      let title = _this.children[1].innerText;
-      this.compTitle = title;
-    },
     isActived: function(e) {
-      console.log("e :", e.path[5]);
-      e.path[4].classList.add("active");
-      console.log("this.$refs.el :", this.$refs);
-      console.log(" this.$refs :", this.$refs.a.innerText);
+      let title = e.toElement.innerText;
+      this.compTitle = title;
+      let subTabTitle =
+        e.toElement.parentNode.parentNode.parentNode.parentNode.className;
+      let subSubTabTitle = e.toElement.parentNode.parentNode.className;
+      console.log("subTabTitle :", subTabTitle);
+      console.log("subSubTabTitle :", subSubTabTitle);
+      let tab = document.getElementsByClassName("tab")[0];
+      let subTab = document.getElementsByClassName("sub-tab")[0];
+      let subSubTab = document.getElementsByClassName("sub-sub-tab")[0];
+      function activedList(target) {
+        return target.querySelectorAll(".active");
+      }
+      if (subTabTitle == "side-bar") {
+        console.log("2 :", 2);
+        if (activedList(tab).length > 0) {
+          activedList(tab).forEach(element => {
+            element.classList.remove("active");
+          });
+        }
+        e.path[2].classList.add("active");
+      } else if (subTabTitle == "expandable sub-sub-tab-title active") {
+        if (activedList(subSubTab).length > 0) {
+          activedList(subSubTab).forEach(element => {
+            element.classList.remove("active");
+          });
+        }
+        e.path[2].classList.add("active");
+      } else if (subTabTitle == "expandable active") {
+        if (activedList(subTab).length > 0) {
+          activedList(subTab).forEach(element => {
+            element.classList.remove("active");
+          });
+        }
+        e.path[2].classList.add("active");
+      }
     }
   }
 };
@@ -141,6 +173,7 @@ export default {
 
 <style lang="scss">
 .top-bar {
+  height: 63px;
   .component-title {
     position: absolute;
     top: 0;
@@ -190,75 +223,119 @@ export default {
     }
   }
   .tab {
-    background-color: #323c4b !important;
-    padding-top: 30px;
     padding-left: 0;
-    height: 100%;
-    > a {
-      display: inline-block;
+    > li {
       width: 100%;
-      &.active {
-        .v-list__tile {
-          color: #fefefe !important;
-          background: rgba(0, 0, 0, 0.24);
+      height: 50px;
+      .tab-btn {
+        color: #596474;
+        position: relative;
+        display: inline-block;
+        padding: 10px 20px;
+        width: 100%;
+        height: 100%;
+        line-height: 30px;
+        text-align: left;
+        &:hover {
           .v-icon {
-            color: #fefefe !important;
+            color: #fefefe;
+          }
+          span {
+            &:hover {
+              background: rgba(0, 0, 0, 0.14);
+              color: #fefefe;
+            }
+          }
+        }
+        .v-icon {
+          color: #596474;
+          margin-right: 10px;
+        }
+        .plus {
+          position: absolute;
+          top: 13px;
+          right: 5px;
+          transform: rotate(90deg);
+        }
+        span {
+          position: absolute;
+          top: 0px;
+          left: 0px;
+          width: 100%;
+          height: 100%;
+          padding-top: 8px;
+          padding-left: 55px;
+          z-index: 100;
+        }
+      }
+      &.active {
+        background: rgba(0, 0, 0, 0.24);
+        > .tab-btn {
+          color: #fefefe;
+          .v-icon {
+            color: #fefefe;
           }
         }
       }
     }
-    .v-list__tile {
-      color: #596474 !important;
-
-      &:hover {
-        background: rgba(0, 0, 0, 0.04);
-        .v-icon {
-          color: #fefefe !important;
+    .expandable {
+      overflow: hidden;
+      .sub-tab,
+      .sub-sub-tab {
+        padding-left: 0;
+        position: relative;
+        -o-transition: all 0.3s ease;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -ms-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        transform: translateX(-15px);
+        opacity: 0.3;
+        .tab-btn {
+          display: block;
+          height: 45px;
+        }
+        span {
+          height: 45px;
+        }
+        li {
+          height: 45px;
+          &.active {
+            background-color: rgba(0, 0, 0, 0.24);
+            span {
+              color: #fefefe;
+            }
+          }
+        }
+      }
+      &.active {
+        height: auto !important;
+        .sub-tab {
+          transform: translateX(0);
+          opacity: 1;
+          span {
+            color: #596474;
+          }
+        }
+        .active {
+          .v-icon {
+            color: #fefefe;
+          }
+          .sub-sub-tab {
+            transform: translateX(0);
+            opacity: 1;
+            span {
+              color: #596474;
+            }
+            .active {
+              span {
+                color: #fefefe;
+              }
+            }
+          }
         }
       }
     }
-    .v-icon {
-      color: #596474 !important;
-    }
-    .v-list__tile__content {
-      padding-left: 10px;
-    }
-    .v-list__group__header--active {
-      .v-list__group__header__prepend-icon {
-        i {
-          color: #607d8b !important;
-        }
-      }
-    }
-    .v-list__group__items--no-action .v-list__tile {
-      padding-left: 38px;
-    }
-    // li {
-    //   .list-title {
-    //     background-color: #252c36;
-    //     margin: 0;
-    //     width: 100%;
-    //     .v-btn__content {
-    //       justify-content: left;
-    //     }
-    //   }
-    //   a {
-    //     color: #f4f4f5;
-    //     padding: 10px 20px;
-    //     text-align: left;
-    //     display: inline-block;
-    //     width: 100%;
-    //     &:hover {
-    //       background-color: #252c36;
-    //     }
-    //   }
-    //   .v-icon {
-    //     // color: #646464;
-    //     color: #f4f4f5;
-    //     margin-right: 10px;
-    //     font-size: 18px;
-    //   }
-    // }
   }
 }
 
