@@ -275,6 +275,9 @@ export default {
           .v-icon {
             color: #fefefe;
           }
+          .plus {
+            transform: rotate(0);
+          }
         }
       }
     }
@@ -320,6 +323,9 @@ export default {
         .active {
           .v-icon {
             color: #fefefe;
+          }
+          .plus {
+            transform: rotate(0);
           }
           .sub-sub-tab {
             transform: translateX(0);
