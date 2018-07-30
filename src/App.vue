@@ -12,7 +12,10 @@ import { mapGetters } from "vuex";
 
 export default {
   components: { AsideTab },
-  computed: mapGetters(["isAuthenticated", "date"])
+  computed: mapGetters(["isAuthenticated"]),
+  updated() {
+    mapGetters(["isAuthenticated"]);
+  }
 };
 </script>
 
@@ -20,16 +23,17 @@ export default {
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
 
 * {
-  font-family: "Spoqa Han Sans", "Spoqa Han Sans JP", "Sans-serif";
+  font-family: "Spoqa Han Sans", "Sans-serif";
   box-sizing: border-box;
 }
 html,
 body {
-  background-color: #f5f5f5;
+  background-color: #fdfdfd;
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
+  font-size: 16px;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -67,9 +71,13 @@ a {
 .contents {
   height: 100%;
   padding-left: 60px;
-  padding-top: 100px;
+  padding-right: 20px;
+  padding-top: 80px;
+  .v-card {
+    background-color: #fff;
+  }
   &.active {
-    padding-left: 230px;
+    padding-left: 250px;
   }
 }
 </style>

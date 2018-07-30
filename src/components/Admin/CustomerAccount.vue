@@ -85,7 +85,7 @@
         class="elevation-1"
       >
         <template slot="headerCell" slot-scope="props">
-          <span class="item-headers" slot="activator">
+          <span slot="activator" class="item-headers">
             {{ props.header.text }}
           </span>
         </template>
@@ -125,20 +125,25 @@
 export default {
   data() {
     return {
-      search: '',
+      search: "",
       pagination: {
         page: 1,
         rowsPerPage: 10
       },
       selected: [],
       headers: [
-        { text: '번호', align: 'left', value: '번호', sortable: false, },
-        { text: '고객사', align: 'left', value: '고객사', sortable: false, },
-        { text: '구분', align: 'right', value: '구분', sortable: false, },
-        { text: '이름', align: 'right', value: '이름', sortable: false, },
-        { text: '부서', align: 'right', value: '부서', sortable: false, },
-        { text: '최종로그인', align: 'right', value: '최종로그인', sortable: false, },
-        { text: '상태', align: 'right', value: '상태', sortable: false, },
+        { text: "번호", align: "left", value: "번호", sortable: false },
+        { text: "고객사", align: "left", value: "고객사", sortable: false },
+        { text: "구분", align: "right", value: "구분", sortable: false },
+        { text: "이름", align: "right", value: "이름", sortable: false },
+        { text: "부서", align: "right", value: "부서", sortable: false },
+        {
+          text: "최종로그인",
+          align: "right",
+          value: "최종로그인",
+          sortable: false
+        },
+        { text: "상태", align: "right", value: "상태", sortable: false }
       ],
       desserts: [
         {
@@ -150,7 +155,7 @@ export default {
           exponent: 4.0,
           call_number: "1%",
           date: "1%"
-        },
+        }
       ]
     };
   },
