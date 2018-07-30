@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <v-toolbar
       class="top-bar"
       color="blue-grey"
@@ -9,7 +9,7 @@
       app
       clipped-right
     >
-      <v-toolbar-side-icon class="hamBtn"  @click.stop=""></v-toolbar-side-icon>
+      <v-toolbar-side-icon class="hamBtn"  @click.stop="clickToggle"></v-toolbar-side-icon>
       <h2 class="component-title">{{compTitle}}</h2>
       <v-btn class="logOutBtn" fixed flat @click.stop="logout" >
         <v-icon >
@@ -17,7 +17,7 @@
         </v-icon>
       </v-btn>   
     </v-toolbar>
-    <div class="side-bar">
+    <div class="side-bar" @mouseover="hoverToggle">
       <div class="header">
         <img src="../assets/logo_small.png" alt="">
         <span>추적관리시스템</span>
@@ -73,7 +73,7 @@
                   <router-link :to="{ name: 'accountLog'}" class="tab-btn" >
                     <span>계정 로그</span>
                   </router-link>
-                </li>             
+                </li>
               </ul>
             </li>         
             <li>
@@ -104,22 +104,18 @@
           </ul>
         </li>
       </ul>
-     
+      <span class="copy">&copy; 2018 ICRAFT</span>
     </div>
-    <v-footer color="blue-grey" class="footer" app>
-      <v-spacer></v-spacer>
-      <span>&copy; 2018 ICRAFT</span>
-    </v-footer>
-  </v-app>
+  </div>
 </template>
 
 <script>
 import Constant from "../constant";
+
 export default {
   data() {
     return {
-      compTitle: "Dashboard",
-      event: ""
+      compTitle: "Dashboard"
     };
   },
   methods: {
@@ -129,14 +125,37 @@ export default {
         this.$router.replace({ name: "login" });
       }
     },
+    hoverToggle: function(e) {
+      let sideBarWidth = e.path[0].offsetWidth;
+      if (sideBarWidth < 62) {
+        this.clickToggle();
+      }
+    },
+    clickToggle: function() {
+      let sideBar = document.getElementsByClassName("side-bar")[0];
+      let topBar = document.getElementsByClassName("top-bar")[0];
+      let con = document.getElementsByClassName("contents")[0];
+      if (sideBar.className == "side-bar") {
+        sideBar.classList.add("active");
+        topBar.classList.add("active");
+        con.classList.add("active");
+        if (this.$store.state.sideBar == true) {
+          this.$store.state.sideBar = false;
+        }
+      } else {
+        sideBar.classList.remove("active");
+        topBar.classList.remove("active");
+        con.classList.remove("active");
+        if (this.$store.state.sideBar == false) {
+          this.$store.state.sideBar = true;
+        }
+      }
+    },
     isActived: function(e) {
       let title = e.toElement.innerText;
       this.compTitle = title;
       let subTabTitle =
         e.toElement.parentNode.parentNode.parentNode.parentNode.className;
-      let subSubTabTitle = e.toElement.parentNode.parentNode.className;
-      console.log("subTabTitle :", subTabTitle);
-      console.log("subSubTabTitle :", subSubTabTitle);
       let tab = document.getElementsByClassName("tab")[0];
       let subTab = document.getElementsByClassName("sub-tab")[0];
       let subSubTab = document.getElementsByClassName("sub-sub-tab")[0];
@@ -144,7 +163,6 @@ export default {
         return target.querySelectorAll(".active");
       }
       if (subTabTitle == "side-bar") {
-        console.log("2 :", 2);
         if (activedList(tab).length > 0) {
           activedList(tab).forEach(element => {
             element.classList.remove("active");
@@ -173,17 +191,16 @@ export default {
 
 <style lang="scss">
 .top-bar {
-  height: 63px;
+  height: 61px;
+  .v-toolbar__content {
+    padding-left: 245px;
+    transition: padding 0.3s ease;
+  }
   .component-title {
-    position: absolute;
-    top: 0;
-    left: 303px;
+    color: #fefefe;
     line-height: 64px;
     font-weight: 400;
-  }
-  .hamBtn {
-    position: relative;
-    left: 230px;
+    margin-top: -2px;
   }
   .logOutBtn {
     top: 15px;
@@ -197,16 +214,31 @@ export default {
       width: 60%;
     }
   }
+  &.active {
+    .v-toolbar__content {
+      padding-left: 80px;
+    }
+  }
 }
 .side-bar {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   background-color: #2c343f;
   width: 230px;
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
   z-index: 200;
+  transition: width 0.3s ease;
+  &.active {
+    width: 60px;
+    span {
+      opacity: 0;
+    }
+    .plus {
+      opacity: 0;
+    }
+  }
   .header {
     background-color: rgba(255, 255, 255, 0.075);
     padding: 18px 20px;
@@ -219,7 +251,15 @@ export default {
     }
     span {
       color: #e7eaee;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      padding-left: 60px;
       font-size: 18px;
+      line-height: 60px;
+      white-space: nowrap;
+      transition: opacity 0.3s ease;
     }
   }
   .tab {
@@ -231,11 +271,38 @@ export default {
         color: #596474;
         position: relative;
         display: inline-block;
-        padding: 10px 20px;
+        padding: 10px 18px;
         width: 100%;
         height: 100%;
         line-height: 30px;
         text-align: left;
+        .v-icon {
+          background: inherit;
+          color: #596474;
+          margin-right: 10px;
+          position: relative;
+          z-index: 200;
+        }
+        span {
+          position: absolute;
+          top: 0px;
+          left: 0px;
+          width: 100%;
+          height: 100%;
+          padding-top: 8px;
+          padding-left: 61px;
+          z-index: 300;
+          white-space: nowrap;
+          transition: opacity 0.3s ease;
+        }
+        .plus {
+          position: absolute;
+          top: 13px;
+          right: 5px;
+          transform: rotate(90deg);
+          transition: all 0.3s ease;
+          z-index: 100;
+        }
         &:hover {
           .v-icon {
             color: #fefefe;
@@ -247,26 +314,6 @@ export default {
             }
           }
         }
-        .v-icon {
-          color: #596474;
-          margin-right: 10px;
-        }
-        .plus {
-          position: absolute;
-          top: 13px;
-          right: 5px;
-          transform: rotate(90deg);
-        }
-        span {
-          position: absolute;
-          top: 0px;
-          left: 0px;
-          width: 100%;
-          height: 100%;
-          padding-top: 8px;
-          padding-left: 55px;
-          z-index: 100;
-        }
       }
       &.active {
         background: rgba(0, 0, 0, 0.24);
@@ -277,6 +324,9 @@ export default {
           }
           .plus {
             transform: rotate(0);
+          }
+          span {
+            text-shadow: 1.5px 1px #607d8b;
           }
         }
       }
@@ -342,6 +392,18 @@ export default {
         }
       }
     }
+  }
+  .copy {
+    color: #e7eaee;
+    display: block;
+    width: 100%;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    z-index: 100;
+    text-align: center;
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
   }
 }
 

@@ -1,10 +1,5 @@
 <template>
   <v-container fluid grid-list-md>
-    <!-- <div id="admin"> -->
-      <!-- <customer-management></customer-management> -->
-      <!-- <customer-account></customer-account> -->
-      <!-- <router-view></router-view> -->
-    <!-- </div> -->
     <router-view></router-view>
   </v-container>
 </template>

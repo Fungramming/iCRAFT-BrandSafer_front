@@ -8,6 +8,7 @@ import store from "./store/index.js";
 // MODULE CSS
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
+import "vuetify/dist/vuetify.min.js";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 
 Vue.use(Vuetify);

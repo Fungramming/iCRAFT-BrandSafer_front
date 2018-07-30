@@ -84,7 +84,7 @@
         class="elevation-1"
       >
         <template slot="headerCell" slot-scope="props">
-          <span class="item-headers" slot="activator">
+          <span slot="activator" class="item-headers">
             {{ props.header.text }}
           </span>
         </template>
@@ -124,7 +124,7 @@
 export default {
   data() {
     return {
-      search: '',
+      search: "",
       pagination: {
         page: 1,
         rowsPerPage: 10
@@ -149,7 +149,7 @@ export default {
           exponent: 4.0,
           call_number: "1%",
           date: "1%"
-        },
+        }
       ]
     };
   },
