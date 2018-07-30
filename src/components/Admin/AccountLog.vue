@@ -4,17 +4,79 @@
     <div class="tableBs-top">
       <p>검색 조건</p>
       <v-layout row wrap>
-        <v-flex d-flex xs12 sm12 md2>
-          <div class="selectbox select-search">
-            <span>검색어</span>
+        <v-flex d-flex xs12 sm5 md2>
+          <span class="span-without-selectbox">기간조회</span>
+          <v-menu
+            ref="menu_start"
+            :close-on-content-click="false"
+            v-model="menu_start"
+            :nudge-right="40"
+            :return-value.sync="date_start"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            min-width="290px"
+          >
+            <v-text-field
+              slot="activator"
+              v-model="date_start"
+              label="시작일"
+              prepend-icon="event"
+              readonly
+            ></v-text-field>
+            <v-date-picker v-model="date_start" no-title scrollable>
+              <v-spacer></v-spacer>
+              <v-btn flat color="primary" @click="menu_start = false">Cancel</v-btn>
+              <v-btn flat color="primary" @click="$refs.menu_start.save(date_start)">OK</v-btn>
+            </v-date-picker>
+          </v-menu>
+        </v-flex>
+        <v-flex d-flex xs12 sm5 md2>
+          <v-menu
+            ref="menu_finish"
+            :close-on-content-click="false"
+            v-model="menu_finish"
+            :nudge-right="40"
+            :return-value.sync="date_finish"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            min-width="290px"
+          >
+            <v-text-field
+              slot="activator"
+              v-model="date_finish"
+              label="종료일"
+              readonly
+            ></v-text-field>
+            <v-date-picker v-model="date_finish" no-title scrollable>
+              <v-spacer></v-spacer>
+              <v-btn flat color="primary" @click="menu_finish = false">Cancel</v-btn>
+              <v-btn flat color="primary" @click="$refs.menu_finish.save(date_finish)">OK</v-btn>
+            </v-date-picker>
+          </v-menu>
+        </v-flex>
+        <v-flex d-flex xs12 sm12 md3>
+          <div class="selectbox">
+            <span>구분</span>
             <select id="select1" name="searchType" class="form-control" size="1">
-              <option selected value="고객사">고객사</option>
-              <option value="대표자">대표자</option>
+              <option selected value="전체">전체</option>
+              <option value="관리자">관리자</option>
+              <option value="운영자">운영자</option>
             </select>
           </div>
         </v-flex>
-        <v-flex d-flex xs12 sm12 md5>
-          <input class="input-text" type="text">
+        <v-flex d-flex xs12 sm12 md3>
+          <div class="selectbox select-search">
+            <span>검색어</span>
+            <select id="select1" name="searchType" class="form-control" size="1">
+              <option selected value="아이디">아이디</option>
+              <option value="이름">이름</option>
+            </select>
+          </div>
+          <input class="input-text input-with-date" type="text">
         </v-flex>
       </v-layout>
       <v-flex d-flex xs12 sm12 md1 offset-md11>
@@ -30,47 +92,25 @@
         :pagination.sync="pagination"
         v-model="selected"
         item-key="number"
-        select-all
         hide-actions
         class="elevation-1"
       >
         <template slot="headerCell" slot-scope="props">
-          <!-- <v-tooltip bottom> -->
-            <span class="item-headers" slot="activator">
-              {{ props.header.text }}
-            </span>
-            <!-- <span>
-              {{ props.header.text }}
-            </span> -->
-          <!-- </v-tooltip> -->
+          <span slot="activator" class="item-headers">
+            {{ props.header.text }}
+          </span>
         </template>
         <template slot="items" slot-scope="props">
-          <td>
-            <v-checkbox
-              v-model="props.selected"
-              primary
-              hide-details
-            ></v-checkbox>
-          </td>
           <td class="text-xs-center">{{ props.item.number }}</td>
           <td class="text-xs-center">{{ props.item.customer }}</td>
           <td class="text-xs-center">{{ props.item.customer_code }}</td>
           <td class="text-xs-center">{{ props.item.address }}</td>
           <td class="text-xs-center">{{ props.item.exponent }}</td>
           <td class="text-xs-center">{{ props.item.call_number }}</td>
-          <td class="text-xs-center">{{ props.item.date }}</td>
         </template>
       </v-data-table>
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
       <div class="bottom-contents-wrap">
-        <v-layout row wrap btn-group>
-          <v-flex d-flex xs12 sm12 md1 offset-md10>
-            <v-btn color="error" dark>삭제</v-btn>
-          </v-flex>
-          <v-flex d-flex xs12 sm12 md1>
-            <v-btn color="primary" dark @click.stop="dialog = true">등록</v-btn>
-          </v-flex>
-        </v-layout>
         <div class="text-xs-center pt-2">
           <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
         </div>
@@ -160,8 +200,8 @@
                     <option value="080">080</option>
                   </select>
                 </span>
-                <input class="input-text input-tel" type="tel" maxlength="4">
-                <input class="input-text input-tel" type="tel" maxlength="4">
+                <input class="input-text input-tel" type="tel">
+                <input class="input-text input-tel" type="tel">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">팩스번호</label>
@@ -188,8 +228,8 @@
                     <option value="080">080</option>
                   </select>
                 </span>
-                <input class="input-text input-tel" type="tel" maxlength="4">
-                <input class="input-text input-tel" type="tel" maxlength="4">
+                <input class="input-text input-tel" type="tel">
+                <input class="input-text input-tel" type="tel">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">대표자(한국어)
@@ -209,9 +249,9 @@
                 <label class="input-title input-mr">사업자등록번호
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text input-tri" type="tel">
-                <input class="input-text input-tri" type="tel">
-                <input class="input-text input-tri" type="tel">
+                <input class="input-text input-tel" type="tel">
+                <input class="input-text input-tel" type="tel">
+                <input class="input-text input-tel" type="tel">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">사업자등록증
@@ -289,6 +329,10 @@ export default {
   data() {
     return {
       search: "",
+      date_start: null,
+      date_finish: null,
+      menu_start: false,
+      menu_finish: false,
       dialog: false,
       pagination: {
         page: 1,
@@ -296,13 +340,12 @@ export default {
       },
       selected: [],
       headers: [
-        { text: "번호", align: "center", value: "번호", sortable: false },
-        { text: "고객사", align: "center", value: "고객사", sortable: false },
-        { text: "고객사코드", align: "center", value: "고객사코드", sortable: false },
-        { text: "주소", align: "center", value: "주소", sortable: false },
-        { text: "대표자", align: "center", value: "대표자", sortable: false },
-        { text: "전화번호", align: "center", value: "전화번호", sortable: false },
-        { text: "가입일자", align: "center", value: "가입일자", sortable: false }
+        { text: "로그인 일시", align: "center", value: "로그인 일시", sortable: false },
+        { text: "구분", align: "center", value: "구분", sortable: false },
+        { text: "아이디", align: "center", value: "아이디", sortable: false },
+        { text: "이름", align: "center", value: "이름", sortable: false },
+        { text: "작업내용", align: "center", value: "작업내용", sortable: false },
+        { text: "접속 IP", align: "center", value: "접속 IP", sortable: false }
       ],
       desserts: [
         {
@@ -312,8 +355,7 @@ export default {
           customer_code: 6.0,
           address: 24,
           exponent: 4.0,
-          call_number: "1%",
-          date: "1%"
+          call_number: "1%"
         },
         {
           value: false,
@@ -322,8 +364,7 @@ export default {
           customer_code: 9.0,
           address: 37,
           exponent: 4.3,
-          call_number: "1%",
-          date: "1%"
+          call_number: "1%"
         },
         {
           value: false,
@@ -332,8 +373,7 @@ export default {
           customer_code: 16.0,
           address: 23,
           exponent: 6.0,
-          call_number: "7%",
-          date: "7%"
+          call_number: "7%"
         },
         {
           value: false,
@@ -342,8 +382,7 @@ export default {
           customer_code: 3.7,
           address: 67,
           exponent: 4.3,
-          call_number: "8%",
-          date: "8%"
+          call_number: "8%"
         },
         {
           value: false,
@@ -352,8 +391,7 @@ export default {
           customer_code: 16.0,
           address: 49,
           exponent: 3.9,
-          call_number: "16%",
-          date: "16%"
+          call_number: "16%"
         },
         {
           value: false,
@@ -362,8 +400,7 @@ export default {
           customer_code: 0.0,
           address: 94,
           exponent: 0.0,
-          call_number: "0%",
-          date: "0%"
+          call_number: "0%"
         },
         {
           value: false,
@@ -372,8 +409,7 @@ export default {
           customer_code: 0.2,
           address: 98,
           exponent: 0,
-          call_number: "2%",
-          date: "2%"
+          call_number: "2%"
         },
         {
           value: false,
@@ -382,8 +418,7 @@ export default {
           customer_code: 3.2,
           address: 87,
           exponent: 6.5,
-          call_number: "45%",
-          date: "45%"
+          call_number: "45%"
         },
         {
           value: false,
@@ -392,8 +427,7 @@ export default {
           customer_code: 25.0,
           address: 51,
           exponent: 4.9,
-          call_number: "22%",
-          date: "22%"
+          call_number: "22%"
         },
         {
           value: false,
@@ -402,8 +436,7 @@ export default {
           customer_code: 26.0,
           address: 65,
           exponent: 7,
-          call_number: "6%",
-          date: "6%"
+          call_number: "6%"
         },
         {
           value: false,
@@ -412,8 +445,7 @@ export default {
           customer_code: 6.0,
           address: 24,
           exponent: 4.0,
-          call_number: "1%",
-          date: "1%"
+          call_number: "1%"
         },
         {
           value: false,
@@ -422,8 +454,7 @@ export default {
           customer_code: 9.0,
           address: 37,
           exponent: 4.3,
-          call_number: "1%",
-          date: "1%"
+          call_number: "1%"
         },
         {
           value: false,
@@ -432,8 +463,7 @@ export default {
           customer_code: 16.0,
           address: 23,
           exponent: 6.0,
-          call_number: "7%",
-          date: "7%"
+          call_number: "7%"
         },
         {
           value: false,
@@ -442,8 +472,7 @@ export default {
           customer_code: 3.7,
           address: 67,
           exponent: 4.3,
-          call_number: "8%",
-          date: "8%"
+          call_number: "8%"
         },
         {
           value: false,
@@ -452,8 +481,7 @@ export default {
           customer_code: 16.0,
           address: 49,
           exponent: 3.9,
-          call_number: "16%",
-          date: "16%"
+          call_number: "16%"
         },
         {
           value: false,
@@ -462,8 +490,7 @@ export default {
           customer_code: 0.0,
           address: 94,
           exponent: 0.0,
-          call_number: "0%",
-          date: "0%"
+          call_number: "0%"
         },
         {
           value: false,
@@ -472,8 +499,7 @@ export default {
           customer_code: 0.2,
           address: 98,
           exponent: 0,
-          call_number: "2%",
-          date: "2%"
+          call_number: "2%"
         },
         {
           value: false,
@@ -482,8 +508,7 @@ export default {
           customer_code: 3.2,
           address: 87,
           exponent: 6.5,
-          call_number: "45%",
-          date: "45%"
+          call_number: "45%"
         },
         {
           value: false,
@@ -492,8 +517,7 @@ export default {
           customer_code: 25.0,
           address: 51,
           exponent: 4.9,
-          call_number: "22%",
-          date: "22%"
+          call_number: "22%"
         },
         {
           value: false,
@@ -502,9 +526,8 @@ export default {
           customer_code: 26.0,
           address: 65,
           exponent: 7,
-          call_number: "6%",
-          date: "6%"
-        },
+          call_number: "6%"
+        }
       ]
     };
   },

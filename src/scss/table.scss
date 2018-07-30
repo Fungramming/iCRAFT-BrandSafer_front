@@ -12,20 +12,33 @@
       color: #646464;
       font-size: 16px;
       font-weight: 600;
-      margin-bottom: 35px;
+      margin-bottom: 55px;
+    }
+    .d-flex.mb0 {
+      margin-bottom: 0;
     }
     .d-flex {
+      position: relative;
       margin-bottom: 10px;
       // 검색조건 - 검색어
+      .span-without-selectbox {
+        position: absolute;
+        top: -30px;
+        width: 100%;
+        color: #646464;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 2.2;
+      }
       .selectbox {
         display: inline-block;
         position: relative;
         // width: 100px;
-        width: 100%;
+        width: 50%;
         border: 1px solid #e6e6e6;
         border-radius: 5px;
         z-index: 1;
-        margin-bottom: 10px;
+        margin: 0 5px 10px 0;
         &:before {
           content: "";
           position: absolute;
@@ -58,6 +71,18 @@
           appearance: none;
         }
       }
+      .selectbox-input {
+        position: relative;
+        span {
+          position: absolute;
+          top: -30px;
+          width: 100%;
+          color: #646464;
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 2.2;
+        }
+      }
       // 검색어 창 
       .input-text {
         width: 100%;
@@ -66,6 +91,16 @@
         border-radius: 5px;
         height: 32px;
       }
+      .input-with-date {
+        height: 41px;
+      }
+    }
+    .v-menu__activator {
+      height: 130%;
+    }
+    // date picker
+    .v-input {
+      margin-top: 0;
     }
     // 검색 버튼
     .search-btn {
@@ -94,6 +129,8 @@
     }
       // table 중간 wrap, box-shadow 중첩 방지 코드
       .elevation-1 {
+        padding: 20px;
+        background: #fff;
         -webkit-box-shadow: none !important;
         box-shadow: none !important;
       }

@@ -8,6 +8,11 @@ import Admin from "./views/Admin.vue";
 import NotFound from "./views/NotFound.vue";
 import CustomerManagement from "./components/Admin/CustomerManagement.vue";
 import CustomerAccount from "./components/Admin/CustomerAccount.vue";
+import IcraftAccount from "./components/Admin/IcraftAccount.vue";
+import AccountLog from "./components/Admin/AccountLog.vue";
+import BlacklistApp from "./components/Admin/BlacklistApp.vue";
+import WarningList from "./components/Admin/WarningList.vue";
+import DistributorManagement from "./components/Admin/DistributorManagement.vue";
 
 Vue.use(Router);
 
@@ -51,6 +56,31 @@ export default new Router({
           path: "/admin/customerAccount",
           name: "customerAccount",
           component: CustomerAccount
+        },
+        {
+          path: "/admin/icraftAccount",
+          name: "icraftAccount",
+          component: IcraftAccount
+        },
+        {
+          path: "/admin/accountLog",
+          name: "accountLog",
+          component: AccountLog
+        },
+        {
+          path: "/admin/blacklistApp",
+          name: "blacklistApp",
+          component: BlacklistApp
+        },
+        {
+          path: "/admin/warningList",
+          name: "warningList",
+          component: WarningList
+        },
+        {
+          path: "/admin/distributorManagement",
+          name: "distributorManagement",
+          component: DistributorManagement
         }
       ]
     },

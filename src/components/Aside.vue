@@ -60,45 +60,45 @@
               </router-link>
               <ul class="sub-sub-tab">
                 <li @click="isActived">
-                  <router-link to="" class="tab-btn" >
+                  <router-link :to="{ name: 'customerAccount'}" class="tab-btn" >
                     <span>고객사 계정</span>
                   </router-link>
                 </li>
                 <li @click="isActived">
-                  <router-link to="" class="tab-btn" >
+                  <router-link :to="{ name: 'icraftAccount'}" class="tab-btn" >
                     <span>iCraft 계정관리</span>
                   </router-link>
                 </li>
                 <li @click="isActived">
-                  <router-link to="" class="tab-btn" >
+                  <router-link :to="{ name: 'accountLog'}" class="tab-btn" >
                     <span>계정 로그</span>
                   </router-link>
                 </li>             
               </ul>
             </li>         
             <li>
-              <router-link to="" class="tab-btn" >
-                  <span>블랙리스트 App</span>
+              <router-link :to="{ name: 'blacklistApp'}" class="tab-btn" >
+                <span>블랙리스트 App</span>
               </router-link>
             </li>
             <li>
-            <router-link to="" class="tab-btn" >
-                  <span>과다인증 알림</span>
+              <router-link :to="{ name: 'warningList'}" class="tab-btn" >
+                <span>과다인증 알림</span>
+              </router-link>
+            </li>
+            <!-- <li>
+              <router-link to="" class="tab-btn" >
+                <span>난수관리</span>
+              </router-link>
+            </li> -->
+            <li>
+              <router-link :to="{ name: 'distributorManagement'}" class="tab-btn" >
+                <span>유통업체 관리</span>
               </router-link>
             </li>
             <li>
               <router-link to="" class="tab-btn" >
-                  <span>난수관리</span>
-              </router-link>
-            </li>
-            <li>
-              <router-link to="" class="tab-btn" >
-                  <span>유통업체</span>
-              </router-link>
-            </li>
-            <li>
-              <router-link to="" class="tab-btn" >
-                  <span>태그타입 관리</span>
+                <span>태그타입 관리</span>
               </router-link>
             </li>
           </ul>
