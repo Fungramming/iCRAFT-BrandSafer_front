@@ -19,8 +19,12 @@ const store = new Vuex.Store({
     isAuthenticated(state) {
       return !!state.token;
     },
-    isSelectedTab(state) {
-      return state.selectedTaB;
+    date(state) {
+      console.log("state.date.today :", state.date.today);
+
+      let time = Date.now();
+      state.date.today = time;
+      console.log("state.date.today :", state.date.today);
     }
   }
 });

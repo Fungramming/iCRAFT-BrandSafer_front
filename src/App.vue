@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <aside-tab v-if="this.isAuthenticated" :position-x="0" :position-y="0"  absolute class="aside" style="width:230px;"></aside-tab>
-    <div class="contents">
+    <div :class="{active: this.$store.state.sideBar} " class="contents">
       <router-view/>
     </div>
   </div>
@@ -12,7 +12,7 @@ import { mapGetters } from "vuex";
 
 export default {
   components: { AsideTab },
-  computed: mapGetters(["isAuthenticated"])
+  computed: mapGetters(["isAuthenticated", "date"])
 };
 </script>
 
@@ -65,8 +65,11 @@ a {
   left: 0;
 }
 .contents {
-  padding-left: 230px;
-  height: 97%;
-  // overflow: hidden;
+  height: 100%;
+  padding-left: 60px;
+  padding-top: 100px;
+  &.active {
+    padding-left: 230px;
+  }
 }
 </style>

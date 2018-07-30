@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <v-toolbar
       class="top-bar"
       color="blue-grey"
@@ -73,7 +73,7 @@
                   <router-link to="" class="tab-btn" >
                     <span>계정 로그</span>
                   </router-link>
-                </li>             
+                </li>
               </ul>
             </li>         
             <li>
@@ -106,11 +106,12 @@
       </ul>
       <span class="copy">&copy; 2018 ICRAFT</span>
     </div>
-  </v-app>
+  </div>
 </template>
 
 <script>
 import Constant from "../constant";
+
 export default {
   data() {
     return {
@@ -133,12 +134,21 @@ export default {
     clickToggle: function() {
       let sideBar = document.getElementsByClassName("side-bar")[0];
       let topBar = document.getElementsByClassName("top-bar")[0];
+      let con = document.getElementsByClassName("contents")[0];
       if (sideBar.className == "side-bar") {
         sideBar.classList.add("active");
         topBar.classList.add("active");
+        con.classList.add("active");
+        if (this.$store.state.sideBar == true) {
+          this.$store.state.sideBar = false;
+        }
       } else {
         sideBar.classList.remove("active");
         topBar.classList.remove("active");
+        con.classList.remove("active");
+        if (this.$store.state.sideBar == false) {
+          this.$store.state.sideBar = true;
+        }
       }
     },
     isActived: function(e) {
@@ -153,7 +163,6 @@ export default {
         return target.querySelectorAll(".active");
       }
       if (subTabTitle == "side-bar") {
-        console.log("2 :", 2);
         if (activedList(tab).length > 0) {
           activedList(tab).forEach(element => {
             element.classList.remove("active");
@@ -182,14 +191,16 @@ export default {
 
 <style lang="scss">
 .top-bar {
-  height: 63px;
+  height: 61px;
   .v-toolbar__content {
     padding-left: 245px;
     transition: padding 0.3s ease;
   }
   .component-title {
+    color: #fefefe;
     line-height: 64px;
     font-weight: 400;
+    margin-top: -2px;
   }
   .logOutBtn {
     top: 15px;
