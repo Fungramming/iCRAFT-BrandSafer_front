@@ -4,17 +4,19 @@
     <div :class="{active: this.$store.state.sideBar} " class="contents">
       <router-view/>
     </div>
+    <log-out v-if="false"></log-out>
   </div>
 </template>
 <script>
-import AsideTab from "./components/Aside.vue";
 import { mapGetters } from "vuex";
+import AsideTab from "./components/Aside.vue";
+import LogOut from "./components/PopupModal/LogOut.vue";
 
 export default {
-  components: { AsideTab },
+  components: { AsideTab, LogOut },
   computed: mapGetters(["isAuthenticated"]),
-  updated() {
-    mapGetters(["isAuthenticated"]);
+  beforeCreate() {
+    // window.localStorage.clear();
   }
 };
 </script>
