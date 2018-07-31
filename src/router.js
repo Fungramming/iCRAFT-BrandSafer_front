@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Login from "./views/Login.vue";
 import Dashboard from "./views/Dashboard.vue";
 import Product from "./views/Product.vue";
+import ProductCertList from "./components/Product/ProductCertList.vue";
 import Appv from "./views/Appv.vue";
 import Admin from "./views/Admin.vue";
 import NotFound from "./views/NotFound.vue";
@@ -17,74 +18,66 @@ import DistributorManagement from "./components/Admin/DistributorManagement.vue"
 Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
-      path: "/",
-      redirect: { name: "login" }
-    },
-    {
-      path: "/login",
-      name: "login",
-      component: Login
-    },
-    {
-      path: "/dashboard",
-      name: "dashboard",
-      component: Dashboard
-    },
-    {
-      path: "/product",
-      name: "product",
-      component: Product
-    },
-    {
-      path: "/appv",
-      name: "appv",
-      component: Appv
-    },
-    {
-      path: "/admin",
-      name: "admin",
-      component: Admin,
-      children: [
-        {
-          path: "/admin/customerManagement",
-          name: "customerManagement",
-          component: CustomerManagement
+    routes: [{
+            path: "/",
+            redirect: { name: "login" }
         },
         {
-          path: "/admin/customerAccount",
-          name: "customerAccount",
-          component: CustomerAccount
+            path: "/login",
+            name: "login",
+            component: Login
         },
         {
-          path: "/admin/icraftAccount",
-          name: "icraftAccount",
-          component: IcraftAccount
+            path: "/dashboard",
+            name: "dashboard",
+            component: Dashboard
         },
         {
-          path: "/admin/accountLog",
-          name: "accountLog",
-          component: AccountLog
+            path: "/product",
+            name: "product",
+            component: Product,
+            children: [{
+                path: "/product/certList",
+                name: "certList",
+                component: ProductCertList
+            }]
         },
         {
-          path: "/admin/blacklistApp",
-          name: "blacklistApp",
-          component: BlacklistApp
+            path: "/appv",
+            name: "appv",
+            component: Appv
         },
         {
-          path: "/admin/warningList",
-          name: "warningList",
-          component: WarningList
+            path: "/admin/customerAccount",
+            name: "customerAccount",
+            component: CustomerAccount
         },
         {
-          path: "/admin/distributorManagement",
-          name: "distributorManagement",
-          component: DistributorManagement
+            path: "/admin/icraftAccount",
+            name: "icraftAccount",
+            component: IcraftAccount
+        },
+        {
+            path: "/admin/accountLog",
+            name: "accountLog",
+            component: AccountLog
+        },
+        {
+            path: "/admin/blacklistApp",
+            name: "blacklistApp",
+            component: BlacklistApp
+        },
+        {
+            path: "/admin/warningList",
+            name: "warningList",
+            component: WarningList
+        },
+        {
+            path: "/admin/distributorManagement",
+            name: "distributorManagement",
+            component: DistributorManagement
         }
-      ]
-    },
-    { path: "*", component: NotFound }
-  ],
-  mode: "history"
+    ]
+}, { path: "*", component: NotFound },
+mode: "history"
 });
