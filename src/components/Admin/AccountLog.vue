@@ -340,11 +340,21 @@ export default {
       },
       selected: [],
       headers: [
-        { text: "로그인 일시", align: "center", value: "로그인 일시", sortable: false },
+        {
+          text: "로그인 일시",
+          align: "center",
+          value: "로그인 일시",
+          sortable: false
+        },
         { text: "구분", align: "center", value: "구분", sortable: false },
         { text: "아이디", align: "center", value: "아이디", sortable: false },
         { text: "이름", align: "center", value: "이름", sortable: false },
-        { text: "작업내용", align: "center", value: "작업내용", sortable: false },
+        {
+          text: "작업내용",
+          align: "center",
+          value: "작업내용",
+          sortable: false
+        },
         { text: "접속 IP", align: "center", value: "접속 IP", sortable: false }
       ],
       desserts: [

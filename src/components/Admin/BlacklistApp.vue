@@ -145,8 +145,18 @@ export default {
       headers: [
         { text: "번호", align: "center", value: "번호", sortable: false },
         { text: "App명", align: "center", value: "App명", sortable: false },
-        { text: "제품 타입", align: "center", value: "제품 타입", sortable: false },
-        { text: "푸시토큰", align: "center", value: "푸시토큰", sortable: false },
+        {
+          text: "제품 타입",
+          align: "center",
+          value: "제품 타입",
+          sortable: false
+        },
+        {
+          text: "푸시토큰",
+          align: "center",
+          value: "푸시토큰",
+          sortable: false
+        },
         { text: "유형", align: "center", value: "유형", sortable: false },
         { text: "등록일", align: "center", value: "등록일", sortable: false },
         { text: "변경일", align: "center", value: "변경일", sortable: false },
@@ -162,7 +172,7 @@ export default {
           exponent: 4.0,
           call_number: "1%",
           date: "1%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -173,7 +183,7 @@ export default {
           exponent: 4.3,
           call_number: "1%",
           date: "1%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -184,7 +194,7 @@ export default {
           exponent: 6.0,
           call_number: "7%",
           date: "7%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -195,7 +205,7 @@ export default {
           exponent: 4.3,
           call_number: "8%",
           date: "8%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -206,7 +216,7 @@ export default {
           exponent: 3.9,
           call_number: "16%",
           date: "16%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -217,7 +227,7 @@ export default {
           exponent: 0.0,
           call_number: "0%",
           date: "0%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -228,7 +238,7 @@ export default {
           exponent: 0,
           call_number: "2%",
           date: "2%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -239,7 +249,7 @@ export default {
           exponent: 6.5,
           call_number: "45%",
           date: "45%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -250,7 +260,7 @@ export default {
           exponent: 4.9,
           call_number: "22%",
           date: "22%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -261,7 +271,7 @@ export default {
           exponent: 7,
           call_number: "6%",
           date: "6%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -272,7 +282,7 @@ export default {
           exponent: 4.0,
           call_number: "1%",
           date: "1%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -283,7 +293,7 @@ export default {
           exponent: 4.3,
           call_number: "1%",
           date: "1%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -294,7 +304,7 @@ export default {
           exponent: 6.0,
           call_number: "7%",
           date: "7%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -305,7 +315,7 @@ export default {
           exponent: 4.3,
           call_number: "8%",
           date: "8%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -316,7 +326,7 @@ export default {
           exponent: 3.9,
           call_number: "16%",
           date: "16%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -327,7 +337,7 @@ export default {
           exponent: 0.0,
           call_number: "0%",
           date: "0%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -338,7 +348,7 @@ export default {
           exponent: 0,
           call_number: "2%",
           date: "2%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -349,7 +359,7 @@ export default {
           exponent: 6.5,
           call_number: "45%",
           date: "45%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -360,7 +370,7 @@ export default {
           exponent: 4.9,
           call_number: "22%",
           date: "22%",
-          changer: 'person'
+          changer: "person"
         },
         {
           value: false,
@@ -371,7 +381,7 @@ export default {
           exponent: 7,
           call_number: "6%",
           date: "6%",
-          changer: 'person'
+          changer: "person"
         }
       ]
     };

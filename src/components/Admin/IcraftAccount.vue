@@ -242,7 +242,12 @@ export default {
         { text: "이름", align: "center", value: "이름", sortable: false },
         { text: "아이디", align: "center", value: "아이디", sortable: false },
         { text: "부서", align: "center", value: "부서", sortable: false },
-        { text: "최종 로그인", align: "center", value: "최종 로그인", sortable: false },
+        {
+          text: "최종 로그인",
+          align: "center",
+          value: "최종 로그인",
+          sortable: false
+        },
         { text: "상태", align: "center", value: "상태", sortable: false }
       ],
       desserts: [

@@ -2,7 +2,7 @@
   <v-layout row wrap>
     <v-flex xs12 class="daily">
       <v-card>
-        <v-card-text class="card-title">일간 현황 {{nowDate}}</v-card-text>
+        <v-card-text class="card-title">일간 현황 ({{nowDate}})</v-card-text>
         <div class="card-cont">
           <table>
             <thead>
@@ -25,7 +25,7 @@
       <v-card>
         <v-card-text class="card-title">실시간 현황</v-card-text>
         <div class="card-cont">
-          chart
+          <line-chart></line-chart>
         </div>
       </v-card>    
     </v-flex>
@@ -33,7 +33,7 @@
       <v-card>
         <v-card-text class="card-title">주간 전체</v-card-text>
         <div class="card-cont">
-          chart
+          <bar-chart></bar-chart>
         </div>
       </v-card>    
     </v-flex>
@@ -68,18 +68,18 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
+import { formatDate } from "../store/helper.js";
+import LineChart from "../components/Dashboard/LineChart.vue";
+import BarChart from "../components/Dashboard/BarChart.vue";
 export default {
+  components: { LineChart, BarChart },
   data() {
     return {
       nowDate: "value"
     };
   },
-  computed: mapGetters(["date"]),
   mounted() {
-    this.nowDate = this.$store.state.date.today;
-    mapGetters(["date"]);
+    this.nowDate = formatDate();
   }
 };
 </script>
@@ -94,6 +94,7 @@ export default {
 .card-title {
   background-color: #f9f9f9;
   color: #646464;
+  padding: 10px 20px;
   text-align: left;
   font-size: 1.2em;
   font-weight: 600;
