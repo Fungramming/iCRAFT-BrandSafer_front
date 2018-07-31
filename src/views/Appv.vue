@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>appv</h1>
   </div>
 </template>
 

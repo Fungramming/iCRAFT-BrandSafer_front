@@ -1,18 +1,114 @@
 <template>
-  <div>
-
-  </div>
+  <v-layout row wrap>
+    <v-flex xs12 class="daily">
+      <v-card>
+        <v-card-text class="card-title">일간 현황 ({{nowDate}})</v-card-text>
+        <div class="card-cont">
+          <table>
+            <thead>
+              <th>인증수</th>
+              <th>정품 | 공유하기</th>
+              <th>가품 | 제보하기</th>
+              <th>ETC</th>
+            </thead>
+            <tbody>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+            </tbody>
+          </table>
+        </div>
+      </v-card>    
+    </v-flex>
+    <v-flex xs12 class="live">
+      <v-card>
+        <v-card-text class="card-title">실시간 현황</v-card-text>
+        <div class="card-cont">
+          <line-chart></line-chart>
+        </div>
+      </v-card>    
+    </v-flex>
+    <v-flex xs9 class="weekly">
+      <v-card>
+        <v-card-text class="card-title">주간 전체</v-card-text>
+        <div class="card-cont">
+          <bar-chart></bar-chart>
+        </div>
+      </v-card>    
+    </v-flex>
+    <v-flex xs3 class="monthly">
+      <v-card>
+        <v-card-text class="card-title">월간 누적</v-card-text>
+        <div class="card-cont">
+          <table>
+            <tbody>
+              <tr>
+                <td>정품</td>
+                <td>1</td>
+              </tr>
+               <tr>
+                <td>정품</td>
+                <td>1</td>
+              </tr>
+               <tr>
+                <td>정품</td>
+                <td>1</td>
+              </tr>
+               <tr>
+                <td>정품</td>
+                <td>1</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </v-card>    
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
+import { formatDate } from "../store/helper.js";
+import LineChart from "../components/Dashboard/LineChart.vue";
+import BarChart from "../components/Dashboard/BarChart.vue";
 export default {
+  components: { LineChart, BarChart },
   data() {
     return {
-      key: "value"
+      nowDate: "value"
     };
+  },
+  mounted() {
+    this.nowDate = formatDate();
   }
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.flex {
+  padding: 4px;
+}
+.flex + .flex {
+  margin-top: 10px;
+}
+.card-title {
+  background-color: #f9f9f9;
+  color: #646464;
+  padding: 10px 20px;
+  text-align: left;
+  font-size: 1.2em;
+  font-weight: 600;
+}
+.card-cont {
+  padding: 10px;
+  table {
+    width: 100%;
+    th {
+      font-weight: 400;
+    }
+    tbody {
+      font-weight: 600;
+    }
+  }
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <aside-tab v-if="this.isAuthenticated" :position-x="0" :position-y="0"  absolute class="aside" style="width:230px;"></aside-tab>
-    <div class="contents">
+    <div :class="{active: this.$store.state.sideBar} " class="contents">
       <router-view/>
     </div>
   </div>
@@ -12,7 +12,10 @@ import { mapGetters } from "vuex";
 
 export default {
   components: { AsideTab },
-  computed: mapGetters(["isAuthenticated"])
+  computed: mapGetters(["isAuthenticated"]),
+  updated() {
+    mapGetters(["isAuthenticated"]);
+  }
 };
 </script>
 
@@ -20,16 +23,17 @@ export default {
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
 
 * {
-  font-family: "Spoqa Han Sans", "Spoqa Han Sans JP", "Sans-serif";
+  font-family: "Spoqa Han Sans", "Sans-serif";
   box-sizing: border-box;
 }
 html,
 body {
-  background-color: #f5f5f5;
+  background-color: #fdfdfd;
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
+  font-size: 16px;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -65,8 +69,15 @@ a {
   left: 0;
 }
 .contents {
-  padding-left: 230px;
-  height: 97%;
-  // overflow: hidden;
+  height: 100%;
+  padding-left: 60px;
+  padding-right: 20px;
+  padding-top: 80px;
+  .v-card {
+    background-color: #fff;
+  }
+  &.active {
+    padding-left: 250px;
+  }
 }
 </style>
