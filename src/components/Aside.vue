@@ -110,8 +110,6 @@
 </template>
 
 <script>
-import Constant from "../constant";
-
 export default {
   data() {
     return {
@@ -119,12 +117,7 @@ export default {
     };
   },
   methods: {
-    logout: function() {
-      if (confirm("로그아웃 하시겠습니까?")) {
-        this.$store.dispatch(Constant.LOG_OUT);
-        this.$router.replace({ name: "login" });
-      }
-    },
+    logout: function() {},
     hoverToggle: function(e) {
       let sideBarWidth = e.path[0].offsetWidth;
       if (sideBarWidth < 62) {
