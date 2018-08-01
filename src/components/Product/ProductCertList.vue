@@ -4,13 +4,17 @@
     <div class="tableBs-top">
       <p>검색 조건</p>
       <v-layout row wrap>
-        <v-flex d-flex xs12 sm6 lg4>
-          <v-calendar>캘린더가 들어갈 자리입니다^^</v-calendar>
+        <v-flex d-flex xs6 md3 lg2>
+          <span class="span-without-selectbox">기간조회</span>
+          <date-picker v-model="date_start" :lang="lang"></date-picker>
         </v-flex>
-        <v-flex d-flex xs12 sm6 lg4>
+        <v-flex d-flex xs6 md3 lg2>
+          <date-picker v-model="date_finish" :lang="lang"></date-picker>
+        </v-flex>
+        <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox">
             <span>고객사</span>
-            <select name="searchType" id="select1" class="form-control" size="1">
+            <select id="select1" name="searchType" class="form-control" size="1">
               <option value="전체" selected>전체</option>
               <option value="고객사1">고객사1</option>
               <option value="고객사2">고객사2</option>
@@ -18,10 +22,10 @@
             </select>
           </div>
         </v-flex>
-        <v-flex d-flex xs12 sm6 lg4>
+        <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox">
             <span>태그타입</span>
-            <select name="searchType" id="select1" class="form-control" size="1">
+            <select id="select1" name="searchType" class="form-control" size="1">
               <option value="전체" selected>전체</option>
               <option value="태그타입1">태그타입1</option>
               <option value="태그타입2">태그타입2</option>
@@ -29,10 +33,10 @@
             </select>
           </div>
         </v-flex>
-        <v-flex d-flex xs12 sm6 lg4>
+        <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox">
             <span>OS</span>
-            <select name="searchType" id="select1" class="form-control" size="1">
+            <select id="select1" name="searchType" class="form-control" size="1">
               <option value="전체" selected>전체</option>
               <option value="OS1">OS1</option>
               <option value="OS2">OS2</option>
@@ -40,10 +44,10 @@
             </select>
           </div>
         </v-flex>
-        <v-flex d-flex xs12 sm6 lg4>
+        <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox">
             <span>인증결과</span>
-            <select name="searchType" id="select1" class="form-control" size="1">
+            <select id="select1" name="searchType" class="form-control" size="1">
               <option value="전체" selected>전체</option>
               <option value="인증결과1">인증결과1</option>
               <option value="인증결과2">인증결과2</option>
@@ -51,10 +55,10 @@
             </select>
           </div>
         </v-flex>
-        <v-flex d-flex xs12 sm6 lg4>
+        <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox select-search">
             <span>검색어</span>
-            <select name="searchType" id="select1" class="form-control" size="1">
+            <select id="select1" name="searchType" class="form-control" size="1">
               <option value="전체" selected>전체</option>
               <option value="검색어1">검색어1</option>
               <option value="검색어2">검색어2</option>
@@ -63,47 +67,11 @@
           </div>
           <input class="input-text" type="text">
         </v-flex>
-        <!-- <v-flex d-flex xs12 sm12 md3>
-          <div class="selectbox">
-            <span>제품 타입</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option selected value="전체">전체</option>
-              <option value="홀로태그">홀로태그</option>
-              <option value="하이브리드태그">하이브리드태그</option>
-              <option value="하이브리드태그">하이브리드태그</option>
-              <option value="난수태그">난수태그</option>
-              <option value="SQR태그">SQR태그</option>
-            </select>
-          </div>
-        </v-flex>
-        <v-flex d-flex xs12 sm12 md3>
-          <div class="selectbox">
-            <span>유형</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option selected value="전체">전체</option>
-              <option value="가품제조">가품제조</option>
-              <option value="과다인증">과다인증</option>
-            </select>
-          </div>
-        </v-flex>
-        <v-flex d-flex xs12 sm12 md3>
-          <div class="selectbox select-search">
-            <span>검색어</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option selected value="푸시토큰">푸시토큰</option>
-              <option value="과다인증번호">과다인증번호</option>
-            </select>
-          </div>
-          <input class="input-text" type="text">
-        </v-flex> -->
       </v-layout>
-      <!-- <v-flex d-flex xs12 sm12 md1 offset-md11>
-        <v-btn class="search-btn" color="primary" dark>검색</v-btn>
-      </v-flex> -->
     </div>
     <!-- table wrap -->
     <v-app class="inspire">
-      <v-data-table
+      <!-- <v-data-table
         :headers="headers"
         :items="desserts"
         :search="search"
@@ -130,7 +98,7 @@
           <td class="text-xs-center">{{ props.item.cert_result }}</td>
           <td class="text-xs-center">{{ props.item.location }}</td>
         </template>
-      </v-data-table>
+      </v-data-table> -->
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <div class="text-xs-center pt-2">
@@ -210,22 +178,79 @@ export default {
     return {
       search: "",
       dialog: false,
+
+      // date picker
+      date_start: "",
+      date_finish: "",
+      lang: {
+        days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        months: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec"
+        ],
+        pickers: [
+          "next 7 days",
+          "next 30 days",
+          "previous 7 days",
+          "previous 30 days"
+        ],
+        placeholder: {
+          date: "Select Date",
+          dateRange: "Select Date Range"
+        }
+      },
+
       pagination: {
         page: 1,
         rowsPerPage: 10
       },
       headers: [
         { text: "번호", align: "center", value: "number", sortable: false },
-        { text: "고객사", align: "center", value: "customer", sortable: false},
-        { text: "태그타입", align: "center", value: "tag_type", sortable: false,},
-        { text: "이미지", align: "center", value: "image", sortable: false,},
-        { text: "제품명", align: "center", value: "product", sortable: false,},
-        { text: "OS", align: "center", value: "OS", sortable: false,},
-        { text: "인증수", align: "center", value: "cert_count", sortable: false,},
-        { text: "유통업체", align: "center", value: "distributor", sortable: false,},
-        { text: "시간", align: "center", value: "time", sortable: false,},
-        { text: "인증결과", align: "center", value: "cert_result", sortable: false,},
-        { text: "위치보기", align: "center", value: "location", sortable: false,}
+        { text: "고객사", align: "center", value: "customer", sortable: false },
+        {
+          text: "태그타입",
+          align: "center",
+          value: "tag_type",
+          sortable: false
+        },
+        { text: "이미지", align: "center", value: "image", sortable: false },
+        { text: "제품명", align: "center", value: "product", sortable: false },
+        { text: "OS", align: "center", value: "OS", sortable: false },
+        {
+          text: "인증수",
+          align: "center",
+          value: "cert_count",
+          sortable: false
+        },
+        {
+          text: "유통업체",
+          align: "center",
+          value: "distributor",
+          sortable: false
+        },
+        { text: "시간", align: "center", value: "time", sortable: false },
+        {
+          text: "인증결과",
+          align: "center",
+          value: "cert_result",
+          sortable: false
+        },
+        {
+          text: "위치보기",
+          align: "center",
+          value: "location",
+          sortable: false
+        }
       ],
       desserts: [
         {

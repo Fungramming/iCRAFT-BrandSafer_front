@@ -1,11 +1,15 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Login from "./views/Login";
+// DASHBOARD
 import Dashboard from "./views/Dashboard";
+// PRODUCT
 import Product from "./views/Product";
 import ProductCertList from "./components/Product/ProductCertList";
+import ProductCertMap from "./components/Product/ProductCertMap.vue";
+// APP
 import Appv from "./views/Appv";
-import Admin from "./views/Admin";
+// ADMIN
 import NotFound from "./views/NotFound";
 import CustomerManagement from "./components/Admin/CustomerManagement";
 import CustomerAccount from "./components/Admin/CustomerAccount";
@@ -16,6 +20,7 @@ import WarningList from "./components/Admin/WarningList";
 import DistributorManagement from "./components/Admin/DistributorManagement";
 import TagtypeManagement from "./components/Admin/TagtypeManagement";
 import AdminappManagement from "./components/Admin/AdminappManagement";
+
 
 Vue.use(Router);
 
@@ -39,10 +44,16 @@ export default new Router({
             name: "product",
             component: Product,
             children: [{
-                path: "/product/certList",
-                name: "certList",
-                component: ProductCertList
-            }]
+                    path: "/product/certList",
+                    name: "certList",
+                    component: ProductCertList
+                },
+                {
+                    path: "/product/certMap",
+                    name: "certMap",
+                    component: ProductCertMap
+                }
+            ]
         },
         {
             path: "/appv",

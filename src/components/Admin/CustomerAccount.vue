@@ -131,13 +131,18 @@ export default {
       },
       selected: [],
       headers: [
-        { text: '번호', align: 'center', value: '번호', sortable: false, },
-        { text: '고객사', align: 'center', value: '고객사', sortable: false, },
-        { text: '구분', align: 'center', value: '구분', sortable: false, },
-        { text: '이름', align: 'center', value: '이름', sortable: false, },
-        { text: '부서', align: 'center', value: '부서', sortable: false, },
-        { text: '최종로그인', align: 'center', value: '최종로그인', sortable: false, },
-        { text: '상태', align: 'center', value: '상태', sortable: false, },
+        { text: "번호", align: "center", value: "번호", sortable: false },
+        { text: "고객사", align: "center", value: "고객사", sortable: false },
+        { text: "구분", align: "center", value: "구분", sortable: false },
+        { text: "이름", align: "center", value: "이름", sortable: false },
+        { text: "부서", align: "center", value: "부서", sortable: false },
+        {
+          text: "최종로그인",
+          align: "center",
+          value: "최종로그인",
+          sortable: false
+        },
+        { text: "상태", align: "center", value: "상태", sortable: false }
       ],
       desserts: [
         {
