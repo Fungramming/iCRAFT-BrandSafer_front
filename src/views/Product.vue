@@ -1,15 +1,15 @@
 <template>
-  <v-container fluid grid-list-xl>
-    <router-view></router-view>
-  </v-container>
+  <router-view></router-view>
 </template>
 
 <script>
-import ProductCertList from "../components/Product/ProductCertList";
+import ProductCertList from "../components/Product/ProductCertList"
+import ProductCertMap from "../components/Product/ProductCertMap"
 
 export default {
   components: {
-    ProductCertList
+    ProductCertList,
+    ProductCertMap
   },
   data() {
     return {};
