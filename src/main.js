@@ -18,13 +18,25 @@ Vue.use(Vuetify);
 import DatePicker from "vue2-datepicker";
 Vue.use(DatePicker);
 
+import * as VueGoogleMaps from "vue2-google-maps";
+import GmapCluster from "vue2-google-maps/src/components/cluster";
+
+Vue.use(Vuetify);
 Vue.prototype.$axios = axios;
 axios.defaults.baseURL = "http://localhost:5000";
 
 Vue.config.productionTip = false;
 
+Vue.use(VueGoogleMaps, {
+    load: {
+        key: "",
+        libraries: "places"
+    }
+});
+Vue.component("GmapCluster", GmapCluster);
+
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount("#app");

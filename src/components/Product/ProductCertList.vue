@@ -4,9 +4,14 @@
     <div class="tableBs-top">
       <p>검색 조건</p>
       <v-layout row wrap>
-        <v-flex d-flex xs12 sm6 lg4>
+        <v-flex d-flex xs6 md3 lg2>
+          <span class="span-without-selectbox">기간조회</span>
+          <date-picker v-model="date_start" :lang="lang"></date-picker>
         </v-flex>
-        <v-flex d-flex xs12 sm6 lg4>
+        <v-flex d-flex xs6 md3 lg2>
+          <date-picker v-model="date_finish" :lang="lang"></date-picker>
+        </v-flex>
+        <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox">
             <span>고객사</span>
             <select id="select1" name="searchType" class="form-control" size="1">
@@ -17,7 +22,7 @@
             </select>
           </div>
         </v-flex>
-        <v-flex d-flex xs12 sm6 lg4>
+        <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox">
             <span>태그타입</span>
             <select id="select1" name="searchType" class="form-control" size="1">
@@ -28,7 +33,7 @@
             </select>
           </div>
         </v-flex>
-        <v-flex d-flex xs12 sm6 lg4>
+        <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox">
             <span>OS</span>
             <select id="select1" name="searchType" class="form-control" size="1">
@@ -39,7 +44,7 @@
             </select>
           </div>
         </v-flex>
-        <v-flex d-flex xs12 sm6 lg4>
+        <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox">
             <span>인증결과</span>
             <select id="select1" name="searchType" class="form-control" size="1">
@@ -50,7 +55,7 @@
             </select>
           </div>
         </v-flex>
-        <v-flex d-flex xs12 sm6 lg4>
+        <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox select-search">
             <span>검색어</span>
             <select id="select1" name="searchType" class="form-control" size="1">
@@ -62,43 +67,7 @@
           </div>
           <input class="input-text" type="text">
         </v-flex>
-        <!-- <v-flex d-flex xs12 sm12 md3>
-          <div class="selectbox">
-            <span>제품 타입</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option selected value="전체">전체</option>
-              <option value="홀로태그">홀로태그</option>
-              <option value="하이브리드태그">하이브리드태그</option>
-              <option value="하이브리드태그">하이브리드태그</option>
-              <option value="난수태그">난수태그</option>
-              <option value="SQR태그">SQR태그</option>
-            </select>
-          </div>
-        </v-flex>
-        <v-flex d-flex xs12 sm12 md3>
-          <div class="selectbox">
-            <span>유형</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option selected value="전체">전체</option>
-              <option value="가품제조">가품제조</option>
-              <option value="과다인증">과다인증</option>
-            </select>
-          </div>
-        </v-flex>
-        <v-flex d-flex xs12 sm12 md3>
-          <div class="selectbox select-search">
-            <span>검색어</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option selected value="푸시토큰">푸시토큰</option>
-              <option value="과다인증번호">과다인증번호</option>
-            </select>
-          </div>
-          <input class="input-text" type="text">
-        </v-flex> -->
       </v-layout>
-      <!-- <v-flex d-flex xs12 sm12 md1 offset-md11>
-        <v-btn class="search-btn" color="primary" dark>검색</v-btn>
-      </v-flex> -->
     </div>
     <!-- table wrap -->
     <v-app class="inspire">
@@ -209,6 +178,38 @@ export default {
     return {
       search: "",
       dialog: false,
+
+      // date picker
+      date_start: "",
+      date_finish: "",
+      lang: {
+        days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        months: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec"
+        ],
+        pickers: [
+          "next 7 days",
+          "next 30 days",
+          "previous 7 days",
+          "previous 30 days"
+        ],
+        placeholder: {
+          date: "Select Date",
+          dateRange: "Select Date Range"
+        }
+      },
+
       pagination: {
         page: 1,
         rowsPerPage: 10
