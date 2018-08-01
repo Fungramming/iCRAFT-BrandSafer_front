@@ -11,8 +11,8 @@
         <v-flex d-flex xs12 sm5 md2>
           <date-picker v-model="date_finish" :lang="lang"></date-picker>
         </v-flex>
-        <v-flex d-flex xs12 sm12 md2>
-          <div class="selectbox">
+        <v-flex d-flex xs12 sm12 md4>
+          <div class="selectbox selectbox-with-date">
             <span>제품 타입</span>
             <select id="select1" name="searchType" class="form-control" size="1">
               <option selected value="전체">전체</option>
@@ -23,7 +23,7 @@
             </select>
           </div>
         </v-flex>
-        <v-flex d-flex xs12 sm12 md3>
+        <v-flex d-flex xs12 sm12 md4>
           <div class="selectbox-input">
             <span>푸시토큰</span>
             <input class="input-text input-with-date" type="text">

@@ -11,7 +11,7 @@
         <v-flex d-flex xs12 sm5 md2>
           <date-picker v-model="date_finish" :lang="lang"></date-picker>
         </v-flex>
-        <v-flex d-flex xs12 sm12 md1>
+        <v-flex d-flex xs12 sm12 md4>
           <div class="selectbox">
             <span>구분</span>
             <select id="select1" name="searchType" class="form-control" size="1">
@@ -21,7 +21,7 @@
             </select>
           </div>
         </v-flex>
-        <v-flex d-flex xs12 sm12 md3>
+        <v-flex d-flex xs12 sm12 md4>
           <div class="selectbox select-search">
             <span>검색어</span>
             <select id="select1" name="searchType" class="form-control" size="1">
