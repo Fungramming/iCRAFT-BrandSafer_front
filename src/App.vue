@@ -23,6 +23,7 @@ export default {
 
 <style lang="scss">
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
+$phone: "(min-width: 0) and (max-width: 500px)";
 
 * {
   font-family: "Spoqa Han Sans", "Sans-serif";
@@ -72,9 +73,13 @@ a {
 }
 .contents {
   height: 100%;
-  padding-left: 60px;
+  padding-left: 80px;
   padding-right: 20px;
   padding-top: 80px;
+  @media #{$phone} {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
   .v-card {
     background-color: #fff;
   }

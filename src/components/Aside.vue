@@ -105,6 +105,14 @@
         </li>
       </ul>
       <span class="copy">&copy; 2018 ICRAFT</span>
+      <!-- <v-btn class="closeBtn" fixed flat @click.stop="" > -->
+        <button class="closeBtn" @click.stop="clickToggle">
+          
+          <v-icon >
+            close  
+          </v-icon>
+        </button>
+      <!-- </v-btn>    -->
     </div>
   </div>
 </template>
@@ -119,9 +127,11 @@ export default {
   methods: {
     logout: function() {},
     hoverToggle: function(e) {
-      let sideBarWidth = e.path[0].offsetWidth;
-      if (sideBarWidth < 62) {
-        this.clickToggle();
+      if (window.innerWidth > 500) {
+        let sideBarWidth = e.path[0].offsetWidth;
+        if (sideBarWidth < 62) {
+          this.clickToggle();
+        }
       }
     },
     clickToggle: function() {
@@ -152,9 +162,9 @@ export default {
       let tab = document.getElementsByClassName("tab")[0];
       let subTab = document.getElementsByClassName("sub-tab")[0];
       let subSubTab = document.getElementsByClassName("sub-sub-tab")[0];
-      function activedList(target) {
+      let activedList = function(target) {
         return target.querySelectorAll(".active");
-      }
+      };
       if (subTabTitle == "side-bar") {
         if (activedList(tab).length > 0) {
           activedList(tab).forEach(element => {
@@ -183,9 +193,11 @@ export default {
 </script>
 
 <style lang="scss">
+$phone: "(min-width: 0) and (max-width: 500px)";
 .top-bar {
   height: 61px;
   .v-toolbar__content {
+    height: 64px !important;
     padding-left: 245px;
     transition: padding 0.3s ease;
   }
@@ -210,6 +222,9 @@ export default {
   &.active {
     .v-toolbar__content {
       padding-left: 80px;
+      @media #{$phone} {
+        padding-left: 20px;
+      }
     }
   }
 }
@@ -223,8 +238,14 @@ export default {
   overflow-x: hidden;
   z-index: 200;
   transition: width 0.3s ease;
+  @media #{$phone} {
+    width: 100%;
+  }
   &.active {
     width: 60px;
+    @media #{$phone} {
+      width: 0;
+    }
     span {
       opacity: 0;
     }
@@ -397,6 +418,17 @@ export default {
     text-align: center;
     white-space: nowrap;
     transition: opacity 0.3s ease;
+  }
+  .closeBtn {
+    color: white;
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 0px;
+    width: 50px;
+    @media #{$phone} {
+      display: inline-block;
+    }
   }
 }
 

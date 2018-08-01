@@ -5,7 +5,6 @@
       <p>검색 조건</p>
       <v-layout row wrap>
         <v-flex d-flex xs12 sm6 lg4>
-          <v-calendar>캘린더가 들어갈 자리입니다^^</v-calendar>
         </v-flex>
         <v-flex d-flex xs12 sm6 lg4>
           <div class="selectbox">
@@ -103,7 +102,7 @@
     </div>
     <!-- table wrap -->
     <v-app class="inspire">
-      <v-data-table
+      <!-- <v-data-table
         :headers="headers"
         :items="desserts"
         :search="search"
@@ -130,7 +129,7 @@
           <td class="text-xs-center">{{ props.item.cert_result }}</td>
           <td class="text-xs-center">{{ props.item.location }}</td>
         </template>
-      </v-data-table>
+      </v-data-table> -->
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <div class="text-xs-center pt-2">
