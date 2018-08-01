@@ -76,8 +76,8 @@ export default new Router({
             path: "/admin/distributorManagement",
             name: "distributorManagement",
             component: DistributorManagement
-        }
-    ]
-}, { path: "*", component: NotFound },
-mode: "history"
+        },
+        { path: "*", component: NotFound }
+    ],
+    mode: "history"
 });
