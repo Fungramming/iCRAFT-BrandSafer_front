@@ -7,18 +7,13 @@
         <v-flex mb0 d-flex xs12 sm12 md3>
           <div class="selectbox-input">
             <span>유통업체명</span>
-            <!-- <select id="select1" name="searchType" class="form-control" size="1">
-              <option selected value="부서">부서</option>
-              <option value="아이디">아이디</option>
-              <option value="이름">이름</option>
-            </select> -->
             <input class="input-text" type="text">
           </div>
         </v-flex>
       </v-layout>
-      <v-flex d-flex xs12 sm12 md1 offset-md11>
+      <!-- <v-flex d-flex xs12 sm12 md1 offset-md11>
         <v-btn class="search-btn" color="primary" dark>검색</v-btn>
-      </v-flex>
+      </v-flex> -->
     </div>
     <!-- table wrap -->
     <v-app class="inspire">

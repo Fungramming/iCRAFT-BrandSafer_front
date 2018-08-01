@@ -48,6 +48,11 @@ export default new Router({
             component: Appv
         },
         {
+            path: "/admin/customerManagement",
+            name: "customerManagement",
+            component: CustomerManagement
+        },
+        {
             path: "/admin/customerAccount",
             name: "customerAccount",
             component: CustomerAccount
@@ -77,7 +82,7 @@ export default new Router({
             name: "distributorManagement",
             component: DistributorManagement
         },
-        { path: "*", component: NotFound }
+        { path: "*", component: NotFound },
     ],
     mode: "history"
 });

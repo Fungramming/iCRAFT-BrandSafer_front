@@ -6,59 +6,12 @@
       <v-layout row wrap>
         <v-flex d-flex xs12 sm5 md2>
           <span class="span-without-selectbox">기간조회</span>
-          <v-menu
-            ref="menu_start"
-            :close-on-content-click="false"
-            v-model="menu_start"
-            :nudge-right="40"
-            :return-value.sync="date_start"
-            lazy
-            transition="scale-transition"
-            offset-y
-            full-width
-            min-width="290px"
-          >
-            <v-text-field
-              slot="activator"
-              v-model="date_start"
-              label="시작일"
-              prepend-icon="event"
-              readonly
-            ></v-text-field>
-            <v-date-picker v-model="date_start" no-title scrollable>
-              <v-spacer></v-spacer>
-              <v-btn flat color="primary" @click="menu_start = false">Cancel</v-btn>
-              <v-btn flat color="primary" @click="$refs.menu_start.save(date_start)">OK</v-btn>
-            </v-date-picker>
-          </v-menu>
+          <date-picker v-model="date_start" :lang="lang"></date-picker>
         </v-flex>
         <v-flex d-flex xs12 sm5 md2>
-          <v-menu
-            ref="menu_finish"
-            :close-on-content-click="false"
-            v-model="menu_finish"
-            :nudge-right="40"
-            :return-value.sync="date_finish"
-            lazy
-            transition="scale-transition"
-            offset-y
-            full-width
-            min-width="290px"
-          >
-            <v-text-field
-              slot="activator"
-              v-model="date_finish"
-              label="종료일"
-              readonly
-            ></v-text-field>
-            <v-date-picker v-model="date_finish" no-title scrollable>
-              <v-spacer></v-spacer>
-              <v-btn flat color="primary" @click="menu_finish = false">Cancel</v-btn>
-              <v-btn flat color="primary" @click="$refs.menu_finish.save(date_finish)">OK</v-btn>
-            </v-date-picker>
-          </v-menu>
+          <date-picker v-model="date_finish" :lang="lang"></date-picker>
         </v-flex>
-        <v-flex d-flex xs12 sm12 md3>
+        <v-flex d-flex xs12 sm12 md1>
           <div class="selectbox">
             <span>구분</span>
             <select id="select1" name="searchType" class="form-control" size="1">
@@ -79,9 +32,9 @@
           <input class="input-text input-with-date" type="text">
         </v-flex>
       </v-layout>
-      <v-flex d-flex xs12 sm12 md1 offset-md11>
+      <!-- <v-flex d-flex xs12 sm12 md1 offset-md11>
         <v-btn class="search-btn" color="primary" dark>검색</v-btn>
-      </v-flex>
+      </v-flex> -->
     </div>
     <!-- table wrap -->
     <v-app class="inspire">
@@ -329,15 +282,25 @@ export default {
   data() {
     return {
       search: "",
-      date_start: null,
-      date_finish: null,
-      menu_start: false,
-      menu_finish: false,
       dialog: false,
       pagination: {
         page: 1,
         rowsPerPage: 10
       },
+
+      // date picker
+      date_start: '',
+      date_finish: '',
+      lang: {
+        days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        pickers: ['next 7 days', 'next 30 days', 'previous 7 days', 'previous 30 days'],
+        placeholder: {
+          date: 'Select Date',
+          dateRange: 'Select Date Range'
+        }
+      },
+
       selected: [],
       headers: [
         {
