@@ -10,7 +10,7 @@
         <v-flex d-flex xs12 sm6 lg4>
           <div class="selectbox">
             <span>고객사</span>
-            <select name="searchType" id="select1" class="form-control" size="1">
+            <select id="select1" name="searchType" class="form-control" size="1">
               <option value="전체" selected>전체</option>
               <option value="고객사1">고객사1</option>
               <option value="고객사2">고객사2</option>
@@ -21,7 +21,7 @@
         <v-flex d-flex xs12 sm6 lg4>
           <div class="selectbox">
             <span>태그타입</span>
-            <select name="searchType" id="select1" class="form-control" size="1">
+            <select id="select1" name="searchType" class="form-control" size="1">
               <option value="전체" selected>전체</option>
               <option value="태그타입1">태그타입1</option>
               <option value="태그타입2">태그타입2</option>
@@ -32,7 +32,7 @@
         <v-flex d-flex xs12 sm6 lg4>
           <div class="selectbox">
             <span>OS</span>
-            <select name="searchType" id="select1" class="form-control" size="1">
+            <select id="select1" name="searchType" class="form-control" size="1">
               <option value="전체" selected>전체</option>
               <option value="OS1">OS1</option>
               <option value="OS2">OS2</option>
@@ -43,7 +43,7 @@
         <v-flex d-flex xs12 sm6 lg4>
           <div class="selectbox">
             <span>인증결과</span>
-            <select name="searchType" id="select1" class="form-control" size="1">
+            <select id="select1" name="searchType" class="form-control" size="1">
               <option value="전체" selected>전체</option>
               <option value="인증결과1">인증결과1</option>
               <option value="인증결과2">인증결과2</option>
@@ -54,7 +54,7 @@
         <v-flex d-flex xs12 sm6 lg4>
           <div class="selectbox select-search">
             <span>검색어</span>
-            <select name="searchType" id="select1" class="form-control" size="1">
+            <select id="select1" name="searchType" class="form-control" size="1">
               <option value="전체" selected>전체</option>
               <option value="검색어1">검색어1</option>
               <option value="검색어2">검색어2</option>
@@ -216,16 +216,41 @@ export default {
       },
       headers: [
         { text: "번호", align: "center", value: "number", sortable: false },
-        { text: "고객사", align: "center", value: "customer", sortable: false},
-        { text: "태그타입", align: "center", value: "tag_type", sortable: false,},
-        { text: "이미지", align: "center", value: "image", sortable: false,},
-        { text: "제품명", align: "center", value: "product", sortable: false,},
-        { text: "OS", align: "center", value: "OS", sortable: false,},
-        { text: "인증수", align: "center", value: "cert_count", sortable: false,},
-        { text: "유통업체", align: "center", value: "distributor", sortable: false,},
-        { text: "시간", align: "center", value: "time", sortable: false,},
-        { text: "인증결과", align: "center", value: "cert_result", sortable: false,},
-        { text: "위치보기", align: "center", value: "location", sortable: false,}
+        { text: "고객사", align: "center", value: "customer", sortable: false },
+        {
+          text: "태그타입",
+          align: "center",
+          value: "tag_type",
+          sortable: false
+        },
+        { text: "이미지", align: "center", value: "image", sortable: false },
+        { text: "제품명", align: "center", value: "product", sortable: false },
+        { text: "OS", align: "center", value: "OS", sortable: false },
+        {
+          text: "인증수",
+          align: "center",
+          value: "cert_count",
+          sortable: false
+        },
+        {
+          text: "유통업체",
+          align: "center",
+          value: "distributor",
+          sortable: false
+        },
+        { text: "시간", align: "center", value: "time", sortable: false },
+        {
+          text: "인증결과",
+          align: "center",
+          value: "cert_result",
+          sortable: false
+        },
+        {
+          text: "위치보기",
+          align: "center",
+          value: "location",
+          sortable: false
+        }
       ],
       desserts: [
         {

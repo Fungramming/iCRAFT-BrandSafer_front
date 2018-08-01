@@ -30,7 +30,7 @@
           </router-link>
         </li>
         <li @click="isActived">
-          <router-link :to="{ name: 'product' }" class="tab-btn" >
+          <router-link :to="{ name: 'certList' }" class="tab-btn" >
               <v-icon>label</v-icon>
               <span>제품</span>
           </router-link>
