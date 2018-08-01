@@ -97,8 +97,13 @@
               </router-link>
             </li>
             <li>
-              <router-link to="" class="tab-btn" >
+              <router-link :to="{ name:'tagtypeManagement'}" class="tab-btn" >
                 <span>태그타입 관리</span>
+              </router-link>
+            </li>
+            <li>
+              <router-link :to="{ name:'adminappManagement'}" class="tab-btn" >
+                <span>관리자App 관리</span>
               </router-link>
             </li>
           </ul>

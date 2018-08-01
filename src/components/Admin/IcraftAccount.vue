@@ -17,7 +17,7 @@
         <v-flex d-flex xs12 sm12 md4>
           <div class="selectbox">
             <span>상태</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
+            <select id="select2" name="searchType" class="form-control" size="1">
               <option selected value="전체">전체</option>
               <option value="등록">등록</option>
               <option value="일시정지">일시정지</option>
@@ -28,7 +28,7 @@
         <v-flex d-flex xs12 sm12 md4>
           <div class="selectbox select-search">
             <span>검색어</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
+            <select id="select3" name="searchType" class="form-control" size="1">
               <option selected value="부서">부서</option>
               <option value="아이디">아이디</option>
               <option value="이름">이름</option>
@@ -70,7 +70,7 @@
           <td class="text-xs-center">{{ props.item.number }}</td>
           <td class="text-xs-center">{{ props.item.customer }}</td>
           <td class="text-xs-center">{{ props.item.customer_code }}</td>
-          <td class="text-xs-center">{{ props.item.address }}</td>
+          <td class="text-xs-center"><a @click="dialog_edit = true">{{ props.item.id }}</a></td>
           <td class="text-xs-center">{{ props.item.exponent }}</td>
           <td class="text-xs-center">{{ props.item.call_number }}</td>
           <td class="text-xs-center">{{ props.item.date }}</td>
@@ -92,8 +92,8 @@
       </div>
     </v-app>
 
-    <v-flex d-flex xs12 sm12 md12>
     <!-- modal dialog -->
+    <v-flex d-flex xs12 sm12 md12>
     <v-dialog
       v-model="dialog"
       fullscreen
@@ -222,6 +222,137 @@
       </v-card>
     </v-dialog>
     </v-flex>
+
+    <!-- modal edit dialog -->
+    <v-flex d-flex xs12 sm12 md12>
+    <v-dialog
+      v-model="dialog_edit"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+      scrollable
+    >
+      <!-- start modal -->
+      <v-card tile>
+        <v-toolbar card dark color="primary">
+          <v-btn icon dark @click.native="dialog_edit = false">
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>iCraft 계정관리</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn dark flat @click.native="dialog_edit = false">수정</v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
+        <div class="card-left">
+          <v-card-text>
+            <v-list three-line subheader>
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">권한
+                  <span class="text-danger">*</span>
+                </label>
+                <span class="selectbox selectbox-100">
+                  <select id="telephone1" class="form-control" name="telephone1">
+                    <option value="iCraft 관리자">iCraft 관리자</option>
+                    <option value="iCraft 사용자">iCraft 사용자</option>
+                  </select>
+                </span>
+              </v-flex>    
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">이름
+                  <span class="text-danger">*</span>
+                </label>
+                <input class="input-text" type="text" required="required">
+              </v-flex>
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">아이디
+                  <span class="text-danger">*</span>
+                </label>
+                <input class="input-text" type="text">
+              </v-flex>
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">비밀번호
+                  <span class="text-danger">*</span>
+                </label>
+                <input class="input-text" type="text" placeholder="( * 5~15자 이내의 영/숫자 조합 )">
+              </v-flex>
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">비밀번호 확인
+                  <span class="text-danger">*</span>
+                </label>
+                <input class="input-text" type="text">
+              </v-flex>
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">이메일</label>
+                <input class="input-text input-mail" type="mail">
+                <span class="selectbox selectbox-mail">
+                  <select id="mail1" class="form-control" name="mail1">
+                    <option value="직접입력">직접입력</option>
+                    <option value="naver.com">naver.com</option>
+                    <option value="daum.net">daum.net</option>
+                    <option value="gmail.com">gmail.com</option>
+                    <option value="nate.com">nate.com</option>
+                  </select>
+                </span>
+                <input class="input-text input-mail" type="mail">
+              </v-flex>
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">전화번호</label>
+                <span class="selectbox">
+                  <select id="telephone1" class="form-control" name="telephone1">
+                    <option value="02">02</option>
+                    <option value="031">031</option>
+                    <option value="032">032</option>
+                    <option value="033">033</option>
+                    <option value="041">041</option>
+                    <option value="042">042</option>
+                    <option value="043">043</option>
+                    <option value="044">044</option>
+                    <option value="051">051</option>
+                    <option value="052">052</option>
+                    <option value="053">053</option>
+                    <option value="054">054</option>
+                    <option value="055">055</option>
+                    <option value="061">061</option>
+                    <option value="062">062</option>
+                    <option value="063">063</option>
+                    <option value="064">064</option>
+                    <option value="070">070</option>
+                    <option value="080">080</option>
+                  </select>
+                </span>
+                <input class="input-text input-tel" type="tel" maxlength="4">
+                <input class="input-text input-tel" type="tel" maxlength="4">
+              </v-flex>
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">핸드폰번호</label>
+                <span class="selectbox">
+                  <select id="telephone1" class="form-control" name="telephone1">
+                    <option value="010">010</option>
+                    <option value="011">011</option>
+                    <option value="016">016</option>
+                    <option value="017">017</option>
+                    <option value="018">018</option>
+                    <option value="019">019</option>
+                  </select>
+                </span>
+                <input class="input-text input-tel" type="tel" maxlength="4">
+                <input class="input-text input-tel" type="tel" maxlength="4">
+              </v-flex>
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">직위</label>
+                <input class="input-text" type="text" required="required">
+              </v-flex>
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">부서</label>
+                <input class="input-text" type="text" required="required">
+              </v-flex>
+            </v-list>
+          </v-card-text>
+        </div>
+      </v-card>
+    </v-dialog>
+    </v-flex>
   </div>
 </template>
 
@@ -231,6 +362,7 @@ export default {
     return {
       search: "",
       dialog: false,
+      dialog_edit: false,
       pagination: {
         page: 1,
         rowsPerPage: 10
@@ -242,12 +374,7 @@ export default {
         { text: "이름", align: "center", value: "이름", sortable: false },
         { text: "아이디", align: "center", value: "아이디", sortable: false },
         { text: "부서", align: "center", value: "부서", sortable: false },
-        {
-          text: "최종 로그인",
-          align: "center",
-          value: "최종 로그인",
-          sortable: false
-        },
+        { text: "최종 로그인", align: "center", value: "최종 로그인", sortable: false},
         { text: "상태", align: "center", value: "상태", sortable: false }
       ],
       desserts: [
@@ -256,7 +383,7 @@ export default {
           number: "1",
           customer: 159,
           customer_code: 6.0,
-          address: 24,
+          id: '아이디',
           exponent: 4.0,
           call_number: "1%",
           date: "1%"
@@ -266,7 +393,7 @@ export default {
           number: "2",
           customer: 237,
           customer_code: 9.0,
-          address: 37,
+          id: '아이디',
           exponent: 4.3,
           call_number: "1%",
           date: "1%"
@@ -276,7 +403,7 @@ export default {
           number: "3",
           customer: 262,
           customer_code: 16.0,
-          address: 23,
+          id: '아이디',
           exponent: 6.0,
           call_number: "7%",
           date: "7%"
@@ -286,7 +413,7 @@ export default {
           number: "4",
           customer: 305,
           customer_code: 3.7,
-          address: 67,
+          id: '아이디',
           exponent: 4.3,
           call_number: "8%",
           date: "8%"
@@ -296,7 +423,7 @@ export default {
           number: "5",
           customer: 356,
           customer_code: 16.0,
-          address: 49,
+          id: '아이디',
           exponent: 3.9,
           call_number: "16%",
           date: "16%"
@@ -306,7 +433,7 @@ export default {
           number: "6",
           customer: 375,
           customer_code: 0.0,
-          address: 94,
+          id: '아이디',
           exponent: 0.0,
           call_number: "0%",
           date: "0%"
@@ -316,7 +443,7 @@ export default {
           number: "7",
           customer: 392,
           customer_code: 0.2,
-          address: 98,
+          id: '아이디',
           exponent: 0,
           call_number: "2%",
           date: "2%"
@@ -326,7 +453,7 @@ export default {
           number: "8",
           customer: 408,
           customer_code: 3.2,
-          address: 87,
+          id: '아이디',
           exponent: 6.5,
           call_number: "45%",
           date: "45%"
@@ -336,7 +463,7 @@ export default {
           number: "9",
           customer: 452,
           customer_code: 25.0,
-          address: 51,
+          id: '아이디',
           exponent: 4.9,
           call_number: "22%",
           date: "22%"
@@ -346,7 +473,7 @@ export default {
           number: "10",
           customer: 518,
           customer_code: 26.0,
-          address: 65,
+          id: '아이디',
           exponent: 7,
           call_number: "6%",
           date: "6%"
@@ -356,7 +483,7 @@ export default {
           number: "11",
           customer: 159,
           customer_code: 6.0,
-          address: 24,
+          id: '아이디',
           exponent: 4.0,
           call_number: "1%",
           date: "1%"
@@ -366,7 +493,7 @@ export default {
           number: "12",
           customer: 237,
           customer_code: 9.0,
-          address: 37,
+          id: '아이디',
           exponent: 4.3,
           call_number: "1%",
           date: "1%"
@@ -376,7 +503,7 @@ export default {
           number: "13",
           customer: 262,
           customer_code: 16.0,
-          address: 23,
+          id: '아이디',
           exponent: 6.0,
           call_number: "7%",
           date: "7%"
@@ -386,7 +513,7 @@ export default {
           number: "14",
           customer: 305,
           customer_code: 3.7,
-          address: 67,
+          id: '아이디',
           exponent: 4.3,
           call_number: "8%",
           date: "8%"
@@ -396,7 +523,7 @@ export default {
           number: "15",
           customer: 356,
           customer_code: 16.0,
-          address: 49,
+          id: '아이디',
           exponent: 3.9,
           call_number: "16%",
           date: "16%"
@@ -406,7 +533,7 @@ export default {
           number: "16",
           customer: 375,
           customer_code: 0.0,
-          address: 94,
+          id: '아이디',
           exponent: 0.0,
           call_number: "0%",
           date: "0%"
@@ -416,7 +543,7 @@ export default {
           number: "17",
           customer: 392,
           customer_code: 0.2,
-          address: 98,
+          id: '아이디',
           exponent: 0,
           call_number: "2%",
           date: "2%"
@@ -426,7 +553,7 @@ export default {
           number: "18",
           customer: 408,
           customer_code: 3.2,
-          address: 87,
+          id: '아이디',
           exponent: 6.5,
           call_number: "45%",
           date: "45%"
@@ -436,7 +563,7 @@ export default {
           number: "19",
           customer: 452,
           customer_code: 25.0,
-          address: 51,
+          id: '아이디',
           exponent: 4.9,
           call_number: "22%",
           date: "22%"
@@ -446,7 +573,7 @@ export default {
           number: "20",
           customer: 518,
           customer_code: 26.0,
-          address: 65,
+          id: '아이디',
           exponent: 7,
           call_number: "6%",
           date: "6%"

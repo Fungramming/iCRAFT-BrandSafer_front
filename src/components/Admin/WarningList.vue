@@ -4,11 +4,11 @@
     <div class="tableBs-top">
       <p>검색 조건</p>
       <v-layout row wrap>
-        <v-flex d-flex xs12 sm5 md2>
+        <v-flex d-flex xs12 sm6 md2>
           <span class="span-without-selectbox">기간조회</span>
           <date-picker v-model="date_start" :lang="lang"></date-picker>
         </v-flex>
-        <v-flex d-flex xs12 sm5 md2>
+        <v-flex d-flex xs12 sm6 md2>
           <date-picker v-model="date_finish" :lang="lang"></date-picker>
         </v-flex>
         <v-flex d-flex xs12 sm12 md4>
@@ -56,7 +56,7 @@
           <td class="text-xs-center">{{ props.item.date }}</td>
           <td class="text-xs-center">{{ props.item.app_name }}</td>
           <td class="text-xs-center">{{ props.item.tag_type }}</td>
-          <td class="text-xs-center">{{ props.item.push_token }}</td>
+          <td class="text-xs-center"><a>{{ props.item.push_token }}</a></td>
           <td class="text-xs-center">{{ props.item.tiems }}</td>
           <td class="text-xs-center">{{ props.item.date_update }}</td>
           <td class="text-xs-center">{{ props.item.date_last }}</td>

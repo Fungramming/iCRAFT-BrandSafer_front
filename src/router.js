@@ -1,19 +1,21 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Login from "./views/Login.vue";
-import Dashboard from "./views/Dashboard.vue";
-import Product from "./views/Product.vue";
-import ProductCertList from "./components/Product/ProductCertList.vue";
-import Appv from "./views/Appv.vue";
-import Admin from "./views/Admin.vue";
-import NotFound from "./views/NotFound.vue";
-import CustomerManagement from "./components/Admin/CustomerManagement.vue";
-import CustomerAccount from "./components/Admin/CustomerAccount.vue";
-import IcraftAccount from "./components/Admin/IcraftAccount.vue";
-import AccountLog from "./components/Admin/AccountLog.vue";
-import BlacklistApp from "./components/Admin/BlacklistApp.vue";
-import WarningList from "./components/Admin/WarningList.vue";
-import DistributorManagement from "./components/Admin/DistributorManagement.vue";
+import Login from "./views/Login";
+import Dashboard from "./views/Dashboard";
+import Product from "./views/Product";
+import ProductCertList from "./components/Product/ProductCertList";
+import Appv from "./views/Appv";
+import Admin from "./views/Admin";
+import NotFound from "./views/NotFound";
+import CustomerManagement from "./components/Admin/CustomerManagement";
+import CustomerAccount from "./components/Admin/CustomerAccount";
+import IcraftAccount from "./components/Admin/IcraftAccount";
+import AccountLog from "./components/Admin/AccountLog";
+import BlacklistApp from "./components/Admin/BlacklistApp";
+import WarningList from "./components/Admin/WarningList";
+import DistributorManagement from "./components/Admin/DistributorManagement";
+import TagtypeManagement from "./components/Admin/TagtypeManagement";
+import AdminappManagement from "./components/Admin/AdminappManagement";
 
 Vue.use(Router);
 
@@ -81,6 +83,16 @@ export default new Router({
             path: "/admin/distributorManagement",
             name: "distributorManagement",
             component: DistributorManagement
+        },
+        {
+            path: "/admin/tagtypeManagement",
+            name: "tagtypeManagement",
+            component: TagtypeManagement
+        },
+        {
+            path: "/admin/adminappManagement",
+            name: "adminappManagement",
+            component: AdminappManagement
         },
         { path: "*", component: NotFound },
     ],

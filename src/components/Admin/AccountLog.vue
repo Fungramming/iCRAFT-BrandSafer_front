@@ -4,15 +4,15 @@
     <div class="tableBs-top">
       <p>검색 조건</p>
       <v-layout row wrap>
-        <v-flex d-flex xs12 sm5 md2>
+        <v-flex d-flex xs12 sm6 md2>
           <span class="span-without-selectbox">기간조회</span>
           <date-picker v-model="date_start" :lang="lang"></date-picker>
         </v-flex>
-        <v-flex d-flex xs12 sm5 md2>
+        <v-flex d-flex xs12 sm6 md2>
           <date-picker v-model="date_finish" :lang="lang"></date-picker>
         </v-flex>
         <v-flex d-flex xs12 sm12 md4>
-          <div class="selectbox">
+          <div class="selectbox selectbox-with-date">
             <span>구분</span>
             <select id="select1" name="searchType" class="form-control" size="1">
               <option selected value="전체">전체</option>
@@ -24,7 +24,7 @@
         <v-flex d-flex xs12 sm12 md4>
           <div class="selectbox select-search">
             <span>검색어</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
+            <select id="select2" name="searchType" class="form-control" size="1">
               <option selected value="아이디">아이디</option>
               <option value="이름">이름</option>
             </select>

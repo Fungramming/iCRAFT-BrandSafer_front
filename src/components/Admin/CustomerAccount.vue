@@ -37,7 +37,7 @@
         <v-flex d-flex xs12 sm12 md3>
           <div class="selectbox">
             <span>구분</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
+            <select id="select2" name="searchType" class="form-control" size="1">
               <option selected value="전체">전체</option>
               <option value="관리자">관리자</option>
               <option value="운영자">운영자</option>
@@ -47,7 +47,7 @@
         <v-flex d-flex xs12 sm12 md3>
           <div class="selectbox">
             <span>상태</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
+            <select id="select3" name="searchType" class="form-control" size="1">
               <option selected value="전체">전체</option>
               <option value="등록">등록</option>
               <option value="일시정지">일시정지</option>
@@ -57,7 +57,7 @@
         <v-flex d-flex xs12 sm12 md3>
           <div class="selectbox select-search">
             <span>검색어</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
+            <select id="select4" name="searchType" class="form-control" size="1">
               <option selected value="부서">부서</option>
               <option value="아이디">아이디</option>
               <option value="이름">이름</option>

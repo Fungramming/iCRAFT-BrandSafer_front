@@ -40,7 +40,7 @@
         border-radius: 5px;
         z-index: 1;
         // margin: 0 5px 10px 0;
-        margin-left: 10px;
+        margin-right: 10px;
         &:before {
           content: "";
           position: absolute;
@@ -75,7 +75,7 @@
       }
       .selectbox-input {
         position: relative;
-        margin-left: 10px;
+        margin-right: 10px;
         span {
           position: absolute;
           top: -30px;
@@ -88,6 +88,7 @@
       }
       .selectbox-with-date {
         height: 35px;
+        margin-left: 10px;
       }
       // 검색어 창 
       .input-text {
@@ -110,6 +111,14 @@
   .inspire {
     background: none;
     height: 0;
+    .v-table {
+      td {
+        &:first-child {
+          width: 50px;
+          // padding: 0;
+        }
+      }
+    }
     .application--wrap {
       height: 0 !important;
     }
