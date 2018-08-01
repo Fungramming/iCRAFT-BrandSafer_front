@@ -4,7 +4,7 @@
     <div class="tableBs-top">
       <p>검색 조건</p>
       <v-layout row wrap>
-        <v-flex d-flex xs12 sm12 md2>
+        <v-flex d-flex xs12 sm12 md3>
           <div class="selectbox">
             <span>고객사</span> 
             <select id="select1" name="searchType" class="form-control" size="1">
@@ -34,7 +34,7 @@
             </select>
           </div>
         </v-flex>
-        <v-flex d-flex xs12 sm12 md1>
+        <v-flex d-flex xs12 sm12 md3>
           <div class="selectbox">
             <span>구분</span>
             <select id="select1" name="searchType" class="form-control" size="1">
@@ -44,7 +44,7 @@
             </select>
           </div>
         </v-flex>
-        <v-flex d-flex xs12 sm12 md1>
+        <v-flex d-flex xs12 sm12 md3>
           <div class="selectbox">
             <span>상태</span>
             <select id="select1" name="searchType" class="form-control" size="1">

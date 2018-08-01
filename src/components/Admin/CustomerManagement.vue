@@ -13,7 +13,7 @@
             </select>
           </div>
         </v-flex>
-        <v-flex d-flex xs12 sm12 md5>
+        <v-flex d-flex xs12 sm12 md3>
           <input class="input-text" type="text">
         </v-flex>
       </v-layout>

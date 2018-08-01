@@ -40,7 +40,7 @@
         border-radius: 5px;
         z-index: 1;
         // margin: 0 5px 10px 0;
-        margin-right: 5px;
+        margin-left: 10px;
         &:before {
           content: "";
           position: absolute;
@@ -75,6 +75,7 @@
       }
       .selectbox-input {
         position: relative;
+        margin-left: 10px;
         span {
           position: absolute;
           top: -30px;
@@ -85,6 +86,9 @@
           line-height: 2.2;
         }
       }
+      .selectbox-with-date {
+        height: 35px;
+      }
       // 검색어 창 
       .input-text {
         width: 100%;
@@ -92,33 +96,20 @@
         padding: 5px;
         border-radius: 5px;
         height: 35px;
-        margin-left: 5px;
       }
       .input-with-date {
-        height: 52px;
+        height: 35px;
       }
     }
     .v-menu__activator {
       height: 130%;
     }
-    // date picker
-    .v-input {
-      margin-top: 0;
-    }
-    // // 검색 버튼
-    // .search-btn {
-    //   border-radius: 5px;
-    //   height: 32px;
-    //   margin: -5px 0px -1px 0;
-    // }
   }
   
   // table 최상위 wrap
   .inspire {
     background: none;
     height: 0;
-    // height: 537px;
-    // height: auto;
     .application--wrap {
       height: 0 !important;
     }
