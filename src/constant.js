@@ -8,15 +8,17 @@ export default {
   RESET_PASSWORD: "resetPassword",
   //막 쓰기
   // 기간설정, 고객사 선택
-  FETCH_STATUS: "fetchDashboard",
+  FETCH_DASHBOARD: "fetchDashboard",
+  FETCH_USER_DASHBOARD: "fetchUserDashboard",
   // 기간설정
   FETCH_PRODUCT_CERIT: "fectchProductCert",
+  /* ========= Product ========= */
+  // FETCH_PRODUCT: "fetchProduct",
+  // ADD_PRODUCT: "addProduct",
+  // UPDATE_PRODUCT: "updateProduct",
+  // DELETE_PRODUCT: "deleteProduct",
 
-  FETCH_PRODUCT: "fetchProduct",
-  ADD_PRODUCT: "addProduct",
-  UPDATE_PRODUCT: "updateProduct",
-  DELETE_PRODUCT: "deleteProduct",
-
+  /* ========= App ========= */
   FETCH_APP_LELEASE: "fetchAppLelease",
   ADD_APP_LELEASE: "addAppLelease",
   UPDATE_APP_LELEASE: "updateAppLelease",
@@ -24,6 +26,7 @@ export default {
 
   FETCH_APP: "fectchApp",
 
+  /* ========= Admin ========= */
   FETCH_CUSTOMER: "fetchCustomer",
   ADD_CUSTOMER: "addCustomer",
   UPDATE_CUSTOMER: "updateCustomer",
@@ -47,6 +50,7 @@ export default {
   DELETE_BLACKLIST: "deleteBlacklist",
 
   FETCH_OVER_CERT: "fetchOverCert",
+
   FETCH_RANDOM_NUMBER: "fetchRandomNumber",
   ADD_RANDOM_NUMBER: "addRandomNumber",
   UPDATE_RANDOM_NUMBER: "updateRandomNumber",
@@ -55,6 +59,7 @@ export default {
   // 관리자 app 등록은 어디서 하나요?
 
   FETCH_ADMIN_APP: "fetchAdminApp",
+  ADD_ADMIN_APP: "addAdminApp",
   UPDATE_ADMIN_APP: "updateAdminApp",
   DELETE_ADMIN_APP: "deleteAdminApp",
 
@@ -70,7 +75,39 @@ export default {
 
   // 코스토리 유통사 코드 띠용
 
-  FETCH_BLACKLISI_REGION: "fetchBlacklistRegion",
-  ADD_BLACKLISI_REGION: "addBlacklistRegion",
-  DELETE_BLACKLISI_REGION: "deleteBlacklistRegion"
+  // FETCH_BLACKLISI_REGION: "fetchBlacklistRegion",
+  // ADD_BLACKLISI_REGION: "addBlacklistRegion",
+  // DELETE_BLACKLISI_REGION: "deleteBlacklistRegion",
+
+  /* ========= UI ========= */
+  SHOW_LOADING: "showLoading",
+
+  /* ========= TimeSelect ========= */
+  WEEK_DAYS: ["일", "월", "화", "수", "목", "금", "토"],
+  TIME_SELECT: [
+    { label: "1" },
+    { label: "2" },
+    { label: "3" },
+    { label: "4" },
+    { label: "5" },
+    { label: "6" },
+    { label: "7" },
+    { label: "8" },
+    { label: "9" },
+    { label: "10" },
+    { label: "11" },
+    { label: "12" },
+    { label: "13" },
+    { label: "14" },
+    { label: "15" },
+    { label: "16" },
+    { label: "17" },
+    { label: "18" },
+    { label: "19" },
+    { label: "20" },
+    { label: "21" },
+    { label: "22" },
+    { label: "23" },
+    { label: "24" }
+  ]
 };

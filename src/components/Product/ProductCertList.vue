@@ -67,43 +67,7 @@
           </div>
           <input class="input-text" type="text">
         </v-flex>
-        <!-- <v-flex d-flex xs12 sm12 md3>
-          <div class="selectbox">
-            <span>제품 타입</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option selected value="전체">전체</option>
-              <option value="홀로태그">홀로태그</option>
-              <option value="하이브리드태그">하이브리드태그</option>
-              <option value="하이브리드태그">하이브리드태그</option>
-              <option value="난수태그">난수태그</option>
-              <option value="SQR태그">SQR태그</option>
-            </select>
-          </div>
-        </v-flex>
-        <v-flex d-flex xs12 sm12 md3>
-          <div class="selectbox">
-            <span>유형</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option selected value="전체">전체</option>
-              <option value="가품제조">가품제조</option>
-              <option value="과다인증">과다인증</option>
-            </select>
-          </div>
-        </v-flex>
-        <v-flex d-flex xs12 sm12 md3>
-          <div class="selectbox select-search">
-            <span>검색어</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option selected value="푸시토큰">푸시토큰</option>
-              <option value="과다인증번호">과다인증번호</option>
-            </select>
-          </div>
-          <input class="input-text" type="text">
-        </v-flex> -->
       </v-layout>
-      <!-- <v-flex d-flex xs12 sm12 md1 offset-md11>
-        <v-btn class="search-btn" color="primary" dark>검색</v-btn>
-      </v-flex> -->
     </div>
     <!-- table wrap -->
     <v-app class="inspire">

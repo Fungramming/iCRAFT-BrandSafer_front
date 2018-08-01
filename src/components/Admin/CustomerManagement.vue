@@ -36,7 +36,7 @@
       >
         <template slot="headerCell" slot-scope="props">
           <!-- <v-tooltip bottom> -->
-            <span class="item-headers" slot="activator">
+            <span slot="activator" class="item-headers">
               {{ props.header.text }}
             </span>
             <!-- <span>
@@ -298,11 +298,26 @@ export default {
       headers: [
         { text: "번호", align: "center", value: "번호", sortable: false },
         { text: "고객사", align: "center", value: "고객사", sortable: false },
-        { text: "고객사코드", align: "center", value: "고객사코드", sortable: false },
+        {
+          text: "고객사코드",
+          align: "center",
+          value: "고객사코드",
+          sortable: false
+        },
         { text: "주소", align: "center", value: "주소", sortable: false },
         { text: "대표자", align: "center", value: "대표자", sortable: false },
-        { text: "전화번호", align: "center", value: "전화번호", sortable: false },
-        { text: "가입일자", align: "center", value: "가입일자", sortable: false }
+        {
+          text: "전화번호",
+          align: "center",
+          value: "전화번호",
+          sortable: false
+        },
+        {
+          text: "가입일자",
+          align: "center",
+          value: "가입일자",
+          sortable: false
+        }
       ],
       desserts: [
         {
@@ -504,7 +519,7 @@ export default {
           exponent: 7,
           call_number: "6%",
           date: "6%"
-        },
+        }
       ]
     };
   },
