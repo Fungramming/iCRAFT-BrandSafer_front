@@ -17,11 +17,11 @@
           label="PASSWORD"
           clearable
         ></v-text-field>
-        <v-radio-group v-model="selectedLang" class="lang-group" row>
+        <!-- <v-radio-group v-model="selectedLang" class="lang-group" row>
           <v-radio class="lang-option" label="한국어" value="Korean"></v-radio>
           <v-radio class="lang-option" label="中文版" value="Chinese"></v-radio>
           <v-radio class="lang-option" label="English" value="English"></v-radio>
-        </v-radio-group>
+        </v-radio-group> -->
         <v-btn class="login-btn" @click.stop="onSubmit"><v-icon style="">launch</v-icon></v-btn>          
       </div>
       <footer>© iCraft21</footer>
@@ -36,8 +36,8 @@ export default {
     return {
       id: "",
       password: "",
-      token: "1234",
-      selectedLang: "Korean"
+      token: "1234"
+      // selectedLang: "Korean"
     };
   },
   mounted() {

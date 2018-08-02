@@ -62,10 +62,8 @@ export default {
   },
 
   /* ========= Admin ========= */
-  fetchCustomer({ page, query }) {
-    return axios.get(CONF.FETCH_CUSTOMER, {
-      params: { page, query }
-    });
+  fetchCustomer() {
+    return axios.get(CONF.FETCH_CUSTOMER);
   },
   addCustomer(customer) {
     return axios.post(CONF.ADD_CUSTOMER, customer);
