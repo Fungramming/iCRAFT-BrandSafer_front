@@ -105,19 +105,18 @@
         </li>
       </ul>
       <span class="copy">&copy; 2018 ICRAFT</span>
-      <!-- <v-btn class="closeBtn" fixed flat @click.stop="" > -->
-        <button class="closeBtn" @click.stop="clickToggle">
-          
+        <button class="closeBtn" @click.stop="clickToggle"> 
           <v-icon >
             close  
           </v-icon>
         </button>
-      <!-- </v-btn>    -->
     </div>
   </div>
 </template>
 
 <script>
+import { hoverFunc, clickFunc, activingFunc } from "./AsideHelper";
+import Constant from "../constant";
 export default {
   data() {
     return {
@@ -127,66 +126,13 @@ export default {
   methods: {
     logout: function() {},
     hoverToggle: function(e) {
-      if (window.innerWidth > 500) {
-        let sideBarWidth = e.path[0].offsetWidth;
-        if (sideBarWidth < 62) {
-          this.clickToggle();
-        }
-      }
+      hoverFunc(e);
     },
     clickToggle: function() {
-      let sideBar = document.getElementsByClassName("side-bar")[0];
-      let topBar = document.getElementsByClassName("top-bar")[0];
-      let con = document.getElementsByClassName("contents")[0];
-      if (sideBar.className == "side-bar") {
-        sideBar.classList.add("active");
-        topBar.classList.add("active");
-        con.classList.add("active");
-        if (this.$store.state.sideBar == true) {
-          this.$store.state.sideBar = false;
-        }
-      } else {
-        sideBar.classList.remove("active");
-        topBar.classList.remove("active");
-        con.classList.remove("active");
-        if (this.$store.state.sideBar == false) {
-          this.$store.state.sideBar = true;
-        }
-      }
+      this.$store.state.sideBar = clickFunc();
     },
     isActived: function(e) {
-      let title = e.toElement.innerText;
-      this.compTitle = title;
-      let subTabTitle =
-        e.toElement.parentNode.parentNode.parentNode.parentNode.className;
-      let tab = document.getElementsByClassName("tab")[0];
-      let subTab = document.getElementsByClassName("sub-tab")[0];
-      let subSubTab = document.getElementsByClassName("sub-sub-tab")[0];
-      let activedList = function(target) {
-        return target.querySelectorAll(".active");
-      };
-      if (subTabTitle == "side-bar") {
-        if (activedList(tab).length > 0) {
-          activedList(tab).forEach(element => {
-            element.classList.remove("active");
-          });
-        }
-        e.path[2].classList.add("active");
-      } else if (subTabTitle == "expandable sub-sub-tab-title active") {
-        if (activedList(subSubTab).length > 0) {
-          activedList(subSubTab).forEach(element => {
-            element.classList.remove("active");
-          });
-        }
-        e.path[2].classList.add("active");
-      } else if (subTabTitle == "expandable active") {
-        if (activedList(subTab).length > 0) {
-          activedList(subTab).forEach(element => {
-            element.classList.remove("active");
-          });
-        }
-        e.path[2].classList.add("active");
-      }
+      this.compTitle = activingFunc(e);
     }
   }
 };
@@ -195,11 +141,14 @@ export default {
 <style lang="scss">
 $phone: "(min-width: 0) and (max-width: 500px)";
 .top-bar {
-  height: 61px;
   .v-toolbar__content {
     height: 64px !important;
     padding-left: 245px;
     transition: padding 0.3s ease;
+    height: 61px;
+    @media #{$phone} {
+      padding-left: 20px;
+    }
   }
   .component-title {
     color: #fefefe;
@@ -237,20 +186,28 @@ $phone: "(min-width: 0) and (max-width: 500px)";
   height: 100%;
   overflow-x: hidden;
   z-index: 200;
-  transition: width 0.3s ease;
+  transition: width, left 0.3s ease;
   @media #{$phone} {
     width: 100%;
+    left: -100%;
   }
   &.active {
     width: 60px;
     @media #{$phone} {
-      width: 0;
+      width: 100%;
+      left: 0;
     }
     span {
       opacity: 0;
+      @media #{$phone} {
+        opacity: 1;
+      }
     }
     .plus {
       opacity: 0;
+      @media #{$phone} {
+        opacity: 1;
+      }
     }
   }
   .header {

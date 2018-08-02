@@ -1,4 +1,4 @@
-var BASE_URL = "/api/v1";
+var BASE_URL = "";
 
 export default {
   PAGESIZE: 5,
@@ -44,7 +44,8 @@ export default {
   UPDATE_ICRAFT_USER: `${BASE_URL}/admin/icrf-users/\${uid}`,
   DELETE_ICRAFT_USER: ` ${BASE_URL}/admin/icrf-users/\${uid}`,
 
-  FETCH_USER: `${BASE_URL}/users/\${uid}`,
+  // FETCH_USER: `${BASE_URL}/users/\${uid}`,
+  FETCH_USER: `${BASE_URL}/users/`,
   ADD_USER: `${BASE_URL}/users/`,
   UPDATE_USER: ` ${BASE_URL}/users/\${uid}`,
   DELETE_USER: `${BASE_URL}/users/\${uid}`,

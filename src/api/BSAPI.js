@@ -92,8 +92,8 @@ export default {
     return axios.delete(CONF.DELETE_ICRAFT_USER, uid);
   },
 
-  fetchUser(uid) {
-    return axios.get(CONF.FETCH_USER.replace("${uid}", uid));
+  fetchUser() {
+    return axios.get(CONF.FETCH_USER);
   },
   addUser(user) {
     return axios.post(CONF.ADD_USER, user);

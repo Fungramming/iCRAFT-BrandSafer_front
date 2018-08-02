@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <aside-tab v-if="this.isAuthenticated" :position-x="0" :position-y="0"  absolute class="aside" style="width:230px;"></aside-tab>
-    <div :class="{active: this.$store.state.sideBar} " class="contents">
+    <div :class="{active: true} " class="contents">
       <router-view/>
     </div>
     <log-out v-if="false"></log-out>
@@ -14,10 +14,7 @@ import LogOut from "./components/PopupModal/LogOut.vue";
 
 export default {
   components: { AsideTab, LogOut },
-  computed: mapGetters(["isAuthenticated"]),
-  beforeCreate() {
-    // window.localStorage.clear();
-  }
+  computed: mapGetters(["isAuthenticated", "sideBar"])
 };
 </script>
 
@@ -85,6 +82,9 @@ a {
   }
   &.active {
     padding-left: 250px;
+    @media #{$phone} {
+      padding-left: 10px;
+    }
   }
 }
 </style>
