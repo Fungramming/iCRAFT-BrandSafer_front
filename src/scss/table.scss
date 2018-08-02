@@ -1,3 +1,6 @@
+$phone: "(min-width: 0) and (max-width: 600px)";
+$tablet: "(min-width: 601px) and (max-width: 959px)";
+
 // 테이블 전체를 감싸는 wrap
 .tableBs {
   // 검색조건 및 검색어 입력 창 wrap
@@ -41,6 +44,14 @@
         z-index: 1;
         // margin: 0 5px 10px 0;
         margin-right: 10px;
+        @media #{$phone} {
+          margin-right: 0;
+          margin-bottom: 35px;
+        }
+        @media #{$tablet} {
+          margin-right: 0;
+          margin-bottom: 35px;
+        }
         &:before {
           content: "";
           position: absolute;
@@ -89,6 +100,17 @@
       .selectbox-with-date {
         height: 35px;
         margin-left: 10px;
+        @media #{$phone} {
+          margin-left: 0;
+          margin-top: 35px;
+        }
+        @media #{$tablet} {
+          margin-left: 0;
+          margin-top: 35px;
+        }
+      }
+      .selectbox-top {
+        margin-bottom: 35px;
       }
       // 검색어 창 
       .input-text {

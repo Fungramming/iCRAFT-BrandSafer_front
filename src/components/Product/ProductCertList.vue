@@ -12,7 +12,7 @@
           <date-picker v-model="date_finish" :lang="lang"></date-picker>
         </v-flex>
         <v-flex d-flex xs12 md6 lg4>
-          <div class="selectbox">
+          <div class="selectbox selectbox-with-date selectbox-top">
             <span>고객사</span>
             <select id="select1" name="searchType" class="form-control" size="1">
               <option value="전체" selected>전체</option>
@@ -23,7 +23,7 @@
           </div>
         </v-flex>
         <v-flex d-flex xs12 md6 lg4>
-          <div class="selectbox">
+          <div class="selectbox selectbox-top">
             <span>태그타입</span>
             <select id="select1" name="searchType" class="form-control" size="1">
               <option value="전체" selected>전체</option>
@@ -34,7 +34,7 @@
           </div>
         </v-flex>
         <v-flex d-flex xs12 md6 lg4>
-          <div class="selectbox">
+          <div class="selectbox selectbox-top">
             <span>OS</span>
             <select id="select1" name="searchType" class="form-control" size="1">
               <option value="전체" selected>전체</option>
@@ -45,7 +45,7 @@
           </div>
         </v-flex>
         <v-flex d-flex xs12 md6 lg4>
-          <div class="selectbox">
+          <div class="selectbox selectbox-top">
             <span>인증결과</span>
             <select id="select1" name="searchType" class="form-control" size="1">
               <option value="전체" selected>전체</option>
@@ -56,7 +56,7 @@
           </div>
         </v-flex>
         <v-flex d-flex xs12 md6 lg4>
-          <div class="selectbox select-search">
+          <div class="selectbox select-search selectbox-top">
             <span>검색어</span>
             <select id="select1" name="searchType" class="form-control" size="1">
               <option value="전체" selected>전체</option>
