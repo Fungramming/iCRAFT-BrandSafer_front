@@ -42,10 +42,10 @@
           </span>
         </template>
         <template slot="items" slot-scope="props">
-          <td>
+          <td @click="getSelected">
             <v-checkbox primary
               hide-details
-              @click="getSelected"
+              
             ></v-checkbox>
           </td>
           <td class="text-xs-center">{{ props.item.idx }}</td>
@@ -122,7 +122,7 @@ export default {
     });
   },
   methods: {
-    getSeleted: function() {
+    getSelected: function() {
       getSelectedFunc();
     }
   }
