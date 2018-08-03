@@ -9,6 +9,7 @@ import ProductCertList from "./components/Product/ProductCertList";
 import ProductCertMap from "./components/Product/ProductCertMap.vue";
 // APP
 import Appv from "./views/Appv";
+import AppReleaseInfo from "./components/Appv/AppReleaseInfo";
 // ADMIN
 import NotFound from "./views/NotFound";
 import CustomerManagement from "./components/Admin/CustomerManagement";
@@ -58,7 +59,12 @@ export default new Router({
         {
             path: "/appv",
             name: "appv",
-            component: Appv
+            component: Appv,
+            children: [{
+                path: "/appv/releaseInfo",
+                name: "releaseInfo",
+                component: AppReleaseInfo
+            }]
         },
         {
             path: "/admin/customerManagement",

@@ -1,11 +1,21 @@
 <template>
-  <div>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>
-export default {};
+import AppReleaseInfo from "../components/Appv/AppReleaseInfo.vue"
+
+export default {
+  components: {
+    AppReleaseInfo
+  },
+  data() {
+    return {
+      key: ""
+    }
+  }
+};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 </style>
