@@ -1,6 +1,6 @@
 <template>
   <div>
-    <line-chart :data="chartData" :loading="loading" :data-zoom="dataZoom" height="300px"></line-chart>
+    <line-chart :data="chartData" :loading="loading" :data-zoom="dataZoom" class="line-chart" height="300px"></line-chart>
   </div>
 </template>
 
@@ -64,4 +64,7 @@ export default {
 </script>
 
 <style scoped>
+.line-chart {
+  overflow: hidden;
+}
 </style>

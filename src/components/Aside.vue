@@ -199,8 +199,6 @@ $phone: "(min-width: 0) and (max-width: 500px)";
 .logout-modal {
   width: 100vw;
   height: 100vh;
-  position: relative;
-  // z-index: inherit;
   .logOutBtn {
     color: white;
     top: 15px;

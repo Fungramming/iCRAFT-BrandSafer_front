@@ -1,6 +1,6 @@
 <template>
   <div>
-    <bar-chart :data="chartData" :loading="loading" :data-empty="dataEmpty" height="300px"></bar-chart>
+    <bar-chart :data="chartData" :loading="loading" :data-empty="dataEmpty" height="300px" class="bar-chart"></bar-chart>
   </div>
 </template>
 
@@ -30,4 +30,7 @@ export default {
 </script>
 
 <style scoped>
+.bar-chart {
+  overflow: hidden;
+}
 </style>
