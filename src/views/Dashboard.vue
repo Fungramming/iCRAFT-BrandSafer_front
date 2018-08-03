@@ -81,7 +81,7 @@ export default {
   },
   mounted() {
     this.nowDate = formatDate();
-    this.$store.dispatch(Constant.FETCH_USER).then(resp => {
+    this.$store.dispatch(Constant.FETCH_CUSTOMER).then(resp => {
       console.log("resp :", resp);
     });
   }

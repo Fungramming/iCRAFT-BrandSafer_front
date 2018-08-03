@@ -153,10 +153,8 @@ export default {
     );
   },
 
-  fetchAdminApp({ page, query }) {
-    return axios.get(CONF.FETCH_ADMIN_APP, {
-      params: { page, query }
-    });
+  fetchAdminApp() {
+    return axios.get(CONF.FETCH_ADMIN_APP);
   },
   addAdminApp({ nid, number }) {
     return axios.delete(CONF.ADD_ADMIN_APP.replace("${nid}", nid), number);

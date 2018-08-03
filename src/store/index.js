@@ -7,6 +7,7 @@ import mutations from "./mutations.js";
 import actions from "./actions.js";
 
 Vue.use(Vuex);
+window.localStorage.clear();
 
 const store = new Vuex.Store({
   state,
@@ -16,9 +17,6 @@ const store = new Vuex.Store({
   getters: {
     isAuthenticated(state) {
       return !!state.token;
-    },
-    sideBar(state) {
-      return state.sideBar;
     }
   }
 });

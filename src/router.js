@@ -21,91 +21,92 @@ import DistributorManagement from "./components/Admin/DistributorManagement";
 import TagtypeManagement from "./components/Admin/TagtypeManagement";
 import AdminappManagement from "./components/Admin/AdminappManagement";
 
-
 Vue.use(Router);
 
 export default new Router({
-    routes: [{
-            path: "/",
-            redirect: { name: "login" }
+  routes: [
+    {
+      path: "/",
+      redirect: { name: "login" }
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: Login
+    },
+    {
+      path: "/dashboard",
+      name: "dashboard",
+      component: Dashboard
+    },
+    {
+      path: "/product",
+      name: "product",
+      component: Product,
+      children: [
+        {
+          path: "/product/certList",
+          name: "certList",
+          component: ProductCertList
         },
         {
-            path: "/login",
-            name: "login",
-            component: Login
-        },
-        {
-            path: "/dashboard",
-            name: "dashboard",
-            component: Dashboard
-        },
-        {
-            path: "/product",
-            name: "product",
-            component: Product,
-            children: [{
-                    path: "/product/certList",
-                    name: "certList",
-                    component: ProductCertList
-                },
-                {
-                    path: "/product/certMap",
-                    name: "certMap",
-                    component: ProductCertMap
-                }
-            ]
-        },
-        {
-            path: "/appv",
-            name: "appv",
-            component: Appv
-        },
-        {
-            path: "/admin/customerManagement",
-            name: "customerManagement",
-            component: CustomerManagement
-        },
-        {
-            path: "/admin/customerAccount",
-            name: "customerAccount",
-            component: CustomerAccount
-        },
-        {
-            path: "/admin/icraftAccount",
-            name: "icraftAccount",
-            component: IcraftAccount
-        },
-        {
-            path: "/admin/accountLog",
-            name: "accountLog",
-            component: AccountLog
-        },
-        {
-            path: "/admin/blacklistApp",
-            name: "blacklistApp",
-            component: BlacklistApp
-        },
-        {
-            path: "/admin/warningList",
-            name: "warningList",
-            component: WarningList
-        },
-        {
-            path: "/admin/distributorManagement",
-            name: "distributorManagement",
-            component: DistributorManagement
-        },
-        {
-            path: "/admin/tagtypeManagement",
-            name: "tagtypeManagement",
-            component: TagtypeManagement
-        },
-        {
-            path: "/admin/adminappManagement",
-            name: "adminappManagement",
-            component: AdminappManagement
-        },
-        { path: "*", component: NotFound },
-    ],
-    mode: "history"
+          path: "/product/certMap",
+          name: "certMap",
+          component: ProductCertMap
+        }
+      ]
+    },
+    {
+      path: "/appv",
+      name: "appv",
+      component: Appv
+    },
+    {
+      path: "/admin/customerManagement",
+      name: "customerManagement",
+      component: CustomerManagement
+    },
+    {
+      path: "/admin/customerAccount",
+      name: "customerAccount",
+      component: CustomerAccount
+    },
+    {
+      path: "/admin/icraftAccount",
+      name: "icraftAccount",
+      component: IcraftAccount
+    },
+    {
+      path: "/admin/accountLog",
+      name: "accountLog",
+      component: AccountLog
+    },
+    {
+      path: "/admin/blacklistApp",
+      name: "blacklistApp",
+      component: BlacklistApp
+    },
+    {
+      path: "/admin/warningList",
+      name: "warningList",
+      component: WarningList
+    },
+    {
+      path: "/admin/distributorManagement",
+      name: "distributorManagement",
+      component: DistributorManagement
+    },
+    {
+      path: "/admin/tagtypeManagement",
+      name: "tagtypeManagement",
+      component: TagtypeManagement
+    },
+    {
+      path: "/admin/adminappManagement",
+      name: "adminappManagement",
+      component: AdminappManagement
+    },
+    { path: "*", component: NotFound }
+  ],
+  mode: "history"
 });

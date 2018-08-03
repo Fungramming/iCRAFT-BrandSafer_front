@@ -1,11 +1,12 @@
-var BASE_URL = "";
+var BASE_URL =
+  "http://brandsaferapi-env.bkktdgvb3w.ap-northeast-2.elasticbeanstalk.com/api/v1.0";
 
 export default {
   PAGESIZE: 5,
 
   /* ========= User ========= */
   // Auth
-  LOG_IN: `${BASE_URL}/tokens/`,
+  LOG_IN: `/tokens/`,
   // Password
   UPDATE_PASSWORD: `${BASE_URL}/users/\${uid}`,
   RESET_PASSWORD: `${BASE_URL}/users/\${uid}/pwReset`,
@@ -36,7 +37,7 @@ export default {
 
   FETCH_CUSTOMER: `${BASE_URL}/admin/customer/`, // query, page
   ADD_CUSTOMER: `${BASE_URL}/admin/customer/`,
-  UPDATE_CUSTOMER: `/admin/customer/\${cid}`,
+  UPDATE_CUSTOMER: `${BASE_URL}/admin/customer/\${cid}`,
 
   FETCH_ICRAFT_USER: `${BASE_URL}/admin/icrf-users/`, // query, page
   FETCH_ICRAFT_USER_ID: ` ${BASE_URL}/admin/icrf-users/\${uid}`,

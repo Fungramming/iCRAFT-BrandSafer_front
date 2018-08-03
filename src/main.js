@@ -23,8 +23,8 @@ import GmapCluster from "vue2-google-maps/src/components/cluster";
 
 Vue.use(Vuetify);
 Vue.prototype.$axios = axios;
-axios.defaults.baseURL =
-  "http://brandsaferapi-env.bkktdgvb3w.ap-northeast-2.elasticbeanstalk.com/api/v1.0/";
+// axios.defaults.baseURL =
+//   "";
 
 Vue.config.productionTip = false;
 
