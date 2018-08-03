@@ -29,8 +29,6 @@
 </template>
 
 <script>
-import Constant from "../constant.js";
-
 export default {
   data() {
     return {

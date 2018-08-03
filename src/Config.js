@@ -16,7 +16,9 @@ export default {
 
   //막 쓰기
   // 기간설정, 고객사 선택
-  FETCH_DASHBOARD: `${BASE_URL}/dashboard1/`, // 모든 유저가저와서 계산해야됨
+  FETCH_DAILY_STATUS: `${BASE_URL}/dashboard1/`, // 모든 유저가저와서 계산해야됨
+  FETCH_MONTHLY_STATUS: `${BASE_URL}/dashboard2/`, // 모든 유저가저와서 계산해야됨
+
   FETCH_USER_DASHBOARD: `${BASE_URL}/users/\${uid}`,
 
   // 기간설정

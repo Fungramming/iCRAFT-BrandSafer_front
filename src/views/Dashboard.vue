@@ -45,19 +45,19 @@
             <tbody>
               <tr>
                 <td>정품</td>
-                <td>1</td>
+                <td>{{status.Genuine}}</td>
               </tr>
                <tr>
-                <td>정품</td>
-                <td>1</td>
+                <td>가품</td>
+                <td>{{status.Genuine}}</td>                
               </tr>
                <tr>
-                <td>정품</td>
-                <td>1</td>
+                <td>공유</td>
+                <td>{{status.Share}}</td>
               </tr>
                <tr>
-                <td>정품</td>
-                <td>1</td>
+                <td>제보</td>
+                <td>{{status.Report}}</td>                
               </tr>
             </tbody>
           </table>
@@ -76,13 +76,30 @@ export default {
   components: { LineChart, BarChart },
   data() {
     return {
-      nowDate: "value"
+      nowDate: "value",
+      status: {
+        Counterfeit: 0,
+        Genuine: 0,
+        Report: 0,
+        Share: 0,
+        ETC: 0,
+        Total: 0
+      }
     };
   },
   mounted() {
     this.nowDate = formatDate();
-    this.$store.dispatch(Constant.FETCH_CUSTOMER).then(resp => {
-      console.log("resp :", resp);
+    this.$store.dispatch(Constant.FETCH_DAILY_STATUS).then(resp => {});
+    this.$store.dispatch(Constant.FETCH_MONTHLY_STATUS).then(resp => {
+      console.log("resp.data.status :", resp.data.status);
+      let box = resp.data.status;
+      console.log("box :", box);
+      for (let daily in box) {
+        for (let item in box[daily]) {
+          this.status[item] = this.status[item] + box[daily][item];
+        }
+      }
+      console.log("this.status :", this.status);
     });
   }
 };
