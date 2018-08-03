@@ -25,7 +25,7 @@
     <v-app class="inspire">
       <v-data-table
         :headers="headers"
-        :items="desserts"
+        :items="results"
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
@@ -35,7 +35,7 @@
         class="elevation-1"
       >
         <template slot="headerCell" slot-scope="props">
-          <span class="item-headers" slot="activator">
+          <span slot="activator" class="item-headers">
             {{ props.header.text }}
           </span>
         </template>
@@ -47,16 +47,17 @@
               hide-details
             ></v-checkbox>
           </td>
-          <td class="text-xs-center">{{ props.item.number }}</td>
-          <td class="text-xs-center"><a @click="dialog_edit = true"> {{ props.item.customer }} </a></td>
-          <td class="text-xs-center">{{ props.item.customer_code }}</td>
-          <td class="text-xs-center">{{ props.item.address }}</td>
-          <td class="text-xs-center">{{ props.item.exponent }}</td>
-          <td class="text-xs-center">{{ props.item.call_number }}</td>
-          <td class="text-xs-center">{{ props.item.date }}</td>
+          <td class="text-xs-left">{{ results.length -- }}</td>
+          <!-- <td class="text-xs-left">{{ props.item.idx - 6 }}</td> -->
+          <td class="text-xs-left"><a @click="dialog_edit = true"> {{ props.item.name_kr }} </a></td>
+          <td class="text-xs-left">{{ props.item.code }}</td>
+          <td class="text-xs-left">{{ props.item.addr_kr }}</td>
+          <td class="text-xs-left">{{ props.item.delegator_kr }}</td>
+          <td class="text-xs-left">{{ props.item.telephone }}</td>
+          <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
         </template>
       </v-data-table>
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
+      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{results.length}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md10>
@@ -292,7 +293,7 @@
           <v-btn icon dark @click.native="dialog_edit = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>고객사 등록</v-toolbar-title>
+          <v-toolbar-title>고객사 수정</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn dark flat @click.native="dialog_edit = false">수정</v-btn>
@@ -485,6 +486,8 @@
 </template>
 
 <script>
+import Constant from "../../constant.js";
+
 export default {
   data() {
     return {
@@ -497,231 +500,20 @@ export default {
       },
       selected: [],
       headers: [
-        { text: "번호", align: "center", value: "번호", sortable: false },
-        { text: "고객사", align: "center", value: "고객사", sortable: false },
+        { text: "번호", align: "left", value: "번호", sortable: false },
+        { text: "고객사", align: "left", value: "고객사", sortable: false },
         {
           text: "고객사코드",
-          align: "center",
+          align: "left",
           value: "고객사코드",
           sortable: false
         },
-        { text: "주소", align: "center", value: "주소", sortable: false },
-        { text: "대표자", align: "center", value: "대표자", sortable: false },
-        {
-          text: "전화번호",
-          align: "center",
-          value: "전화번호",
-          sortable: false
-        },
-        {
-          text: "가입일자",
-          align: "center",
-          value: "가입일자",
-          sortable: false
-        }
+        { text: "주소", align: "left", value: "주소", sortable: false },
+        { text: "대표자", align: "left", value: "대표자", sortable: false },
+        { text: "전화번호", align: "left", value: "전화번호", sortable: false },
+        { text: "가입일자", align: "left", value: "가입일자", sortable: false }
       ],
-      desserts: [
-        {
-          value: false,
-          number: "1",
-          customer: '오감바이오',
-          customer_code: 6.0,
-          address: 24,
-          exponent: 4.0,
-          call_number: "1%",
-          date: "1%"
-        },
-        {
-          value: false,
-          number: "2",
-          customer: '오감바이오',
-          customer_code: 9.0,
-          address: 37,
-          exponent: 4.3,
-          call_number: "1%",
-          date: "1%"
-        },
-        {
-          value: false,
-          number: "3",
-          customer: '오감바이오',
-          customer_code: 16.0,
-          address: 23,
-          exponent: 6.0,
-          call_number: "7%",
-          date: "7%"
-        },
-        {
-          value: false,
-          number: "4",
-          customer: '오감바이오',
-          customer_code: 3.7,
-          address: 67,
-          exponent: 4.3,
-          call_number: "8%",
-          date: "8%"
-        },
-        {
-          value: false,
-          number: "5",
-          customer: '오감바이오',
-          customer_code: 16.0,
-          address: 49,
-          exponent: 3.9,
-          call_number: "16%",
-          date: "16%"
-        },
-        {
-          value: false,
-          number: "6",
-          customer: '오감바이오',
-          customer_code: 0.0,
-          address: 94,
-          exponent: 0.0,
-          call_number: "0%",
-          date: "0%"
-        },
-        {
-          value: false,
-          number: "7",
-          customer: '오감바이오',
-          customer_code: 0.2,
-          address: 98,
-          exponent: 0,
-          call_number: "2%",
-          date: "2%"
-        },
-        {
-          value: false,
-          number: "8",
-          customer: '오감바이오',
-          customer_code: 3.2,
-          address: 87,
-          exponent: 6.5,
-          call_number: "45%",
-          date: "45%"
-        },
-        {
-          value: false,
-          number: "9",
-          customer: '오감바이오',
-          customer_code: 25.0,
-          address: 51,
-          exponent: 4.9,
-          call_number: "22%",
-          date: "22%"
-        },
-        {
-          value: false,
-          number: "10",
-          customer: '오감바이오',
-          customer_code: 26.0,
-          address: 65,
-          exponent: 7,
-          call_number: "6%",
-          date: "6%"
-        },
-        {
-          value: false,
-          number: "11",
-          customer: '오감바이오',
-          customer_code: 6.0,
-          address: 24,
-          exponent: 4.0,
-          call_number: "1%",
-          date: "1%"
-        },
-        {
-          value: false,
-          number: "12",
-          customer: '오감바이오',
-          customer_code: 9.0,
-          address: 37,
-          exponent: 4.3,
-          call_number: "1%",
-          date: "1%"
-        },
-        {
-          value: false,
-          number: "13",
-          customer: '오감바이오',
-          customer_code: 16.0,
-          address: 23,
-          exponent: 6.0,
-          call_number: "7%",
-          date: "7%"
-        },
-        {
-          value: false,
-          number: "14",
-          customer: '오감바이오',
-          customer_code: 3.7,
-          address: 67,
-          exponent: 4.3,
-          call_number: "8%",
-          date: "8%"
-        },
-        {
-          value: false,
-          number: "15",
-          customer: '오감바이오',
-          customer_code: 16.0,
-          address: 49,
-          exponent: 3.9,
-          call_number: "16%",
-          date: "16%"
-        },
-        {
-          value: false,
-          number: "16",
-          customer: '오감바이오',
-          customer_code: 0.0,
-          address: 94,
-          exponent: 0.0,
-          call_number: "0%",
-          date: "0%"
-        },
-        {
-          value: false,
-          number: "17",
-          customer: '오감바이오',
-          customer_code: 0.2,
-          address: 98,
-          exponent: 0,
-          call_number: "2%",
-          date: "2%"
-        },
-        {
-          value: false,
-          number: "18",
-          customer: '오감바이오',
-          customer_code: 3.2,
-          address: 87,
-          exponent: 6.5,
-          call_number: "45%",
-          date: "45%"
-        },
-        {
-          value: false,
-          number: "19",
-          customer: '오감바이오',
-          customer_code: 25.0,
-          address: 51,
-          exponent: 4.9,
-          call_number: "22%",
-          date: "22%"
-        },
-        {
-          value: false,
-          number: "20",
-          customer: '오감바이오',
-          customer_code: 26.0,
-          address: 65,
-          exponent: 7,
-          call_number: "6%",
-          date: "6%"
-        }
-      ]
+      results: []
     };
   },
   computed: {
@@ -736,6 +528,13 @@ export default {
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
     }
+  },
+  mounted() {
+    this.$store.dispatch(Constant.FETCH_USERS).then(resp => {
+      this.results = resp;
+      console.log("this.results :", this.results);
+      // console.log("this.results.length :", this.results.length);
+    });
   }
 };
 </script>

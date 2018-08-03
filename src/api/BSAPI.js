@@ -62,9 +62,14 @@ export default {
   },
 
   /* ========= Admin ========= */
-  fetchCustomer() {
-    return axios.get(CONF.FETCH_CUSTOMER);
+  fetchCustomer(customer) {
+    return axios.get(CONF.FETCH_CUSTOMER, customer);
   },
+  // fetchCustomer({ page, query }) {
+  //   return axios.get(CONF.FETCH_CUSTOMER, {
+  //     params: { page, query }
+  //   });
+  // },
   addCustomer(customer) {
     return axios.post(CONF.ADD_CUSTOMER, customer);
   },
@@ -72,11 +77,14 @@ export default {
     return axios.put(CONF.UPDATE_CUSTOMER.replace("${cid}", cid), customer);
   },
 
-  fetchIcraftUser({ page, query }) {
-    return axios.get(CONF.FETCH_ICRAFT_USER, {
-      params: { page, query }
-    });
+  fetchIcraftUser(uid) {
+    return axios.get(CONF.FETCH_ICRAFT_USER, uid);
   },
+  // fetchIcraftUser({ page, query }) {
+  //   return axios.get(CONF.FETCH_ICRAFT_USER, {
+  //     params: { page, query }
+  //   });
+  // },
   fetchIcraftUserId(uid) {
     return axios.get(CONF.FETCH_ICRAFT_USER_ID.replace("${uid}", uid));
   },
@@ -103,11 +111,14 @@ export default {
     return axios.delete(CONF.DELETE_USER, uid);
   },
 
-  fetchAccountLog({ page, query }) {
-    return axios.get(CONF.FETCH_ACCOUNT_LOG, {
-      params: { page, query }
-    });
+  fetchAccountLog() {
+    return axios.get(CONF.FETCH_ACCOUNT_LOG);
   },
+  // fetchAccountLog({ page, query }) {
+  //   return axios.get(CONF.FETCH_ACCOUNT_LOG, {
+  //     params: { page, query }
+  //   });
+  // },
 
   fetchBlacklist({ page, query }) {
     return axios.get(CONF.FETCH_BLACKLIST, {

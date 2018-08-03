@@ -51,7 +51,7 @@ export default {
   UPDATE_USER: ` ${BASE_URL}/users/\${uid}`,
   DELETE_USER: `${BASE_URL}/users/\${uid}`,
 
-  FETCH_ACCOUNT_LOG: `${BASE_URL}/users/access`, // query, page
+  FETCH_ACCOUNT_LOG: `${BASE_URL}/admin/access`, // query, page
 
   // 권한관리 서버와 의논 필요
 
