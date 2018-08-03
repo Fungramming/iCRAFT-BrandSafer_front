@@ -40,7 +40,7 @@
     <v-app class="inspire">
       <v-data-table
         :headers="headers"
-        :items="desserts"
+        :items="results"
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
@@ -278,6 +278,8 @@
 </template>
 
 <script>
+import Constant from "../../constant.js";
+
 export default {
   data() {
     return {
@@ -519,7 +521,8 @@ export default {
           exponent: 7,
           call_number: "6%"
         }
-      ]
+      ],
+      results: []
     };
   },
   computed: {
@@ -534,6 +537,13 @@ export default {
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
     }
+  },
+  mounted() {
+    this.$store.dispatch(Constant.FETCH_ACCOUNT_LOG).then(resp => {
+      this.results = resp;
+      console.log("this.results :", this.results);
+      // console.log("this.results.length :", this.results.length);
+    });
   }
 };
 </script>
