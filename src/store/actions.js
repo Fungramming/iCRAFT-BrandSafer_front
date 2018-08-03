@@ -30,11 +30,11 @@ export default {
     return promise(BSAPI.logIn, payload, store, Constant.LOG_IN);
   },
   // Dashboard
-  async [Constant.FETCH_DASHBOARD](store, payload) {
-    return promise(BSAPI.fetchDashboard, payload, store, null);
+  async [Constant.FETCH_DAILY_STATUS](store, payload) {
+    return promise(BSAPI.fetchDailyStatus, payload, store, null);
   },
-  async [Constant.FETCH_USER_DASHBOARD](store, payload) {
-    return promise(BSAPI.fetchUserDashboard, payload, store, null);
+  async [Constant.FETCH_MONTHLY_STATUS](store, payload) {
+    return promise(BSAPI.fetchMonthlyStatus, payload, store, null);
   },
   // Product
   async [Constant.FETCH_PRODUCT_CERIT](store, payload) {

@@ -18,20 +18,20 @@
       </v-btn> -->     
     </v-toolbar>
      <v-dialog v-model="dialog" class="logout-modal" persistent max-width="290">
-        <v-btn slot="activator" class="logOutBtn" fixed flat>
-          <v-icon >
-            exit_to_app
-          </v-icon>
-        </v-btn>
-        <v-card>
-          <v-card-title class="headline">로그아웃 하시겠습니까?</v-card-title>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="green darken-1" flat @click.native="logout">로그아웃</v-btn>
-            <v-btn color="green darken-1" flat @click.native="dialog = false">취소</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+      <v-btn slot="activator" class="logOutBtn" fixed flat>
+        <v-icon >
+          exit_to_app
+        </v-icon>
+      </v-btn>
+      <v-card>
+        <v-card-title class="headline">로그아웃 하시겠습니까?</v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" flat @click.native="logout">로그아웃</v-btn>
+          <v-btn color="green darken-1" flat @click.native="dialog = false">취소</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <div class="side-bar active" @mouseover="hoverToggle">
       <div class="header">
         <img src="../assets/logo_small.png" alt="">

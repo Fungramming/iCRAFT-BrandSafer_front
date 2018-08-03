@@ -71,7 +71,7 @@
     </div>
     <!-- table wrap -->
     <v-app class="inspire">
-      <!-- <v-data-table
+      <v-data-table
         :headers="headers"
         :items="desserts"
         :search="search"
@@ -98,7 +98,7 @@
           <td class="text-xs-center">{{ props.item.cert_result }}</td>
           <td class="text-xs-center">{{ props.item.location }}</td>
         </template>
-      </v-data-table> -->
+      </v-data-table>
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <div class="text-xs-center pt-2">
@@ -106,41 +106,6 @@
         </div>
       </div>
     </v-app>
-
-    <v-flex d-flex xs12 sm12 md12>
-    <!-- modal dialog -->
-    <v-dialog
-      v-model="dialog"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-      scrollable
-    >
-      <!-- start modal -->
-      <v-card tile>
-        <v-toolbar card dark color="primary">
-          <v-btn icon dark @click.native="dialog = false">
-            <v-icon>close</v-icon>
-          </v-btn>
-          <v-toolbar-title>블랙리스트 App</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark flat @click.native="dialog = false">저장</v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-        <div class="card-left">
-          <v-card-text>
-            <v-list three-line subheader>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">푸시토큰</label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-            </v-list>
-          </v-card-text>
-        </div>
-      </v-card>
-    </v-dialog>
-    </v-flex>
   </div>
   <!-- <section class="search">
     <h3>검색조건</h3>

@@ -31,8 +31,11 @@ export default {
   },
 
   /* ========= Dashboard ========= */
-  fetchDashboard() {
-    return axios.get(CONF.FETCH_DASHBOARD);
+  fetchDailyStatus() {
+    return axios.get(CONF.FETCH_DAILY_STATUS);
+  },
+  fetchMonthlyStatus() {
+    return axios.get(CONF.FETCH_MONTHLY_STATUS);
   },
   fetchUserDashboard(uid) {
     return axios.get(CONF.FETCH_USER_DASHBOARD.replace("${uid}", uid));
