@@ -166,7 +166,7 @@
           <v-btn icon dark @click.native="dialog_edit = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>유통업체 관리</v-toolbar-title>
+          <v-toolbar-title>유통업체 수정</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn dark flat @click.native="dialog_edit = false">수정</v-btn>
@@ -290,10 +290,6 @@ export default {
       this.distributors = resp.data.distributors.reverse();
       console.log("this.distributors :", this.distributors);
       console.log("this.distributors.length :", this.distributors.length);
-      if (this.distributors.state === "Registered") {
-        this.distributors.state = "등록";
-      }
-      console.log("this.distributors :", this.distributors);
     });
     // this.changer();
   }
