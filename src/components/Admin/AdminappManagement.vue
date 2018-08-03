@@ -122,8 +122,8 @@ export default {
     });
   },
   methods: {
-    getSelected: function() {
-      getSelectedFunc();
+    getSelected: function(e) {
+      getSelectedFunc(e);
     }
   }
 };
