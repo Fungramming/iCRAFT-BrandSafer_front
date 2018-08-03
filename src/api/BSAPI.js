@@ -1,5 +1,5 @@
 import axios from "axios";
-import CONF from "../config";
+import CONF from "../Config";
 
 export default {
   /* ========= Login ========= */
@@ -163,11 +163,14 @@ export default {
     return axios.put(CONF.UPDATE_ADMIN_APP, app);
   },
 
-  fetchDistributor({ page, query }) {
-    return axios.get(CONF.FETCH_DISTRIBUTOR, {
-      params: { page, query }
-    });
+  fetchDistributor(distributor) {
+    return axios.get(CONF.FETCH_DISTRIBUTOR, distributor);
   },
+  // fetchDistributor({ page, query }) {
+  //   return axios.get(CONF.FETCH_DISTRIBUTOR, {
+  //     params: { page, query }
+  //   });
+  // },
   addDistributor(distributor) {
     return axios.post(CONF.ADD_DISTRIBUTOR, distributor);
   },
@@ -181,11 +184,14 @@ export default {
     return axios.delete(CONF.DELETE_DISTRIBUTOR, did);
   },
 
-  fetchTagType({ page, query }) {
-    return axios.get(CONF.FETCH_TAG_TYPE, {
-      params: { page, query }
-    });
+  fetchTagType(tagType) {
+    return axios.get(CONF.FETCH_TAG_TYPE, tagType);
   },
+  // fetchTagType({ page, query }) {
+  //   return axios.get(CONF.FETCH_TAG_TYPE, {
+  //     params: { page, query }
+  //   });
+  // },
   addTagType(tagType) {
     return axios.post(CONF.ADD_TAG_TYPE, tagType);
   },

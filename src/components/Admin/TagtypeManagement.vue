@@ -84,7 +84,7 @@
           </v-flex>
         </v-layout>
         <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+          <v-pagination v-model="pagination.page" :length="pages" :total-visible="7"></v-pagination>
         </div>
       </div>
     </v-app>
@@ -234,6 +234,8 @@
 </template>
 
 <script>
+import Constant from "../../constant.js";
+
 export default {
   data() {
     return {
@@ -248,7 +250,12 @@ export default {
       headers: [
         { text: "번호", align: "center", value: "번호", sortable: false },
         { text: "버전", align: "center", value: "버전", sortable: false },
-        { text: "태그타입", align: "center", value: "태그타입", sortable: false },
+        {
+          text: "태그타입",
+          align: "center",
+          value: "태그타입",
+          sortable: false
+        },
         { text: "사이즈", align: "center", value: "사이즈", sortable: false },
         { text: "상태", align: "center", value: "상태", sortable: false },
         { text: "작성자", align: "center", value: "작성자", sortable: false },
@@ -258,212 +265,213 @@ export default {
         {
           value: false,
           number: "1",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 6.0,
           address: 24,
-          status: '등록',
-          account: 'newAccount',
+          status: "등록",
+          account: "newAccount"
         },
         {
           value: false,
           number: "2",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 9.0,
           address: 37,
-          status: '등록',
-          account: 'newAccount',
+          status: "등록",
+          account: "newAccount"
         },
         {
           value: false,
           number: "3",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 16.0,
           address: 23,
-          status: '등록',
-          account: 'newAccount',
-          call_number: "7%",
+          status: "등록",
+          account: "newAccount",
+          call_number: "7%"
         },
         {
           value: false,
           number: "4",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 3.7,
           address: 67,
-          status: '등록',
-          account: 'newAccount',
-          call_number: "8%",
+          status: "등록",
+          account: "newAccount",
+          call_number: "8%"
         },
         {
           value: false,
           number: "5",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 16.0,
           address: 49,
-          status: '등록',
-          account: 'newAccount',
-          call_number: "16%",
+          status: "등록",
+          account: "newAccount",
+          call_number: "16%"
         },
         {
           value: false,
           number: "6",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 0.0,
           address: 94,
-          status: '등록',
-          account: 'newAccount',
-          call_number: "0%",
+          status: "등록",
+          account: "newAccount",
+          call_number: "0%"
         },
         {
           value: false,
           number: "7",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 0.2,
           address: 98,
-          status: '등록',
-          account: 'newAccount',
-          call_number: "2%",
+          status: "등록",
+          account: "newAccount",
+          call_number: "2%"
         },
         {
           value: false,
           number: "8",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 3.2,
           address: 87,
-          status: '등록',
-          account: 'newAccount',
-          call_number: "45%",
+          status: "등록",
+          account: "newAccount",
+          call_number: "45%"
         },
         {
           value: false,
           number: "9",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 25.0,
           address: 51,
-          status: '등록',
-          account: 'newAccount',
-          call_number: "22%",
+          status: "등록",
+          account: "newAccount",
+          call_number: "22%"
         },
         {
           value: false,
           number: "10",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 26.0,
           address: 65,
-          status: '등록',
-          account: 'newAccount',
-          call_number: "6%",
+          status: "등록",
+          account: "newAccount",
+          call_number: "6%"
         },
         {
           value: false,
           number: "11",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 6.0,
           address: 24,
-          status: '등록',
-          account: 'newAccount',
+          status: "등록",
+          account: "newAccount"
         },
         {
           value: false,
           number: "12",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 9.0,
           address: 37,
-          status: '등록',
-          account: 'newAccount',
+          status: "등록",
+          account: "newAccount"
         },
         {
           value: false,
           number: "13",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 16.0,
           address: 23,
-          status: '등록',
-          account: 'newAccount',
+          status: "등록",
+          account: "newAccount"
         },
         {
           value: false,
           number: "14",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 3.7,
           address: 67,
-          status: '등록',
-          account: 'newAccount',
+          status: "등록",
+          account: "newAccount"
         },
         {
           value: false,
           number: "15",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 16.0,
           address: 49,
-          status: '등록',
-          account: 'newAccount',
+          status: "등록",
+          account: "newAccount"
         },
         {
           value: false,
           number: "16",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 0.0,
           address: 94,
-          status: '등록',
-          account: 'newAccount',
+          status: "등록",
+          account: "newAccount"
         },
         {
           value: false,
           number: "17",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 0.2,
           address: 98,
-          status: '등록',
-          account: 'newAccount',
+          status: "등록",
+          account: "newAccount"
         },
         {
           value: false,
           number: "18",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 3.2,
           address: 87,
-          status: '등록',
-          account: 'newAccount',
+          status: "등록",
+          account: "newAccount"
         },
         {
           value: false,
           number: "19",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 25.0,
           address: 51,
-          status: '등록',
-          account: 'newAccount',
+          status: "등록",
+          account: "newAccount"
         },
         {
           value: false,
           number: "20",
-          version: '4.0',
-          distributor: '오감바이오',
+          version: "4.0",
+          distributor: "오감바이오",
           customer_code: 26.0,
           address: 65,
-          status: '등록',
-          account: 'newAccount',
+          status: "등록",
+          account: "newAccount"
         }
-      ]
+      ],
+      results: []
     };
   },
   computed: {
@@ -478,6 +486,13 @@ export default {
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
     }
+  },
+  mounted() {
+    this.$store.dispatch(Constant.FETCH_TAG_TYPE).then(resp => {
+      this.results = resp;
+      console.log("this.results :", this.results);
+      // console.log("this.results.length :", this.results.length);
+    });
   }
 };
 </script>
