@@ -2,7 +2,7 @@ export default {
   isLoading: false,
   sideBar: true,
   selectedTaB: "dashboard",
-  token: "",
+  token: "11",
   user: {
     email: "",
     id: -1,

@@ -62,11 +62,14 @@ export default {
   },
 
   /* ========= Admin ========= */
-  fetchCustomer({ page, query }) {
-    return axios.get(CONF.FETCH_CUSTOMER, {
-      params: { page, query }
-    });
+  fetchCustomer(customer) {
+    return axios.get(CONF.FETCH_CUSTOMER, customer);
   },
+  // fetchCustomer({ page, query }) {
+  //   return axios.get(CONF.FETCH_CUSTOMER, {
+  //     params: { page, query }
+  //   });
+  // },
   addCustomer(customer) {
     return axios.post(CONF.ADD_CUSTOMER, customer);
   },
@@ -74,11 +77,14 @@ export default {
     return axios.put(CONF.UPDATE_CUSTOMER.replace("${cid}", cid), customer);
   },
 
-  fetchIcraftUser({ page, query }) {
-    return axios.get(CONF.FETCH_ICRAFT_USER, {
-      params: { page, query }
-    });
+  fetchIcraftUser(uid) {
+    return axios.get(CONF.FETCH_ICRAFT_USER, uid);
   },
+  // fetchIcraftUser({ page, query }) {
+  //   return axios.get(CONF.FETCH_ICRAFT_USER, {
+  //     params: { page, query }
+  //   });
+  // },
   fetchIcraftUserId(uid) {
     return axios.get(CONF.FETCH_ICRAFT_USER_ID.replace("${uid}", uid));
   },
@@ -92,8 +98,8 @@ export default {
     return axios.delete(CONF.DELETE_ICRAFT_USER, uid);
   },
 
-  fetchUser(uid) {
-    return axios.get(CONF.FETCH_USER.replace("${uid}", uid));
+  fetchUser() {
+    return axios.get(CONF.FETCH_USER);
   },
   addUser(user) {
     return axios.post(CONF.ADD_USER, user);
@@ -105,11 +111,14 @@ export default {
     return axios.delete(CONF.DELETE_USER, uid);
   },
 
-  fetchAccountLog({ page, query }) {
-    return axios.get(CONF.FETCH_ACCOUNT_LOG, {
-      params: { page, query }
-    });
+  fetchAccountLog() {
+    return axios.get(CONF.FETCH_ACCOUNT_LOG);
   },
+  // fetchAccountLog({ page, query }) {
+  //   return axios.get(CONF.FETCH_ACCOUNT_LOG, {
+  //     params: { page, query }
+  //   });
+  // },
 
   fetchBlacklist({ page, query }) {
     return axios.get(CONF.FETCH_BLACKLIST, {
@@ -144,10 +153,8 @@ export default {
     );
   },
 
-  fetchAdminApp({ page, query }) {
-    return axios.get(CONF.FETCH_ADMIN_APP, {
-      params: { page, query }
-    });
+  fetchAdminApp() {
+    return axios.get(CONF.FETCH_ADMIN_APP);
   },
   addAdminApp({ nid, number }) {
     return axios.delete(CONF.ADD_ADMIN_APP.replace("${nid}", nid), number);

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar
-      class="top-bar"
+      class="top-bar active"
       color="blue-grey"
       dark
       fixed
@@ -11,13 +11,28 @@
     >
       <v-toolbar-side-icon class="hamBtn"  @click.stop="clickToggle"></v-toolbar-side-icon>
       <h2 class="component-title">{{compTitle}}</h2>
-      <v-btn class="logOutBtn" fixed flat @click.stop="logout" >
+      <!-- <v-btn class="logOutBtn" slot="activator" fixed flat @click.stop="logout" >
         <v-icon >
           exit_to_app
         </v-icon>
-      </v-btn>   
+      </v-btn> -->     
     </v-toolbar>
-    <div class="side-bar" @mouseover="hoverToggle">
+     <v-dialog v-model="dialog" class="logout-modal" persistent max-width="290">
+        <v-btn slot="activator" class="logOutBtn" fixed flat>
+          <v-icon >
+            exit_to_app
+          </v-icon>
+        </v-btn>
+        <v-card>
+          <v-card-title class="headline">로그아웃 하시겠습니까?</v-card-title>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" flat @click.native="logout">로그아웃</v-btn>
+            <v-btn color="green darken-1" flat @click.native="dialog = false">취소</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    <div class="side-bar active" @mouseover="hoverToggle">
       <div class="header">
         <img src="../assets/logo_small.png" alt="">
         <span>추적관리시스템</span>
@@ -110,88 +125,44 @@
         </li>
       </ul>
       <span class="copy">&copy; 2018 ICRAFT</span>
-      <!-- <v-btn class="closeBtn" fixed flat @click.stop="" > -->
-        <button class="closeBtn" @click.stop="clickToggle">
-          
+        <button class="closeBtn" @click.stop="clickToggle"> 
           <v-icon >
             close  
           </v-icon>
         </button>
-      <!-- </v-btn>    -->
     </div>
   </div>
 </template>
 
 <script>
+import { hoverFunc, clickFunc, activingFunc } from "./AsideHelper";
+import Constant from "../constant";
 export default {
   data() {
     return {
-      compTitle: "Dashboard"
+      compTitle: "Dashboard",
+      dialog: false
     };
   },
   methods: {
-    logout: function() {},
+    logout: function() {
+      this.$store.dispatch(Constant.LOG_OUT).then(resp => {
+        console.log("resp :", resp);
+        this.$router.push({ name: "login" });
+      });
+    },
     hoverToggle: function(e) {
-      if (window.innerWidth > 500) {
-        let sideBarWidth = e.path[0].offsetWidth;
-        if (sideBarWidth < 62) {
-          this.clickToggle();
-        }
+      hoverFunc(e);
+      let sideBarWidth = e.path[0].offsetWidth;
+      if (sideBarWidth < 62) {
+        this.clickToggle();
       }
     },
     clickToggle: function() {
-      let sideBar = document.getElementsByClassName("side-bar")[0];
-      let topBar = document.getElementsByClassName("top-bar")[0];
-      let con = document.getElementsByClassName("contents")[0];
-      if (sideBar.className == "side-bar") {
-        sideBar.classList.add("active");
-        topBar.classList.add("active");
-        con.classList.add("active");
-        if (this.$store.state.sideBar == true) {
-          this.$store.state.sideBar = false;
-        }
-      } else {
-        sideBar.classList.remove("active");
-        topBar.classList.remove("active");
-        con.classList.remove("active");
-        if (this.$store.state.sideBar == false) {
-          this.$store.state.sideBar = true;
-        }
-      }
+      this.$store.state.sideBar = clickFunc();
     },
     isActived: function(e) {
-      let title = e.toElement.innerText;
-      this.compTitle = title;
-      let subTabTitle =
-        e.toElement.parentNode.parentNode.parentNode.parentNode.className;
-      let tab = document.getElementsByClassName("tab")[0];
-      let subTab = document.getElementsByClassName("sub-tab")[0];
-      let subSubTab = document.getElementsByClassName("sub-sub-tab")[0];
-      let activedList = function(target) {
-        return target.querySelectorAll(".active");
-      };
-      if (subTabTitle == "side-bar") {
-        if (activedList(tab).length > 0) {
-          activedList(tab).forEach(element => {
-            element.classList.remove("active");
-          });
-        }
-        e.path[2].classList.add("active");
-      } else if (subTabTitle == "expandable sub-sub-tab-title active") {
-        if (activedList(subSubTab).length > 0) {
-          activedList(subSubTab).forEach(element => {
-            element.classList.remove("active");
-          });
-        }
-        e.path[2].classList.add("active");
-      } else if (subTabTitle == "expandable active") {
-        if (activedList(subTab).length > 0) {
-          activedList(subTab).forEach(element => {
-            element.classList.remove("active");
-          });
-        }
-        e.path[2].classList.add("active");
-      }
+      this.compTitle = activingFunc(e);
     }
   }
 };
@@ -200,29 +171,20 @@ export default {
 <style lang="scss">
 $phone: "(min-width: 0) and (max-width: 500px)";
 .top-bar {
-  height: 61px;
   .v-toolbar__content {
     height: 64px !important;
     padding-left: 245px;
     transition: padding 0.3s ease;
+    height: 61px;
+    @media #{$phone} {
+      padding-left: 20px;
+    }
   }
   .component-title {
     color: #fefefe;
     line-height: 64px;
     font-weight: 400;
     margin-top: -2px;
-  }
-  .logOutBtn {
-    top: 15px;
-    right: 0;
-    &:before {
-      left: 16px;
-      width: 60%;
-    }
-    .v-ripple__container {
-      left: 16px;
-      width: 60%;
-    }
   }
   &.active {
     .v-toolbar__content {
@@ -233,6 +195,36 @@ $phone: "(min-width: 0) and (max-width: 500px)";
     }
   }
 }
+// 로그아웃 모달
+.logout-modal {
+  width: 100vw;
+  height: 100vh;
+  .logOutBtn {
+    color: white;
+    top: 15px;
+    right: 0;
+    z-index: 200;
+    &:before {
+      left: 16px;
+      width: 60%;
+    }
+    .v-ripple__container {
+      left: 16px;
+      width: 60%;
+    }
+  }
+  .v-dialog {
+    background-color: white;
+    .headline {
+      font-size: 1em !important;
+      text-align: center;
+      font-weight: 600;
+    }
+  }
+  .v-dialog__content--active {
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+}
 .side-bar {
   position: fixed;
   top: 0;
@@ -241,21 +233,29 @@ $phone: "(min-width: 0) and (max-width: 500px)";
   width: 230px;
   height: 100%;
   overflow-x: hidden;
-  z-index: 200;
-  transition: width 0.3s ease;
+  z-index: 100;
+  transition: width, left 0.3s ease;
   @media #{$phone} {
     width: 100%;
+    left: -100%;
   }
   &.active {
     width: 60px;
     @media #{$phone} {
-      width: 0;
+      width: 100%;
+      left: 0;
     }
     span {
       opacity: 0;
+      @media #{$phone} {
+        opacity: 1;
+      }
     }
     .plus {
       opacity: 0;
+      @media #{$phone} {
+        opacity: 1;
+      }
     }
   }
   .header {

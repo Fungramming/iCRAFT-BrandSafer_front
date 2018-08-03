@@ -45,7 +45,7 @@
     <v-app class="inspire">
       <v-data-table
         :headers="headers"
-        :items="desserts"
+        :items="results"
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
@@ -67,16 +67,16 @@
               hide-details
             ></v-checkbox>
           </td>
-          <td class="text-xs-center">{{ props.item.number }}</td>
-          <td class="text-xs-center">{{ props.item.customer }}</td>
-          <td class="text-xs-center">{{ props.item.customer_code }}</td>
-          <td class="text-xs-center"><a @click="dialog_edit = true">{{ props.item.id }}</a></td>
-          <td class="text-xs-center">{{ props.item.exponent }}</td>
-          <td class="text-xs-center">{{ props.item.call_number }}</td>
-          <td class="text-xs-center">{{ props.item.date }}</td>
+          <td class="text-xs-left">{{ results.length -- }}</td>
+          <td class="text-xs-left">{{ props.item.customer }}</td>
+          <td class="text-xs-left">{{ props.item.customer_code }}</td>
+          <td class="text-xs-left"><a @click="dialog_edit = true">{{ props.item.id }}</a></td>
+          <td class="text-xs-left">{{ props.item.exponent }}</td>
+          <td class="text-xs-left">{{ props.item.call_number }}</td>
+          <td class="text-xs-left">{{ props.item.date }}</td>
         </template>
       </v-data-table>
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
+      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{results.length}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md10>
@@ -357,6 +357,8 @@
 </template>
 
 <script>
+import Constant from "../../constant.js";
+
 export default {
   data() {
     return {
@@ -374,211 +376,15 @@ export default {
         { text: "이름", align: "center", value: "이름", sortable: false },
         { text: "아이디", align: "center", value: "아이디", sortable: false },
         { text: "부서", align: "center", value: "부서", sortable: false },
-        { text: "최종 로그인", align: "center", value: "최종 로그인", sortable: false},
+        {
+          text: "최종 로그인",
+          align: "center",
+          value: "최종 로그인",
+          sortable: false
+        },
         { text: "상태", align: "center", value: "상태", sortable: false }
       ],
-      desserts: [
-        {
-          value: false,
-          number: "1",
-          customer: 159,
-          customer_code: 6.0,
-          id: '아이디',
-          exponent: 4.0,
-          call_number: "1%",
-          date: "1%"
-        },
-        {
-          value: false,
-          number: "2",
-          customer: 237,
-          customer_code: 9.0,
-          id: '아이디',
-          exponent: 4.3,
-          call_number: "1%",
-          date: "1%"
-        },
-        {
-          value: false,
-          number: "3",
-          customer: 262,
-          customer_code: 16.0,
-          id: '아이디',
-          exponent: 6.0,
-          call_number: "7%",
-          date: "7%"
-        },
-        {
-          value: false,
-          number: "4",
-          customer: 305,
-          customer_code: 3.7,
-          id: '아이디',
-          exponent: 4.3,
-          call_number: "8%",
-          date: "8%"
-        },
-        {
-          value: false,
-          number: "5",
-          customer: 356,
-          customer_code: 16.0,
-          id: '아이디',
-          exponent: 3.9,
-          call_number: "16%",
-          date: "16%"
-        },
-        {
-          value: false,
-          number: "6",
-          customer: 375,
-          customer_code: 0.0,
-          id: '아이디',
-          exponent: 0.0,
-          call_number: "0%",
-          date: "0%"
-        },
-        {
-          value: false,
-          number: "7",
-          customer: 392,
-          customer_code: 0.2,
-          id: '아이디',
-          exponent: 0,
-          call_number: "2%",
-          date: "2%"
-        },
-        {
-          value: false,
-          number: "8",
-          customer: 408,
-          customer_code: 3.2,
-          id: '아이디',
-          exponent: 6.5,
-          call_number: "45%",
-          date: "45%"
-        },
-        {
-          value: false,
-          number: "9",
-          customer: 452,
-          customer_code: 25.0,
-          id: '아이디',
-          exponent: 4.9,
-          call_number: "22%",
-          date: "22%"
-        },
-        {
-          value: false,
-          number: "10",
-          customer: 518,
-          customer_code: 26.0,
-          id: '아이디',
-          exponent: 7,
-          call_number: "6%",
-          date: "6%"
-        },
-        {
-          value: false,
-          number: "11",
-          customer: 159,
-          customer_code: 6.0,
-          id: '아이디',
-          exponent: 4.0,
-          call_number: "1%",
-          date: "1%"
-        },
-        {
-          value: false,
-          number: "12",
-          customer: 237,
-          customer_code: 9.0,
-          id: '아이디',
-          exponent: 4.3,
-          call_number: "1%",
-          date: "1%"
-        },
-        {
-          value: false,
-          number: "13",
-          customer: 262,
-          customer_code: 16.0,
-          id: '아이디',
-          exponent: 6.0,
-          call_number: "7%",
-          date: "7%"
-        },
-        {
-          value: false,
-          number: "14",
-          customer: 305,
-          customer_code: 3.7,
-          id: '아이디',
-          exponent: 4.3,
-          call_number: "8%",
-          date: "8%"
-        },
-        {
-          value: false,
-          number: "15",
-          customer: 356,
-          customer_code: 16.0,
-          id: '아이디',
-          exponent: 3.9,
-          call_number: "16%",
-          date: "16%"
-        },
-        {
-          value: false,
-          number: "16",
-          customer: 375,
-          customer_code: 0.0,
-          id: '아이디',
-          exponent: 0.0,
-          call_number: "0%",
-          date: "0%"
-        },
-        {
-          value: false,
-          number: "17",
-          customer: 392,
-          customer_code: 0.2,
-          id: '아이디',
-          exponent: 0,
-          call_number: "2%",
-          date: "2%"
-        },
-        {
-          value: false,
-          number: "18",
-          customer: 408,
-          customer_code: 3.2,
-          id: '아이디',
-          exponent: 6.5,
-          call_number: "45%",
-          date: "45%"
-        },
-        {
-          value: false,
-          number: "19",
-          customer: 452,
-          customer_code: 25.0,
-          id: '아이디',
-          exponent: 4.9,
-          call_number: "22%",
-          date: "22%"
-        },
-        {
-          value: false,
-          number: "20",
-          customer: 518,
-          customer_code: 26.0,
-          id: '아이디',
-          exponent: 7,
-          call_number: "6%",
-          date: "6%"
-        }
-      ]
+      results: []
     };
   },
   computed: {
@@ -593,6 +399,13 @@ export default {
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
     }
+  },
+  mounted() {
+    this.$store.dispatch(Constant.FETCH_ICRAFT_USER).then(resp => {
+      this.results = resp.data["icrf-users"].reverse();
+      // this.results = resp.data['icrf-users'].reverse()
+      console.log("this.results :", this.results);
+    });
   }
 };
 </script>

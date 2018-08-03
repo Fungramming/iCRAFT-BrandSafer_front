@@ -1,22 +1,32 @@
 <template>
   <div id="app">
     <aside-tab v-if="this.isAuthenticated" :position-x="0" :position-y="0"  absolute class="aside" style="width:230px;"></aside-tab>
-    <div :class="{active: this.$store.state.sideBar} " class="contents">
-      <router-view/>
+    <div :class="{active: true} " class="contents">
+      <transition name="fade">
+        <router-view/>
+      </transition>
     </div>
-    <log-out v-if="false"></log-out>
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
+import { formatDate } from "./store/helper.js";
 import AsideTab from "./components/Aside.vue";
-import LogOut from "./components/PopupModal/LogOut.vue";
+// import LogOut from "./components/PopupModal/LogOut.vue";
 
 export default {
-  components: { AsideTab, LogOut },
-  computed: mapGetters(["isAuthenticated"]),
-  beforeCreate() {
-    // window.localStorage.clear();
+  components: { AsideTab },
+  data() {
+    return {
+      logout: false
+    };
+  },
+  computed: {
+    ...mapGetters(["isAuthenticated"]),
+    ...mapState(["isLoading"])
+  },
+  mounted() {
+    this.$store.state.date = formatDate();
   }
 };
 </script>
@@ -73,9 +83,9 @@ a {
 }
 .contents {
   height: 100%;
-  padding-left: 80px;
+  padding-left: 250px;
   padding-right: 20px;
-  padding-top: 80px;
+  padding-top: 85px;
   @media #{$phone} {
     padding-left: 10px;
     padding-right: 10px;
@@ -84,7 +94,10 @@ a {
     background-color: #fff;
   }
   &.active {
-    padding-left: 250px;
+    padding-left: 75px;
+    @media #{$phone} {
+      padding-left: 10px;
+    }
   }
 }
 </style>

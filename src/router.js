@@ -22,7 +22,6 @@ import DistributorManagement from "./components/Admin/DistributorManagement";
 import TagtypeManagement from "./components/Admin/TagtypeManagement";
 import AdminappManagement from "./components/Admin/AdminappManagement";
 
-
 Vue.use(Router);
 
 export default new Router({
@@ -111,7 +110,7 @@ export default new Router({
             name: "adminappManagement",
             component: AdminappManagement
         },
-        { path: "*", component: NotFound },
+        { path: "*", component: NotFound }
     ],
     mode: "history"
 });

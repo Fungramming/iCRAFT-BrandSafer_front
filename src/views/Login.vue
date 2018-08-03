@@ -17,11 +17,11 @@
           label="PASSWORD"
           clearable
         ></v-text-field>
-        <v-radio-group v-model="selectedLang" class="lang-group" row>
+        <!-- <v-radio-group v-model="selectedLang" class="lang-group" row>
           <v-radio class="lang-option" label="한국어" value="Korean"></v-radio>
           <v-radio class="lang-option" label="中文版" value="Chinese"></v-radio>
           <v-radio class="lang-option" label="English" value="English"></v-radio>
-        </v-radio-group>
+        </v-radio-group> -->
         <v-btn class="login-btn" @click.stop="onSubmit"><v-icon style="">launch</v-icon></v-btn>          
       </div>
       <footer>© iCraft21</footer>
@@ -36,8 +36,8 @@ export default {
     return {
       id: "",
       password: "",
-      token: "1234",
-      selectedLang: "Korean"
+      token: "1234"
+      // selectedLang: "Korean"
     };
   },
   mounted() {
@@ -49,31 +49,33 @@ export default {
   },
   methods: {
     onSubmit() {
-      if (this.id && this.password) {
-        this.$store
-          .dispatch(Constant.LOG_IN, {
-            userId: this.id,
-            userPassword: this.password,
-            token: this.token
-          })
-          .then(() => {
-            // if (resp.status == 200) {
-            this.$router.push({ name: "dashboard" });
-            // }
-          });
-        // .catch(err => {
-        //   if (err.status == 401) {
-        //     alert(
-        //       `접속 실패!\n이메일이나 비밀번호를 다시 한번 확인해주세요.`
-        //     );
-        //   } else {
-        //     alert(
-        //       `접속실패!\n에러 코드: ${err.response.status}\n
-        //       에러 메세지: ${err.response.message}`
-        //     );
-        //   }
-        // });
-      }
+      this.$router.push({ name: "dashboard" });
+      this.$store.state.tokken = 111;
+      // if (this.id && this.password) {
+      //   this.$store
+      //     .dispatch(Constant.LOG_IN, {
+      //       userId: this.id,
+      //       userPassword: this.password,
+      //       token: this.token
+      //     })
+      //     .then(() => {
+      //       // if (resp.status == 200) {
+      //       this.$router.push({ name: "dashboard" });
+      //       // }
+      //     });
+      //   // .catch(err => {
+      //   //   if (err.status == 401) {
+      //   //     alert(
+      //   //       `접속 실패!\n이메일이나 비밀번호를 다시 한번 확인해주세요.`
+      //   //     );
+      //   //   } else {
+      //   //     alert(
+      //   //       `접속실패!\n에러 코드: ${err.response.status}\n
+      //   //       에러 메세지: ${err.response.message}`
+      //   //     );
+      //   //   }
+      //   // });
+      // }
     }
   }
 };
