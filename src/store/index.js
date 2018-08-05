@@ -7,7 +7,7 @@ import mutations from "./mutations.js";
 import actions from "./actions.js";
 
 Vue.use(Vuex);
-window.localStorage.clear();
+// window.localStorage.clear();
 
 const store = new Vuex.Store({
   state,

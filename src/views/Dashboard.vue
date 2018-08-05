@@ -31,7 +31,7 @@
     </v-flex>
     <v-flex xs12 md9 class="weekly">
       <v-card>
-        <v-card-text class="card-title">주간 전체</v-card-text>
+        <v-card-text class="card-title">주간 현황</v-card-text>
         <div class="card-cont">
           <bar-chart></bar-chart>
         </div>
@@ -45,19 +45,19 @@
             <tbody>
               <tr>
                 <td>정품</td>
-                <td>{{status.Genuine}}</td>
+                <td>{{monthlyStatus.Genuine}}</td>
               </tr>
                <tr>
                 <td>가품</td>
-                <td>{{status.Genuine}}</td>                
+                <td>{{monthlyStatus.Genuine}}</td>                
               </tr>
                <tr>
                 <td>공유</td>
-                <td>{{status.Share}}</td>
+                <td>{{monthlyStatus.Share}}</td>
               </tr>
                <tr>
                 <td>제보</td>
-                <td>{{status.Report}}</td>                
+                <td>{{monthlyStatus.Report}}</td>                
               </tr>
             </tbody>
           </table>
@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       nowDate: "value",
-      status: {
+      monthlyStatus: {
         Counterfeit: 0,
         Genuine: 0,
         Report: 0,
@@ -89,17 +89,17 @@ export default {
   },
   mounted() {
     this.nowDate = formatDate();
-    this.$store.dispatch(Constant.FETCH_DAILY_STATUS).then(resp => {});
+    this.$store.dispatch(Constant.FETCH_DAILY_STATUS).then(resp => {
+      console.log("resp :", resp);
+    });
     this.$store.dispatch(Constant.FETCH_MONTHLY_STATUS).then(resp => {
-      console.log("resp.data.status :", resp.data.status);
       let box = resp.data.status;
-      console.log("box :", box);
       for (let daily in box) {
         for (let item in box[daily]) {
-          this.status[item] = this.status[item] + box[daily][item];
+          this.monthlyStatus[item] =
+            this.monthlyStatus[item] + box[daily][item];
         }
       }
-      console.log("this.status :", this.status);
     });
   }
 };

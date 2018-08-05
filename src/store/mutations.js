@@ -20,5 +20,11 @@ export default {
   },
   [Constant.SHOW_LOADING]: (state, isLoading) => {
     state.isLoading = isLoading;
+  },
+  [Constant.FETCH_DAILY_STATUS]: (state, payload) => {
+    state.dailyStatus = payload;
+  },
+  [Constant.FETCH_MONTHLY_STATUS]: (state, payload) => {
+    state.monthlyStatus = payload;
   }
 };
