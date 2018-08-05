@@ -31,10 +31,20 @@ export default {
   },
   // Dashboard
   async [Constant.FETCH_DAILY_STATUS](store, payload) {
-    return promise(BSAPI.fetchDailyStatus, payload, store, null);
+    return promise(
+      BSAPI.fetchDailyStatus,
+      payload,
+      store,
+      Constant.FETCH_DAILY_STATUS
+    );
   },
   async [Constant.FETCH_MONTHLY_STATUS](store, payload) {
-    return promise(BSAPI.fetchMonthlyStatus, payload, store, null);
+    return promise(
+      BSAPI.fetchMonthlyStatus,
+      payload,
+      store,
+      Constant.FETCH_MONTHLY_STATUS
+    );
   },
   // Product
   async [Constant.FETCH_PRODUCT_CERIT](store, payload) {

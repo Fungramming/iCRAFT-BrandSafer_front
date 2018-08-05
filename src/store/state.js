@@ -10,5 +10,9 @@ export default {
     role: ""
   },
   time: "",
-  date: ""
+  date: "",
+
+  //DashBoard
+  dailyStatus: {},
+  monthlyStatus: {}
 };
