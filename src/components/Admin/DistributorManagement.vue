@@ -19,7 +19,7 @@
     <v-app class="inspire">
       <v-data-table
         :headers="headers"
-        :items="desserts"
+        :items="distributors"
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
@@ -41,15 +41,15 @@
               hide-details
             ></v-checkbox>
           </td>
-          <td class="text-xs-center">{{ props.item.number }}</td>
-          <td class="text-xs-center">{{ props.item.customer }}</td>
-          <td class="text-xs-center"><a @click="dialog_edit = true"> {{ props.item.distributor }} </a></td>
-          <td class="text-xs-center">{{ props.item.address }}</td>
-          <td class="text-xs-center">{{ props.item.status }}</td>
-          <td class="text-xs-center">{{ props.item.account }}</td>
+          <td class="text-xs-center">{{ props.item.idx}}</td>
+          <td class="text-xs-center">{{ props.item.name_kr }}</td>
+          <td class="text-xs-center"><a @click="dialog_edit = true"> {{ props.item.name_kr }} </a></td>
+          <td class="text-xs-center">{{ props.item.dtRegistered }}</td>
+          <td class="text-xs-center">{{ props.item.state }}</td>
+          <td class="text-xs-center">{{ props.item.registrant }}</td>
         </template>
       </v-data-table>
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
+      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{distributors.length}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md10>
@@ -60,7 +60,7 @@
           </v-flex>
         </v-layout>
         <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+          <v-pagination v-model="pagination.page" :length="pages" :total-visible="7"></v-pagination>
         </div>
       </div>
     </v-app>
@@ -166,7 +166,7 @@
           <v-btn icon dark @click.native="dialog_edit = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>유통업체 관리</v-toolbar-title>
+          <v-toolbar-title>유통업체 수정</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn dark flat @click.native="dialog_edit = false">수정</v-btn>
@@ -240,6 +240,8 @@
 </template>
 
 <script>
+import Constant from "../../constant.js";
+
 export default {
   data() {
     return {
@@ -254,221 +256,22 @@ export default {
       headers: [
         { text: "번호", align: "center", value: "번호", sortable: false },
         { text: "고객사", align: "center", value: "고객사", sortable: false },
-        { text: "유통업체명", align: "center", value: "유통업체명", sortable: false },
+        {
+          text: "유통업체명",
+          align: "center",
+          value: "유통업체명",
+          sortable: false
+        },
         { text: "등록일", align: "center", value: "등록일", sortable: false },
         { text: "상태", align: "center", value: "상태", sortable: false },
-        { text: "생성계정", align: "center", value: "생성계정", sortable: false }
-      ],
-      desserts: [
         {
-          value: false,
-          number: "1",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 6.0,
-          address: 24,
-          status: '등록',
-          account: 'newAccount',
-        },
-        {
-          value: false,
-          number: "2",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 9.0,
-          address: 37,
-          status: '등록',
-          account: 'newAccount',
-        },
-        {
-          value: false,
-          number: "3",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 16.0,
-          address: 23,
-          status: '등록',
-          account: 'newAccount',
-          call_number: "7%",
-        },
-        {
-          value: false,
-          number: "4",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 3.7,
-          address: 67,
-          status: '등록',
-          account: 'newAccount',
-          call_number: "8%",
-        },
-        {
-          value: false,
-          number: "5",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 16.0,
-          address: 49,
-          status: '등록',
-          account: 'newAccount',
-          call_number: "16%",
-        },
-        {
-          value: false,
-          number: "6",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 0.0,
-          address: 94,
-          status: '등록',
-          account: 'newAccount',
-          call_number: "0%",
-        },
-        {
-          value: false,
-          number: "7",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 0.2,
-          address: 98,
-          status: '등록',
-          account: 'newAccount',
-          call_number: "2%",
-        },
-        {
-          value: false,
-          number: "8",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 3.2,
-          address: 87,
-          status: '등록',
-          account: 'newAccount',
-          call_number: "45%",
-        },
-        {
-          value: false,
-          number: "9",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 25.0,
-          address: 51,
-          status: '등록',
-          account: 'newAccount',
-          call_number: "22%",
-        },
-        {
-          value: false,
-          number: "10",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 26.0,
-          address: 65,
-          status: '등록',
-          account: 'newAccount',
-          call_number: "6%",
-        },
-        {
-          value: false,
-          number: "11",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 6.0,
-          address: 24,
-          status: '등록',
-          account: 'newAccount',
-        },
-        {
-          value: false,
-          number: "12",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 9.0,
-          address: 37,
-          status: '등록',
-          account: 'newAccount',
-        },
-        {
-          value: false,
-          number: "13",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 16.0,
-          address: 23,
-          status: '등록',
-          account: 'newAccount',
-        },
-        {
-          value: false,
-          number: "14",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 3.7,
-          address: 67,
-          status: '등록',
-          account: 'newAccount',
-        },
-        {
-          value: false,
-          number: "15",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 16.0,
-          address: 49,
-          status: '등록',
-          account: 'newAccount',
-        },
-        {
-          value: false,
-          number: "16",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 0.0,
-          address: 94,
-          status: '등록',
-          account: 'newAccount',
-        },
-        {
-          value: false,
-          number: "17",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 0.2,
-          address: 98,
-          status: '등록',
-          account: 'newAccount',
-        },
-        {
-          value: false,
-          number: "18",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 3.2,
-          address: 87,
-          status: '등록',
-          account: 'newAccount',
-        },
-        {
-          value: false,
-          number: "19",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 25.0,
-          address: 51,
-          status: '등록',
-          account: 'newAccount',
-        },
-        {
-          value: false,
-          number: "20",
-          customer: '오감바이오',
-          distributor: '오감바이오',
-          customer_code: 26.0,
-          address: 65,
-          status: '등록',
-          account: 'newAccount',
+          text: "생성계정",
+          align: "center",
+          value: "생성계정",
+          sortable: false
         }
-      ]
+      ],
+      distributors: []
     };
   },
   computed: {
@@ -479,11 +282,25 @@ export default {
       )
         return 0;
 
-      return Math.ceil(
-        this.pagination.totalItems / this.pagination.rowsPerPage
-      );
+      return Math.ceil(this.distributors.length / this.pagination.rowsPerPage);
     }
+  },
+  mounted() {
+    this.$store.dispatch(Constant.FETCH_DISTRIBUTOR).then(resp => {
+      this.distributors = resp.data.distributors.reverse();
+      console.log("this.distributors :", this.distributors);
+      console.log("this.distributors.length :", this.distributors.length);
+    });
+    // this.changer();
   }
+  // methods: {
+  //   changer: function() {
+  //     if (this.distributors.state === "Registered") {
+  //       this.distributors.state = "등록";
+  //     }
+  //     console.log("this.distributors :", this.distributors);
+  //   }
+  // }
 };
 </script>
 

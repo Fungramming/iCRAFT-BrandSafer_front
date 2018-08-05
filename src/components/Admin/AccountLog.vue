@@ -40,7 +40,7 @@
     <v-app class="inspire">
       <v-data-table
         :headers="headers"
-        :items="results"
+        :items="logins"
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
@@ -62,10 +62,10 @@
           <td class="text-xs-center">{{ props.item.call_number }}</td>
         </template>
       </v-data-table>
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
+      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{logins.length}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+          <v-pagination v-model="pagination.page" :length="pages" :total-visible="7"></v-pagination>
         </div>
       </div>
     </v-app>
@@ -522,7 +522,7 @@ export default {
           call_number: "6%"
         }
       ],
-      results: []
+      logins: []
     };
   },
   computed: {
@@ -540,9 +540,9 @@ export default {
   },
   mounted() {
     this.$store.dispatch(Constant.FETCH_ACCOUNT_LOG).then(resp => {
-      this.results = resp;
-      console.log("this.results :", this.results);
-      // console.log("this.results.length :", this.results.length);
+      this.logins = resp;
+      console.log("this.logins :", this.logins);
+      // console.log("this.logins.length :", this.logins.length);
     });
   }
 };

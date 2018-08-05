@@ -524,9 +524,7 @@ export default {
       )
         return 0;
 
-      return Math.ceil(
-        this.pagination.totalItems / this.pagination.rowsPerPage
-      );
+      return Math.ceil(this.results.length / this.pagination.rowsPerPage);
     }
   },
   mounted() {
