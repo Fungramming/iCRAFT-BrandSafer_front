@@ -10,9 +10,6 @@ export default {
   // Password
   UPDATE_PASSWORD: `${BASE_URL}/users/\${uid}`,
   RESET_PASSWORD: `${BASE_URL}/users/\${uid}/pwReset`,
-  // Users
-  FETCH_USERS: `${BASE_URL}/users/`,
-  ADD_USERS: `${BASE_URL}/users/`,
 
   //막 쓰기
   // 기간설정, 고객사 선택
@@ -37,6 +34,10 @@ export default {
 
   // FETCH_APP: ${BASE_URL}fectchApp,
 
+  FETCH_COMPANY: `${BASE_URL}/company/`,
+  ADD_COMPANY: `${BASE_URL}/company/`,
+  UPDATE_COMPANY: `${BASE_URL}/company/\${cid}`,
+
   FETCH_CUSTOMER: `${BASE_URL}/admin/customer/`, // query, page
   ADD_CUSTOMER: `${BASE_URL}/admin/customer/`,
   UPDATE_CUSTOMER: `${BASE_URL}/admin/customer/\${cid}`,
@@ -47,9 +48,10 @@ export default {
   UPDATE_ICRAFT_USER: `${BASE_URL}/admin/icrf-users/\${uid}`,
   DELETE_ICRAFT_USER: ` ${BASE_URL}/admin/icrf-users/\${uid}`,
 
-  // FETCH_USER: `${BASE_URL}/users/\${uid}`,
-  FETCH_USER: `${BASE_URL}/users/`,
-  ADD_USER: `${BASE_URL}/users/`,
+  FETCH_USERS: `${BASE_URL}/users/`,
+  ADD_USERS: `${BASE_URL}/users/`,
+  FETCH_USER: `${BASE_URL}/users/\${uid}`,
+  ADD_USER: `${BASE_URL}/users/\${uid}`,
   UPDATE_USER: ` ${BASE_URL}/users/\${uid}`,
   DELETE_USER: `${BASE_URL}/users/\${uid}`,
 

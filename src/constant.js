@@ -27,6 +27,10 @@ export default {
   FETCH_APP: "fectchApp",
 
   /* ========= Admin ========= */
+  FETCH_COMPANY: "fetchCompany",
+  ADD_COMPANY: "addCompany",
+  UPDATE_COMPANY: "updateCompany",
+
   FETCH_CUSTOMER: "fetchCustomer",
   ADD_CUSTOMER: "addCustomer",
   UPDATE_CUSTOMER: "updateCustomer",
@@ -36,6 +40,8 @@ export default {
   UPDATE_ICRAFT_USER: "updateIcraftUser",
   DELETE_ICRAFT_USER: "deleteIcraftUser",
 
+  FETCH_USERS: "fetchUsers",
+  ADD_USERS: "addUsers",
   FETCH_USER: "fetchUser",
   ADD_USER: "addUser",
   UPDATE_USER: "updateUser",

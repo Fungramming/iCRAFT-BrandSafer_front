@@ -54,6 +54,16 @@ export default {
     return promise(BSAPI.deleteAppLelease, payload, store, null);
   },
   //Admin
+  async [Constant.FETCH_COMPANY](store, payload) {
+    return promise(BSAPI.fetchCompany, payload, store, null);
+  },
+  async [Constant.ADD_COMPANY](store, payload) {
+    return promise(BSAPI.addCompany, payload, store, null);
+  },
+  async [Constant.UPDATE_COMPANY](store, payload) {
+    return promise(BSAPI.updateCompany, payload, store, null);
+  },
+
   async [Constant.FETCH_CUSTOMER](store, payload) {
     return promise(BSAPI.fetchCustomer, payload, store, null);
   },
@@ -80,6 +90,12 @@ export default {
     return promise(BSAPI.deleteIcraftUser, payload, store, null);
   },
 
+  async [Constant.FETCH_USERS](store, payload) {
+    return promise(BSAPI.fetchUsers, payload, store, null);
+  },
+  async [Constant.ADD_USERS](store, payload) {
+    return promise(BSAPI.addUsers, payload, store, null);
+  },
   async [Constant.FETCH_USER](store, payload) {
     return promise(BSAPI.fetchUser, payload, store, null);
   },

@@ -48,15 +48,15 @@
               
             ></v-checkbox>
           </td>
-          <td class="text-xs-center">{{ props.item.idx }}</td>
-          <td class="text-xs-center">{{ props.item.companyName }}</td>
-          <td class="text-xs-center">{{ props.item.name }}</td>
-          <td class="text-xs-center">{{ props.item.contact }}</td>
-          <td class="text-xs-center">{{ props.item.pushToken }}</td>
-          <td class="text-xs-center">{{ props.item.dtRegistered }}</td>
-          <td class="text-xs-center">{{ props.item.state }}</td>
-          <td class="text-xs-center">{{ props.item.dtModified }}</td>
-          <td class="text-xs-center">{{ props.item.modifier }}</td>
+          <td class="text-xs-left">{{ props.item.idx }}</td>
+          <td class="text-xs-left">{{ props.item.companyName }}</td>
+          <td class="text-xs-left">{{ props.item.name }}</td>
+          <td class="text-xs-left">{{ props.item.contact }}</td>
+          <td class="text-xs-left">{{ props.item.pushToken }}</td>
+          <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
+          <td class="text-xs-left">{{ props.item.state }}</td>
+          <td class="text-xs-left">{{ props.item.dtModified }}</td>
+          <td class="text-xs-left">{{ props.item.modifier }}</td>
         </template>
       </v-data-table>
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{apps.length}}</span> 건</span>
@@ -88,20 +88,20 @@ export default {
       },
       selected: [],
       headers: [
-        { text: "번호", align: "center", value: "번호", sortable: false },
-        { text: "회사명", align: "center", value: "회사명", sortable: false },
-        { text: "이름", align: "center", value: "이름", sortable: false },
-        { text: "연락처", align: "center", value: "연락처", sortable: false },
+        { text: "번호", align: "left", value: "번호", sortable: false },
+        { text: "회사명", align: "left", value: "회사명", sortable: false },
+        { text: "이름", align: "left", value: "이름", sortable: false },
+        { text: "연락처", align: "left", value: "연락처", sortable: false },
         {
           text: "푸시토큰",
-          align: "center",
+          align: "left",
           value: "푸시토큰",
           sortable: false
         },
-        { text: "등록일", align: "center", value: "등록일", sortable: false },
-        { text: "상태", align: "center", value: "상태", sortable: false },
-        { text: "변경일", align: "center", value: "변경일", sortable: false },
-        { text: "변경자", align: "center", value: "변경자", sortable: false }
+        { text: "등록일", align: "left", value: "등록일", sortable: false },
+        { text: "상태", align: "left", value: "상태", sortable: false },
+        { text: "변경일", align: "left", value: "변경일", sortable: false },
+        { text: "변경자", align: "left", value: "변경자", sortable: false }
       ],
       apps: []
     };

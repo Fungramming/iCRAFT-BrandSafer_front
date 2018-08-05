@@ -52,18 +52,18 @@
           </span>
         </template>
         <template slot="items" slot-scope="props">
-          <td class="text-xs-center">{{ props.item.number }}</td>
-          <td class="text-xs-center">{{ props.item.date }}</td>
-          <td class="text-xs-center">{{ props.item.app_name }}</td>
-          <td class="text-xs-center">{{ props.item.tag_type }}</td>
-          <td class="text-xs-center"><a>{{ props.item.push_token }}</a></td>
-          <td class="text-xs-center">{{ props.item.tiems }}</td>
-          <td class="text-xs-center">{{ props.item.date_update }}</td>
-          <td class="text-xs-center">{{ props.item.date_last }}</td>
-          <td class="text-xs-center">{{ props.item.customer_code }}</td>
-          <td class="text-xs-center">{{ props.item.os }}</td>
-          <td class="text-xs-center">{{ props.item.model }}</td>
-          <td class="text-xs-center">{{ props.item.language_set }}</td>
+          <td class="text-xs-left">{{ props.item.number }}</td>
+          <td class="text-xs-left">{{ props.item.date }}</td>
+          <td class="text-xs-left">{{ props.item.app_name }}</td>
+          <td class="text-xs-left">{{ props.item.tag_type }}</td>
+          <td class="text-xs-left"><a>{{ props.item.push_token }}</a></td>
+          <td class="text-xs-left">{{ props.item.tiems }}</td>
+          <td class="text-xs-left">{{ props.item.date_update }}</td>
+          <td class="text-xs-left">{{ props.item.date_last }}</td>
+          <td class="text-xs-left">{{ props.item.customer_code }}</td>
+          <td class="text-xs-left">{{ props.item.os }}</td>
+          <td class="text-xs-left">{{ props.item.model }}</td>
+          <td class="text-xs-left">{{ props.item.language_set }}</td>
         </template>
       </v-data-table>
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
@@ -328,49 +328,49 @@ export default {
 
       selected: [],
       headers: [
-        { text: "번호", align: "center", value: "번호", sortable: false },
+        { text: "번호", align: "left", value: "번호", sortable: false },
         {
           text: "관제일자",
-          align: "center",
+          align: "left",
           value: "관제일자",
           sortable: false
         },
-        { text: "App명", align: "center", value: "App명", sortable: false },
+        { text: "App명", align: "left", value: "App명", sortable: false },
         {
           text: "태그타입",
-          align: "center",
+          align: "left",
           value: "태그타입",
           sortable: false
         },
         {
           text: "푸시토큰",
-          align: "center",
+          align: "left",
           value: "푸시토큰",
           sortable: false
         },
         {
           text: "인증횟수",
-          align: "center",
+          align: "left",
           value: "인증횟수",
           sortable: false
         },
         {
           text: "관제갱신일시",
-          align: "center",
+          align: "left",
           value: "관제갱신일시",
           sortable: false
         },
-        // { text: "블랙리스트유형", align: "center", value: "블랙리스트유형", sortable: false },
+        // { text: "블랙리스트유형", align: "left", value: "블랙리스트유형", sortable: false },
         {
           text: "마지막 인증일시",
-          align: "center",
+          align: "left",
           value: "마지막 인증일시",
           sortable: false
         },
-        { text: "App등록", align: "center", value: "App등록", sortable: false },
-        { text: "OS", align: "center", value: "OS", sortable: false },
-        { text: "모델명	", align: "center", value: "모델명	", sortable: false },
-        { text: "언어셋", align: "center", value: "언어셋", sortable: false }
+        { text: "App등록", align: "left", value: "App등록", sortable: false },
+        { text: "OS", align: "left", value: "OS", sortable: false },
+        { text: "모델명	", align: "left", value: "모델명	", sortable: false },
+        { text: "언어셋", align: "left", value: "언어셋", sortable: false }
       ],
       desserts: [
         {

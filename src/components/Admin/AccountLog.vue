@@ -54,12 +54,12 @@
           </span>
         </template>
         <template slot="items" slot-scope="props">
-          <td class="text-xs-center">{{ props.item.number }}</td>
-          <td class="text-xs-center">{{ props.item.customer }}</td>
-          <td class="text-xs-center">{{ props.item.customer_code }}</td>
-          <td class="text-xs-center">{{ props.item.address }}</td>
-          <td class="text-xs-center">{{ props.item.exponent }}</td>
-          <td class="text-xs-center">{{ props.item.call_number }}</td>
+          <td class="text-xs-left">{{ props.item.number }}</td>
+          <td class="text-xs-left">{{ props.item.customer }}</td>
+          <td class="text-xs-left">{{ props.item.customer_code }}</td>
+          <td class="text-xs-left">{{ props.item.address }}</td>
+          <td class="text-xs-left">{{ props.item.exponent }}</td>
+          <td class="text-xs-left">{{ props.item.call_number }}</td>
         </template>
       </v-data-table>
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{logins.length}}</span> 건</span>
@@ -325,20 +325,20 @@ export default {
       headers: [
         {
           text: "로그인 일시",
-          align: "center",
+          align: "left",
           value: "로그인 일시",
           sortable: false
         },
-        { text: "구분", align: "center", value: "구분", sortable: false },
-        { text: "아이디", align: "center", value: "아이디", sortable: false },
-        { text: "이름", align: "center", value: "이름", sortable: false },
+        { text: "구분", align: "left", value: "구분", sortable: false },
+        { text: "아이디", align: "left", value: "아이디", sortable: false },
+        { text: "이름", align: "left", value: "이름", sortable: false },
         {
           text: "작업내용",
-          align: "center",
+          align: "left",
           value: "작업내용",
           sortable: false
         },
-        { text: "접속 IP", align: "center", value: "접속 IP", sortable: false }
+        { text: "접속 IP", align: "left", value: "접속 IP", sortable: false }
       ],
       desserts: [
         {
@@ -540,7 +540,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch(Constant.FETCH_ACCOUNT_LOG).then(resp => {
-      this.logins = resp;
+      this.logins = resp.data.logins;
       console.log("this.logins :", this.logins);
       // console.log("this.logins.length :", this.logins.length);
     });

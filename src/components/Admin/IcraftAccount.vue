@@ -45,7 +45,7 @@
     <v-app class="inspire">
       <v-data-table
         :headers="headers"
-        :items="results"
+        :items="account"
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
@@ -67,16 +67,17 @@
               hide-details
             ></v-checkbox>
           </td>
-          <td class="text-xs-left">{{ results.length -- }}</td>
-          <td class="text-xs-left">{{ props.item.customer }}</td>
-          <td class="text-xs-left">{{ props.item.customer_code }}</td>
+          <td class="text-xs-left">{{ props.item.idx }}</td>
+          <td class="text-xs-left">{{ props.item.role }}</td>
+          <td class="text-xs-left">{{ props.item.name }}</td>
           <td class="text-xs-left"><a @click="dialog_edit = true">{{ props.item.id }}</a></td>
-          <td class="text-xs-left">{{ props.item.exponent }}</td>
-          <td class="text-xs-left">{{ props.item.call_number }}</td>
-          <td class="text-xs-left">{{ props.item.date }}</td>
+          <td class="text-xs-left">{{ props.item.department }}</td>
+          <td class="text-xs-left">{{ props.item.dtLastConnected }}</td>
+          <td class="text-xs-left">{{ props.item.state }}</td>
         </template>
       </v-data-table>
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{results.length}}</span> 건</span>
+      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{account.length}}</span> 건</span>
+      <!-- <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{account[0].length}}</span> 건</span> -->
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md10>
@@ -87,7 +88,7 @@
           </v-flex>
         </v-layout>
         <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+          <v-pagination v-model="pagination.page" :length="pages" :total-visible="7"></v-pagination>
         </div>
       </div>
     </v-app>
@@ -371,20 +372,20 @@ export default {
       },
       selected: [],
       headers: [
-        { text: "번호", align: "center", value: "번호", sortable: false },
-        { text: "구분", align: "center", value: "구분", sortable: false },
-        { text: "이름", align: "center", value: "이름", sortable: false },
-        { text: "아이디", align: "center", value: "아이디", sortable: false },
-        { text: "부서", align: "center", value: "부서", sortable: false },
+        { text: "번호", align: "left", value: "번호", sortable: false },
+        { text: "구분", align: "left", value: "구분", sortable: false },
+        { text: "이름", align: "left", value: "이름", sortable: false },
+        { text: "아이디", align: "left", value: "아이디", sortable: false },
+        { text: "부서", align: "left", value: "부서", sortable: false },
         {
           text: "최종 로그인",
-          align: "center",
+          align: "left",
           value: "최종 로그인",
           sortable: false
         },
-        { text: "상태", align: "center", value: "상태", sortable: false }
+        { text: "상태", align: "left", value: "상태", sortable: false }
       ],
-      results: []
+      account: {}
     };
   },
   computed: {
@@ -395,16 +396,16 @@ export default {
       )
         return 0;
 
-      return Math.ceil(
-        this.pagination.totalItems / this.pagination.rowsPerPage
-      );
+      return Math.ceil(this.account.length / this.pagination.rowsPerPage);
     }
   },
   mounted() {
     this.$store.dispatch(Constant.FETCH_ICRAFT_USER).then(resp => {
-      this.results = resp.data["icrf-users"].reverse();
-      // this.results = resp.data['icrf-users'].reverse()
-      console.log("this.results :", this.results);
+      this.account = resp.data["icrf-users"].reverse();
+      // this.account = resp.data.icrf_users.reverse();
+      // this.account[0] = resp.data["icrf-users"].reverse();
+      console.log('resp.data["icrf-users"] :', typeof resp.data["icrf-users"]);
+      console.log(this.account[0]);
     });
   }
 };

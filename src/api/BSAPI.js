@@ -65,6 +65,16 @@ export default {
   },
 
   /* ========= Admin ========= */
+  fetchCompany(customer) {
+    return axios.get(CONF.FETCH_COMPANY, customer);
+  },
+  addCompany(customer) {
+    return axios.post(CONF.ADD_COMPANY, customer);
+  },
+  updateCompany({ cid, customer }) {
+    return axios.put(CONF.UPDATE_COMPANY.replace("${cid}", cid), customer);
+  },
+
   fetchCustomer(customer) {
     return axios.get(CONF.FETCH_CUSTOMER, customer);
   },
@@ -100,7 +110,12 @@ export default {
   deleteIcraftUser(uid) {
     return axios.delete(CONF.DELETE_ICRAFT_USER, uid);
   },
-
+  fetchUsers() {
+    return axios.get(CONF.FETCH_USERS);
+  },
+  addUsers(users) {
+    return axios.post(CONF.ADD_USERS, users);
+  },
   fetchUser() {
     return axios.get(CONF.FETCH_USER);
   },

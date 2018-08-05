@@ -96,13 +96,13 @@
               hide-details
             ></v-checkbox>
           </td>
-          <td class="text-xs-center">{{ props.item.number }}</td>
-          <td class="text-xs-center">{{ props.item.customer }}</td>
-          <td class="text-xs-center">{{ props.item.customer_code }}</td>
-          <td class="text-xs-center">{{ props.item.address }}</td>
-          <td class="text-xs-center">{{ props.item.exponent }}</td>
-          <td class="text-xs-center">{{ props.item.call_number }}</td>
-          <td class="text-xs-center">{{ props.item.date }}</td>
+          <td class="text-xs-left">{{ props.item.number }}</td>
+          <td class="text-xs-left">{{ props.item.customer }}</td>
+          <td class="text-xs-left">{{ props.item.customer_code }}</td>
+          <td class="text-xs-left">{{ props.item.address }}</td>
+          <td class="text-xs-left">{{ props.item.exponent }}</td>
+          <td class="text-xs-left">{{ props.item.call_number }}</td>
+          <td class="text-xs-left">{{ props.item.date }}</td>
         </template>
       </v-data-table>
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
@@ -121,6 +121,8 @@
 </template>
 
 <script>
+import Constant from "../../constant.js";
+
 export default {
   data() {
     return {
@@ -131,18 +133,18 @@ export default {
       },
       selected: [],
       headers: [
-        { text: "번호", align: "center", value: "번호", sortable: false },
-        { text: "고객사", align: "center", value: "고객사", sortable: false },
-        { text: "구분", align: "center", value: "구분", sortable: false },
-        { text: "이름", align: "center", value: "이름", sortable: false },
-        { text: "부서", align: "center", value: "부서", sortable: false },
+        { text: "번호", align: "left", value: "번호", sortable: false },
+        { text: "고객사", align: "left", value: "고객사", sortable: false },
+        { text: "구분", align: "left", value: "구분", sortable: false },
+        { text: "이름", align: "left", value: "이름", sortable: false },
+        { text: "부서", align: "left", value: "부서", sortable: false },
         {
           text: "최종로그인",
-          align: "center",
+          align: "left",
           value: "최종로그인",
           sortable: false
         },
-        { text: "상태", align: "center", value: "상태", sortable: false }
+        { text: "상태", align: "left", value: "상태", sortable: false }
       ],
       desserts: [
         {
@@ -155,7 +157,8 @@ export default {
           call_number: "1%",
           date: "1%"
         }
-      ]
+      ],
+      users: []
     };
   },
   computed: {
@@ -170,6 +173,13 @@ export default {
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
     }
+  },
+  mounted() {
+    this.$store.dispatch(Constant.FETCH_USERS).then(resp => {
+      this.users = resp;
+      console.log("this.users :", this.users);
+      // console.log("this.users.length :", this.users.length);
+    });
   }
 };
 </script>

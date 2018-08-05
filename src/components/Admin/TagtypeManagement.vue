@@ -63,13 +63,13 @@
               hide-details
             ></v-checkbox>
           </td>
-          <td class="text-xs-center">{{ props.item.idx }}</td>
-          <td class="text-xs-center"><a @click="dialog_edit = true"> {{ props.item.version }} </a></td>
-          <td class="text-xs-center">{{ props.item.type }}</td>
-          <td class="text-xs-center">{{ props.item.width }} * {{ props.item.height }}</td>
-          <td class="text-xs-center">{{ props.item.state }}</td>
-          <td class="text-xs-center">{{ props.item.registrant }}</td>
-          <td class="text-xs-center">{{ props.item.dtRegistered }}</td>
+          <td class="text-xs-left">{{ props.item.idx }}</td>
+          <td class="text-xs-left"><a @click="dialog_edit = true"> {{ props.item.version }} </a></td>
+          <td class="text-xs-left">{{ props.item.type }}</td>
+          <td class="text-xs-left">{{ props.item.width }} * {{ props.item.height }}</td>
+          <td class="text-xs-left">{{ props.item.state }}</td>
+          <td class="text-xs-left">{{ props.item.registrant }}</td>
+          <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
         </template>
       </v-data-table>
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{tag_type.length}}</span> 건</span>
@@ -247,18 +247,18 @@ export default {
       },
       selected: [],
       headers: [
-        { text: "번호", align: "center", value: "번호", sortable: false },
-        { text: "버전", align: "center", value: "버전", sortable: false },
+        { text: "번호", align: "left", value: "번호", sortable: false },
+        { text: "버전", align: "left", value: "버전", sortable: false },
         {
           text: "태그타입",
-          align: "center",
+          align: "left",
           value: "태그타입",
           sortable: false
         },
-        { text: "사이즈", align: "center", value: "사이즈", sortable: false },
-        { text: "상태", align: "center", value: "상태", sortable: false },
-        { text: "작성자", align: "center", value: "작성자", sortable: false },
-        { text: "등록일", align: "center", value: "등록일", sortable: false }
+        { text: "사이즈", align: "left", value: "사이즈", sortable: false },
+        { text: "상태", align: "left", value: "상태", sortable: false },
+        { text: "작성자", align: "left", value: "작성자", sortable: false },
+        { text: "등록일", align: "left", value: "등록일", sortable: false }
       ],
       tag_type: []
     };

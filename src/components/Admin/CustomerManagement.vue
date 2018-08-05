@@ -25,7 +25,7 @@
     <v-app class="inspire">
       <v-data-table
         :headers="headers"
-        :items="results"
+        :items="customer"
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
@@ -47,7 +47,7 @@
               hide-details
             ></v-checkbox>
           </td>
-          <td class="text-xs-left">{{ results.length -- }}</td>
+          <td class="text-xs-left">{{ props.item.idx }}</td>
           <!-- <td class="text-xs-left">{{ props.item.idx - 6 }}</td> -->
           <td class="text-xs-left"><a @click="dialog_edit = true"> {{ props.item.name_kr }} </a></td>
           <td class="text-xs-left">{{ props.item.code }}</td>
@@ -57,7 +57,7 @@
           <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
         </template>
       </v-data-table>
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{results.length}}</span> 건</span>
+      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{customer.length}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md10>
@@ -68,7 +68,7 @@
           </v-flex>
         </v-layout>
         <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+          <v-pagination v-model="pagination.page" :length="pages" :total-visible="7"></v-pagination>
         </div>
       </div>
     </v-app>
@@ -513,7 +513,7 @@ export default {
         { text: "전화번호", align: "left", value: "전화번호", sortable: false },
         { text: "가입일자", align: "left", value: "가입일자", sortable: false }
       ],
-      results: []
+      customer: []
     };
   },
   computed: {
@@ -524,14 +524,14 @@ export default {
       )
         return 0;
 
-      return Math.ceil(this.results.length / this.pagination.rowsPerPage);
+      return Math.ceil(this.customer.length / this.pagination.rowsPerPage);
     }
   },
   mounted() {
-    this.$store.dispatch(Constant.FETCH_USERS).then(resp => {
-      this.results = resp;
-      console.log("this.results :", this.results);
-      // console.log("this.results.length :", this.results.length);
+    this.$store.dispatch(Constant.FETCH_COMPANY).then(resp => {
+      this.customer = resp.data.company;
+      console.log("this.customer :", this.customer);
+      // console.log("this.customer.length :", this.customer.length);
     });
   }
 };

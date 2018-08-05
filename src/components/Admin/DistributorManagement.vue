@@ -41,12 +41,12 @@
               hide-details
             ></v-checkbox>
           </td>
-          <td class="text-xs-center">{{ props.item.idx}}</td>
-          <td class="text-xs-center">{{ props.item.name_kr }}</td>
-          <td class="text-xs-center"><a @click="dialog_edit = true"> {{ props.item.name_kr }} </a></td>
-          <td class="text-xs-center">{{ props.item.dtRegistered }}</td>
-          <td class="text-xs-center">{{ props.item.state }}</td>
-          <td class="text-xs-center">{{ props.item.registrant }}</td>
+          <td class="text-xs-left">{{ props.item.idx}}</td>
+          <td class="text-xs-left">{{ props.item.name_kr }}</td>
+          <td class="text-xs-left"><a @click="dialog_edit = true"> {{ props.item.name_kr }} </a></td>
+          <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
+          <td class="text-xs-left">{{ props.item.state }}</td>
+          <td class="text-xs-left">{{ props.item.registrant }}</td>
         </template>
       </v-data-table>
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{distributors.length}}</span> 건</span>
@@ -254,19 +254,19 @@ export default {
       },
       selected: [],
       headers: [
-        { text: "번호", align: "center", value: "번호", sortable: false },
-        { text: "고객사", align: "center", value: "고객사", sortable: false },
+        { text: "번호", align: "left", value: "번호", sortable: false },
+        { text: "고객사", align: "left", value: "고객사", sortable: false },
         {
           text: "유통업체명",
-          align: "center",
+          align: "left",
           value: "유통업체명",
           sortable: false
         },
-        { text: "등록일", align: "center", value: "등록일", sortable: false },
-        { text: "상태", align: "center", value: "상태", sortable: false },
+        { text: "등록일", align: "left", value: "등록일", sortable: false },
+        { text: "상태", align: "left", value: "상태", sortable: false },
         {
           text: "생성계정",
-          align: "center",
+          align: "left",
           value: "생성계정",
           sortable: false
         }
