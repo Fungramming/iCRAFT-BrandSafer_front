@@ -138,11 +138,14 @@ export default {
   //   });
   // },
 
-  fetchBlacklist({ page, query }) {
-    return axios.get(CONF.FETCH_BLACKLIST, {
-      params: { page, query }
-    });
+  fetchBlacklist() {
+    return axios.get(CONF.FETCH_BLACKLIST);
   },
+  // fetchBlacklist({ page, query }) {
+  //   return axios.get(CONF.FETCH_BLACKLIST, {
+  //     params: { page, query }
+  //   });
+  // },
   addBlacklist(list) {
     return axios.post(CONF.ADD_BLACKLIST, list);
   },

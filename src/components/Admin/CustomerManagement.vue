@@ -14,7 +14,7 @@
           </div>
         </v-flex>
         <v-flex d-flex xs12 sm12 md3>
-          <input class="input-text" type="text">
+          <input class="input-text" type="text" maxlength="40">
         </v-flex>
       </v-layout>
       <!-- <v-flex d-flex xs12 sm12 md1 offset-md11>

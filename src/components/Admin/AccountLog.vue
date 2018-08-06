@@ -540,7 +540,8 @@ export default {
   },
   mounted() {
     this.$store.dispatch(Constant.FETCH_ACCOUNT_LOG).then(resp => {
-      this.logins = resp.data.logins;
+      this.logins = resp.data;
+      // this.logins = resp.data.logins;
       console.log("this.logins :", this.logins);
       // console.log("this.logins.length :", this.logins.length);
     });

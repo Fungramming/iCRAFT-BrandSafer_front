@@ -68,14 +68,14 @@
               hide-details
             ></v-checkbox>
           </td>
-          <td class="text-xs-left">{{ props.item.number }}</td>
-          <td class="text-xs-left">{{ props.item.customer }}</td>
-          <td class="text-xs-left">{{ props.item.customer_code }}</td>
-          <td class="text-xs-left"><a>{{ props.item.push_token }}</a></td>
-          <td class="text-xs-left">{{ props.item.exponent }}</td>
-          <td class="text-xs-left">{{ props.item.call_number }}</td>
-          <td class="text-xs-left">{{ props.item.date }}</td>
-          <td class="text-xs-left">{{ props.item.changer }}</td>
+          <td class="text-xs-left">{{ props.item.blType }}</td>
+          <td class="text-xs-left">{{ props.item.delYN }}</td>
+          <td class="text-xs-left">{{ props.item.dtModified }}</td>
+          <td class="text-xs-left"><a>{{ props.item.dtRegistered }}</a></td>
+          <td class="text-xs-left">{{ props.item.idx }}</td>
+          <td class="text-xs-left">{{ props.item.modifier }}</td>
+          <td class="text-xs-left">{{ props.item.pushToken }}</td>
+          <td class="text-xs-left">{{ props.item.registrant }}</td>
         </template>
       </v-data-table>
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
@@ -132,6 +132,8 @@
 </template>
 
 <script>
+import Constant from "../../constant.js";
+
 export default {
   data() {
     return {
@@ -157,228 +159,229 @@ export default {
         { text: "변경일", align: "left", value: "변경일", sortable: false },
         { text: "변경자", align: "left", value: "변경자", sortable: false }
       ],
-      desserts: [
-        {
-          value: false,
-          number: "1",
-          customer: 159,
-          customer_code: 6.0,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 4.0,
-          call_number: "1%",
-          date: "1%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "2",
-          customer: 237,
-          customer_code: 9.0,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 4.3,
-          call_number: "1%",
-          date: "1%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "3",
-          customer: 262,
-          customer_code: 16.0,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 6.0,
-          call_number: "7%",
-          date: "7%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "4",
-          customer: 305,
-          customer_code: 3.7,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 4.3,
-          call_number: "8%",
-          date: "8%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "5",
-          customer: 356,
-          customer_code: 16.0,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 3.9,
-          call_number: "16%",
-          date: "16%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "6",
-          customer: 375,
-          customer_code: 0.0,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 0.0,
-          call_number: "0%",
-          date: "0%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "7",
-          customer: 392,
-          customer_code: 0.2,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 0,
-          call_number: "2%",
-          date: "2%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "8",
-          customer: 408,
-          customer_code: 3.2,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 6.5,
-          call_number: "45%",
-          date: "45%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "9",
-          customer: 452,
-          customer_code: 25.0,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 4.9,
-          call_number: "22%",
-          date: "22%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "10",
-          customer: 518,
-          customer_code: 26.0,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 7,
-          call_number: "6%",
-          date: "6%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "11",
-          customer: 159,
-          customer_code: 6.0,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 4.0,
-          call_number: "1%",
-          date: "1%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "12",
-          customer: 237,
-          customer_code: 9.0,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 4.3,
-          call_number: "1%",
-          date: "1%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "13",
-          customer: 262,
-          customer_code: 16.0,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 6.0,
-          call_number: "7%",
-          date: "7%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "14",
-          customer: 305,
-          customer_code: 3.7,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 4.3,
-          call_number: "8%",
-          date: "8%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "15",
-          customer: 356,
-          customer_code: 16.0,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 3.9,
-          call_number: "16%",
-          date: "16%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "16",
-          customer: 375,
-          customer_code: 0.0,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 0.0,
-          call_number: "0%",
-          date: "0%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "17",
-          customer: 392,
-          customer_code: 0.2,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 0,
-          call_number: "2%",
-          date: "2%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "18",
-          customer: 408,
-          customer_code: 3.2,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 6.5,
-          call_number: "45%",
-          date: "45%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "19",
-          customer: 452,
-          customer_code: 25.0,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 4.9,
-          call_number: "22%",
-          date: "22%",
-          changer: "person"
-        },
-        {
-          value: false,
-          number: "20",
-          customer: 518,
-          customer_code: 26.0,
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          exponent: 7,
-          call_number: "6%",
-          date: "6%",
-          changer: "person"
-        }
-      ]
+      // desserts: [
+      //   {
+      //     value: false,
+      //     number: "1",
+      //     customer: 159,
+      //     customer_code: 6.0,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 4.0,
+      //     call_number: "1%",
+      //     date: "1%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "2",
+      //     customer: 237,
+      //     customer_code: 9.0,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 4.3,
+      //     call_number: "1%",
+      //     date: "1%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "3",
+      //     customer: 262,
+      //     customer_code: 16.0,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 6.0,
+      //     call_number: "7%",
+      //     date: "7%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "4",
+      //     customer: 305,
+      //     customer_code: 3.7,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 4.3,
+      //     call_number: "8%",
+      //     date: "8%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "5",
+      //     customer: 356,
+      //     customer_code: 16.0,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 3.9,
+      //     call_number: "16%",
+      //     date: "16%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "6",
+      //     customer: 375,
+      //     customer_code: 0.0,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 0.0,
+      //     call_number: "0%",
+      //     date: "0%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "7",
+      //     customer: 392,
+      //     customer_code: 0.2,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 0,
+      //     call_number: "2%",
+      //     date: "2%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "8",
+      //     customer: 408,
+      //     customer_code: 3.2,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 6.5,
+      //     call_number: "45%",
+      //     date: "45%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "9",
+      //     customer: 452,
+      //     customer_code: 25.0,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 4.9,
+      //     call_number: "22%",
+      //     date: "22%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "10",
+      //     customer: 518,
+      //     customer_code: 26.0,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 7,
+      //     call_number: "6%",
+      //     date: "6%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "11",
+      //     customer: 159,
+      //     customer_code: 6.0,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 4.0,
+      //     call_number: "1%",
+      //     date: "1%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "12",
+      //     customer: 237,
+      //     customer_code: 9.0,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 4.3,
+      //     call_number: "1%",
+      //     date: "1%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "13",
+      //     customer: 262,
+      //     customer_code: 16.0,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 6.0,
+      //     call_number: "7%",
+      //     date: "7%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "14",
+      //     customer: 305,
+      //     customer_code: 3.7,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 4.3,
+      //     call_number: "8%",
+      //     date: "8%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "15",
+      //     customer: 356,
+      //     customer_code: 16.0,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 3.9,
+      //     call_number: "16%",
+      //     date: "16%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "16",
+      //     customer: 375,
+      //     customer_code: 0.0,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 0.0,
+      //     call_number: "0%",
+      //     date: "0%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "17",
+      //     customer: 392,
+      //     customer_code: 0.2,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 0,
+      //     call_number: "2%",
+      //     date: "2%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "18",
+      //     customer: 408,
+      //     customer_code: 3.2,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 6.5,
+      //     call_number: "45%",
+      //     date: "45%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "19",
+      //     customer: 452,
+      //     customer_code: 25.0,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 4.9,
+      //     call_number: "22%",
+      //     date: "22%",
+      //     changer: "person"
+      //   },
+      //   {
+      //     value: false,
+      //     number: "20",
+      //     customer: 518,
+      //     customer_code: 26.0,
+      //     push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
+      //     exponent: 7,
+      //     call_number: "6%",
+      //     date: "6%",
+      //     changer: "person"
+      //   }
+      // ],
+      desserts: []
     };
   },
   computed: {
@@ -389,10 +392,14 @@ export default {
       )
         return 0;
 
-      return Math.ceil(
-        this.pagination.totalItems / this.pagination.rowsPerPage
-      );
+      return Math.ceil(this.desserts.length / this.pagination.rowsPerPage);
     }
+  },
+  mounted() {
+    this.$store.dispatch(Constant.FETCH_BLACKLIST).then(resp => {
+      this.desserts = resp.data.blacklists;
+      console.log("desserts :", this.desserts);
+    });
   }
 };
 </script>

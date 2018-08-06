@@ -385,7 +385,8 @@ export default {
         },
         { text: "상태", align: "left", value: "상태", sortable: false }
       ],
-      account: {}
+      account: []
+      // account: {}
     };
   },
   computed: {
@@ -406,6 +407,7 @@ export default {
       // this.account[0] = resp.data["icrf-users"].reverse();
       console.log('resp.data["icrf-users"] :', typeof resp.data["icrf-users"]);
       console.log(this.account[0]);
+      console.log(this.account);
     });
   }
 };
