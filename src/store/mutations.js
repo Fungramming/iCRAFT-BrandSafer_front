@@ -24,6 +24,9 @@ export default {
   [Constant.FETCH_DAILY_STATUS]: (state, payload) => {
     state.dailyStatus = payload;
   },
+  [Constant.FETCH_WEEKLY_STATUS]: (state, payload) => {
+    state.weeklyStatus = payload;
+  },
   [Constant.FETCH_MONTHLY_STATUS]: (state, payload) => {
     state.monthlyStatus = payload;
   }

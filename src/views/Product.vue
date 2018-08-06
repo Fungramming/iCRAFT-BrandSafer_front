@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import ProductCertList from "../components/Product/ProductCertList"
-import ProductCertMap from "../components/Product/ProductCertMap"
+import ProductCertList from "../components/Product/ProductCertList";
+import ProductCertMap from "../components/Product/ProductCertMap";
 
 export default {
   components: {
