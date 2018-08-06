@@ -1,7 +1,7 @@
 <template>
   <div class="tableBs">
     <!-- table top menu -->
-    <div class="tableBs-top">
+    <!-- <div class="tableBs-top">
       <p>검색 조건</p>
       <v-layout row wrap>
         <v-flex d-flex xs12 sm12 md1>
@@ -17,44 +17,72 @@
           <input class="input-text" type="text" maxlength="40">
         </v-flex>
       </v-layout>
-      <!-- <v-flex d-flex xs12 sm12 md1 offset-md11>
-        <v-btn class="search-btn" color="primary" dark>검색</v-btn>
-      </v-flex> -->
-    </div>
+    </div> -->
     <!-- table wrap -->
     <v-app class="inspire">
+      <v-card-title>
+        검색조건
+      <v-spacer></v-spacer>
+      <v-text-field
+        v-model="search"
+        append-icon="search"
+        label="검색어"
+        single-line
+        hide-details
+      ></v-text-field>
+      </v-card-title>
+
       <v-data-table
         :headers="headers"
         :items="customer"
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
-        item-key="number"
+        item-key="idx"
         select-all
-        hide-actions
         class="elevation-1"
       >
-        <template slot="headerCell" slot-scope="props">
-          <span slot="activator" class="item-headers">
-            {{ props.header.text }}
-          </span>
+
+
+        <template slot="headers" slot-scope="props">
+          <tr>
+            <th>
+              <v-checkbox
+                :input-value="props.all"
+                :indeterminate="props.indeterminate"
+                primary
+                hide-details
+                @click.native="toggleAll"
+              ></v-checkbox>
+            </th>
+            <th
+              v-for="header in props.headers"
+              :key="header.text"
+              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+              @click="changeSort(header.value)"
+            >
+              {{ header.text }}
+            </th>
+          </tr>
         </template>
+
         <template slot="items" slot-scope="props">
-          <td>
-            <v-checkbox
-              v-model="props.selected"
-              primary
-              hide-details
-            ></v-checkbox>
-          </td>
-          <td class="text-xs-left">{{ props.item.idx }}</td>
-          <!-- <td class="text-xs-left">{{ props.item.idx - 6 }}</td> -->
-          <td class="text-xs-left"><a @click="dialog_edit = true"> {{ props.item.name_kr }} </a></td>
-          <td class="text-xs-left">{{ props.item.code }}</td>
-          <td class="text-xs-left">{{ props.item.addr_kr }}</td>
-          <td class="text-xs-left">{{ props.item.delegator_kr }}</td>
-          <td class="text-xs-left">{{ props.item.telephone }}</td>
-          <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
+          <tr :active="props.selected" @click="props.selected = !props.selected">
+            <td>
+              <v-checkbox
+                v-model="props.selected"
+                primary
+                hide-details
+              ></v-checkbox>
+            </td>
+            <td class="text-xs-left">{{ props.item.idx }}</td>
+            <td class="text-xs-left"><a @click="dialog_edit = true"> {{ props.item.name_kr }} </a></td>
+            <td class="text-xs-left">{{ props.item.code }}</td>
+            <td class="text-xs-left">{{ props.item.addr_kr }}</td>
+            <td class="text-xs-left">{{ props.item.delegator_kr }}</td>
+            <td class="text-xs-left">{{ props.item.telephone }}</td>
+            <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
+          </tr>
         </template>
       </v-data-table>
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{customer.length}}</span> 건</span>
@@ -500,18 +528,18 @@ export default {
       },
       selected: [],
       headers: [
-        { text: "번호", align: "left", value: "번호", sortable: false },
-        { text: "고객사", align: "left", value: "고객사", sortable: false },
+        { text: "번호", align: "left", value: "idx", sortable: false },
+        { text: "고객사", align: "left", value: "name_kr", sortable: false },
         {
           text: "고객사코드",
           align: "left",
-          value: "고객사코드",
+          value: "code",
           sortable: false
         },
-        { text: "주소", align: "left", value: "주소", sortable: false },
-        { text: "대표자", align: "left", value: "대표자", sortable: false },
-        { text: "전화번호", align: "left", value: "전화번호", sortable: false },
-        { text: "가입일자", align: "left", value: "가입일자", sortable: false }
+        { text: "주소", align: "left", value: "addr_kr", sortable: false },
+        { text: "대표자", align: "left", value: "delegator_kr", sortable: false },
+        { text: "전화번호", align: "left", value: "telephone", sortable: false },
+        { text: "가입일자", align: "left", value: "dtRegistered", sortable: false }
       ],
       customer: []
     };
@@ -533,6 +561,23 @@ export default {
       console.log("this.customer :", this.customer);
       // console.log("this.customer.length :", this.customer.length);
     });
+  },
+  methods: {
+    toggleAll() {
+      if (this.selected.length) this.selected = [];
+      else this.selected = this.customer.slice();
+    },
+    getSelected: function(e) {
+      getSelectedFunc(e);
+    },
+    changeSort(column) {
+      if (this.pagination.sortBy === column) {
+        this.pagination.descending = !this.pagination.descending;
+      } else {
+        this.pagination.sortBy = column;
+        this.pagination.descending = false;
+      }
+    }
   }
 };
 </script>
