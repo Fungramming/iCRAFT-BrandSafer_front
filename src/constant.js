@@ -9,6 +9,7 @@ export default {
   //막 쓰기
   // 기간설정, 고객사 선택
   FETCH_DAILY_STATUS: "fetchDailyStatus",
+  FETCH_WEEKLY_STATUS: "fetchWeeklyStatus",
   FETCH_MONTHLY_STATUS: "fetchMonthlyStatus",
   // 기간설정
   FETCH_PRODUCT_CERIT: "fectchProductCert",

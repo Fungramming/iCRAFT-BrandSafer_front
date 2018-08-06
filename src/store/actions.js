@@ -185,5 +185,9 @@ export default {
 
   [Constant.SHOW_LOADING]: (state, isLoading) => {
     state.isLoading = isLoading;
+  },
+  [Constant.FETCH_WEEKLY_STATUS]: (store, payload) => {
+    console.log("payload :", payload);
+    store.commit(Constant.FETCH_WEEKLY_STATUS, payload);
   }
 };

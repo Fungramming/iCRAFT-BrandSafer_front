@@ -14,5 +14,6 @@ export default {
 
   //DashBoard
   dailyStatus: {},
+  weeklyStatus: {},
   monthlyStatus: {}
 };

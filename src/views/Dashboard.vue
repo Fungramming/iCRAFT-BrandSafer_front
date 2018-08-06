@@ -2,7 +2,7 @@
   <v-layout row wrap>
     <v-flex xs12 class="daily">
       <v-card>
-        <v-card-text class="card-title">일간 현황 ({{nowDate}})</v-card-text>
+        <v-card-text class="card-title">일간 현황 <span class="duration">({{nowDate}})</span></v-card-text>
         <div class="card-cont">
           <table>
             <thead>
@@ -12,10 +12,10 @@
               <th>ETC</th>
             </thead>
             <tbody>
-              <td>1</td>
-              <td>1</td>
-              <td>1</td>
-              <td>1</td>
+              <td>{{toDayStatus.Total}}</td>
+              <td>{{toDayStatus.Genuine}} | {{toDayStatus.Share}}</td>
+              <td>{{toDayStatus.Counterfeit}} | {{toDayStatus.Report}}</td>
+              <td>{{toDayStatus.ETC}}</td>
             </tbody>
           </table>
         </div>
@@ -39,7 +39,7 @@
     </v-flex>
     <v-flex xs12 md3 class="monthly">
       <v-card>
-        <v-card-text class="card-title">월간 누적</v-card-text>
+        <v-card-text class="card-title">월간 누적 <span class="duration">({{this.duration.monthly.firstDay}}~{{ this.duration.monthly.lastDay}})</span></v-card-text>
         <div class="card-cont">
           <table>
             <tbody>
@@ -49,7 +49,7 @@
               </tr>
                <tr>
                 <td>가품</td>
-                <td>{{monthlyStatus.Genuine}}</td>                
+                <td>{{monthlyStatus.Counterfeit}}</td>                
               </tr>
                <tr>
                 <td>공유</td>
@@ -77,6 +77,8 @@ export default {
   data() {
     return {
       nowDate: "value",
+      toDayStatus: {},
+      weeklyStatus: {},
       monthlyStatus: {
         Counterfeit: 0,
         Genuine: 0,
@@ -84,23 +86,66 @@ export default {
         Share: 0,
         ETC: 0,
         Total: 0
+      },
+      duration: {
+        monthly: {
+          firstDay: "",
+          lastDay: ""
+        },
+        weekly: {
+          firstDay: "",
+          lastDay: ""
+        }
       }
     };
   },
   mounted() {
     this.nowDate = formatDate();
-    this.$store.dispatch(Constant.FETCH_DAILY_STATUS).then(resp => {
-      console.log("resp :", resp);
-    });
-    this.$store.dispatch(Constant.FETCH_MONTHLY_STATUS).then(resp => {
-      let box = resp.data.status;
-      for (let daily in box) {
-        for (let item in box[daily]) {
-          this.monthlyStatus[item] =
-            this.monthlyStatus[item] + box[daily][item];
+    this.fetchLiveData();
+    this.fetchData();
+  },
+  methods: {
+    fetchLiveData() {
+      this.$store.dispatch(Constant.FETCH_DAILY_STATUS).then(resp => {
+        console.log("live resp :", resp);
+      });
+    },
+    fetchData() {
+      this.$store.dispatch(Constant.FETCH_MONTHLY_STATUS).then(resp => {
+        let box = resp.data.status;
+
+        // FIRST and LAST DAY
+        let keyList = Object.keys(box);
+        this.duration.monthly.firstDay = keyList[0];
+        this.duration.monthly.lastDay = keyList[keyList.length - 1];
+
+        // TODAY STATUS
+        this.toDayStatus = box[this.duration.monthly.lastDay];
+
+        // WEEKLY STATUS
+        let startWeekDay = keyList[keyList.length - 7];
+        let onKey = false;
+        for (let item in box) {
+          if (item == startWeekDay) {
+            onKey = true;
+          }
+          if (onKey == true) {
+            this.weeklyStatus[item] = box[item];
+          }
         }
-      }
-    });
+        this.$store.dispatch(Constant.FETCH_WEEKLY_STATUS, {
+          data: this.weeklyStatus
+        });
+
+        // MONTHLY STATUS
+        for (let daily in box) {
+          for (let item in box[daily]) {
+            this.monthlyStatus[item] =
+              this.monthlyStatus[item] + box[daily][item];
+          }
+        }
+      });
+    }
   }
 };
 </script>
