@@ -33,7 +33,77 @@
         hide-details
       ></v-text-field>
       </v-card-title>
+
+
       <v-data-table
+        :headers="headers"
+        :items="apps"
+        :search="search"
+        :pagination.sync="pagination"
+        v-model="selected"
+        item-key="idx"
+        select-all
+        class="elevation-1"
+      >
+        <!-- <template slot="headerCell" slot-scope="props">
+          <v-tooltip bottom>
+            <span slot="activator">
+              {{ props.header.text }} 
+            </span>
+            <span>
+              {{ props.header.text }}
+            </span>
+          </v-tooltip>
+        </template> -->
+
+        <template slot="headers" slot-scope="props">
+          <tr>
+            <th>
+              <v-checkbox
+                :input-value="props.all"
+                :indeterminate="props.indeterminate"
+                primary
+                hide-details
+                @click.native="toggleAll"
+              ></v-checkbox>
+            </th>
+            <th
+              v-for="header in props.headers"
+              :key="header.text"
+              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+              @click="changeSort(header.value)"
+            >
+              {{ header.text }}
+            </th>
+          </tr>
+        </template>
+
+
+        <template slot="items" slot-scope="props">
+          <tr :active="props.selected" @click="props.selected = !props.selected">
+            <td>
+              <v-checkbox
+                :input-value="props.selected"
+                primary
+                hide-details
+              ></v-checkbox>
+            </td>
+            <td class="text-xs-left">{{ props.item.idx }}</td>
+            <td class="text-xs-left">{{ props.item.companyName }}</td>
+            <td class="text-xs-left"><a @click="tagtype_dialog_edit = true">{{ props.item.name }}</a></td>
+            <td class="text-xs-left">{{ props.item.contact }}</td>
+            <td class="text-xs-left">{{ props.item.pushToken }}</td>
+            <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
+            <td class="text-xs-left">{{ props.item.state }}</td>
+            <td class="text-xs-left">{{ props.item.dtModified }}</td>
+            <td class="text-xs-left">{{ props.item.modifier }}</td>
+          </tr>
+        </template>
+      </v-data-table>
+
+
+
+      <!-- <v-data-table
         :headers="headers"
         :items="apps"
         :search="search"
@@ -42,6 +112,7 @@
         item-key="number"
         hide-actions
         class="elevation-1"
+        select-all
       >
         <template slot="headerCell" slot-scope="props">
           <v-tooltip bottom>
@@ -71,7 +142,9 @@
         <v-alert slot="no-results" :value="true" color="error" icon="warning">
         검색결과 "{{ search }}" 을(를) 찾지 못하였습니다.
         </v-alert>
-      </v-data-table>
+      </v-data-table> -->
+
+
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{apps.length}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
@@ -149,21 +222,40 @@ export default {
       },
       selected: [],
       headers: [
-        { text: "선택", align: "left", value: "번호", sortable: false },
-        { text: "번호", align: "left", value: "번호", sortable: false },
-        { text: "회사명", align: "left", value: "회사명", sortable: false },
-        { text: "이름", align: "left", value: "이름", sortable: false },
-        { text: "연락처", align: "left", value: "연락처", sortable: false },
+        { text: "idx", align: "left", value: "idx", sortable: false },
         {
-          text: "푸시토큰",
+          text: "companyName",
           align: "left",
-          value: "푸시토큰",
+          value: "companyName",
           sortable: false
         },
-        { text: "등록일", align: "left", value: "등록일", sortable: false },
-        { text: "상태", align: "left", value: "상태", sortable: false },
-        { text: "변경일", align: "left", value: "변경일", sortable: false },
-        { text: "변경자", align: "left", value: "변경자", sortable: false }
+        { text: "name", align: "left", value: "name", sortable: false },
+        { text: "contact", align: "left", value: "contact", sortable: false },
+        {
+          text: "pushToken",
+          align: "left",
+          value: "pushToken",
+          sortable: false
+        },
+        {
+          text: "dtRegistered",
+          align: "left",
+          value: "dtRegistered",
+          sortable: false
+        },
+        {
+          text: "state",
+          align: "left",
+          value: "state",
+          sortable: false
+        },
+        {
+          text: "dtModified",
+          align: "left",
+          value: "dtModified",
+          sortable: false
+        },
+        { text: "modifier", align: "left", value: "modifier", sortable: false }
       ],
       apps: []
     };
@@ -191,6 +283,14 @@ export default {
     },
     getSelected: function(e) {
       getSelectedFunc(e);
+    },
+    changeSort(column) {
+      if (this.pagination.sortBy === column) {
+        this.pagination.descending = !this.pagination.descending;
+      } else {
+        this.pagination.sortBy = column;
+        this.pagination.descending = false;
+      }
     }
   }
 };
