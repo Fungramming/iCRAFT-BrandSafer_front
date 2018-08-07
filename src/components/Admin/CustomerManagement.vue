@@ -76,7 +76,7 @@
               ></v-checkbox>
             </td>
             <td class="text-xs-left">{{ props.item.idx }}</td>
-            <td class="text-xs-left"><a @click="dialog_edit = true"> {{ props.item.name_kr }} </a></td>
+            <td class="text-xs-left"><a @click.stop="showEditModal"> {{ props.item.name_kr }} </a></td>
             <td class="text-xs-left">{{ props.item.code }}</td>
             <td class="text-xs-left">{{ props.item.addr_kr }}</td>
             <td class="text-xs-left">{{ props.item.delegator_kr }}</td>
@@ -92,7 +92,7 @@
             <v-btn color="error" dark>삭제</v-btn>
           </v-flex>
           <v-flex d-flex xs12 sm12 md1>
-            <v-btn color="primary" dark @click.stop="dialog = true">등록</v-btn>
+            <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
           </v-flex>
         </v-layout>
         <div class="text-xs-center pt-2">
@@ -101,25 +101,16 @@
       </div>
     </v-app>
 
-    <!-- modal dialog -->
-    <v-flex d-flex xs12 sm12 md12>  
-    <v-dialog
-      v-model="dialog"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-      scrollable
-    >
-      <!-- start modal -->
-      <v-card tile>
+
+    <!-- modal -->
+    <v-flex d-flex xs12 sm12 md12>
+      <modal :width="modal_size" :height="modal_size_height" name="customer" transition="pop-out">
+        <v-card tile>
         <v-toolbar card dark color="primary">
-          <v-btn icon dark @click.native="dialog = false">
-            <v-icon>close</v-icon>
-          </v-btn>
           <v-toolbar-title>고객사 등록</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click.native="dialog = false">저장</v-btn>
+            <v-btn dark flat>저장</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <div class="card-left">
@@ -303,28 +294,19 @@
           </v-card-text>
         </div>
       </v-card>
-    </v-dialog>
+      </modal>
     </v-flex>
 
-    <!-- modal edit dialog -->
-    <v-flex d-flex xs12 sm12 md12>  
-    <v-dialog
-      v-model="dialog_edit"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-      scrollable
-    >
-      <!-- start modal -->
-      <v-card tile>
+
+    <!-- modal edit -->
+    <v-flex d-flex xs12 sm12 md12>
+      <modal :width="modal_size" :height="modal_size_height" name="customer_edit" transition="pop-out">
+        <v-card tile>
         <v-toolbar card dark color="primary">
-          <v-btn icon dark @click.native="dialog_edit = false">
-            <v-icon>close</v-icon>
-          </v-btn>
           <v-toolbar-title>고객사 수정</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click.native="dialog_edit = false">수정</v-btn>
+            <v-btn dark flat>수정</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <div class="card-left">
@@ -508,8 +490,9 @@
           </v-card-text>
         </div>
       </v-card>
-    </v-dialog>
+      </modal>
     </v-flex>
+
   </div>
 </template>
 
@@ -521,8 +504,8 @@ export default {
   data() {
     return {
       search: "",
-      dialog: false,
-      dialog_edit: false,
+      modal_size: Constant.MODAL_SIZE,
+      modal_size_height: Constant.MODAL_SIZE_HEIGHT,
       pagination: {
         page: 1,
         rowsPerPage: 10
@@ -585,6 +568,12 @@ export default {
     });
   },
   methods: {
+    showModal() {
+      this.$modal.show("customer");
+    },
+    showEditModal() {
+      this.$modal.show("customer_edit");
+    },
     toggleAll() {
       if (this.selected.length) this.selected = [];
       else this.selected = this.customer.slice();

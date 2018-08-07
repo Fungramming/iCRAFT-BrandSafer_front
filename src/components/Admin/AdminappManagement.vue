@@ -217,13 +217,8 @@ import { getSelectedFunc } from "../CompHelper.js";
 export default {
   data() {
     return {
-      resizable: false,
-      adaptive: false,
-      draggable: false,
-      canBeShown: false,
-      modal_size: Constant.MODAL_SIZE,
       search: "",
-      // tagtype_dialog_edit: false,
+      modal_size: Constant.MODAL_SIZE,
       pagination: {
         page: 1,
         rowsPerPage: 10

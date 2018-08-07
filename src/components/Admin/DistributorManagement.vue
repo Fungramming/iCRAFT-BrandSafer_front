@@ -37,11 +37,6 @@
         select-all
         class="elevation-1"
       >
-        <!-- <template slot="headerCell" slot-scope="props">
-          <span slot="activator" class="item-headers">
-            {{ props.header.text }}
-          </span>
-        </template> -->
 
         <template slot="headers" slot-scope="props">
           <tr>
@@ -76,7 +71,7 @@
             </td>
             <td class="text-xs-left">{{ props.item.idx}}</td>
             <td class="text-xs-left">{{ props.item.name_kr }}</td>
-            <td class="text-xs-left"><a @click="dialog_edit = true"> {{ props.item.name_kr }} </a></td>
+            <td class="text-xs-left"><a @click.stop="showEditModal"> {{ props.item.name_kr }} </a></td>
             <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
             <td class="text-xs-left">{{ props.item.state }}</td>
             <td class="text-xs-left">{{ props.item.registrant }}</td>
@@ -91,7 +86,7 @@
             <v-btn color="error" dark>삭제</v-btn>
           </v-flex>
           <v-flex d-flex xs12 sm12 md1>
-            <v-btn color="primary" dark @click.stop="dialog = true">등록</v-btn>
+            <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
           </v-flex>
         </v-layout>
         <div class="text-xs-center pt-2">
@@ -112,13 +107,10 @@
       <!-- start modal -->
       <v-card tile>
         <v-toolbar card dark color="primary">
-          <v-btn icon dark @click.native="dialog = false">
-            <v-icon>close</v-icon>
-          </v-btn>
           <v-toolbar-title>유통업체 관리</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click.native="dialog = false">저장</v-btn>
+            <v-btn dark flat>등록</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <div class="card-left">
@@ -198,13 +190,10 @@
       <!-- start modal -->
       <v-card tile>
         <v-toolbar card dark color="primary">
-          <v-btn icon dark @click.native="dialog_edit = false">
-            <v-icon>close</v-icon>
-          </v-btn>
           <v-toolbar-title>유통업체 수정</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click.native="dialog_edit = false">수정</v-btn>
+            <v-btn dark flat>수정</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <div class="card-left">
@@ -271,6 +260,159 @@
       </v-card>
     </v-dialog>
     </v-flex>
+
+
+    <!-- modal -->
+    <v-flex d-flex xs12 sm12 md12>
+      <modal :width="modal_size" :height="modal_size" name="distributors" transition="pop-out">
+        <v-card tile>
+        <v-toolbar card dark color="primary">
+          <v-toolbar-title>유통업체 관리</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn dark flat>등록</v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
+        <div class="card-left">
+          <v-card-text>
+            <v-list three-line subheader>
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">고객사
+                  <span class="text-danger">*</span>
+                </label>
+                <span class="selectbox selectbox-100">
+                  <select id="select1" name="searchType" class="form-control" size="1">
+                    <option selected value="선택해주세요">선택해주세요</option>
+                    <option value="블랙야크">블랙야크</option>
+                    <option value="CJ E&M">CJ E&M</option>
+                    <option value="브랜드세이퍼">브랜드세이퍼</option>
+                    <option value="LF">LF</option>
+                    <option value="아모레퍼시픽">아모레퍼시픽</option>
+                    <option value="카버코리아">카버코리아</option>
+                    <option value="엘앤피코스메틱">엘앤피코스메틱</option>
+                    <option value="파파레서피">파파레서피</option>
+                    <option value="젬나컴퍼니">젬나컴퍼니</option>
+                    <option value="(주)차바이오에프앤씨">(주)차바이오에프앤씨</option>
+                    <option value="AUDIO BANK">AUDIO BANK</option>
+                    <option value="제이준메딕스㈜">제이준메딕스㈜</option>
+                    <option value="아이시드">아이시드</option>
+                    <option value="난수발권테스트">난수발권테스트</option>
+                    <option value="TWOTSP">TWOTSP</option>
+                    <option value="엘앤피코스메틱㈜">엘앤피코스메틱㈜</option>
+                    <option value="(주)노드메이슨">(주)노드메이슨</option>
+                    <option value="제이준코스메틱㈜">제이준코스메틱㈜</option>
+                    <option value="BrandSafer">BrandSafer</option>
+                    <option value="문경오미자">문경오미자</option>
+                    <option value="문경 테스트">문경 테스트</option>
+                    <option value="오감 바이오">오감 바이오</option>
+                  </select>
+                </span>
+              </v-flex>    
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">유통업체명(한국어)
+                  <span class="text-danger">*</span>
+                </label>
+                <input class="input-text" type="text" required="required">
+              </v-flex>
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">유통업체명(영어)</label>
+                <input class="input-text" type="text">
+              </v-flex>
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">유통업체명(중국어)</label>
+                <input class="input-text" type="text" placeholder="( * 5~15자 이내의 영/숫자 조합 )">
+              </v-flex>
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">노트</label>
+                <input class="input-text" type="text">
+              </v-flex>
+              <v-flex d-flex xs12 sm12 md2>
+                <label class="input-title">상태</label>
+                <input checked="checked" class="input-radio" type="radio" name="staus" value="사용">사용
+                <input class="input-radio" type="radio" name="staus" value="정지">정지
+              </v-flex>
+            </v-list>
+          </v-card-text>
+        </div>
+      </v-card>
+      </modal>
+    </v-flex>
+
+    <!-- modal edit -->
+    <v-flex d-flex xs12 sm12 md12>
+      <modal :width="modal_size" :height="modal_size" name="distributors_edit" transition="pop-out">
+        <v-card tile>
+        <v-toolbar card dark color="primary">
+          <v-toolbar-title>유통업체 수정</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn dark flat>수정</v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
+        <div class="card-left">
+          <v-card-text>
+            <v-list three-line subheader>
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">고객사
+                  <span class="text-danger">*</span>
+                </label>
+                <span class="selectbox selectbox-100">
+                  <select id="select1" name="searchType" class="form-control" size="1">
+                    <option selected value="선택해주세요">선택해주세요</option>
+                    <option value="블랙야크">블랙야크</option>
+                    <option value="CJ E&M">CJ E&M</option>
+                    <option value="브랜드세이퍼">브랜드세이퍼</option>
+                    <option value="LF">LF</option>
+                    <option value="아모레퍼시픽">아모레퍼시픽</option>
+                    <option value="카버코리아">카버코리아</option>
+                    <option value="엘앤피코스메틱">엘앤피코스메틱</option>
+                    <option value="파파레서피">파파레서피</option>
+                    <option value="젬나컴퍼니">젬나컴퍼니</option>
+                    <option value="(주)차바이오에프앤씨">(주)차바이오에프앤씨</option>
+                    <option value="AUDIO BANK">AUDIO BANK</option>
+                    <option value="제이준메딕스㈜">제이준메딕스㈜</option>
+                    <option value="아이시드">아이시드</option>
+                    <option value="난수발권테스트">난수발권테스트</option>
+                    <option value="TWOTSP">TWOTSP</option>
+                    <option value="엘앤피코스메틱㈜">엘앤피코스메틱㈜</option>
+                    <option value="(주)노드메이슨">(주)노드메이슨</option>
+                    <option value="제이준코스메틱㈜">제이준코스메틱㈜</option>
+                    <option value="BrandSafer">BrandSafer</option>
+                    <option value="문경오미자">문경오미자</option>
+                    <option value="문경 테스트">문경 테스트</option>
+                    <option value="오감 바이오">오감 바이오</option>
+                  </select>
+                </span>
+              </v-flex>    
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">유통업체명(한국어)
+                  <span class="text-danger">*</span>
+                </label>
+                <input class="input-text" type="text" required="required">
+              </v-flex>
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">유통업체명(영어)</label>
+                <input class="input-text" type="text">
+              </v-flex>
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">유통업체명(중국어)</label>
+                <input class="input-text" type="text" placeholder="( * 5~15자 이내의 영/숫자 조합 )">
+              </v-flex>
+              <v-flex d-flex xs12 sm12 md5>
+                <label class="input-title">노트</label>
+                <input class="input-text" type="text">
+              </v-flex>
+              <v-flex d-flex xs12 sm12 md2>
+                <label class="input-title">상태</label>
+                <input checked="checked" class="input-radio" type="radio" name="staus" value="사용">사용
+                <input class="input-radio" type="radio" name="staus" value="정지">정지
+              </v-flex>
+            </v-list>
+          </v-card-text>
+        </div>
+      </v-card>
+      </modal>
+    </v-flex>
   </div>
 </template>
 
@@ -282,8 +424,7 @@ export default {
   data() {
     return {
       search: "",
-      dialog: false,
-      dialog_edit: false,
+      modal_size: Constant.MODAL_SIZE,
       pagination: {
         page: 1,
         rowsPerPage: 10
@@ -340,6 +481,12 @@ export default {
     });
   },
   methods: {
+    showModal() {
+      this.$modal.show("distributors");
+    },
+    showEditModal() {
+      this.$modal.show("distributors_edit");
+    },
     toggleAll() {
       if (this.selected.length) this.selected = [];
       else this.selected = this.distributors.slice();
