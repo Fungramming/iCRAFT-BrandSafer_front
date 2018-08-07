@@ -13,7 +13,7 @@ export default {
   date: "",
 
   //DashBoard
-  dailyStatus: {},
+  liveStatus: {},
   weeklyStatus: {},
   monthlyStatus: {}
 };

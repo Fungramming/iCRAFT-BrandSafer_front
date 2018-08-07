@@ -1,20 +1,19 @@
 var BASE_URL =
-  "http://bstnt2.c0grph7n5f6y.ap-northeast-2.rds.amazonaws.com/api/v1.0";
-// "http://brandsaferapi-env.bkktdgvb3w.ap-northeast-2.elasticbeanstalk.com/api/v1.0";
+  "http://bstnt.c0grph7n5f6y.ap-northeast-2.rds.amazonaws.com/api/v1.0";
 
 export default {
   PAGESIZE: 5,
 
   /* ========= User ========= */
   // Auth
-  LOG_IN: `/tokens/`,
+  LOG_IN: `${BASE_URL}/tokens/`,
   // Password
   UPDATE_PASSWORD: `${BASE_URL}/users/\${uid}`,
   RESET_PASSWORD: `${BASE_URL}/users/\${uid}/pwReset`,
 
   //막 쓰기
   // 기간설정, 고객사 선택
-  FETCH_DAILY_STATUS: `${BASE_URL}/dashboard1/`, // 모든 유저가저와서 계산해야됨
+  FETCH_LIVE_STATUS: `${BASE_URL}/dashboard1/`, // 모든 유저가저와서 계산해야됨
   FETCH_MONTHLY_STATUS: `${BASE_URL}/dashboard2/`, // 모든 유저가저와서 계산해야됨
 
   FETCH_USER_DASHBOARD: `${BASE_URL}/users/\${uid}`,

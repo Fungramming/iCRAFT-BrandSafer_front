@@ -31,8 +31,8 @@ export default {
   },
 
   /* ========= Dashboard ========= */
-  fetchDailyStatus() {
-    return axios.get(CONF.FETCH_DAILY_STATUS);
+  fetchLiveStatus() {
+    return axios.get(CONF.FETCH_LIVE_STATUS);
   },
   fetchMonthlyStatus() {
     return axios.get(CONF.FETCH_MONTHLY_STATUS);

@@ -12,53 +12,57 @@ export default {
   components: { LineChart },
   data() {
     return {
+      liveStatus: {},
+      chartSettings: {
+        xAxisType: " "
+      },
       chartData: {
-        columns: ["date", "cost", "profit"],
-        rows: [
-          { date: "00:01", cost: 15, profit: 12 },
-          { date: "00:02", cost: 12, profit: 25 },
-          { date: "00:03", cost: 21, profit: 10 },
-          { date: "00:04", cost: 41, profit: 32 },
-          { date: "00:05", cost: 31, profit: 30 },
-          { date: "00:06", cost: 31, profit: 30 },
-          { date: "00:07", cost: 31, profit: 30 },
-          { date: "00:08", cost: 31, profit: 30 },
-          { date: "00:09", cost: 31, profit: 30 },
-          { date: "00:10", cost: 31, profit: 30 },
-          { date: "00:11", cost: 31, profit: 30 },
-          { date: "00:12", cost: 31, profit: 30 },
-          { date: "00:13", cost: 31, profit: 30 },
-          { date: "00:14", cost: 31, profit: 30 },
-          { date: "00:15", cost: 31, profit: 30 },
-          { date: "00:16", cost: 31, profit: 30 },
-          { date: "00:17", cost: 31, profit: 30 },
-          { date: "00:18", cost: 31, profit: 30 },
-          { date: "00:19", cost: 31, profit: 30 },
-          { date: "00:20", cost: 31, profit: 30 },
-          { date: "00:21", cost: 31, profit: 30 },
-          { date: "00:22", cost: 31, profit: 30 },
-          { date: "00:23", cost: 31, profit: 30 },
-          { date: "00:24", cost: 31, profit: 30 },
-          { date: "00:25", cost: 31, profit: 30 },
-          { date: "00:26", cost: 31, profit: 30 },
-          { date: "00:27", cost: 31, profit: 30 },
-          { date: "00:28", cost: 31, profit: 30 },
-          { date: "00:29", cost: 31, profit: 30 },
-          { date: "00:30", cost: 31, profit: 30 },
-          { date: "00:31", cost: 31, profit: 30 },
-          { date: "00:32", cost: 31, profit: 30 },
-          { date: "00:33", cost: 31, profit: 30 },
-          { date: "00:34", cost: 31, profit: 30 },
-          { date: "00:35", cost: 71, profit: 55 }
-        ]
+        columns: ["시간", "정품", "가품", "제보하기"],
+        rows: []
       },
       dataZoom: [
         {
-          type: "slider"
+          type: "slider",
+          start: 0,
+          end: 100
         }
       ],
       loading: true
     };
+  },
+  mounted() {
+    this.liveStatus = this.$store.state.liveStatus;
+    this.makeChartData();
+  },
+  methods: {
+    makeChartData: function() {
+      // let box = this.liveStatus.status;
+      // let keyList = Object.keys(box);
+      // let startTime = keyList[0];
+      // let lastTime = keyList[keyList.length - 1];
+      // console.log("startTime ,lastTime:", startTime, lastTime);
+      // for (let item in box) {
+      //   let time = item.split(" ")[1];
+      //   let obj = {
+      //     시간: time,
+      //     정품: box[item].Genuine,
+      //     가품: box[item].Counterfeit,
+      //     제보: box[item].Report
+      //   };
+      //   this.chartData.rows.push(obj);
+      // }
+      // let sTime = new Date("2018,02,03 10:32");
+      // let lTime = new Date("2018,02,03 12:32");
+      //   console.log((lTime - sTime) / 60 / 1000);
+
+      let sTime = new Date("2018,02,03 10:32");
+      let lTime = new Date("2018,02,03 18:32");
+      console.log((lTime - sTime) / 60 / 1000);
+
+      console.log("dt :", sTime);
+      sTime.setMinutes(sTime.getMinutes() + 30);
+      console.log("sTime :", sTime);
+    }
   }
 };
 </script>

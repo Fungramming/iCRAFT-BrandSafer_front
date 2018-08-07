@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import Constant from "../constant";
+
 export default {
   data() {
     return {
@@ -47,33 +49,31 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$router.push({ name: "dashboard" });
       this.$store.state.tokken = 111;
-      // if (this.id && this.password) {
-      //   this.$store
-      //     .dispatch(Constant.LOG_IN, {
-      //       userId: this.id,
-      //       userPassword: this.password,
-      //       token: this.token
-      //     })
-      //     .then(() => {
-      //       // if (resp.status == 200) {
-      //       this.$router.push({ name: "dashboard" });
-      //       // }
-      //     });
-      //   // .catch(err => {
-      //   //   if (err.status == 401) {
-      //   //     alert(
-      //   //       `접속 실패!\n이메일이나 비밀번호를 다시 한번 확인해주세요.`
-      //   //     );
-      //   //   } else {
-      //   //     alert(
-      //   //       `접속실패!\n에러 코드: ${err.response.status}\n
-      //   //       에러 메세지: ${err.response.message}`
-      //   //     );
-      //   //   }
-      //   // });
-      // }
+      if (this.id && this.password) {
+        this.$store
+          .dispatch(Constant.LOG_IN, {
+            userId: this.id,
+            userPassword: this.password
+          })
+          .then(resp => {
+            if (resp.status == 200) {
+              this.$router.push({ name: "dashboard" });
+            }
+          });
+        // .catch(err => {
+        //   if (err.status == 401) {
+        //     alert(
+        //       `접속 실패!\n이메일이나 비밀번호를 다시 한번 확인해주세요.`
+        //     );
+        //   } else {
+        //     alert(
+        //       `접속실패!\n에러 코드: ${err.response.status}\n
+        //       에러 메세지: ${err.response.message}`
+        //     );
+        //   }
+        // });
+      }
     }
   }
 };
