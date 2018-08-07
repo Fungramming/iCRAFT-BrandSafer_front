@@ -270,10 +270,18 @@ export default {
       return Math.ceil(this.apps.length / this.pagination.rowsPerPage);
     }
   },
+  watch: {
+    app: function() {
+      console.log("this.app :", this.app);
+    }
+  },
+  updated() {
+    console.log(this.$children[0].$children[1].searchLength);
+  },
   mounted() {
     this.$store.dispatch(Constant.FETCH_ADMIN_APP).then(resp => {
       this.apps = resp.data.apps;
-      console.log("apps :", this.apps);
+      console.log("apps :", this.apps.length);
     });
   },
   methods: {
