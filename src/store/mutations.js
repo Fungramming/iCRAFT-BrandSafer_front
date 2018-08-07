@@ -21,8 +21,8 @@ export default {
   [Constant.SHOW_LOADING]: (state, isLoading) => {
     state.isLoading = isLoading;
   },
-  [Constant.FETCH_DAILY_STATUS]: (state, payload) => {
-    state.dailyStatus = payload;
+  [Constant.FETCH_LIVE_STATUS]: (state, payload) => {
+    state.liveStatus = payload;
   },
   [Constant.FETCH_WEEKLY_STATUS]: (state, payload) => {
     state.weeklyStatus = payload;

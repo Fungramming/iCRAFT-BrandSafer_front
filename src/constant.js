@@ -8,7 +8,7 @@ export default {
   RESET_PASSWORD: "resetPassword",
   //막 쓰기
   // 기간설정, 고객사 선택
-  FETCH_DAILY_STATUS: "fetchDailyStatus",
+  FETCH_LIVE_STATUS: "fetchLiveStatus",
   FETCH_WEEKLY_STATUS: "fetchWeeklyStatus",
   FETCH_MONTHLY_STATUS: "fetchMonthlyStatus",
   // 기간설정

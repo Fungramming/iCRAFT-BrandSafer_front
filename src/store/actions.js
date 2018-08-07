@@ -30,13 +30,16 @@ export default {
     return promise(BSAPI.logIn, payload, store, Constant.LOG_IN);
   },
   // Dashboard
-  async [Constant.FETCH_DAILY_STATUS](store, payload) {
+  async [Constant.FETCH_LIVE_STATUS](store, payload) {
     return promise(
-      BSAPI.fetchDailyStatus,
+      BSAPI.fetchLiveStatus,
       payload,
       store,
-      Constant.FETCH_DAILY_STATUS
+      Constant.FETCH_LIVE_STATUS
     );
+  },
+  [Constant.FETCH_WEEKLY_STATUS]: (store, payload) => {
+    store.commit(Constant.FETCH_WEEKLY_STATUS, payload);
   },
   async [Constant.FETCH_MONTHLY_STATUS](store, payload) {
     return promise(
@@ -185,9 +188,5 @@ export default {
 
   [Constant.SHOW_LOADING]: (state, isLoading) => {
     state.isLoading = isLoading;
-  },
-  [Constant.FETCH_WEEKLY_STATUS]: (store, payload) => {
-    console.log("payload :", payload);
-    store.commit(Constant.FETCH_WEEKLY_STATUS, payload);
   }
 };

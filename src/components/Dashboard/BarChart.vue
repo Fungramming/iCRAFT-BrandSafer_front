@@ -24,11 +24,10 @@ export default {
   mounted() {
     this.date = this.$store.state.date.split(" ")[0];
     this.weeklyStatus = this.$store.state.weeklyStatus;
-    console.log("this.weeklyStatys us", this.weeklyStatus);
     this.makeChartData();
   },
   methods: {
-    makeChartData() {
+    makeChartData: function() {
       let box = this.weeklyStatus.data;
       for (let item in box) {
         let obj = {
@@ -40,7 +39,6 @@ export default {
         };
         this.chartData.rows.push(obj);
       }
-      console.log("this.charData :", this.chartData);
     }
   }
 };
