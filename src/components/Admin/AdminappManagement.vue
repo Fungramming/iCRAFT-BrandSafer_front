@@ -1,5 +1,6 @@
 <template>
   <div class="tableBs">
+
     <!-- table top menu -->
     <!-- <div class="tableBs-top">
       <p>검색 조건</p>
@@ -20,6 +21,9 @@
         </v-flex>
       </v-layout>
     </div> -->
+
+    <v-btn color="error" dark @click="showModal">등록</v-btn>
+
     <!-- table wrap -->
     <v-app class="inspire">
       <v-card-title>
@@ -145,7 +149,7 @@
       </v-data-table> -->
 
 
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{apps.length}}</span> 건</span>
+      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md11>
@@ -158,25 +162,17 @@
       </div>
     </v-app>
 
-    <!-- modal edit dialog -->
-    <v-flex d-flex xs12 sm12 md12>  
-    <v-dialog
-      v-model="tagtype_dialog_edit"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-      scrollable
-    >
-      <!-- start modal -->
-      <v-card tile>
+
+    <!-- modal edit -->
+    <v-flex d-flex xs12 sm12 md12>
+      <modal :width="modal_size" :height="modal_size" name="adminapp_edit" transition="pop-out">
+        <v-card tile>
         <v-toolbar card dark color="primary">
-          <v-btn icon dark @click.native="tagtype_dialog_edit = false">
-            <v-icon>close</v-icon>
-          </v-btn>
           <v-toolbar-title>관리자App 수정</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click.native="tagtype_dialog_edit = false">수정</v-btn>
+            <v-btn dark flat>수정</v-btn>
+            <!-- <v-btn dark flat @click.native="tagtype_dialog_edit = false">수정</v-btn> -->
           </v-toolbar-items>
         </v-toolbar>
         <div class="card-left">
@@ -196,30 +192,43 @@
               </v-flex>
               <v-flex d-flex xs12 sm12 md3>
                 <label class="input-title">상태</label>
-                <input checked="checked" class="input-radio" type="radio" name="staus" value="등록">등록
-                <input class="input-radio" type="radio" name="staus" value="승인">승인
+                <input checked="checked" class="input-radio" type="radio" name="staus" value="등록">
+                <span>등록</span>
+                <input class="input-radio" type="radio" name="staus" value="승인">
+                <span>승인</span>
               </v-flex>
             </v-list>
           </v-card-text>
         </div>
       </v-card>
-    </v-dialog>
+      </modal>
     </v-flex>
+
+
   </div>
 </template>
 
 <script>
+// const MODAL_SIZE = "80%";
+
 import Constant from "../../constant.js";
 import { getSelectedFunc } from "../CompHelper.js";
+
 export default {
   data() {
     return {
+      resizable: false,
+      adaptive: false,
+      draggable: false,
+      canBeShown: false,
+      modal_size: Constant.MODAL_SIZE,
       search: "",
-      tagtype_dialog_edit: false,
+      // tagtype_dialog_edit: false,
       pagination: {
         page: 1,
         rowsPerPage: 10
       },
+      total: "",
       selected: [],
       headers: [
         { text: "idx", align: "left", value: "idx", sortable: false },
@@ -267,24 +276,43 @@ export default {
         this.pagination.totalItems == null
       )
         return 0;
-      return Math.ceil(this.apps.length / this.pagination.rowsPerPage);
+      return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
   },
-  watch: {
-    app: function() {
-      console.log("this.app :", this.app);
-    }
-  },
+  // watch: {
+  //   app: function() {
+  //     console.log("this.app :", this.app);
+  //   }
+  // },
   updated() {
-    console.log(this.$children[0].$children[1].searchLength);
+    let update_total = this.$children[0].$children[1].searchLength;
+    // console.log(this.$children[0].$children[1].searchLength);
+    // console.log(update_total);
+    this.total = update_total;
   },
   mounted() {
     this.$store.dispatch(Constant.FETCH_ADMIN_APP).then(resp => {
       this.apps = resp.data.apps;
       console.log("apps :", this.apps.length);
+      this.total = this.apps.length;
     });
   },
   methods: {
+    showModal() {
+      this.$modal.show("adminapp_edit");
+    },
+    // show(resizable, adaptive, draggable) {
+    //   this.resizable = resizable;
+    //   this.adaptive = adaptive;
+    //   this.draggable = draggable;
+    //   /*
+    //     $nextTick is required because the data model with new
+    //     "resizable, adaptive, draggable" values is not updated yet.. eh
+    //   */
+    //   this.$nextTick(() => {
+    //     this.$modal.show("example-modal");
+    //   });
+    // },
     toggleAll() {
       if (this.selected.length) this.selected = [];
       else this.selected = this.apps.slice();

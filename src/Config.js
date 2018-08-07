@@ -1,5 +1,6 @@
 var BASE_URL =
-  "http://brandsaferapi-env.bkktdgvb3w.ap-northeast-2.elasticbeanstalk.com/api/v1.0";
+  "http://bstnt2.c0grph7n5f6y.ap-northeast-2.rds.amazonaws.com/api/v1.0";
+// "http://brandsaferapi-env.bkktdgvb3w.ap-northeast-2.elasticbeanstalk.com/api/v1.0";
 
 export default {
   PAGESIZE: 5,

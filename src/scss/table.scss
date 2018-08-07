@@ -145,9 +145,22 @@ $tablet: "(min-width: 601px) and (max-width: 959px)";
         }
     }
     // table 최상위 wrap
-    .inspire {
+    .inspire {      
         background: none;
         height: 0;
+        .d-flex {
+          position: relative;
+          .span-without-selectbox {
+              position: absolute;
+              top: -30px;
+              width: 100%;
+              color: #646464;
+              font-size: 14px;
+              font-weight: 600;
+              line-height: 2.2;
+              text-align: left;
+          }
+        }
         .v-table {
             td {
                 &:first-child {

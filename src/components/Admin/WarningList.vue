@@ -1,7 +1,7 @@
 <template>
   <div class="tableBs">
     <!-- table top menu -->
-    <div class="tableBs-top">
+    <!-- <div class="tableBs-top">
       <p>검색 조건</p>
       <v-layout row wrap>
         <v-flex d-flex xs12 sm6 md2>
@@ -30,43 +30,87 @@
           </div>
         </v-flex>
       </v-layout>
-      <!-- <v-flex d-flex xs12 sm12 md1 offset-md11>
-        <v-btn class="search-btn" color="primary" dark>검색</v-btn>
-      </v-flex> -->
-    </div>
+    </div> -->
     <!-- table wrap -->
     <v-app class="inspire">
+      <v-card-title>
+      <v-layout row wrap>
+        <v-flex d-flex xs12 sm6 md5>
+          <span class="span-without-selectbox">기간조회</span>
+          <date-picker v-model="date_start" :lang="lang"></date-picker>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md5>
+          <date-picker v-model="date_finish" :lang="lang"></date-picker>
+        </v-flex>
+      </v-layout>
+      <v-spacer></v-spacer>
+      <v-text-field
+        v-model="search"
+        append-icon="search"
+        label="검색어"
+        hide-details
+      ></v-text-field>
+      </v-card-title>
+
       <v-data-table
         :headers="headers"
-        :items="desserts"
+        :items="oversert"
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
-        item-key="number"
+        item-key="idx"
         hide-actions
         class="elevation-1"
       >
-        <template slot="headerCell" slot-scope="props">
-          <span slot="activator" class="item-headers">
-            {{ props.header.text }}
-          </span>
+        <template slot="headers" slot-scope="props">
+          <tr>
+            <th>
+              <v-checkbox
+                :input-value="props.all"
+                :indeterminate="props.indeterminate"
+                primary
+                hide-details
+                @click.native="toggleAll"
+              ></v-checkbox>
+            </th>
+            <th
+              v-for="header in props.headers"
+              :key="header.text"
+              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+              @click="changeSort(header.value)"
+            >
+              {{ header.text }}
+            </th>
+          </tr>
         </template>
+
         <template slot="items" slot-scope="props">
-          <td class="text-xs-left">{{ props.item.number }}</td>
-          <td class="text-xs-left">{{ props.item.date }}</td>
-          <td class="text-xs-left">{{ props.item.app_name }}</td>
-          <td class="text-xs-left">{{ props.item.tag_type }}</td>
-          <td class="text-xs-left"><a>{{ props.item.push_token }}</a></td>
-          <td class="text-xs-left">{{ props.item.tiems }}</td>
-          <td class="text-xs-left">{{ props.item.date_update }}</td>
-          <td class="text-xs-left">{{ props.item.date_last }}</td>
-          <td class="text-xs-left">{{ props.item.customer_code }}</td>
-          <td class="text-xs-left">{{ props.item.os }}</td>
-          <td class="text-xs-left">{{ props.item.model }}</td>
-          <td class="text-xs-left">{{ props.item.language_set }}</td>
+          <tr :active="props.selected" @click="props.selected = !props.selected">
+            <td>
+              <v-checkbox
+                :input-value="props.selected"
+                primary
+                hide-details
+              ></v-checkbox>
+            </td>
+            <td class="text-xs-left">{{ props.item.number }}</td>
+            <td class="text-xs-left">{{ props.item.date }}</td>
+            <td class="text-xs-left">{{ props.item.app_name }}</td>
+            <td class="text-xs-left">{{ props.item.tag_type }}</td>
+            <td class="text-xs-left"><a>{{ props.item.push_token }}</a></td>
+            <td class="text-xs-left">{{ props.item.tiems }}</td>
+            <td class="text-xs-left">{{ props.item.date_update }}</td>
+            <td class="text-xs-left">{{ props.item.date_last }}</td>
+            <td class="text-xs-left">{{ props.item.customer_code }}</td>
+            <td class="text-xs-left">{{ props.item.os }}</td>
+            <td class="text-xs-left">{{ props.item.model }}</td>
+            <td class="text-xs-left">{{ props.item.language_set }}</td>
+          </tr>
         </template>
       </v-data-table>
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
+
+
+      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <div class="text-xs-center pt-2">
           <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
@@ -282,10 +326,10 @@
 </template>
 
 <script>
-// import DatePicker from 'vue2-datepicker'
+import Constant from "../../constant.js";
+import { getSelectedFunc } from "../CompHelper.js";
 
 export default {
-  // components: { DatePicker },
   data() {
     return {
       search: "",
@@ -325,7 +369,7 @@ export default {
           dateRange: "Select Date Range"
         }
       },
-
+      total: "",
       selected: [],
       headers: [
         { text: "번호", align: "left", value: "번호", sortable: false },
@@ -372,308 +416,7 @@ export default {
         { text: "모델명	", align: "left", value: "모델명	", sortable: false },
         { text: "언어셋", align: "left", value: "언어셋", sortable: false }
       ],
-      desserts: [
-        {
-          value: false,
-          number: "1",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 6.0,
-          os: 24,
-          model: 4.0,
-          language_set: "1%"
-        },
-        {
-          value: false,
-          number: "2",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 9.0,
-          os: 37,
-          model: 4.3,
-          language_set: "1%"
-        },
-        {
-          value: false,
-          number: "3",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 16.0,
-          os: 23,
-          model: 6.0,
-          language_set: "7%"
-        },
-        {
-          value: false,
-          number: "4",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 3.7,
-          os: 67,
-          model: 4.3,
-          language_set: "8%"
-        },
-        {
-          value: false,
-          number: "5",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 16.0,
-          os: 49,
-          model: 3.9,
-          language_set: "16%"
-        },
-        {
-          value: false,
-          number: "6",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 0.0,
-          os: 94,
-          model: 0.0,
-          language_set: "0%"
-        },
-        {
-          value: false,
-          number: "7",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 0.2,
-          os: 98,
-          model: 0,
-          language_set: "2%"
-        },
-        {
-          value: false,
-          number: "8",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 3.2,
-          os: 87,
-          model: 6.5,
-          language_set: "45%"
-        },
-        {
-          value: false,
-          number: "9",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 25.0,
-          os: 51,
-          model: 4.9,
-          language_set: "22%"
-        },
-        {
-          value: false,
-          number: "10",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 26.0,
-          os: 65,
-          model: 7,
-          language_set: "6%"
-        },
-        {
-          value: false,
-          number: "11",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 6.0,
-          os: 24,
-          model: 4.0,
-          language_set: "1%"
-        },
-        {
-          value: false,
-          number: "12",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 9.0,
-          os: 37,
-          model: 4.3,
-          language_set: "1%"
-        },
-        {
-          value: false,
-          number: "13",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 16.0,
-          os: 23,
-          model: 6.0,
-          language_set: "7%"
-        },
-        {
-          value: false,
-          number: "14",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 3.7,
-          os: 67,
-          model: 4.3,
-          language_set: "8%"
-        },
-        {
-          value: false,
-          number: "15",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 16.0,
-          os: 49,
-          model: 3.9,
-          language_set: "16%"
-        },
-        {
-          value: false,
-          number: "16",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 0.0,
-          os: 94,
-          model: 0.0,
-          language_set: "0%"
-        },
-        {
-          value: false,
-          number: "17",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 0.2,
-          os: 98,
-          model: 0,
-          language_set: "2%"
-        },
-        {
-          value: false,
-          number: "18",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 3.2,
-          os: 87,
-          model: 6.5,
-          language_set: "45%"
-        },
-        {
-          value: false,
-          number: "19",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 25.0,
-          os: 51,
-          model: 4.9,
-          language_set: "22%"
-        },
-        {
-          value: false,
-          number: "20",
-          date: "2018.07.30",
-          app_name: "BrandSaferQ",
-          tag_type: "SQR태그",
-          push_token: "e5db3e3784bcaec2AQCA199999LG-F600L",
-          tiems: "50",
-          date_update: "2018-07-30-14:00",
-          date_last: "2018-07-30-14:00",
-          customer_code: 26.0,
-          os: 65,
-          model: 7,
-          language_set: "6%"
-        }
-      ]
+      oversert: []
     };
   },
   computed: {
@@ -687,6 +430,36 @@ export default {
       return Math.ceil(
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
+    }
+  },
+  updated() {
+    let update_total = this.$children[0].$children[1].searchLength;
+    // console.log(this.$children[0].$children[1].searchLength);
+    // console.log(update_total);
+    this.total = update_total;
+  },
+  mounted() {
+    this.$store.dispatch(Constant.FETCH_OVER_CERT).then(resp => {
+      this.oversert = resp.data;
+      console.log("oversert :", this.oversert);
+      this.total = this.oversert.length;
+    });
+  },
+  methods: {
+    toggleAll() {
+      if (this.selected.length) this.selected = [];
+      else this.selected = this.apps.slice();
+    },
+    getSelected: function(e) {
+      getSelectedFunc(e);
+    },
+    changeSort(column) {
+      if (this.pagination.sortBy === column) {
+        this.pagination.descending = !this.pagination.descending;
+      } else {
+        this.pagination.sortBy = column;
+        this.pagination.descending = false;
+      }
     }
   }
 };

@@ -1,7 +1,7 @@
 <template>
   <div class="tableBs">
     <!-- table top menu -->
-    <div class="tableBs-top">
+    <!-- <div class="tableBs-top">
       <p>검색 조건</p>
       <v-layout row wrap>
         <v-flex d-flex xs12 sm6 md2>
@@ -32,27 +32,60 @@
           <input class="input-text input-with-date" type="text">
         </v-flex>
       </v-layout>
-      <!-- <v-flex d-flex xs12 sm12 md1 offset-md11>
-        <v-btn class="search-btn" color="primary" dark>검색</v-btn>
-      </v-flex> -->
-    </div>
+    </div> -->
     <!-- table wrap -->
     <v-app class="inspire">
+      <v-card-title>
+      <v-layout row wrap>
+        <v-flex d-flex xs12 sm6 md5>
+          <span class="span-without-selectbox">기간조회</span>
+          <date-picker v-model="date_start" :lang="lang"></date-picker>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md5>
+          <date-picker v-model="date_finish" :lang="lang"></date-picker>
+        </v-flex>
+      </v-layout>
+      <v-spacer></v-spacer>
+      <v-text-field
+        v-model="search"
+        append-icon="search"
+        label="검색어"
+        hide-details
+      ></v-text-field>
+      </v-card-title>
+
       <v-data-table
         :headers="headers"
         :items="logins"
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
-        item-key="number"
-        hide-actions
+        item-key="idx"
+        select-all
         class="elevation-1"
       >
-        <template slot="headerCell" slot-scope="props">
-          <span slot="activator" class="item-headers">
-            {{ props.header.text }}
-          </span>
+        <template slot="headers" slot-scope="props">
+          <tr>
+            <th>
+              <v-checkbox
+                :input-value="props.all"
+                :indeterminate="props.indeterminate"
+                primary
+                hide-details
+                @click.native="toggleAll"
+              ></v-checkbox>
+            </th>
+            <th
+              v-for="header in props.headers"
+              :key="header.text"
+              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+              @click="changeSort(header.value)"
+            >
+              {{ header.text }}
+            </th>
+          </tr>
         </template>
+
         <template slot="items" slot-scope="props">
           <td class="text-xs-left">{{ props.item.number }}</td>
           <td class="text-xs-left">{{ props.item.customer }}</td>
@@ -320,7 +353,7 @@ export default {
           dateRange: "Select Date Range"
         }
       },
-
+      total: "",
       selected: [],
       headers: [
         {
@@ -538,13 +571,33 @@ export default {
       );
     }
   },
+  updated() {
+    let update_total = this.$children[0].$children[1].searchLength;
+    // console.log(this.$children[0].$children[1].searchLength);
+    // console.log(update_total);
+    this.total = update_total;
+  },
   mounted() {
     this.$store.dispatch(Constant.FETCH_ACCOUNT_LOG).then(resp => {
-      this.logins = resp.data;
-      // this.logins = resp.data.logins;
+      this.logins = resp.data.logins;
       console.log("this.logins :", this.logins);
       // console.log("this.logins.length :", this.logins.length);
+      this.total = this.logins.length;
     });
+  },
+  methods: {
+    toggleAll() {
+      if (this.selected.length) this.selected = [];
+      else this.selected = this.apps.slice();
+    },
+    changeSort(column) {
+      if (this.pagination.sortBy === column) {
+        this.pagination.descending = !this.pagination.descending;
+      } else {
+        this.pagination.sortBy = column;
+        this.pagination.descending = false;
+      }
+    }
   }
 };
 </script>

@@ -70,7 +70,7 @@
           <tr :active="props.selected" @click="props.selected = !props.selected">
             <td>
               <v-checkbox
-                v-model="props.selected"
+                :input-value="props.selected"
                 primary
                 hide-details
               ></v-checkbox>
@@ -85,7 +85,7 @@
           </tr>
         </template>
       </v-data-table>
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{customer.length}}</span> 건</span>
+      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md10>
@@ -515,6 +515,7 @@
 
 <script>
 import Constant from "../../constant.js";
+import { getSelectedFunc } from "../CompHelper.js";
 
 export default {
   data() {
@@ -526,6 +527,7 @@ export default {
         page: 1,
         rowsPerPage: 10
       },
+      total: "",
       selected: [],
       headers: [
         { text: "번호", align: "left", value: "idx", sortable: false },
@@ -537,9 +539,24 @@ export default {
           sortable: false
         },
         { text: "주소", align: "left", value: "addr_kr", sortable: false },
-        { text: "대표자", align: "left", value: "delegator_kr", sortable: false },
-        { text: "전화번호", align: "left", value: "telephone", sortable: false },
-        { text: "가입일자", align: "left", value: "dtRegistered", sortable: false }
+        {
+          text: "대표자",
+          align: "left",
+          value: "delegator_kr",
+          sortable: false
+        },
+        {
+          text: "전화번호",
+          align: "left",
+          value: "telephone",
+          sortable: false
+        },
+        {
+          text: "가입일자",
+          align: "left",
+          value: "dtRegistered",
+          sortable: false
+        }
       ],
       customer: []
     };
@@ -552,14 +569,19 @@ export default {
       )
         return 0;
 
-      return Math.ceil(this.customer.length / this.pagination.rowsPerPage);
+      return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
+  },
+  updated() {
+    let update_total = this.$children[0].$children[1].searchLength;
+    this.total = update_total;
   },
   mounted() {
     this.$store.dispatch(Constant.FETCH_COMPANY).then(resp => {
       this.customer = resp.data.company;
       console.log("this.customer :", this.customer);
       // console.log("this.customer.length :", this.customer.length);
+      this.total = this.customer.length;
     });
   },
   methods: {

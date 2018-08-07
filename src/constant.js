@@ -116,5 +116,8 @@ export default {
     { label: "22" },
     { label: "23" },
     { label: "24" }
-  ]
+  ],
+
+  /* ========= Modal size ========= */
+  MODAL_SIZE: "80%"
 };

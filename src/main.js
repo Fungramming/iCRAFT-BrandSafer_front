@@ -21,6 +21,10 @@ Vue.use(DatePicker);
 import * as VueGoogleMaps from "vue2-google-maps";
 import GmapCluster from "vue2-google-maps/src/components/cluster";
 
+// MODAL
+import vmodal from "vue-js-modal";
+Vue.use(vmodal);
+
 Vue.use(Vuetify);
 Vue.prototype.$axios = axios;
 // axios.defaults.baseURL =

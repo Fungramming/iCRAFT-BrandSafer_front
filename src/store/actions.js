@@ -10,10 +10,12 @@ function promise(apiFunction, payload, store, constant) {
         if (constant) {
           store.commit(constant, resp.data);
         }
+        console.log(resp.data);
         resolve(resp);
         store.dispatch(Constant.SHOW_LOADING, false);
       })
       .catch(err => {
+        console.log(err);
         reject(err);
         store.dispatch(Constant.SHOW_LOADING, false);
       });

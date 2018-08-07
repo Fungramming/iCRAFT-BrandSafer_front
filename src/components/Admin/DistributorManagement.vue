@@ -69,7 +69,7 @@
           <tr :active="props.selected" @click="props.selected = !props.selected">
             <td>
               <v-checkbox
-                v-model="props.selected"
+                :input-value="props.selected"
                 primary
                 hide-details
               ></v-checkbox>
@@ -84,7 +84,7 @@
         </template>
       </v-data-table>
 
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{distributors.length}}</span> 건</span>
+      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md10>
@@ -276,6 +276,7 @@
 
 <script>
 import Constant from "../../constant.js";
+import { getSelectedFunc } from "../CompHelper.js";
 
 export default {
   data() {
@@ -287,6 +288,7 @@ export default {
         page: 1,
         rowsPerPage: 10
       },
+      total: "",
       selected: [],
       headers: [
         { text: "번호", align: "left", value: "idx", sortable: false },
@@ -297,7 +299,12 @@ export default {
           value: "name_kr",
           sortable: false
         },
-        { text: "등록일", align: "left", value: "dtRegistered", sortable: false },
+        {
+          text: "등록일",
+          align: "left",
+          value: "dtRegistered",
+          sortable: false
+        },
         { text: "상태", align: "left", value: "state", sortable: false },
         {
           text: "생성계정",
@@ -317,14 +324,19 @@ export default {
       )
         return 0;
 
-      return Math.ceil(this.distributors.length / this.pagination.rowsPerPage);
+      return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
+  },
+  updated() {
+    let update_total = this.$children[0].$children[1].searchLength;
+    this.total = update_total;
   },
   mounted() {
     this.$store.dispatch(Constant.FETCH_DISTRIBUTOR).then(resp => {
       this.distributors = resp.data.distributors.reverse();
-      console.log("this.distributors :", this.distributors);
-      console.log("this.distributors.length :", this.distributors.length);
+      // console.log("this.distributors :", this.distributors);
+      // console.log("this.distributors.length :", this.distributors.length);
+      this.total = this.distributors.length;
     });
   },
   methods: {

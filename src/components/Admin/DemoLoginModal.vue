@@ -1,126 +1,58 @@
-// modal wrap
-.v--modal-overlay {
-  .v-toolbar__title {
-    color: #fff;
-  }
-  .v-card {
-    .v-card--tile {
-      -webkit-box-shadow: none;
-      box-shadow: none;
-    }
-  }
-  .card-left {
-    background: #fff;
-    .v-list--three-line {
-      // 각 리스트 wrap (v-list__tile, v-list__tile--avatar)
-      > div {
-        height: 35px;
-      }
-      .d-flex {
-        margin-bottom: 7px;
-      }
-      .v-subheader {
-        margin: 15px 0;
-        color: #999;
-      }
-      // label text title
-      .input-title {
-        color: #646464;
-        font-size: 12px;
-        text-align: left;
-        width: 110px;
-      }
-      // margin-right 15px이 필요한 Input
-      .input-mr {
-        margin-right: 15px;
-      }
-      // 필수항목 *
-      .text-danger {
-        color: #d26a5c;
-      }
-      // input 텍스트 창
-      .input-text {
-        font-size: 14px;
-        border: 1px solid #e6e6e6;
-        padding: 5px;
-        border-radius: 5px;
-        margin-left: 25px;
-        width: 100%;
-        color: #333;
-      }
-      // input type file
-      .input-file {
-        font-size: 12px;
-        width: 55%;
-      }
-      // input type tel
-      .input-tel {
-        width: 40%;
-        margin-left: 10px;
-      }
-      .input-mail {
-        width: 32%;
-      }
-      .input-size {
-        width: 47%;
-      }
-      .input-tri {
-        width: 30%;
-        margin-left: 10px;
-      }
-      .input-radio {
-        margin-right: 15px;
-      }
-      // 사용 가능한 파일 문구
-      .file-txt {
-        font-size: 10px;
-        margin-left: 20px;
-        text-align: right;
-      }
-      // 선택 창
-      .selectbox {
-        display: inline-block;
-        position: relative;
-        width: 95px;
-        border: 1px solid #e6e6e6;
-        border-radius: 5px;
-        z-index: 1;
-        margin-left: 25px;
-        color: #333;
-        &:before {
-          content: "";
-          position: absolute;
-          top: 50%;
-          right: 5px;
-          width: 0;
-          height: 0;
-          margin-top: -1px;
-          border-left: 5px solid transparent;
-          border-right: 5px solid transparent;
-          border-top: 5px solid #999;
-        }
-        select {
-          width: 100%;
-          height: auto;
-          padding: 5px;
-          border-radius: 5px;
-          -webkit-appearance: none;
-          -moz-appearance: none;
-          appearance: none;
-        }
-      }
-      .selectbox-100 {
-        width: 100%;
-      }
-      .selectbox-mail {
-        width: 25%;
-      }
-    }
-  }
-}
+<template>
+<modal name="demo-login" :width="modalWidth" transition="pop-out" :height="400">
+  <div class="box">
+    <div id="bp-left" class="box-part">
+      <div id="partition-register" class="partition">
+        <div class="partition-title">CREATE ACCOUNT</div>
+        <div class="partition-form">
+          <form autocomplete="false">
 
+            <div class="autocomplete-fix">
+              <input type="password">
+            </div>
 
-//====================== modal
+            <input id="n-email" type="text" placeholder="Email">
+            <input id="n-username" type="text" placeholder="Username">
+            <input id="n-password2" type="password" placeholder="Password">
+          </form>
+
+          <div style="margin-top: 42px">
+          </div>
+
+          <div class="button-set">
+            <button id="goto-signin-btn">Sign In</button>
+            <button id="register-btn">Register</button>
+          </div>
+
+          <button class="large-btn github-btn">connect with <span>github</span></button>
+          <button class="large-btn facebook-btn">connect with <span>facebook</span></button>
+        </div>
+      </div>
+    </div>
+    <div id="bp-right" class="box-part">
+      <div class="box-messages">
+      </div>
+    </div>
+  </div>
+</modal>
+</template>
+<script>
+const MODAL_WIDTH = 656;
+
+export default {
+  name: "DemoLoginModal",
+  data() {
+    return {
+      modalWidth: MODAL_WIDTH
+    };
+  },
+  created() {
+    this.modalWidth =
+      window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH;
+  }
+};
+</script>
+<style lang="scss">
 $background_color: #404142;
 $github_color: #dba226;
 $facebook_color: #3880ff;
@@ -292,3 +224,4 @@ $facebook_color: #3880ff;
   opacity: 0;
   transform: translateY(24px);
 }
+</style>
