@@ -55,22 +55,20 @@
             </select>
           </div>
         </v-flex>
-        <v-flex d-flex xs12 md6 lg4>
-          <div class="selectbox select-search selectbox-top">
-            <span>검색어</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option value="전체" selected>전체</option>
-              <option value="검색어1">검색어1</option>
-              <option value="검색어2">검색어2</option>
-              <option value="검색어3">검색어3</option>
-            </select>
-          </div>
-          <input class="input-text" type="text">
-        </v-flex>
       </v-layout>
     </div>
     <!-- table wrap -->
     <v-app class="inspire">
+      <v-card-title>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="search"
+          label="검색어"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
       <v-data-table
         :headers="headers"
         :items="desserts"

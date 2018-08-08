@@ -4,10 +4,12 @@
 
 <script>
 import AppReleaseInfo from "../components/Appv/AppReleaseInfo.vue"
+import AppLookup from "../components/Appv/AppLookup.vue"
 
 export default {
   components: {
-    AppReleaseInfo
+    AppReleaseInfo,
+    AppLookup
   },
   data() {
     return {
