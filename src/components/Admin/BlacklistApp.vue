@@ -42,7 +42,6 @@
     <!-- table wrap -->
     <v-app class="inspire">
       <v-card-title>
-        검색조건
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -94,14 +93,14 @@
                 hide-details
               ></v-checkbox>
             </td>
+            <td class="text-xs-left">{{ total }}</td>
+            <td class="text-xs-left">{{ props.item.app }}</td>
             <td class="text-xs-left">{{ props.item.blType }}</td>
+            <td class="text-xs-left"><a>{{ props.item.pushToken }}</a></td>
             <td class="text-xs-left">{{ props.item.delYN }}</td>
-            <td class="text-xs-left">{{ props.item.dtModified }}</td>
-            <td class="text-xs-left"><a>{{ props.item.dtRegistered }}</a></td>
-            <td class="text-xs-left">{{ props.item.idx }}</td>
+            <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
+            <td class="text-xs-left">{{ props.item.dtModified}}</td>
             <td class="text-xs-left">{{ props.item.modifier }}</td>
-            <td class="text-xs-left">{{ props.item.pushToken }}</td>
-            <td class="text-xs-left">{{ props.item.registrant }}</td>
           </tr>
         </template>
       </v-data-table>
@@ -116,7 +115,7 @@
           </v-flex>
         </v-layout>
         <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+          <v-pagination v-model="pagination.page" :length="pages" :total-visible="7"></v-pagination>
         </div>
       </div>
     </v-app>
@@ -164,19 +163,29 @@ export default {
       total: "",
       selected: [],
       headers: [
-        { text: "번호", align: "left", value: "번호", sortable: false },
-        { text: "App명", align: "left", value: "App명", sortable: false },
+        { text: "번호", align: "left", value: "idx", sortable: false },
+        { text: "App명", align: "left", value: "app", sortable: false },
         {
           text: "제품 타입",
           align: "left",
-          value: "제품 타입",
+          value: "blType",
           sortable: false
         },
-        { text: "푸시토큰", align: "left", value: "푸시토큰", sortable: false },
-        { text: "유형", align: "left", value: "유형", sortable: false },
-        { text: "등록일", align: "left", value: "등록일", sortable: false },
-        { text: "변경일", align: "left", value: "변경일", sortable: false },
-        { text: "변경자", align: "left", value: "변경자", sortable: false }
+        {
+          text: "푸시토큰",
+          align: "left",
+          value: "pushToken",
+          sortable: false
+        },
+        { text: "유형", align: "left", value: "delYN", sortable: false },
+        {
+          text: "등록일",
+          align: "left",
+          value: "dtRegistered",
+          sortable: false
+        },
+        { text: "변경일", align: "left", value: "dtModified", sortable: false },
+        { text: "변경자", align: "left", value: "modifier", sortable: false }
       ],
       blacklists: []
     };
@@ -192,20 +201,26 @@ export default {
       return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
   },
+  updated() {
+    let update_total = this.$children[0].$children[1].searchLength;
+    this.total = update_total;
+  },
   mounted() {
     this.$store.dispatch(Constant.FETCH_BLACKLIST).then(resp => {
       this.blacklists = resp.data.blacklists;
       console.log("blacklists :", this.blacklists);
-      this.total = this.blacklists.legnth;
+      this.total = this.blacklists.length;
     });
+    this.totalDown();
   },
   methods: {
+    totalDown() {},
     showModal() {
       this.$modal.show("blacklist");
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];
-      else this.selected = this.distributors.slice();
+      else this.selected = this.blacklists.slice();
     },
     getSelected: function(e) {
       getSelectedFunc(e);

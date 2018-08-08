@@ -21,13 +21,10 @@
         </v-flex>
       </v-layout>
     </div> -->
-
-    <v-btn color="error" dark @click="showModal">등록</v-btn>
-
     <!-- table wrap -->
+
     <v-app class="inspire">
       <v-card-title>
-        검색조건
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -94,7 +91,7 @@
             </td>
             <td class="text-xs-left">{{ props.item.idx }}</td>
             <td class="text-xs-left">{{ props.item.companyName }}</td>
-            <td class="text-xs-left"><a @click="tagtype_dialog_edit = true">{{ props.item.name }}</a></td>
+            <td class="text-xs-left"><a @click.stop="showEditModal">{{ props.item.name }}</a></td>
             <td class="text-xs-left">{{ props.item.contact }}</td>
             <td class="text-xs-left">{{ props.item.pushToken }}</td>
             <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
@@ -209,8 +206,6 @@
 </template>
 
 <script>
-// const MODAL_SIZE = "80%";
-
 import Constant from "../../constant.js";
 import { getSelectedFunc } from "../CompHelper.js";
 
@@ -293,21 +288,9 @@ export default {
     });
   },
   methods: {
-    showModal() {
+    showEditModal() {
       this.$modal.show("adminapp_edit");
     },
-    // show(resizable, adaptive, draggable) {
-    //   this.resizable = resizable;
-    //   this.adaptive = adaptive;
-    //   this.draggable = draggable;
-    //   /*
-    //     $nextTick is required because the data model with new
-    //     "resizable, adaptive, draggable" values is not updated yet.. eh
-    //   */
-    //   this.$nextTick(() => {
-    //     this.$modal.show("example-modal");
-    //   });
-    // },
     toggleAll() {
       if (this.selected.length) this.selected = [];
       else this.selected = this.apps.slice();

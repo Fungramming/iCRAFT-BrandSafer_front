@@ -38,7 +38,6 @@
     <!-- table wrap -->
     <v-app class="inspire">
       <v-card-title>
-        검색조건
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"

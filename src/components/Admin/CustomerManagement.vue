@@ -34,7 +34,7 @@
 
       <v-data-table
         :headers="headers"
-        :items="customer"
+        :items="customers"
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
@@ -75,7 +75,8 @@
                 hide-details
               ></v-checkbox>
             </td>
-            <td class="text-xs-left">{{ props.item.idx }}</td>
+            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
+            <!-- <td class="text-xs-left">{{ props.item.idx }}</td> -->
             <td class="text-xs-left"><a @click.stop="showEditModal"> {{ props.item.name_kr }} </a></td>
             <td class="text-xs-left">{{ props.item.code }}</td>
             <td class="text-xs-left">{{ props.item.addr_kr }}</td>
@@ -511,6 +512,7 @@ export default {
         rowsPerPage: 10
       },
       total: "",
+      total_index: "",
       selected: [],
       headers: [
         { text: "번호", align: "left", value: "idx", sortable: false },
@@ -541,7 +543,7 @@ export default {
           sortable: false
         }
       ],
-      customer: []
+      customers: []
     };
   },
   computed: {
@@ -556,20 +558,50 @@ export default {
     }
   },
   updated() {
-    let update_total = this.$children[0].$children[1].searchLength;
-    this.total = update_total;
+    // getTotalDate();
+    this.getTotal();
   },
   mounted() {
     this.$store.dispatch(Constant.FETCH_COMPANY).then(resp => {
-      this.customer = resp.data.company;
-      console.log("this.customer :", this.customer);
-      // console.log("this.customer.length :", this.customer.length);
-      this.total = this.customer.length;
+      this.customers = resp.data.company.reverse();
+      console.log("this.customers :", this.customers);
+      // console.log("this.customers.length :", this.customers.length);
+      this.total = this.customers.length;
     });
   },
   methods: {
+    getTotal() {
+      let update_total = this.$children[0].$children[1].searchLength;
+      this.total = update_total;
+
+      let page = document.getElementsByClassName("v-select__selection");
+      let pageActive = document.getElementsByClassName(
+        "v-pagination__item--active"
+      );
+      let pageText = page[0].innerText;
+      let pageActiveText = pageActive[0].innerText;
+      let pageNum = pageActiveText - 1;
+      let calPage = pageNum * pageText;
+      this.total_index = calPage;
+      // console.log("page :", page);
+      // console.log("pageActive :", pageActive);
+      // console.log("pageText :", pageText);
+      // console.log("pageActiveText :", pageActiveText);
+      // console.log("calPage :", calPage);
+      // console.log("this.total_index :", this.total_index);
+    },
     showModal() {
       this.$modal.show("customer");
+      let modalWrap = document.getElementsByClassName("v--modal-box v--modal");
+      // console.log("modalWrap :", typeof modalWrap);
+      // for (let item in modalWrap) {
+      //   console.log("item :", modalWrap[item]);
+      // }
+      // // modalWrap.childNodes.className = "overflow";
+      // // modalWrap.childNodes.style.overflow = "scroll";
+      // modalWrap.classList.add("overflow");
+      console.log("modalWrap.style.overflow :", modalWrap.style);
+      modalWrap.style.overflow = "scroll";
     },
     showEditModal() {
       this.$modal.show("customer_edit");

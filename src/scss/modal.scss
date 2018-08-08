@@ -1,14 +1,22 @@
 // modal wrap
+.overflow {
+  overflow: scroll;
+}
 .v--modal-overlay {
+  .v--modal-background-click {
+    .v--modal-box.v--model {
+      overflow: scroll !important;
+    }
+  }
   .v-toolbar__title {
     color: #fff;
   }
-  .v-card {
-    .v-card--tile {
-      -webkit-box-shadow: none;
-      box-shadow: none;
-    }
-  }
+  // .v-card {
+  //   .v-card--tile {
+  //     -webkit-box-shadow: none;
+  //     box-shadow: none;
+  //   }
+  // }
   .card-left {
     background: #fff;
     .v-list--three-line {
