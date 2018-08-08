@@ -10,12 +10,14 @@
           v-model="id"
           label="ID"
           clearable
+          v-on:keyup.enter="onSubmit"
         ></v-text-field>
         <v-text-field
           v-model="password"
           :type="'password'"
           label="PASSWORD"
           clearable
+          v-on:keyup.enter="onSubmit"
         ></v-text-field>
         <!-- <v-radio-group v-model="selectedLang" class="lang-group" row>
           <v-radio class="lang-option" label="한국어" value="Korean"></v-radio>
@@ -25,6 +27,22 @@
         <v-btn class="login-btn" @click.stop="onSubmit"><v-icon style="">launch</v-icon></v-btn>          
       </div>
       <footer>© iCraft21</footer>
+      <transition>
+        <div class="alert-modal">
+          <v-alert
+            :value="successModal"
+            type="success"
+          > 
+          로그인 하였습니다.
+          </v-alert>
+          <v-alert
+          :value="errorModal"
+          type="error"
+          >
+          접속 실패! 아이디나 비밀번호를 다시 한번 확인해주세요.
+          </v-alert>
+        </div>
+      </transition>
   </div>
 </template>
 
@@ -36,8 +54,9 @@ export default {
     return {
       id: "",
       password: "",
-      token: "1234"
-      // selectedLang: "Korean"
+      errors: [],
+      successModal: false,
+      errorModal: false
     };
   },
   mounted() {
@@ -49,30 +68,36 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$store.state.tokken = 111;
+      // this.$store.state.tokken = 111;
       if (this.id && this.password) {
         this.$store
           .dispatch(Constant.LOG_IN, {
-            userId: this.id,
-            userPassword: this.password
+            username: this.id,
+            password: this.password
           })
           .then(resp => {
             if (resp.status == 200) {
+              this.successModal = true;
               this.$router.push({ name: "dashboard" });
             }
+          })
+          .catch(err => {
+            if (err.status == 401) {
+              this.errorModal = true;
+            } else {
+              alert(
+                `접속실패!\n에러 코드: ${err.response.status}\n
+              에러 메세지: ${err.response.message}`
+              );
+            }
           });
-        // .catch(err => {
-        //   if (err.status == 401) {
-        //     alert(
-        //       `접속 실패!\n이메일이나 비밀번호를 다시 한번 확인해주세요.`
-        //     );
-        //   } else {
-        //     alert(
-        //       `접속실패!\n에러 코드: ${err.response.status}\n
-        //       에러 메세지: ${err.response.message}`
-        //     );
-        //   }
-        // });
+      }
+
+      if (!this.id) {
+        console.log("this.errors :", this.errors);
+        this.errors.push("아이디를 입력해주세요.");
+      } else if (!this.password) {
+        this.errors.push("비밀번호를 입력해주세요.");
       }
     }
   }
@@ -136,5 +161,20 @@ $primary-color: #173857;
     font-size: 15px;
     letter-spacing: -1px;
   }
+}
+.alert-modal {
+  position: absolute;
+  top: -4px;
+  left: 0;
+  width: 100%;
+  height: 65px;
+}
+.v-alert.error {
+  background-color: #ff5252;
+  height: 100%;
+}
+.v-alert.success {
+  background-color: #4caf50;
+  height: 100%;
 }
 </style>

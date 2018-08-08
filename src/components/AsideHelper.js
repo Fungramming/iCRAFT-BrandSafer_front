@@ -27,6 +27,7 @@ export function clickFunc() {
 }
 
 export function activingFunc(e) {
+  console.log(e);
   let title = e.toElement.innerText;
   let subTabTitle =
     e.toElement.parentNode.parentNode.parentNode.parentNode.className;

@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <!-- <aside-tab v-if="this.isAuthenticated" :position-x="0" :position-y="0"  absolute class="aside" style="width:230px;"></aside-tab> -->
-    <aside-tab :position-x="0" :position-y="0"  absolute class="aside" style="width:230px;"></aside-tab>
+    <aside-tab v-if="this.isAuthenticated" :position-x="0" :position-y="0"  absolute class="aside" style="width:230px;"></aside-tab>
     <div :class="{active: true} " class="contents">
       <transition name="fade">
         <router-view/>
@@ -13,7 +12,6 @@
 import { mapGetters, mapState } from "vuex";
 import { formatDate } from "./store/helper.js";
 import AsideTab from "./components/Aside.vue";
-// import LogOut from "./components/PopupModal/LogOut.vue";
 
 export default {
   components: { AsideTab },
