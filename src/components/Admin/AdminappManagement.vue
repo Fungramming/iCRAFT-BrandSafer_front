@@ -89,7 +89,8 @@
                 hide-details
               ></v-checkbox>
             </td>
-            <td class="text-xs-left">{{ props.item.idx }}</td>
+            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
+            <!-- <td class="text-xs-left">{{ props.item.idx }}</td> -->
             <td class="text-xs-left">{{ props.item.companyName }}</td>
             <td class="text-xs-left"><a @click.stop="showEditModal">{{ props.item.name }}</a></td>
             <td class="text-xs-left">{{ props.item.contact }}</td>
@@ -177,15 +178,15 @@
             <v-list three-line subheader>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">회사명</label>
-                <input class="input-text" type="text" required="required" placeholder="회사명">
+                <input :value="selected_company" class="input-text" type="text" required="required" placeholder="회사명">
               </v-flex>    
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">이름</label>
-                <input class="input-text" type="text" required="required" placeholder="이름">
+                <input :value="selected_name" class="input-text" type="text" required="required" placeholder="이름">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">연락처</label>
-                <input class="input-text" type="text">
+                <input :value="selected_tel" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md3>
                 <label class="input-title">상태</label>
@@ -219,6 +220,7 @@ export default {
         rowsPerPage: 10
       },
       total: "",
+      total_index: "",
       selected: [],
       headers: [
         { text: "idx", align: "left", value: "idx", sortable: false },
@@ -256,7 +258,12 @@ export default {
         },
         { text: "modifier", align: "left", value: "modifier", sortable: false }
       ],
-      apps: []
+      apps: [],
+
+      // For edit modal
+      selected_company: "",
+      selected_name: "",
+      selected_tel: ""
     };
   },
   computed: {
@@ -270,32 +277,55 @@ export default {
     }
   },
   // watch: {
-  //   app: function() {
+  //   app: function(e) {
   //     console.log("this.app :", this.app);
   //   }
   // },
   updated() {
-    let update_total = this.$children[0].$children[1].searchLength;
-    // console.log(this.$children[0].$children[1].searchLength);
-    // console.log(update_total);
-    this.total = update_total;
+    this.getTotal();
   },
   mounted() {
-    this.$store.dispatch(Constant.FETCH_ADMIN_APP).then(resp => {
-      this.apps = resp.data.apps;
-      console.log("apps :", this.apps.length);
-      this.total = this.apps.length;
-    });
+    this.getDatas();
   },
   methods: {
-    showEditModal() {
+    getDatas() {
+      this.$store.dispatch(Constant.FETCH_ADMIN_APP).then(resp => {
+        this.apps = resp.data.apps;
+        this.total = this.apps.length;
+        console.log("apps :", this.apps);
+      });
+    },
+    getTotal() {
+      let update_total = this.$children[0].$children[1].searchLength;
+      this.total = update_total;
+
+      let page = document.getElementsByClassName("v-select__selection");
+      let pageActive = document.getElementsByClassName(
+        "v-pagination__item--active"
+      );
+      let pageText = page[0].innerText;
+      let pageActiveText = pageActive[0].innerText;
+      let pageNum = pageActiveText - 1;
+      let calPage = pageNum * pageText;
+      this.total_index = calPage;
+    },
+    showEditModal(e) {
       this.$modal.show("adminapp_edit");
+      this.getDatas();
+
+      let company = e.path[2].children[2].innerText;
+      let name = e.path[2].children[3].innerText;
+      let tel = e.path[2].children[4].innerText;
+
+      this.selected_company = company;
+      this.selected_name = name;
+      this.selected_tel = tel;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];
       else this.selected = this.apps.slice();
     },
-    getSelected: function(e) {
+    getSelected(e) {
       getSelectedFunc(e);
     },
     changeSort(column) {

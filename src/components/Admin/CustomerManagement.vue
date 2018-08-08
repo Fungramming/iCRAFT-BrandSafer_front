@@ -608,7 +608,7 @@ export default {
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];
-      else this.selected = this.customer.slice();
+      else this.selected = this.customers.slice();
     },
     getSelected: function(e) {
       getSelectedFunc(e);

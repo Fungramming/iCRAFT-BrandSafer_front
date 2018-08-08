@@ -59,7 +59,7 @@
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
-        item-key="idx"
+        item-key="name"
         select-all
         class="elevation-1"
       >
@@ -95,10 +95,9 @@
               ></v-checkbox>
             </td>
             <td class="text-xs-left">{{ total - props.index - total_index }}</td>
-            <!-- <td class="text-xs-left">{{ props.item.idx }}</td> -->
             <td class="text-xs-left">{{ props.item.role }}</td>
             <td class="text-xs-left">{{ props.item.name }}</td>
-            <td class="text-xs-left"><a @click="dialog_edit = true">{{ props.item.id }}</a></td>
+            <td class="text-xs-left"><a @click.stop="showEditModal">{{ props.item.id }}</a></td>
             <td class="text-xs-left">{{ props.item.department }}</td>
             <td class="text-xs-left">{{ props.item.dtLastConnected }}</td>
             <td class="text-xs-left">{{ props.item.state }}</td>
@@ -113,7 +112,7 @@
             <v-btn color="error" dark>삭제</v-btn>
           </v-flex>
           <v-flex d-flex xs12 sm12 md1>
-            <v-btn color="primary" dark @click.stop="dialog = true">등록</v-btn>
+            <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
           </v-flex>
         </v-layout>
         <div class="text-xs-center pt-2">
@@ -122,17 +121,10 @@
       </div>
     </v-app>
 
-    <!-- modal dialog -->
+    <!-- modal -->
     <v-flex d-flex xs12 sm12 md12>
-    <v-dialog
-      v-model="dialog"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-      scrollable
-    >
-      <!-- start modal -->
-      <v-card tile>
+      <modal :width="modal_size" :height="modal_size" name="account" transition="pop-out">
+        <v-card tile>
         <v-toolbar card dark color="primary">
           <v-btn icon dark @click.native="dialog = false">
             <v-icon>close</v-icon>
@@ -250,28 +242,18 @@
           </v-card-text>
         </div>
       </v-card>
-    </v-dialog>
+      </modal>
     </v-flex>
 
-    <!-- modal edit dialog -->
+    <!-- modal edit -->
     <v-flex d-flex xs12 sm12 md12>
-    <v-dialog
-      v-model="dialog_edit"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-      scrollable
-    >
-      <!-- start modal -->
-      <v-card tile>
+      <modal :width="modal_size" :height="modal_size_height" name="account_edit" transition="pop-out">
+        <v-card tile>
         <v-toolbar card dark color="primary">
-          <v-btn icon dark @click.native="dialog_edit = false">
-            <v-icon>close</v-icon>
-          </v-btn>
-          <v-toolbar-title>iCraft 계정관리</v-toolbar-title>
+          <v-toolbar-title>iCraft 수정</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click.native="dialog_edit = false">수정</v-btn>
+            <v-btn dark flat>수정</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <div class="card-left">
@@ -381,7 +363,7 @@
           </v-card-text>
         </div>
       </v-card>
-    </v-dialog>
+      </modal>
     </v-flex>
   </div>
 </template>
@@ -394,13 +376,14 @@ export default {
   data() {
     return {
       search: "",
-      dialog: false,
-      dialog_edit: false,
+      modal_size: Constant.MODAL_SIZE,
+      modal_size_height: Constant.MODAL_SIZE_HEIGHT,
       pagination: {
         page: 1,
         rowsPerPage: 10
       },
       total: "",
+      total_index: "",
       selected: [],
       headers: [
         { text: "번호", align: "left", value: "idx", sortable: false },
@@ -432,8 +415,7 @@ export default {
     }
   },
   updated() {
-    let update_total = this.$children[0].$children[1].searchLength;
-    this.total = update_total;
+    this.getTotal();
   },
   mounted() {
     this.$store.dispatch(Constant.FETCH_ICRAFT_USER).then(resp => {
@@ -441,7 +423,7 @@ export default {
       // console.log('resp.data["icrf-users"] :', typeof resp.data["icrf-users"]);
       // console.log(this.account[0]);
       // console.log(this.account);
-      this.total = this.account.legnth;
+      this.total = this.account.length;
     });
   },
   methods: {
@@ -459,9 +441,15 @@ export default {
       let calPage = pageNum * pageText;
       this.total_index = calPage;
     },
+    showModal() {
+      this.$modal.show("account");
+    },
+    showEditModal() {
+      this.$modal.show("account_edit");
+    },
     toggleAll() {
       if (this.selected.length) this.selected = [];
-      else this.selected = this.distributors.slice();
+      else this.selected = this.account.slice();
     },
     getSelected: function(e) {
       getSelectedFunc(e);

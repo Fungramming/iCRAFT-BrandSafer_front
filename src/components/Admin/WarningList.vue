@@ -416,7 +416,9 @@ export default {
         { text: "모델명	", align: "left", value: "모델명	", sortable: false },
         { text: "언어셋", align: "left", value: "언어셋", sortable: false }
       ],
-      oversert: []
+      oversert: [],
+      page: "",
+      searchQuery: ""
     };
   },
   computed: {
@@ -439,11 +441,16 @@ export default {
     this.total = update_total;
   },
   mounted() {
-    this.$store.dispatch(Constant.FETCH_OVER_CERT).then(resp => {
-      this.oversert = resp.data;
-      console.log("oversert :", this.oversert);
-      this.total = this.oversert.length;
-    });
+    this.$store
+      .dispatch(Constant.FETCH_OVER_CERT, {
+        page: this.page,
+        query: this.searchQuery.trim()
+      })
+      .then(resp => {
+        this.oversert = resp.data;
+        console.log("oversert :", this.oversert);
+        // this.total = this.oversert.length;
+      });
   },
   methods: {
     toggleAll() {

@@ -59,7 +59,7 @@
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
-        item-key="idx"
+        item-key="app"
         select-all
         class="elevation-1"
       >
@@ -93,7 +93,7 @@
                 hide-details
               ></v-checkbox>
             </td>
-            <td class="text-xs-left">{{ total }}</td>
+            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
             <td class="text-xs-left">{{ props.item.app }}</td>
             <td class="text-xs-left">{{ props.item.blType }}</td>
             <td class="text-xs-left"><a>{{ props.item.pushToken }}</a></td>
@@ -161,6 +161,7 @@ export default {
         rowsPerPage: 10
       },
       total: "",
+      total_index: "",
       selected: [],
       headers: [
         { text: "번호", align: "left", value: "idx", sortable: false },
@@ -202,19 +203,30 @@ export default {
     }
   },
   updated() {
-    let update_total = this.$children[0].$children[1].searchLength;
-    this.total = update_total;
+    this.getTotal();
   },
   mounted() {
     this.$store.dispatch(Constant.FETCH_BLACKLIST).then(resp => {
-      this.blacklists = resp.data.blacklists;
+      this.blacklists = resp.data.blacklists.reverse();
       console.log("blacklists :", this.blacklists);
       this.total = this.blacklists.length;
     });
-    this.totalDown();
   },
   methods: {
-    totalDown() {},
+    getTotal() {
+      let update_total = this.$children[0].$children[1].searchLength;
+      this.total = update_total;
+
+      let page = document.getElementsByClassName("v-select__selection");
+      let pageActive = document.getElementsByClassName(
+        "v-pagination__item--active"
+      );
+      let pageText = page[0].innerText;
+      let pageActiveText = pageActive[0].innerText;
+      let pageNum = pageActiveText - 1;
+      let calPage = pageNum * pageText;
+      this.total_index = calPage;
+    },
     showModal() {
       this.$modal.show("blacklist");
     },

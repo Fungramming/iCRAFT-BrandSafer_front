@@ -95,7 +95,7 @@
             </td>
             <td class="text-xs-left">{{ props.item.idx }}</td>
             <td class="text-xs-left"><a @click.stop="showEditModal"> {{ props.item.version }} </a></td>
-            <td class="text-xs-left">{{ props.item.type }}</td>
+            <td class="text-xs-left">{{ props.item.name_kr }}</td>
             <td class="text-xs-left">{{ props.item.width }} * {{ props.item.height }}</td>
             <td class="text-xs-left">{{ props.item.state }}</td>
             <td class="text-xs-left">{{ props.item.registrant }}</td>
@@ -339,7 +339,7 @@
                   <label class="input-title">버전
                     <span class="text-danger">*</span>
                   </label>
-                  <input class="input-text" type="text" required="required">
+                  <input :value="selected_version" class="input-text" type="text" required="required">
                 </v-flex>    
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">태그타입
@@ -420,7 +420,10 @@ export default {
           sortable: false
         }
       ],
-      tag_type: []
+      tag_type: [],
+
+      // For edit modal
+      selected_version: ""
     };
   },
   computed: {
@@ -439,18 +442,32 @@ export default {
     this.total = update_total;
   },
   mounted() {
-    this.$store.dispatch(Constant.FETCH_TAG_TYPE).then(resp => {
-      this.tag_type = resp.data.tag_type.reverse();
-      // console.log("this.tag_type.length :", this.tag_type.length);
-      this.total = this.tag_type.length;
-    });
+    this.getDatas();
   },
   methods: {
+    getDatas() {
+      this.$store.dispatch(Constant.FETCH_TAG_TYPE).then(resp => {
+        this.tag_type = resp.data.tag_type.reverse();
+        this.total = this.tag_type.length;
+      });
+    },
     showModal() {
       this.$modal.show("tagtype");
     },
-    showEditModal() {
+    showEditModal(e) {
       this.$modal.show("tagtype_edit");
+      this.getDatas();
+
+      console.log("e.path :", e.path[2].children[4].innerText);
+
+      let version = e.path[2].children[2].children[0].innerText;
+      let width = e.path[2].children[4].innerText;
+      let height = e.path[2].children[4].innerText;
+      // let tel = e.path[2].children[4].innerText;
+
+      this.selected_version = version;
+      // this.selected_name = name;
+      // this.selected_tel = tel;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];
