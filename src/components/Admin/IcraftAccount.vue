@@ -274,13 +274,13 @@
                 <label class="input-title">이름
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="text" required="required">
+                <input :value="selected_name" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">아이디
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="text">
+                <input :value="selected_id" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">비밀번호
@@ -353,11 +353,11 @@
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">직위</label>
-                <input class="input-text" type="text" required="required">
+                <input :value="selected_position" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">부서</label>
-                <input class="input-text" type="text" required="required">
+                <input :value="selected_department" class="input-text" type="text" required="required">
               </v-flex>
             </v-list>
           </v-card-text>
@@ -399,8 +399,20 @@ export default {
         },
         { text: "상태", align: "left", value: "state", sortable: false }
       ],
-      account: []
+      account: [],
       // account: {}
+
+      // For edit modal
+      selected_index: "",
+      selected_email: "",
+      selected_phone: "",
+      selected_telephone: "",
+      selected_position: "",
+      selected_role: "",
+      selected_name: "",
+      selected_id: "",
+      selected_department: "",
+      selected_state: "",
     };
   },
   computed: {
@@ -418,15 +430,16 @@ export default {
     this.getTotal();
   },
   mounted() {
-    this.$store.dispatch(Constant.FETCH_ICRAFT_USER).then(resp => {
-      this.account = resp.data["icrf-users"].reverse();
-      // console.log('resp.data["icrf-users"] :', typeof resp.data["icrf-users"]);
-      // console.log(this.account[0]);
-      // console.log(this.account);
-      this.total = this.account.length;
-    });
+    this.getDatas();
   },
   methods: {
+    getDatas() {
+      this.$store.dispatch(Constant.FETCH_ICRAFT_USER).then(resp => {
+        this.account = resp.data["icrf-users"].reverse();
+        // console.log('resp.data["icrf-users"] :', typeof resp.data["icrf-users"]);
+        this.total = this.account.length;
+      });
+    },
     getTotal() {
       let update_total = this.$children[0].$children[1].searchLength;
       this.total = update_total;
@@ -444,8 +457,20 @@ export default {
     showModal() {
       this.$modal.show("account");
     },
-    showEditModal() {
+    showEditModal(e) {
       this.$modal.show("account_edit");
+
+      this.selected_state = e.path[2].children[7].innerText 
+      this.selected_department = e.path[2].children[5].innerText 
+      this.selected_id = e.path[2].children[4].innerText 
+      this.selected_name = e.path[2].children[3].innerText 
+      this.selected_role = e.path[2].children[2].innerText ;
+
+      this.selected_index = e.target.parentNode.parentNode['sectionRowIndex']
+      this.selected_email = this.account[this.selected_index].email
+      this.selected_phone = this.account[this.selected_index].phone
+      this.selected_telephone = this.account[this.selected_index].telephone
+      this.selected_position = this.account[this.selected_index].position
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

@@ -222,19 +222,19 @@
                 <label class="input-title">유통업체명(한국어)
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="text" required="required">
+                <input :value="selected_name_kr" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">유통업체명(영어)</label>
-                <input class="input-text" type="text">
+                <input :value="selected_name_en" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">유통업체명(중국어)</label>
-                <input class="input-text" type="text" placeholder="( * 5~15자 이내의 영/숫자 조합 )">
+                <input :value="selected_name_zh" class="input-text" type="text" placeholder="( * 5~15자 이내의 영/숫자 조합 )">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">노트</label>
-                <input class="input-text" type="text">
+                <input :value="selected_note" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md2>
                 <label class="input-title">상태</label>
@@ -289,7 +289,13 @@ export default {
           sortable: false
         }
       ],
-      distributors: []
+      distributors: [],
+
+      // For edit modal
+      selected_name_kr: "",
+      selected_name_en: "",
+      selected_name_zh: "",
+      selected_note: "",
     };
   },
   computed: {
@@ -307,14 +313,17 @@ export default {
     this.getTotal();
   },
   mounted() {
-    this.$store.dispatch(Constant.FETCH_DISTRIBUTOR).then(resp => {
-      this.distributors = resp.data.distributors.reverse();
-      // console.log("this.distributors :", this.distributors);
-      // console.log("this.distributors.length :", this.distributors.length);
-      this.total = this.distributors.length;
-    });
+    this.getDatas();
   },
   methods: {
+    getDatas() {
+      this.$store.dispatch(Constant.FETCH_DISTRIBUTOR).then(resp => {
+        this.distributors = resp.data.distributors.reverse();
+        // console.log("this.distributors :", this.distributors);
+        // console.log("this.distributors.length :", this.distributors.length);
+        this.total = this.distributors.length;
+      });
+    },
     getTotal() {
       let update_total = this.$children[0].$children[1].searchLength;
       this.total = update_total;
@@ -332,8 +341,15 @@ export default {
     showModal() {
       this.$modal.show("distributors");
     },
-    showEditModal() {
+    showEditModal(e) {
       this.$modal.show("distributors_edit");
+
+      this.selected_name_kr = e.path[2].children[3].innerText
+      
+      this.selected_index = e.target.parentNode.parentNode['sectionRowIndex']
+      this.selected_name_en = this.distributors[this.selected_index].name_en
+      this.selected_name_zh = this.distributors[this.selected_index].name_zh
+      this.selected_note = this.distributors[this.selected_index].note
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

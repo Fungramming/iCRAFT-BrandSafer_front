@@ -359,8 +359,8 @@
                   <label class="input-title">사이즈
                     <span class="text-danger">*</span>
                   </label>
-                  <input class="input-text input-size" type="text" placeholder="width">
-                  <input class="input-text input-size" type="text" placeholder="height">
+                  <input :value="selected_width" class="input-text input-size" type="text" placeholder="width">
+                  <input :value="selected_height" class="input-text input-size" type="text" placeholder="height">
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">설명</label>
@@ -423,7 +423,9 @@ export default {
       tag_type: [],
 
       // For edit modal
-      selected_version: ""
+      selected_version: "",
+      selected_width: "",
+      selected_height: "",
     };
   },
   computed: {
@@ -456,18 +458,16 @@ export default {
     },
     showEditModal(e) {
       this.$modal.show("tagtype_edit");
-      this.getDatas();
 
-      console.log("e.path :", e.path[2].children[4].innerText);
+      console.log("e.path :", e.path[2].children[4].innerText.substring(6,9));
 
       let version = e.path[2].children[2].children[0].innerText;
-      let width = e.path[2].children[4].innerText;
-      let height = e.path[2].children[4].innerText;
-      // let tel = e.path[2].children[4].innerText;
+      let width = e.path[2].children[4].innerText.substring(0,3);
+      let height = e.path[2].children[4].innerText.substring(6,9);
 
       this.selected_version = version;
-      // this.selected_name = name;
-      // this.selected_tel = tel;
+      this.selected_width = width;
+      this.selected_height = height;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

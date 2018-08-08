@@ -311,7 +311,6 @@ export default {
     },
     showEditModal(e) {
       this.$modal.show("adminapp_edit");
-      this.getDatas();
 
       let company = e.path[2].children[2].innerText;
       let name = e.path[2].children[3].innerText;
