@@ -265,13 +265,10 @@
       <modal :width="modal_size" :height="modal_size" name="tagtype" transition="pop-out">
         <v-card tile>
           <v-toolbar card dark color="primary">
-            <v-btn icon dark @click.native="dialog = false">
-              <v-icon>close</v-icon>
-            </v-btn>
             <v-toolbar-title>태그타입 관리</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-              <v-btn dark flat @click.native="dialog = false">저장</v-btn>
+              <v-btn dark flat>등록</v-btn>
             </v-toolbar-items>
           </v-toolbar>
           <div class="card-left">
@@ -330,13 +327,10 @@
       <modal :width="modal_size" :height="modal_size" name="tagtype_edit" transition="pop-out">
         <v-card tile>
           <v-toolbar card dark color="primary">
-            <v-btn icon dark @click.native="dialog = false">
-              <v-icon>close</v-icon>
-            </v-btn>
             <v-toolbar-title>태그타입 수정</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-              <v-btn dark flat @click.native="dialog = false">수정</v-btn>
+              <v-btn dark flat>수정</v-btn>
             </v-toolbar-items>
           </v-toolbar>
           <div class="card-left">
@@ -401,8 +395,6 @@ export default {
   data() {
     return {
       search: "",
-      dialog: false,
-      dialog_edit: false,
       modal_size: Constant.MODAL_SIZE,
       pagination: {
         page: 1,

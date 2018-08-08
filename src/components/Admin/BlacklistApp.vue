@@ -112,7 +112,7 @@
             <v-btn color="error" dark>삭제</v-btn>
           </v-flex>
           <v-flex d-flex xs12 sm12 md1>
-            <v-btn color="primary" dark @click.stop="dialog = true">등록</v-btn>
+            <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
           </v-flex>
         </v-layout>
         <div class="text-xs-center pt-2">
@@ -121,25 +121,15 @@
       </div>
     </v-app>
 
+    <!-- modal -->
     <v-flex d-flex xs12 sm12 md12>
-    <!-- modal dialog -->
-    <v-dialog
-      v-model="dialog"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-      scrollable
-    >
-      <!-- start modal -->
-      <v-card tile>
+      <modal :width="modal_size" :height="modal_size" name="blacklist" transition="pop-out">
+        <v-card tile>
         <v-toolbar card dark color="primary">
-          <v-btn icon dark @click.native="dialog = false">
-            <v-icon>close</v-icon>
-          </v-btn>
           <v-toolbar-title>블랙리스트 App</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click.native="dialog = false">저장</v-btn>
+            <v-btn dark flat>등록</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <div class="card-left">
@@ -153,7 +143,7 @@
           </v-card-text>
         </div>
       </v-card>
-    </v-dialog>
+      </modal>
     </v-flex>
   </div>
 </template>
@@ -166,7 +156,7 @@ export default {
   data() {
     return {
       search: "",
-      dialog: false,
+      modal_size: Constant.MODAL_SIZE,
       pagination: {
         page: 1,
         rowsPerPage: 10
@@ -210,6 +200,9 @@ export default {
     });
   },
   methods: {
+    showModal() {
+      this.$modal.show("blacklist");
+    },
     toggleAll() {
       if (this.selected.length) this.selected = [];
       else this.selected = this.distributors.slice();

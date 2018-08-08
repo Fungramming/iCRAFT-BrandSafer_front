@@ -119,5 +119,6 @@ export default {
   ],
 
   /* ========= Modal size ========= */
-  MODAL_SIZE: "80%"
+  MODAL_SIZE: "80%",
+  MODAL_SIZE_HEIGHT: "95%"
 };
