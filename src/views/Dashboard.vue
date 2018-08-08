@@ -29,7 +29,7 @@
         </div>
       </v-card>    
     </v-flex>
-    <v-flex xs12 md9 class="weekly">
+    <v-flex xs12 md12 lg9 class="weekly">
       <v-card>
         <v-card-text class="card-title">주간 현황</v-card-text>
         <div class="card-cont">
@@ -37,7 +37,7 @@
         </div>
       </v-card>    
     </v-flex>
-    <v-flex xs12 md3 class="monthly">
+    <v-flex xs12 md12 lg3 class="monthly">
       <v-card>
         <v-card-text class="card-title">월간 누적 <span class="duration">({{this.duration.monthly.firstDay}}~{{ this.duration.monthly.lastDay}})</span></v-card-text>
         <div class="card-cont">

@@ -15,24 +15,19 @@ export function clickFunc() {
     sideBar.classList.add("active");
     topBar.classList.add("active");
     con.classList.add("active");
-    // if (this.$store.state.sideBar == true) {
-    //   this.$store.state.sideBar = false;
-    // }
+
     return false;
   } else {
     sideBar.classList.remove("active");
     topBar.classList.remove("active");
     con.classList.remove("active");
-    // if (this.$store.state.sideBar == false) {
-    //   this.$store.state.sideBar = true;
-    // }
+
     return true;
   }
 }
 
 export function activingFunc(e) {
   let title = e.toElement.innerText;
-  // this.compTitle = title;
   let subTabTitle =
     e.toElement.parentNode.parentNode.parentNode.parentNode.className;
   let tab = document.getElementsByClassName("tab")[0];
