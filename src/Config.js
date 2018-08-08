@@ -1,5 +1,5 @@
-var BASE_URL = "http://localhost:5000/api/v1.0";
-// "http://brandsaferapi-env.bkktdgvb3w.ap-northeast-2.elasticbeanstalk.com/api/v1.0";
+var BASE_URL =
+  "http://brandsaferapi-env-2.bkktdgvb3w.ap-northeast-2.elasticbeanstalk.com/api/v1.0";
 
 export default {
   PAGESIZE: 5,

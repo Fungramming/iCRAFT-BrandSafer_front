@@ -2,7 +2,7 @@ import BSAPI from "../api/BSAPI";
 import Constant from "../constant";
 
 function promise(apiFunction, payload, store, constant) {
-  store.dispatch(Constant.SHOW_LOADING, true);
+  store.commit(Constant.SHOW_LOADING, true);
 
   return new Promise((resolve, reject) => {
     apiFunction(payload)
@@ -12,25 +12,20 @@ function promise(apiFunction, payload, store, constant) {
         }
         console.log(resp.data);
         resolve(resp);
-        store.dispatch(Constant.SHOW_LOADING, false);
+        store.commit(Constant.SHOW_LOADING, false);
       })
       .catch(err => {
         console.log(err);
         reject(err);
-        store.dispatch(Constant.SHOW_LOADING, false);
+        store.commit(Constant.SHOW_LOADING, false);
       });
   });
 }
 export default {
-  // [Constant.LOG_IN]: (store, payload) => {
-  //   store.commit(Constant.LOG_IN, payload);
-  // },
   [Constant.LOG_OUT]: store => {
     store.commit(Constant.LOG_OUT);
   },
   async [Constant.LOG_IN](store, payload) {
-    console.log("payload :", payload);
-
     return promise(BSAPI.logIn, payload, store, Constant.LOG_IN);
   },
   // Dashboard

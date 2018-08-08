@@ -6,10 +6,10 @@ export default {
     state.token = payload.token;
     state.user.id = payload.userId;
     state.user = {
-      id: payload.userId,
-      name: payload.name,
-      role: payload.role,
-      companyName: payload.companyName
+      id: payload.user.id,
+      companyCode: payload.user.companyCode,
+      companyName: payload.user.name_kr,
+      role: payload.user.role_name
     };
     axios.defaults.headers.common["Authorization"] =
       "basic " + btoa(payload.token + ":");
@@ -17,9 +17,9 @@ export default {
   [Constant.LOG_OUT]: state => {
     state.token = "";
     state.user = {
-      email: "",
       id: -1,
-      name: "",
+      companyCode: "",
+      companyName: "",
       role: ""
     };
     axios.defaults.headers.common["Authorization"] = "";
