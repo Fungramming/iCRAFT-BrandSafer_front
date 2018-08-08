@@ -7,7 +7,8 @@ export default {
     email: "",
     id: -1,
     name: "",
-    role: ""
+    role: "",
+    companyName: ""
   },
   time: "",
   date: "",

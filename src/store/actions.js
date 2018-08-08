@@ -22,13 +22,15 @@ function promise(apiFunction, payload, store, constant) {
   });
 }
 export default {
-  [Constant.LOG_IN]: (store, payload) => {
-    store.commit(Constant.LOG_IN, payload);
-  },
+  // [Constant.LOG_IN]: (store, payload) => {
+  //   store.commit(Constant.LOG_IN, payload);
+  // },
   [Constant.LOG_OUT]: store => {
     store.commit(Constant.LOG_OUT);
   },
   async [Constant.LOG_IN](store, payload) {
+    console.log("payload :", payload);
+
     return promise(BSAPI.logIn, payload, store, Constant.LOG_IN);
   },
   // Dashboard

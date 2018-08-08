@@ -43,5 +43,25 @@ Vue.component("GmapCluster", GmapCluster);
 new Vue({
   router,
   store,
+  created() {
+    // get auth cache
+    if (store.getters.isAuthenticated) {
+      axios.defaults.headers.common.Authorization = `basic ${btoa(
+        `${store.state.token}:`
+      )}`;
+    }
+    // Catch error with expired authentication time
+    axios.interceptors.response.use(
+      response => response,
+      error => {
+        if (error.response.status === 401 && store.getters.isAuthenticated) {
+          store.dispatch("logOut");
+          alert("인증 세션이 만료되었습니다, 다시 접속해주시기 바랍니다.");
+          router.replace({ name: "login" });
+        }
+        return Promise.reject(error.response);
+      }
+    );
+  },
   render: h => h(App)
 }).$mount("#app");

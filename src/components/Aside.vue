@@ -41,64 +41,64 @@
         <li @click="isActived">
           <router-link :to="{ name: 'dashboard' }" name="dashboard" class="tab-btn" >
               <v-icon>dashboard</v-icon>
-              <span class="switch">Dashboard</span>
+              <span class="switch step1">Dashboard</span>
           </router-link>
         </li>
         <li @click="isActived">
           <router-link :to="{ name: 'certList' }" name="certList" class="tab-btn" >
               <v-icon>label</v-icon>
-              <span class="switch">제품</span>
+              <span class="switch step1">제품</span>
           </router-link>
         </li>
         <li @click="isActived">
           <router-link :to="{ name: 'appv' }" name="appv" class="tab-btn" >
               <v-icon>public</v-icon>
-              <span class="switch">App</span>
+              <span class="switch step1">App</span>
           </router-link>
         </li>
         <li class="expandable" @click="isActived">
           <router-link to="" name="admin" class="tab-btn">
               <v-icon>settings</v-icon>
-              <span class="switch">관리자</span>
+              <span class="switch step1">관리자</span>
               <v-icon class="plus">keyboard_arrow_down</v-icon>
           </router-link>
           <ul class="sub-tab">
-            <li class="active">
+            <li>
               <router-link :to="{ name: 'customerManagement'}" name="customerManagement" class="tab-btn" >
-                  <span class="switch">고객사관리</span>
+                  <span class="switch step2">고객사관리</span>
               </router-link>
             </li>
             <li class="expandable sub-sub-tab-title">
               <router-link to="" class="tab-btn" >
-                  <span class="switch">계정</span>
+                  <span class="switch step2">계정</span>
                   <v-icon class="plus">keyboard_arrow_down</v-icon>
               </router-link>
               <ul class="sub-sub-tab">
                 <li @click="isActived">
                   <router-link :to="{ name: 'customerAccount'}" name="customerAccount" class="tab-btn" >
-                    <span class="switch">고객사 계정</span>
+                    <span class="switch step3">고객사 계정</span>
                   </router-link>
                 </li>
                 <li @click="isActived">
                   <router-link :to="{ name: 'icraftAccount'}" name="icraftAccount" class="tab-btn" >
-                    <span class="switch">iCraft 계정관리</span>
+                    <span class="switch step3">iCraft 계정관리</span>
                   </router-link>
                 </li>
                 <li @click="isActived">
                   <router-link :to="{ name: 'accountLog'}" name="accountLog" class="tab-btn" >
-                    <span class="switch">계정 로그</span>
+                    <span class="switch step3">계정 로그</span>
                   </router-link>
                 </li>
               </ul>
             </li>         
             <li>
               <router-link :to="{ name: 'blacklistApp'}" name="blacklistApp" class="tab-btn" >
-                <span class="switch">블랙리스트 App</span>
+                <span class="switch step2">블랙리스트 App</span>
               </router-link>
             </li>
             <li>
               <router-link :to="{ name: 'warningList'}" name="warningList" class="tab-btn" >
-                <span class="switch">과다인증 알림</span>
+                <span class="switch step2">과다인증 알림</span>
               </router-link>
             </li>
             <!-- <li>
@@ -108,17 +108,17 @@
             </li> -->
             <li>
               <router-link :to="{ name: 'distributorManagement'}" name="distributorManagement" class="tab-btn" >
-                <span class="switch">유통업체 관리</span>
+                <span class="switch step2">유통업체 관리</span>
               </router-link>
             </li>
             <li>
               <router-link :to="{ name:'tagtypeManagement'}" name="tagtypeManagement" class="tab-btn" >
-                <span class="switch">태그타입 관리</span>
+                <span class="switch step2">태그타입 관리</span>
               </router-link>
             </li>
             <li>
               <router-link :to="{ name:'adminappManagement'}" name="adminappManagement" class="tab-btn" >
-                <span class="switch">관리자App 관리</span>
+                <span class="switch step2">관리자App 관리</span>
               </router-link>
             </li>
           </ul>
@@ -149,8 +149,8 @@ export default {
   },
   methods: {
     logout: function() {
-      this.$store.dispatch(Constant.LOG_OUT).then(resp => {
-        console.log("resp :", resp);
+      this.$store.dispatch(Constant.LOG_OUT).then(() => {
+        this.dialog = false;
         this.$router.push({ name: "login" });
       });
     },
@@ -173,7 +173,24 @@ export default {
       for (let item in tabList) {
         let tabUrl = tabList[item].name;
         if (routeUrl == tabUrl) {
-          tabList[item].getElementsByClassName("switch")[0].click();
+          let switchTab = tabList[item].getElementsByClassName("switch")[0];
+          switchTab.click();
+          if (switchTab.classList.contains("step1")) {
+            switchTab.parentNode.parentNode.className = "active";
+          } else if (switchTab.classList.contains("step2")) {
+            switchTab.parentNode.parentNode.className = "active";
+            switchTab.parentNode.parentNode.parentNode.parentNode.classList.add(
+              "active"
+            );
+          } else if (switchTab.classList.contains("step3")) {
+            switchTab.parentNode.parentNode.className = "active";
+            switchTab.parentNode.parentNode.parentNode.parentNode.classList.add(
+              "active"
+            );
+            switchTab.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.classList.add(
+              "active"
+            );
+          }
         }
       }
     }
