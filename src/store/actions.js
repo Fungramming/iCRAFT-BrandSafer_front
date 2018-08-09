@@ -3,7 +3,7 @@ import Constant from "../constant";
 
 function promise(apiFunction, payload, store, constant) {
   store.commit(Constant.SHOW_LOADING, true);
-
+  store.state.submitTime = new Date();
   return new Promise((resolve, reject) => {
     apiFunction(payload)
       .then(resp => {
@@ -176,7 +176,6 @@ export default {
     return promise(BSAPI.fetchTagType, payload, store, null);
   },
   async [Constant.ADD_TAG_TYPE](store, payload) {
-    console.log("payload :", payload);
     return promise(BSAPI.addTagType, payload, store, null);
   },
   async [Constant.UPDATE_TAG_TYPE](store, payload) {

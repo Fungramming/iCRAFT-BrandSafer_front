@@ -7,6 +7,7 @@ export default {
     id: -1
   },
   date: "",
+  submitTime: "",
 
   //DashBoard
   liveStatus: {},
