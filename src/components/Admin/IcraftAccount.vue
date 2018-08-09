@@ -296,7 +296,7 @@
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">이메일</label>
-                <input class="input-text input-mail" type="mail">
+                <input :value="selected_email_1" class="input-text input-mail" type="mail">
                 <span class="selectbox selectbox-mail">
                   <select id="mail1" class="form-control" name="mail1">
                     <option value="직접입력">직접입력</option>
@@ -306,7 +306,7 @@
                     <option value="nate.com">nate.com</option>
                   </select>
                 </span>
-                <input class="input-text input-mail" type="mail">
+                <input :value="selected_email_2" class="input-text input-mail" type="mail">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">전화번호</label>
@@ -333,8 +333,8 @@
                     <option value="080">080</option>
                   </select>
                 </span>
-                <input class="input-text input-tel" type="tel" maxlength="4">
-                <input class="input-text input-tel" type="tel" maxlength="4">
+                <input :value="selected_telephone_1" class="input-text input-tel" type="tel" maxlength="4">
+                <input :value="selected_telephone_2" class="input-text input-tel" type="tel" maxlength="4">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">핸드폰번호</label>
@@ -348,8 +348,8 @@
                     <option value="019">019</option>
                   </select>
                 </span>
-                <input class="input-text input-tel" type="tel" maxlength="4">
-                <input class="input-text input-tel" type="tel" maxlength="4">
+                <input :value="selected_phone_1" class="input-text input-tel" type="tel" maxlength="4">
+                <input :value="selected_phone_2" class="input-text input-tel" type="tel" maxlength="4">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">직위</label>
@@ -405,14 +405,20 @@ export default {
       // For edit modal
       selected_index: "",
       selected_email: "",
+      selected_email_1: "",
+      selected_email_2: "",
       selected_phone: "",
+      selected_phone_1: "",
+      selected_phone_2: "",
       selected_telephone: "",
+      selected_telephone_1: "",
+      selected_telephone_2: "",
       selected_position: "",
       selected_role: "",
       selected_name: "",
       selected_id: "",
       selected_department: "",
-      selected_state: "",
+      selected_state: ""
     };
   },
   computed: {
@@ -436,7 +442,6 @@ export default {
     getDatas() {
       this.$store.dispatch(Constant.FETCH_ICRAFT_USER).then(resp => {
         this.account = resp.data["icrf-users"].reverse();
-        // console.log('resp.data["icrf-users"] :', typeof resp.data["icrf-users"]);
         this.total = this.account.length;
       });
     },
@@ -460,17 +465,30 @@ export default {
     showEditModal(e) {
       this.$modal.show("account_edit");
 
-      this.selected_state = e.path[2].children[7].innerText 
-      this.selected_department = e.path[2].children[5].innerText 
-      this.selected_id = e.path[2].children[4].innerText 
-      this.selected_name = e.path[2].children[3].innerText 
-      this.selected_role = e.path[2].children[2].innerText ;
+      this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
 
-      this.selected_index = e.target.parentNode.parentNode['sectionRowIndex']
-      this.selected_email = this.account[this.selected_index].email
-      this.selected_phone = this.account[this.selected_index].phone
-      this.selected_telephone = this.account[this.selected_index].telephone
-      this.selected_position = this.account[this.selected_index].position
+      this.selected_state = e.path[2].children[7].innerText;
+      this.selected_department = e.path[2].children[5].innerText;
+      this.selected_id = e.path[2].children[4].innerText;
+      this.selected_name = e.path[2].children[3].innerText;
+      this.selected_role = e.path[2].children[2].innerText;
+
+      this.selected_email = this.account[this.selected_index].email;
+      let email = this.selected_email.split("@");
+      this.selected_email_1 = email[0];
+      this.selected_email_2 = email[1];
+
+      this.selected_phone = this.account[this.selected_index].phone;
+      let phone = this.selected_phone.split("-");
+      this.selected_phone_1 = phone[1];
+      this.selected_phone_2 = phone[2];
+
+      this.selected_telephone = this.account[this.selected_index].telephone;
+      let telephone = this.selected_telephone.split("-");
+      this.selected_telephone_1 = telephone[1];
+      this.selected_telephone_2 = telephone[2];
+
+      this.selected_position = this.account[this.selected_index].position;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

@@ -203,20 +203,22 @@ export default {
     }
   },
   updated() {
-    this.getTotal();
+    let update_total = this.$children[0].$children[1].searchLength;
+    this.total = update_total;
   },
   mounted() {
-    this.$store.dispatch(Constant.FETCH_BLACKLIST).then(resp => {
-      this.blacklists = resp.data.blacklists.reverse();
-      console.log("blacklists :", this.blacklists);
-      this.total = this.blacklists.length;
-    });
+    this.getDatas();
+    this.getTotal();
   },
   methods: {
+    getDatas() {
+      this.$store.dispatch(Constant.FETCH_BLACKLIST).then(resp => {
+        this.blacklists = resp.data.blacklists.reverse();
+        console.log("blacklists :", this.blacklists);
+        this.total = this.blacklists.length;
+      });
+    },
     getTotal() {
-      let update_total = this.$children[0].$children[1].searchLength;
-      this.total = update_total;
-
       let page = document.getElementsByClassName("v-select__selection");
       let pageActive = document.getElementsByClassName(
         "v-pagination__item--active"

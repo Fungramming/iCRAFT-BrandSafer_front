@@ -282,10 +282,12 @@ export default {
   //   }
   // },
   updated() {
-    this.getTotal();
+    let update_total = this.$children[0].$children[1].searchLength;
+    this.total = update_total;
   },
   mounted() {
     this.getDatas();
+    this.getTotal();
   },
   methods: {
     getDatas() {
@@ -296,9 +298,6 @@ export default {
       });
     },
     getTotal() {
-      let update_total = this.$children[0].$children[1].searchLength;
-      this.total = update_total;
-
       let page = document.getElementsByClassName("v-select__selection");
       let pageActive = document.getElementsByClassName(
         "v-pagination__item--active"

@@ -58,8 +58,8 @@
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
-        item-key="idx"
-        hide-actions
+        item-key="app_name"
+        select-all
         class="elevation-1"
       >
         <template slot="headers" slot-scope="props">
@@ -93,18 +93,18 @@
                 hide-details
               ></v-checkbox>
             </td>
-            <td class="text-xs-left">{{ props.item.number }}</td>
-            <td class="text-xs-left">{{ props.item.date }}</td>
+            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
+            <td class="text-xs-left">{{ props.item.dtTermAgreement }}</td>
             <td class="text-xs-left">{{ props.item.app_name }}</td>
-            <td class="text-xs-left">{{ props.item.tag_type }}</td>
-            <td class="text-xs-left"><a>{{ props.item.push_token }}</a></td>
-            <td class="text-xs-left">{{ props.item.tiems }}</td>
-            <td class="text-xs-left">{{ props.item.date_update }}</td>
-            <td class="text-xs-left">{{ props.item.date_last }}</td>
-            <td class="text-xs-left">{{ props.item.customer_code }}</td>
+            <td class="text-xs-left">{{ props.item.appTagType }}</td>
+            <td class="text-xs-left"><a>{{ props.item.pushToken }}</a></td>
+            <td class="text-xs-left">{{ props.item.times }}</td>
+            <td class="text-xs-left">{{ props.item.dtTermAgreement }}</td>
+            <td class="text-xs-left">{{ props.item.dtLastConnected }}</td>
+            <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
             <td class="text-xs-left">{{ props.item.os }}</td>
             <td class="text-xs-left">{{ props.item.model }}</td>
-            <td class="text-xs-left">{{ props.item.language_set }}</td>
+            <td class="text-xs-left">{{ props.item.language }}</td>
           </tr>
         </template>
       </v-data-table>
@@ -113,215 +113,11 @@
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+          <v-pagination v-model="pagination.page" :length="pages" :total-visible="7"></v-pagination>
         </div>
       </div>
     </v-app>
 
-    <v-flex d-flex xs12 sm12 md12>
-    <!-- modal dialog -->
-    <v-dialog
-      v-model="dialog"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-      scrollable
-    >
-      <!-- start modal -->
-      <v-card tile>
-        <v-toolbar card dark color="primary">
-          <v-btn icon dark @click.native="dialog = false">
-            <v-icon>close</v-icon>
-          </v-btn>
-          <v-toolbar-title>고객사 등록</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark flat @click.native="dialog = false">저장</v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-        <div class="card-left">
-          <v-card-text>
-            <v-list three-line subheader>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">고객사코드
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="고객사코드">
-              </v-flex>    
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">고객사(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="고객사(한국어)">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">고객사(영어)</label>
-                <input class="input-text" type="text">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">고객사(중국어)</label>
-                <input class="input-text" type="text">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">주소(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="주소(한국어)">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">주소(영어)</label>
-                <input class="input-text" type="text">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">주소(중국어)</label>
-                <input class="input-text" type="text">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">전화번호</label>
-                <span class="selectbox">
-                  <select id="telephone1" class="form-control" name="telephone1">
-                    <option value="02">02</option>
-                    <option value="031">031</option>
-                    <option value="032">032</option>
-                    <option value="033">033</option>
-                    <option value="041">041</option>
-                    <option value="042">042</option>
-                    <option value="043">043</option>
-                    <option value="044">044</option>
-                    <option value="051">051</option>
-                    <option value="052">052</option>
-                    <option value="053">053</option>
-                    <option value="054">054</option>
-                    <option value="055">055</option>
-                    <option value="061">061</option>
-                    <option value="062">062</option>
-                    <option value="063">063</option>
-                    <option value="064">064</option>
-                    <option value="070">070</option>
-                    <option value="080">080</option>
-                  </select>
-                </span>
-                <input class="input-text input-tel" type="tel">
-                <input class="input-text input-tel" type="tel">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">팩스번호</label>
-                <span class="selectbox">
-                  <select id="telephone1" class="form-control" name="telephone1">
-                    <option value="02">02</option>
-                    <option value="031">031</option>
-                    <option value="032">032</option>
-                    <option value="033">033</option>
-                    <option value="041">041</option>
-                    <option value="042">042</option>
-                    <option value="043">043</option>
-                    <option value="044">044</option>
-                    <option value="051">051</option>
-                    <option value="052">052</option>
-                    <option value="053">053</option>
-                    <option value="054">054</option>
-                    <option value="055">055</option>
-                    <option value="061">061</option>
-                    <option value="062">062</option>
-                    <option value="063">063</option>
-                    <option value="064">064</option>
-                    <option value="070">070</option>
-                    <option value="080">080</option>
-                  </select>
-                </span>
-                <input class="input-text input-tel" type="tel">
-                <input class="input-text input-tel" type="tel">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">대표자(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="대표자(한국어)">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">대표자(영어)</label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">대표자(중국어)</label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title input-mr">사업자등록번호
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text input-tel" type="tel">
-                <input class="input-text input-tel" type="tel">
-                <input class="input-text input-tel" type="tel">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">사업자등록증
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">CI
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">URL
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">TnT로고이미지
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">설명(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="설명(한국어)">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">설명(영어)</label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">설명(중국어)</label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-divider></v-divider>
-              <v-subheader>계약 정보</v-subheader>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">계약서명
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">계약기간
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">사업자등록증
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : pdf)</span>
-              </v-flex>
-            </v-list>
-          </v-card-text>
-        </div>
-      </v-card>
-    </v-dialog>
-    </v-flex>
   </div>
 </template>
 
@@ -370,26 +166,27 @@ export default {
         }
       },
       total: "",
+      total_index: "",
       selected: [],
       headers: [
-        { text: "번호", align: "left", value: "번호", sortable: false },
+        { text: "번호", align: "left", value: "idx", sortable: false },
         {
           text: "관제일자",
           align: "left",
-          value: "관제일자",
+          value: "dtTermAgreement",
           sortable: false
         },
-        { text: "App명", align: "left", value: "App명", sortable: false },
+        { text: "App명", align: "left", value: "app_name", sortable: false },
         {
           text: "태그타입",
           align: "left",
-          value: "태그타입",
+          value: "appTagType",
           sortable: false
         },
         {
           text: "푸시토큰",
           align: "left",
-          value: "푸시토큰",
+          value: "pushToken",
           sortable: false
         },
         {
@@ -401,24 +198,29 @@ export default {
         {
           text: "관제갱신일시",
           align: "left",
-          value: "관제갱신일시",
+          value: "dtTermAgreement",
           sortable: false
         },
         // { text: "블랙리스트유형", align: "left", value: "블랙리스트유형", sortable: false },
         {
           text: "마지막 인증일시",
           align: "left",
-          value: "마지막 인증일시",
+          value: "dtLastConnected",
           sortable: false
         },
-        { text: "App등록", align: "left", value: "App등록", sortable: false },
-        { text: "OS", align: "left", value: "OS", sortable: false },
-        { text: "모델명	", align: "left", value: "모델명	", sortable: false },
-        { text: "언어셋", align: "left", value: "언어셋", sortable: false }
+        {
+          text: "App등록",
+          align: "left",
+          value: "dtRegistered",
+          sortable: false
+        },
+        { text: "OS", align: "left", value: "os", sortable: false },
+        { text: "모델명	", align: "left", value: "model	", sortable: false },
+        { text: "언어셋", align: "left", value: "language", sortable: false }
       ],
       oversert: [],
       page: "",
-      searchQuery: ""
+      queryDateToday: ""
     };
   },
   computed: {
@@ -429,33 +231,63 @@ export default {
       )
         return 0;
 
-      return Math.ceil(
-        this.pagination.totalItems / this.pagination.rowsPerPage
-      );
+      return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
   },
   updated() {
-    let update_total = this.$children[0].$children[1].searchLength;
-    // console.log(this.$children[0].$children[1].searchLength);
-    // console.log(update_total);
-    this.total = update_total;
+    this.getTotal();
   },
   mounted() {
-    this.$store
-      .dispatch(Constant.FETCH_OVER_CERT, {
-        page: this.page,
-        query: this.searchQuery.trim()
-      })
-      .then(resp => {
-        this.oversert = resp.data;
-        console.log("oversert :", this.oversert);
-        // this.total = this.oversert.length;
-      });
+    this.getDatas();
   },
   methods: {
+    getDatas() {
+      let today = new Date();
+      let dd = today.getDate();
+      let mm = today.getMonth() + 1;
+      let yyyy = today.getFullYear();
+
+      if (dd < 10) {
+        dd = "0" + dd;
+      }
+
+      if (mm < 10) {
+        mm = "0" + mm;
+      }
+      today = yyyy + "-" + mm + "-" + dd;
+
+      this.date_start = today;
+      this.date_finish = today;
+      // this.queryDateToday = today;
+
+      this.$store
+        .dispatch(Constant.FETCH_OVER_CERT, {
+          start: "2015-05-05",
+          end: "2015-05-31"
+        })
+        .then(resp => {
+          this.oversert = resp.data.certs.reverse();
+          console.log("oversert.length :", this.oversert.length);
+          this.total = this.oversert.length;
+        });
+    },
+    getTotal() {
+      let update_total = this.$children[0].$children[1].searchLength;
+      this.total = update_total;
+
+      let page = document.getElementsByClassName("v-select__selection");
+      let pageActive = document.getElementsByClassName(
+        "v-pagination__item--active"
+      );
+      let pageText = page[0].innerText;
+      let pageActiveText = pageActive[0].innerText;
+      let pageNum = pageActiveText - 1;
+      let calPage = pageNum * pageText;
+      this.total_index = calPage;
+    },
     toggleAll() {
       if (this.selected.length) this.selected = [];
-      else this.selected = this.apps.slice();
+      else this.selected = this.oversert.slice();
     },
     getSelected: function(e) {
       getSelectedFunc(e);

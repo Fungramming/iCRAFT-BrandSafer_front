@@ -317,35 +317,35 @@
                 <label class="input-title">고객사코드
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="text" required="required" placeholder="고객사코드">
+                <input :value="selected_code" class="input-text" type="text" required="required" placeholder="고객사코드">
               </v-flex>    
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">고객사(한국어)
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="text" required="required" placeholder="고객사(한국어)">
+                <input :value="selected_name_kr" class="input-text" type="text" required="required" placeholder="고객사(한국어)">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">고객사(영어)</label>
-                <input class="input-text" type="text">
+                <input :value="selected_name_en" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">고객사(중국어)</label>
-                <input class="input-text" type="text">
+                <input :value="selected_name_zh" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">주소(한국어)
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="text" required="required" placeholder="주소(한국어)">
+                <input :value="selected_addr_kr" class="input-text" type="text" required="required" placeholder="주소(한국어)">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">주소(영어)</label>
-                <input class="input-text" type="text">
+                <input :value="selected_addr_en" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">주소(중국어)</label>
-                <input class="input-text" type="text">
+                <input :value="selected_addr_zh" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">전화번호</label>
@@ -372,8 +372,8 @@
                     <option value="080">080</option>
                   </select>
                 </span>
-                <input class="input-text input-tel" type="tel" maxlength="4">
-                <input class="input-text input-tel" type="tel" maxlength="4">
+                <input :value="selected_telephone_1" class="input-text input-tel" type="tel" maxlength="4">
+                <input :value="selected_telephone_2" class="input-text input-tel" type="tel" maxlength="4">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">팩스번호</label>
@@ -400,30 +400,31 @@
                     <option value="080">080</option>
                   </select>
                 </span>
-                <input class="input-text input-tel" type="tel" maxlength="4">
-                <input class="input-text input-tel" type="tel" maxlength="4">
+                <input :value="selected_fax_1" class="input-text input-tel" type="tel" maxlength="4">
+                <input :value="selected_fax_2" class="input-text input-tel" type="tel" maxlength="4">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">대표자(한국어)
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="text" required="required" placeholder="대표자(한국어)">
+                <input :value="selected_delegator_kr" class="input-text" type="text" required="required" placeholder="대표자(한국어)">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">대표자(영어)</label>
-                <input class="input-text" type="text" required="required">
+                <input :value="selected_delegator_en" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">대표자(중국어)</label>
-                <input class="input-text" type="text" required="required">
+                <input :value="selected_delegator_zh" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title input-mr">사업자등록번호
                   <span class="text-danger">*</span>
                 </label>
+                <input :value="selected_registrationNumber" class="input-text" type="text">
+                <!-- <input class="input-text input-tri" type="tel">
                 <input class="input-text input-tri" type="tel">
-                <input class="input-text input-tri" type="tel">
-                <input class="input-text input-tri" type="tel">
+                <input class="input-text input-tri" type="tel"> -->
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">사업자등록증
@@ -443,7 +444,7 @@
                 <label class="input-title">URL
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="text" required="required">
+                <input :value="selected_url" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">TnT로고이미지
@@ -456,17 +457,17 @@
                 <label class="input-title">설명(한국어)
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="text" required="required" placeholder="설명(한국어)">
+                <input :value="selected_description_kr" class="input-text" type="text" required="required" placeholder="설명(한국어)">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">설명(영어)</label>
-                <input class="input-text" type="text" required="required">
+                <input :value="selected_description_en" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">설명(중국어)</label>
-                <input class="input-text" type="text" required="required">
+                <input :value="selected_description_zh" class="input-text" type="text" required="required">
               </v-flex>
-              <v-divider></v-divider>
+              <!-- <v-divider></v-divider>
               <v-subheader>계약 정보</v-subheader>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">계약서명
@@ -486,7 +487,7 @@
                 </label>
                 <input class="input-file" type="file" required="required">
                 <span class="file-txt">(사용가능한 파일 형식 : pdf)</span>
-              </v-flex>
+              </v-flex> -->
             </v-list>
           </v-card-text>
         </div>
@@ -543,7 +544,31 @@ export default {
           sortable: false
         }
       ],
-      customers: []
+      customers: [],
+
+      // For edit modal
+      selected_index: "",
+      selected_code: "",
+      selected_name_kr: "",
+      selected_name_en: "",
+      selected_name_zh: "",
+      selected_addr_kr: "",
+      selected_addr_en: "",
+      selected_addr_zh: "",
+      selected_fax: "",
+      selected_fax_1: "",
+      selected_fax_2: "",
+      selected_telephone: "",
+      selected_telephone_1: "",
+      selected_telephone_2: "",
+      selected_delegator_kr: "",
+      selected_delegator_en: "",
+      selected_delegator_zh: "",
+      selected_description_kr: "",
+      selected_description_en: "",
+      selected_description_zh: "",
+      selected_url: "",
+      selected_registrationNumber: ""
     };
   },
   computed: {
@@ -558,18 +583,20 @@ export default {
     }
   },
   updated() {
-    // getTotalDate();
     this.getTotal();
   },
   mounted() {
-    this.$store.dispatch(Constant.FETCH_COMPANY).then(resp => {
-      this.customers = resp.data.company.reverse();
-      console.log("this.customers :", this.customers);
-      // console.log("this.customers.length :", this.customers.length);
-      this.total = this.customers.length;
-    });
+    this.getDatas();
   },
   methods: {
+    getDatas() {
+      this.$store.dispatch(Constant.FETCH_COMPANY).then(resp => {
+        this.customers = resp.data.company.reverse();
+        console.log("this.customers :", this.customers);
+        // console.log("this.customers.length :", this.customers.length);
+        this.total = this.customers.length;
+      });
+    },
     getTotal() {
       let update_total = this.$children[0].$children[1].searchLength;
       this.total = update_total;
@@ -583,12 +610,6 @@ export default {
       let pageNum = pageActiveText - 1;
       let calPage = pageNum * pageText;
       this.total_index = calPage;
-      // console.log("page :", page);
-      // console.log("pageActive :", pageActive);
-      // console.log("pageText :", pageText);
-      // console.log("pageActiveText :", pageActiveText);
-      // console.log("calPage :", calPage);
-      // console.log("this.total_index :", this.total_index);
     },
     showModal() {
       this.$modal.show("customer");
@@ -603,8 +624,56 @@ export default {
       console.log("modalWrap.style.overflow :", modalWrap.style);
       modalWrap.style.overflow = "scroll";
     },
-    showEditModal() {
+    showEditModal(e) {
       this.$modal.show("customer_edit");
+
+      this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
+
+      this.selected_code = e.path[2].children[3].innerText;
+      this.selected_name_kr = e.path[2].children[2].innerText;
+      this.selected_name_en = this.customers[this.selected_index].name_en;
+      this.selected_name_zh = this.customers[this.selected_index].name_zh;
+
+      this.selected_addr_kr = e.path[2].children[4].innerText;
+      this.selected_addr_en = this.customers[this.selected_index].addr_en;
+      this.selected_addr_zh = this.customers[this.selected_index].addr_zh;
+
+      this.selected_delegator_kr = e.path[2].children[5].innerText;
+
+      this.selected_telephone = e.path[2].children[6].innerText;
+      let telephone = this.selected_telephone.split("-");
+      this.selected_telephone_1 = telephone[1];
+      this.selected_telephone_2 = telephone[2];
+
+      this.selected_fax = this.customers[this.selected_index].fax;
+      let fax = this.selected_fax.split("-");
+      this.selected_fax_1 = fax[1];
+      this.selected_fax_2 = fax[2];
+
+      this.selected_description_kr = this.customers[
+        this.selected_index
+      ].description_kr;
+      this.selected_description_en = this.customers[
+        this.selected_index
+      ].description_en;
+      this.selected_description_zh = this.customers[
+        this.selected_index
+      ].description_zh;
+
+      this.selected_delegator_kr = this.customers[
+        this.selected_index
+      ].delegator_kr;
+      this.selected_delegator_en = this.customers[
+        this.selected_index
+      ].delegator_en;
+      this.selected_delegator_zh = this.customers[
+        this.selected_index
+      ].delegator_zh;
+
+      this.selected_url = this.customers[this.selected_index].url;
+      this.selected_registrationNumber = this.customers[
+        this.selected_index
+      ].registrationNumber;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

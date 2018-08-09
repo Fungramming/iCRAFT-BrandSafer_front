@@ -425,7 +425,7 @@ export default {
       // For edit modal
       selected_version: "",
       selected_width: "",
-      selected_height: "",
+      selected_height: ""
     };
   },
   computed: {
@@ -459,11 +459,11 @@ export default {
     showEditModal(e) {
       this.$modal.show("tagtype_edit");
 
-      console.log("e.path :", e.path[2].children[4].innerText.substring(6,9));
+      console.log("e.path :", e.path[2].children[4].innerText.substring(6, 9));
 
       let version = e.path[2].children[2].children[0].innerText;
-      let width = e.path[2].children[4].innerText.substring(0,3);
-      let height = e.path[2].children[4].innerText.substring(6,9);
+      let width = e.path[2].children[4].innerText.substring(0, 3);
+      let height = e.path[2].children[4].innerText.substring(6, 9);
 
       this.selected_version = version;
       this.selected_width = width;
