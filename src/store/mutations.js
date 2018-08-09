@@ -4,13 +4,7 @@ import axios from "axios";
 export default {
   [Constant.LOG_IN]: (state, payload) => {
     state.token = payload.token;
-    state.user.id = payload.userId;
-    state.user = {
-      id: payload.user.id,
-      companyCode: payload.user.companyCode,
-      companyName: payload.user.name_kr,
-      role: payload.user.role_name
-    };
+    state.user = payload.user;
     axios.defaults.headers.common["Authorization"] =
       "basic " + btoa(payload.token + ":");
   },

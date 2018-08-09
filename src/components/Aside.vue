@@ -152,7 +152,7 @@ export default {
         tabA: true,
         tabB: true,
         tabC: true,
-        tabD: false
+        tabD: true
       }
     };
   },
