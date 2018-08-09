@@ -1,40 +1,5 @@
 <template>
   <div class="tableBs">
-    <!-- table top menu -->
-    <!-- <div class="tableBs-top">
-      <p>검색 조건</p>
-      <v-layout row wrap>
-        <v-flex mb0 d-flex xs12 sm12 md4>
-          <div class="selectbox">
-            <span>제품 타입</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option selected value="전체">전체</option>
-              <option value="홀로태그">홀로태그</option>
-              <option value="홀로태그 + QR">홀로태그 + QR</option>
-              <option value="하이브리드태그">하이브리드태그</option>
-              <option value="난수태그">난수태그</option>
-              <option value="SQR태그">SQR태그</option>
-            </select>
-          </div>
-        </v-flex>
-        <v-flex mb0 d-flex xs12 sm12 md4>
-          <div class="selectbox">
-            <span>상태</span>
-            <select id="select2" name="searchType" class="form-control" size="1">
-              <option selected value="전체">전체</option>
-              <option value="서비스">서비스</option>
-              <option value="삭제">삭제</option>
-            </select>
-          </div>
-        </v-flex>
-        <v-flex mb0 d-flex xs12 sm12 md4>
-          <div class="selectbox-input">
-            <span>유통업체명</span>
-            <input class="input-text" type="text">
-          </div>
-        </v-flex>
-      </v-layout>
-    </div> -->
     <!-- table wrap -->
     <v-app class="inspire">
       <v-card-title>
@@ -48,7 +13,6 @@
       ></v-text-field>
       </v-card-title>
 
-
       <v-data-table
         :headers="headers"
         :items="tag_type"
@@ -59,7 +23,6 @@
         select-all
         class="elevation-1"
       >
-
 
         <template slot="headers" slot-scope="props">
           <tr>
@@ -82,7 +45,6 @@
             </th>
           </tr>
         </template>
-
 
         <template slot="items" slot-scope="props">
           <tr :active="props.selected" @click="props.selected = !props.selected">
@@ -131,145 +93,6 @@
       </div>
     </v-app>
 
-    <!-- <v-flex d-flex xs12 sm12 md12>
-    <v-dialog
-      v-model="dialog"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-      scrollable
-    >
-      <v-card tile>
-        <v-toolbar card dark color="primary">
-          <v-btn icon dark @click.native="dialog = false">
-            <v-icon>close</v-icon>
-          </v-btn>
-          <v-toolbar-title>태그타입 관리</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark flat @click.native="dialog = false">저장</v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-        <div class="card-left">
-          <v-card-text>
-            <v-list three-line subheader>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">버전
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>    
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">태그타입
-                  <span class="text-danger">*</span>
-                </label>
-                <span class="selectbox selectbox-100">
-                  <select id="select1" name="searchType" class="form-control" size="1">
-                    <option selected value="홀로태그">홀로태그</option>
-                    <option value="홀로태그 + QR">홀로태그 + QR</option>
-                    <option value="하이브리드태그">하이브리드태그</option>
-                    <option value="난수태그">난수태그</option>
-                    <option value="SQR태그">SQR태그</option>
-                  </select>
-                </span>
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">사이즈
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text input-size" type="text" placeholder="width">
-                <input class="input-text input-size" type="text" placeholder="height">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">설명</label>
-                <input class="input-text" type="text">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">노트</label>
-                <input class="input-text" type="text">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md3>
-                <label class="input-title">상태</label>
-                <input checked="checked" class="input-radio" type="radio" name="staus" value="서비스">서비스
-                <input class="input-radio" type="radio" name="staus" value="사용정지">사용정지
-              </v-flex>
-            </v-list>
-          </v-card-text>
-        </div>
-      </v-card>
-    </v-dialog>
-    </v-flex> -->
-
-    <!-- <v-flex d-flex xs12 sm12 md12>
-    <v-dialog
-      v-model="dialog_edit"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-      scrollable
-    >
-      <v-card tile>
-        <v-toolbar card dark color="primary">
-          <v-btn icon dark @click.native="dialog_edit = false">
-            <v-icon>close</v-icon>
-          </v-btn>
-          <v-toolbar-title>태그타입 관리</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark flat @click.native="dialog_edit = false">수정</v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-        <div class="card-left">
-          <v-card-text>
-            <v-list three-line subheader>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">버전
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>    
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">태그타입
-                  <span class="text-danger">*</span>
-                </label>
-                <span class="selectbox selectbox-100">
-                  <select id="select1" name="searchType" class="form-control" size="1">
-                    <option selected value="홀로태그">홀로태그</option>
-                    <option value="홀로태그 + QR">홀로태그 + QR</option>
-                    <option value="하이브리드태그">하이브리드태그</option>
-                    <option value="난수태그">난수태그</option>
-                    <option value="SQR태그">SQR태그</option>
-                  </select>
-                </span>
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">사이즈
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text input-size" type="text" placeholder="width">
-                <input class="input-text input-size" type="text" placeholder="height">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">설명</label>
-                <input class="input-text" type="text">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">노트</label>
-                <input class="input-text" type="text">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md3>
-                <label class="input-title">상태</label>
-                <input checked="checked" class="input-radio" type="radio" name="staus" value="서비스">서비스
-                <input class="input-radio" type="radio" name="staus" value="사용정지">사용정지
-              </v-flex>
-            </v-list>
-          </v-card-text>
-        </div>
-      </v-card>
-    </v-dialog>
-    </v-flex> -->
-
-
     <!-- modal -->
     <v-flex d-flex xs12 sm12 md12>
       <modal :width="modal_size" :height="modal_size" name="tagtype" transition="pop-out">
@@ -278,7 +101,7 @@
             <v-toolbar-title>태그타입 관리</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-              <v-btn dark flat>등록</v-btn>
+              <v-btn dark flat @click.stop="submit">등록</v-btn>
             </v-toolbar-items>
           </v-toolbar>
           <div class="card-left">
@@ -288,14 +111,14 @@
                   <label class="input-title">버전
                     <span class="text-danger">*</span>
                   </label>
-                  <input class="input-text" type="text" required="required">
+                  <input v-model="submitData.version" class="input-text" type="text" required="required">
                 </v-flex>    
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">태그타입
                     <span class="text-danger">*</span>
                   </label>
                   <span class="selectbox selectbox-100">
-                    <select id="select1" name="searchType" class="form-control" size="1">
+                    <select id="select1" v-model="submitData.type" name="searchType" class="form-control" size="1">
                       <option selected value="홀로태그">홀로태그</option>
                       <option value="홀로태그 + QR">홀로태그 + QR</option>
                       <option value="하이브리드태그">하이브리드태그</option>
@@ -308,21 +131,21 @@
                   <label class="input-title">사이즈
                     <span class="text-danger">*</span>
                   </label>
-                  <input class="input-text input-size" type="text" placeholder="width">
-                  <input class="input-text input-size" type="text" placeholder="height">
+                  <input v-model="submitData.width" class="input-text input-size" type="text" placeholder="width">
+                  <input v-model="submitData.height" class="input-text input-size" type="text" placeholder="height">
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">설명</label>
-                  <input class="input-text" type="text">
+                  <input v-model="submitData.description" class="input-text" type="text">
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">노트</label>
-                  <input class="input-text" type="text">
+                  <input v-model="submitData.note" class="input-text" type="text">
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md3>
                   <label class="input-title">상태</label>
-                  <input checked="checked" class="input-radio" type="radio" name="staus" value="서비스">서비스
-                  <input class="input-radio" type="radio" name="staus" value="사용정지">사용정지
+                  <input v-model="submitData.state" checked="checked" class="input-radio" type="radio" name="staus" value="서비스">서비스
+                  <input v-model="submitData.state" class="input-radio" type="radio" name="staus" value="사용정지">사용정지
                 </v-flex>
               </v-list>
             </v-card-text>
@@ -330,7 +153,6 @@
         </v-card>
       </modal>
     </v-flex>
-
 
     <!-- modal edit -->
     <v-flex d-flex xs12 sm12 md12>
@@ -393,7 +215,6 @@
       </modal>
     </v-flex>
 
-
   </div>
 </template>
 
@@ -433,6 +254,23 @@ export default {
       ],
       tag_type: [],
 
+      //submitData
+      submitData: {
+        description: "",
+        dtModified: "2000-00-00",
+        dtRegistered: "2000-00-00",
+        height: "",
+        modifier: "ibjung",
+        name_en: "test",
+        name_kr: "test",
+        name_zh: "test",
+        note: "",
+        registrant: this.$store.state.user.modifier,
+        state: "",
+        type: "Holo Tag2",
+        version: "",
+        width: ""
+      },
       // For edit modal
       selected_version: "",
       selected_width: "",
@@ -455,10 +293,6 @@ export default {
   },
   mounted() {
     this.getDatas();
-    console.log(
-      "this.$children[0].$children[4] :",
-      this.$children[0].$children[4].value
-    );
   },
   methods: {
     getDatas() {
@@ -472,8 +306,6 @@ export default {
     },
     showEditModal(e) {
       this.$modal.show("tagtype_edit");
-
-      console.log("e.path :", e.path[2].children[4].innerText.substring(6, 9));
 
       let version = e.path[2].children[2].children[0].innerText;
       let width = e.path[2].children[4].innerText.substring(0, 3);
@@ -497,6 +329,11 @@ export default {
         this.pagination.sortBy = column;
         this.pagination.descending = false;
       }
+    },
+    submit() {
+      this.$store.dispatch(Constant.ADD_TAG_TYPE, this.submitData).then(() => {
+        console.log("11 :", 11);
+      });
     }
   }
 };

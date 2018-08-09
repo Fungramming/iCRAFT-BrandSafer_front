@@ -176,6 +176,7 @@ export default {
     return promise(BSAPI.fetchTagType, payload, store, null);
   },
   async [Constant.ADD_TAG_TYPE](store, payload) {
+    console.log("payload :", payload);
     return promise(BSAPI.addTagType, payload, store, null);
   },
   async [Constant.UPDATE_TAG_TYPE](store, payload) {
