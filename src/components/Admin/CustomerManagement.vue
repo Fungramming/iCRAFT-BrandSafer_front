@@ -146,7 +146,7 @@
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">전화번호</label>
                 <span class="selectbox">
-                  <select id="telephone1" class="form-control" name="telephone1">
+                  <select id="telephone1" v-model="firstNum" class="form-control" name="telephone1">
                     <option value="02">02</option>
                     <option value="031">031</option>
                     <option value="032">032</option>
@@ -168,8 +168,8 @@
                     <option value="080">080</option>
                   </select>
                 </span>
-                <input class="input-text input-tel" type="tel" maxlength="4">
-                <input class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="midNum" class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="lastNum" class="input-text input-tel" type="tel" maxlength="4">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">팩스번호</label>
@@ -561,6 +561,10 @@ export default {
       selected_description_zh: "",
       selected_url: "",
       selected_registrationNumber: "",
+      firstNum: "",
+      midNum: "",
+      lastNum: "",
+      telNum: "",
 
       // For submit
       submitData: {
@@ -576,8 +580,8 @@ export default {
         description_en: "",
         description_kr: "",
         description_zh: "",
-        dtModified: "2000-00-00",
-        dtRegistered: "2000-00-00",
+        dtModified: this.$store.state.submitTime,
+        dtRegistered: this.$store.state.submitTime,
         fax: "",
         modifier: this.$store.state.user.modifier,
         name_en: "",
@@ -604,8 +608,17 @@ export default {
       return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
   },
+  watch: {
+    telNum: function() {
+      this.firstNum;
+    }
+  },
   updated() {
     getTotal(this);
+    if (this.firstNum && this.midNum && this.lastNum) {
+      this.submitData.telephone =
+        this.firstNum + "-" + this.midNum + "-" + this.lastNum;
+    }
   },
   mounted() {
     this.getDatas();
@@ -624,8 +637,6 @@ export default {
     getDatas() {
       this.$store.dispatch(Constant.FETCH_COMPANY).then(resp => {
         this.customers = resp.data.company.reverse();
-        console.log("this.customers :", this.customers);
-        // console.log("this.customers.length :", this.customers.length);
         this.total = this.customers.length;
       });
     },
