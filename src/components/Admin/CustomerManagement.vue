@@ -146,7 +146,7 @@
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">전화번호</label>
                 <span class="selectbox">
-                  <select id="telephone1" v-model="firstNum" class="form-control" name="telephone1">
+                  <select id="telephone1" v-model="firstNum_tel" class="form-control" name="telephone1">
                     <option value="02">02</option>
                     <option value="031">031</option>
                     <option value="032">032</option>
@@ -168,13 +168,13 @@
                     <option value="080">080</option>
                   </select>
                 </span>
-                <input v-model="midNum" class="input-text input-tel" type="tel" maxlength="4">
-                <input v-model="lastNum" class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="midNum_tel" class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="lastNum_tel" class="input-text input-tel" type="tel" maxlength="4">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">팩스번호</label>
                 <span class="selectbox">
-                  <select id="telephone1" class="form-control" name="telephone1">
+                  <select id="telephone1" v-model="firstNum_fax" class="form-control" name="telephone1">
                     <option value="02">02</option>
                     <option value="031">031</option>
                     <option value="032">032</option>
@@ -196,8 +196,8 @@
                     <option value="080">080</option>
                   </select>
                 </span>
-                <input class="input-text input-tel" type="tel" maxlength="4">
-                <input class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="midNum_fax" class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="lastNum_fax" class="input-text input-tel" type="tel" maxlength="4">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">대표자(한국어)
@@ -217,9 +217,9 @@
                 <label class="input-title input-mr">사업자등록번호
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text input-tri" type="tel">
-                <input class="input-text input-tri" type="tel">
-                <input class="input-text input-tri" type="tel">
+                <input v-model="firstNum_ragi" class="input-text input-tri" type="tel" maxlength="3">
+                <input v-model="midNum_ragi" class="input-text input-tri" type="tel" maxlength="2">
+                <input v-model="lastNum_ragi" class="input-text input-tri" type="tel" maxlength="5">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">사업자등록증
@@ -561,12 +561,21 @@ export default {
       selected_description_zh: "",
       selected_url: "",
       selected_registrationNumber: "",
-      firstNum: "",
-      midNum: "",
-      lastNum: "",
-      telNum: "",
 
       // For submit
+      firstNum_tel: "",
+      midNum_tel: "",
+      lastNum_tel: "",
+      telNum: "",
+      firstNum_fax: "",
+      midNum_fax: "",
+      lastNum_fax: "",
+      faxNum: "",
+      firstNum_ragi: "",
+      midNum_ragi: "",
+      lastNum_ragi: "",
+      ragiNum: "",
+
       submitData: {
         addr_en: "",
         addr_kr: "",
@@ -608,20 +617,24 @@ export default {
       return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
   },
-  watch: {
-    telNum: function() {
-      this.firstNum;
-    }
-  },
   updated() {
     getTotal(this);
-    if (this.firstNum && this.midNum && this.lastNum) {
+    if (this.firstNum_tel && this.midNum_tel && this.lastNum_tel) {
       this.submitData.telephone =
-        this.firstNum + "-" + this.midNum + "-" + this.lastNum;
+        this.firstNum_tel + "-" + this.midNum_tel + "-" + this.lastNum_tel;
+    }
+    if (this.firstNum_fax && this.midNum_fax && this.lastNum_fax) {
+      this.submitData.fax =
+        this.firstNum_fax + "-" + this.midNum_fax + "-" + this.lastNum_fax;
+    }
+    if (this.firstNum_ragi && this.midNum_ragi && this.lastNum_ragi) {
+      this.submitData.registrationNumber =
+        this.firstNum_ragi + this.midNum_ragi + this.lastNum_ragi;
     }
   },
   mounted() {
     this.getDatas();
+    console.log('this.$store.state.user.modifier :', this.$store.state.user.modifier);
   },
   methods: {
     addDatas() {
