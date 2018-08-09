@@ -203,8 +203,8 @@ export default {
       submitData: {
         blType: "C",
         delYN: "Y",
-        dtModified: "2000-00-00",
-        dtRegistered: "2000-00-00",
+        dtModified: this.$store.state.submitTime,
+        dtRegistered: this.$store.state.submitTime,
         modifier: this.$store.state.user.modifier,
         pushToken: "",
         registrant: this.$store.state.user.modifier
