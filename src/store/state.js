@@ -1,16 +1,14 @@
 export default {
   isLoading: false,
-  sideBar: true,
+  sideBar: false,
   selectedTaB: "dashboard",
   token: "11",
   user: {
-    email: "",
     id: -1,
-    name: "",
     role: "",
+    companyCode: "",
     companyName: ""
   },
-  time: "",
   date: "",
 
   //DashBoard

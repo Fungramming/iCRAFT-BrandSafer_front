@@ -62,7 +62,7 @@
             </tbody>
           </table>
         </div>
-      </v-card>    
+      </v-card>
     </v-flex>
   </v-layout>
 </template>
@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     fetchLiveData() {
-      this.$store.dispatch(Constant.FETCH_LIVE_STATUS).then(() => {});
+      this.$store.dispatch(Constant.FETCH_LIVE_STATUS, "100001").then(() => {});
     },
     fetchData() {
       this.$store.dispatch(Constant.FETCH_MONTHLY_STATUS).then(resp => {
