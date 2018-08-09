@@ -1,9 +1,10 @@
 import BSAPI from "../api/BSAPI";
 import Constant from "../constant";
+import { formatDate } from "./helper.js";
 
 function promise(apiFunction, payload, store, constant) {
   store.commit(Constant.SHOW_LOADING, true);
-  store.state.submitTime = new Date();
+  store.state.submitTime = formatDate();
   return new Promise((resolve, reject) => {
     apiFunction(payload)
       .then(resp => {
