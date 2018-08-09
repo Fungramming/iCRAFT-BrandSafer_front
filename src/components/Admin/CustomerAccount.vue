@@ -105,6 +105,17 @@
           <td class="text-xs-left">{{ props.item.date }}</td>
         </template>
       </v-data-table>
+      <div class="v-datatable__actions">
+        <span>per page :</span>
+        <div class="v-datatable__actions__select">          
+          <select v-model="pagination.rowsPerPage">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="-1">All</option>
+          </select>
+        </div>
+      </div>
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
@@ -122,6 +133,7 @@
 
 <script>
 import Constant from "../../constant.js";
+import { getSelectedFunc, getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -173,6 +185,9 @@ export default {
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
     }
+  },
+  updated() {
+    getTotal(this);
   },
   mounted() {
     this.$store.dispatch(Constant.FETCH_USERS).then(resp => {
