@@ -576,15 +576,15 @@ export default {
         description_en: "",
         description_kr: "",
         description_zh: "",
-        dtModified: "",
-        dtRegistered: "",
+        dtModified: "2000-00-00",
+        dtRegistered: "2000-00-00",
         fax: "",
-        modifier: "",
+        modifier: this.$store.state.user.modifier,
         name_en: "",
         name_kr: "",
         name_zh: "",
         note: "",
-        registrant: "",
+        registrant: this.$store.state.user.modifier,
         registrationNumber: "",
         state: "",
         telephone: "",
@@ -613,9 +613,7 @@ export default {
   methods: {
     addDatas() {
       this.$store
-        .dispatch(Constant.ADD_COMPANY, {
-          customer: this.submitData
-        })
+        .dispatch(Constant.ADD_COMPANY, this.submitData)
         .then(resp => {
           console.log("resp :", resp);
         })

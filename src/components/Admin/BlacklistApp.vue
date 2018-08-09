@@ -139,7 +139,7 @@
           <v-toolbar-title>블랙리스트 App</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat>등록</v-btn>
+            <v-btn dark flat @click.stop="addDatas">등록</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <div class="card-left">
@@ -147,7 +147,7 @@
             <v-list three-line subheader>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">푸시토큰</label>
-                <input class="input-text" type="text" required="required">
+                <input v-model="submitData.pushToken" class="input-text" type="text" required="required">
               </v-flex>
             </v-list>
           </v-card-text>
@@ -199,7 +199,16 @@ export default {
         { text: "변경일", align: "left", value: "dtModified", sortable: false },
         { text: "변경자", align: "left", value: "modifier", sortable: false }
       ],
-      blacklists: []
+      blacklists: [],
+      submitData: {
+        blType: "C",
+        delYN: "Y",
+        dtModified: "2000-00-00",
+        dtRegistered: "2000-00-00",
+        modifier: this.$store.state.user.modifier,
+        pushToken: "",
+        registrant: this.$store.state.user.modifier
+      }
     };
   },
   computed: {
@@ -220,10 +229,20 @@ export default {
     this.getDatas();
   },
   methods: {
+    addDatas() {
+      this.$store
+        .dispatch(Constant.ADD_BLACKLIST, this.submitData)
+        .then(resp => {
+          console.log("resp :", resp);
+          this.getDatas();
+        })
+        .catch(err => {
+          console.log("err :", err);
+        });
+    },
     getDatas() {
       this.$store.dispatch(Constant.FETCH_BLACKLIST).then(resp => {
-        this.blacklists = resp.data.blacklists.reverse();
-        console.log("blacklists :", this.blacklists);
+        this.blacklists = resp.data.blacklists;
         this.total = this.blacklists.length;
       });
     },

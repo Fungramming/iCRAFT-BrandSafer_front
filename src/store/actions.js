@@ -3,7 +3,6 @@ import Constant from "../constant";
 
 function promise(apiFunction, payload, store, constant) {
   store.commit(Constant.SHOW_LOADING, true);
-
   return new Promise((resolve, reject) => {
     apiFunction(payload)
       .then(resp => {
