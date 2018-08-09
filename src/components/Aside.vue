@@ -181,6 +181,7 @@ export default {
       this.compTitle = activingFunc(e);
     },
     defaultTab() {
+      // CustomerUser / CustomerAdmin / iCraftUser / iCraftAdministrator / iCraftSuperAdmin
       if (this.userRole == "CustomerUser") {
         this.tabList.tabD = true;
       }
@@ -255,7 +256,7 @@ $phone: "(min-width: 0) and (max-width: 500px)";
   width: 230px;
   height: 100%;
   overflow-x: hidden;
-  z-index: 100;
+  z-index: 300;
   transition: width, left 0.3s ease;
   @media #{$phone} {
     width: 100%;

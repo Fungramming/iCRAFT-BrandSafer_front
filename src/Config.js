@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-var BASE_URL = "http://brandsaferapi-env-2.bkktdgvb3w.ap-northeast-2.elasticbeanstalk.com/api/v1.0";
-// var BASE_URL = "http://localhost:5000/api/v1.0";
-=======
 var BASE_URL =
   "http://brandsaferapi-env-2.bkktdgvb3w.ap-northeast-2.elasticbeanstalk.com/api/v1.0";
->>>>>>> b17bfb168f4746637cf29702f21be087a037e96d
+// var BASE_URL = "http://localhost:5000/api/v1.0";
 
 export default {
   PAGESIZE: 5,

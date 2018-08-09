@@ -104,8 +104,19 @@
           </tr>
         </template>
       </v-data-table>
-      
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
+      <div class="v-datatable__actions">
+        <span>per page :</span>
+        <div class="v-datatable__actions__select">          
+          <select v-model="pagination.rowsPerPage">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="-1">All</option>
+          </select>
+        </div>
+      </div>
+             
+      <span v-if="totalSwitch" class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md10>
@@ -375,13 +386,15 @@ import { getSelectedFunc } from "../CompHelper.js";
 export default {
   data() {
     return {
+      items: ["Foo", "Bar", "Fizz", "Buzz"],
       search: "",
       modal_size: Constant.MODAL_SIZE,
       modal_size_height: Constant.MODAL_SIZE_HEIGHT,
       pagination: {
-        page: 1,
+        // page: 1
         rowsPerPage: 10
       },
+      totalSwitch: false,
       total: "",
       total_index: "",
       selected: [],
@@ -412,7 +425,7 @@ export default {
       selected_name: "",
       selected_id: "",
       selected_department: "",
-      selected_state: "",
+      selected_state: ""
     };
   },
   computed: {
@@ -436,23 +449,29 @@ export default {
     getDatas() {
       this.$store.dispatch(Constant.FETCH_ICRAFT_USER).then(resp => {
         this.account = resp.data["icrf-users"].reverse();
-        // console.log('resp.data["icrf-users"] :', typeof resp.data["icrf-users"]);
         this.total = this.account.length;
+        this.totalSwitch = true;
       });
     },
     getTotal() {
-      let update_total = this.$children[0].$children[1].searchLength;
-      this.total = update_total;
+      // this.$children[0].$children[1].$children[1].$el.parentNode.parentNode.style.position =
+      //   "absolute";
+      if (this.totalSwitch) {
+        // this.$children[0].$children[1].$children[1].$el.parentNode.parentNode.style.visibility =
+        //   "hidden";
+        let update_total = this.$children[0].$children[1].searchLength;
+        this.total = update_total;
 
-      let page = document.getElementsByClassName("v-select__selection");
-      let pageActive = document.getElementsByClassName(
-        "v-pagination__item--active"
-      );
-      let pageText = page[0].innerText;
-      let pageActiveText = pageActive[0].innerText;
-      let pageNum = pageActiveText - 1;
-      let calPage = pageNum * pageText;
-      this.total_index = calPage;
+        let pageNum = this.$children[0].$children[4].value - 1;
+        let pageActiveText = this.$children[0].$children[1].$children[1].value;
+
+        console.log("this.$children[0].$children[1].$children[1] : ");
+
+        // this.$children[0].$children[1].$children[1].zIndex = 0;
+
+        let calPage = pageNum * pageActiveText;
+        this.total_index = calPage;
+      }
     },
     showModal() {
       this.$modal.show("account");
@@ -460,17 +479,17 @@ export default {
     showEditModal(e) {
       this.$modal.show("account_edit");
 
-      this.selected_state = e.path[2].children[7].innerText 
-      this.selected_department = e.path[2].children[5].innerText 
-      this.selected_id = e.path[2].children[4].innerText 
-      this.selected_name = e.path[2].children[3].innerText 
-      this.selected_role = e.path[2].children[2].innerText ;
+      this.selected_state = e.path[2].children[7].innerText;
+      this.selected_department = e.path[2].children[5].innerText;
+      this.selected_id = e.path[2].children[4].innerText;
+      this.selected_name = e.path[2].children[3].innerText;
+      this.selected_role = e.path[2].children[2].innerText;
 
-      this.selected_index = e.target.parentNode.parentNode['sectionRowIndex']
-      this.selected_email = this.account[this.selected_index].email
-      this.selected_phone = this.account[this.selected_index].phone
-      this.selected_telephone = this.account[this.selected_index].telephone
-      this.selected_position = this.account[this.selected_index].position
+      this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
+      this.selected_email = this.account[this.selected_index].email;
+      this.selected_phone = this.account[this.selected_index].phone;
+      this.selected_telephone = this.account[this.selected_index].telephone;
+      this.selected_position = this.account[this.selected_index].position;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <aside-tab v-if="this.isAuthenticated" :position-x="0" :position-y="0"  absolute class="aside" style="width:230px;"></aside-tab>
-    <div :class="{active: true} " class="contents">
+    <div :class="{active: true} " class="contents active">
       <transition name="fade">
         <router-view/>
       </transition>
