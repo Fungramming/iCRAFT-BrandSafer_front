@@ -70,7 +70,7 @@
             </td>
             <td class="text-xs-left">{{ total - props.index - total_index }}</td>
             <!-- <td class="text-xs-left">{{ props.item.idx}}</td> -->
-            <td class="text-xs-left">{{ props.item.name_kr }}</td>
+            <td class="text-xs-left">{{ props.item.companyCode }}</td>
             <td class="text-xs-left"><a @click.stop="showEditModal"> {{ props.item.name_kr }} </a></td>
             <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
             <td class="text-xs-left">{{ props.item.state }}</td>
@@ -180,8 +180,8 @@
                   <span class="text-danger">*</span>
                 </label>
                 <span class="selectbox selectbox-100">
-                  <select id="select1" name="searchType" class="form-control" size="1">
-                    <option v-for="item in this.companyList" :value="item.code">{{item.name_kr}}</option>
+                  <select id="select1" v-model="submitData.companyCode" name="searchType" class="form-control" size="1" disabled>
+                    <option value="" selected>{{selected_name_kr}}</option>                  
                   </select>
                 </span>
               </v-flex>    

@@ -57,7 +57,7 @@
             </td>
             <td class="text-xs-left">{{ props.item.idx }}</td>
             <td class="text-xs-left"><a @click.stop="showEditModal"> {{ props.item.version }} </a></td>
-            <td class="text-xs-left">{{ props.item.name_kr }}</td>
+            <td class="text-xs-left">{{ props.item.type }}</td>
             <td class="text-xs-left">{{ props.item.width }} * {{ props.item.height }}</td>
             <td class="text-xs-left">{{ props.item.state }}</td>
             <td class="text-xs-left">{{ props.item.registrant }}</td>
@@ -119,11 +119,11 @@
                   </label>
                   <span class="selectbox selectbox-100">
                     <select id="select1" v-model="submitData.type" name="searchType" class="form-control" size="1">
-                      <option selected value="홀로태그">홀로태그</option>
-                      <option value="홀로태그 + QR">홀로태그 + QR</option>
-                      <option value="하이브리드태그">하이브리드태그</option>
-                      <option value="난수태그">난수태그</option>
-                      <option value="SQR태그">SQR태그</option>
+                      <option selected value="HOLOTAG_ONLY">홀로태그</option>
+                      <option value="HOLOTAG_BARCODE">홀로태그 + QR</option>
+                      <option value="HYBRIDTAG">하이브리드태그</option>
+                      <option value="RANDOMTAG">난수태그</option>
+                      <option value="SQRTAG">SQR태그</option>
                     </select>
                   </span>
                 </v-flex>
@@ -144,8 +144,8 @@
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md3>
                   <label class="input-title">상태</label>
-                  <input v-model="submitData.state" checked="checked" class="input-radio" type="radio" name="staus" value="서비스">서비스
-                  <input v-model="submitData.state" class="input-radio" type="radio" name="staus" value="사용정지">사용정지
+                  <input v-model="submitData.state" checked="checked" class="input-radio" type="radio" name="staus" value="Enable">서비스
+                  <input v-model="submitData.state" class="input-radio" type="radio" name="staus" value="Deleted">사용정지
                 </v-flex>
               </v-list>
             </v-card-text>
@@ -257,16 +257,16 @@ export default {
       //submitData
       submitData: {
         description: "",
-        dtModified: "2000-00-00",
-        dtRegistered: "2000-00-00",
+        dtModified: this.$store.state.submitTime,
+        dtRegistered: this.$store.state.submitTime,
         height: "",
         modifier: this.$store.state.user.modifier,
-        name_en: "test",
-        name_kr: "test",
-        name_zh: "test",
+        name_en: "",
+        name_kr: "",
+        name_zh: "",
         note: "",
         registrant: this.$store.state.user.modifier,
-        state: "Enable",
+        state: "",
         type: "",
         version: "",
         width: ""
