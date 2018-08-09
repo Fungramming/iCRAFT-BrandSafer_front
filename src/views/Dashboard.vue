@@ -62,7 +62,7 @@
             </tbody>
           </table>
         </div>
-      </v-card>    
+      </v-card>
     </v-flex>
   </v-layout>
 </template>

@@ -202,3 +202,33 @@ $tablet: "(min-width: 601px) and (max-width: 959px)";
         }
     }
 }
+
+.v-datatable__actions {
+  background-color: #ffffff;
+  position: relative;
+  top: -70px;
+  height: 59px;
+  span {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    color: rgba(0, 0, 0, 0.72);
+    display: inline-block;
+    padding-bottom: 7px;
+    font-size: 1.2em
+  }
+  .v-datatable__actions__select {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    position: relative;
+    margin-right: 20px;
+    margin-left: 10px;
+    select {
+      outline: none;
+      cursor: pointer;
+      padding: 5px;
+      padding-left: 12px;
+      width: 40px;
+    }
+  }
+}
+.bottom-contents-wrap {
+  margin-top: -70px;
+}

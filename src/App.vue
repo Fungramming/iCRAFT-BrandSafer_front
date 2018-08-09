@@ -1,11 +1,17 @@
 <template>
   <div id="app">
     <aside-tab v-if="this.isAuthenticated" :position-x="0" :position-y="0"  absolute class="aside" style="width:230px;"></aside-tab>
-    <div :class="{active: true} " class="contents">
+    <div :class="{active: true} " class="contents active">
       <transition name="fade">
         <router-view/>
       </transition>
     </div>
+    <v-progress-circular v-show ="isLoading"
+    :size="50"
+      class="progressBar"
+      color="primary"
+      indeterminate
+    ></v-progress-circular>
   </div>
 </template>
 <script>
@@ -17,7 +23,8 @@ export default {
   components: { AsideTab },
   data() {
     return {
-      logout: false
+      logout: false,
+      sideBar: this.$store.state.isLoading
     };
   },
   computed: {
@@ -98,5 +105,10 @@ a {
       padding-left: 10px;
     }
   }
+}
+.progressBar {
+  position: fixed !important;
+  top: 50%;
+  left: 50%;
 }
 </style>

@@ -3,17 +3,13 @@ export function getSelectedFunc(e) {
   console.log(e.path[8]);
 }
 
-// export function getTotalDate() {
-//   let update_total = this.$children[0].$children[1].searchLength;
-//   this.total = update_total;
+export function getTotal(_this) {
+  let update_total = _this.$children[0].$children[1].searchLength;
+  _this.total = update_total;
 
-//   let page = document.getElementsByClassName("v-select__selection");
-//   let pageActive = document.getElementsByClassName(
-//     "v-pagination__item--active"
-//   );
-//   let pageText = page[0].innerText;
-//   let pageActiveText = pageActive[0].innerText;
-//   let pageNum = pageActiveText - 1;
-//   let calPage = pageNum * pageText;
-//   this.total_index = calPage;
-// }
+  let pageNum = _this.$children[0].$children[4].value - 1;
+  let pageActiveText = _this.$children[0].$children[1].$children[1].value;
+
+  let calPage = pageNum * pageActiveText;
+  _this.total_index = calPage;
+}

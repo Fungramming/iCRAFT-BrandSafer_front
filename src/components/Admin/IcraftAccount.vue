@@ -104,7 +104,18 @@
           </tr>
         </template>
       </v-data-table>
-      
+      <div class="v-datatable__actions">
+        <span>per page :</span>
+        <div class="v-datatable__actions__select">          
+          <select v-model="pagination.rowsPerPage">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="-1">All</option>
+          </select>
+        </div>
+      </div>
+
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
@@ -370,7 +381,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getSelectedFunc } from "../CompHelper.js";
+import { getSelectedFunc, getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -379,7 +390,7 @@ export default {
       modal_size: Constant.MODAL_SIZE,
       modal_size_height: Constant.MODAL_SIZE_HEIGHT,
       pagination: {
-        page: 1,
+        // page: 1
         rowsPerPage: 10
       },
       total: "",
@@ -433,7 +444,7 @@ export default {
     }
   },
   updated() {
-    this.getTotal();
+    getTotal(this);
   },
   mounted() {
     this.getDatas();
@@ -444,20 +455,6 @@ export default {
         this.account = resp.data["icrf-users"].reverse();
         this.total = this.account.length;
       });
-    },
-    getTotal() {
-      let update_total = this.$children[0].$children[1].searchLength;
-      this.total = update_total;
-
-      let page = document.getElementsByClassName("v-select__selection");
-      let pageActive = document.getElementsByClassName(
-        "v-pagination__item--active"
-      );
-      let pageText = page[0].innerText;
-      let pageActiveText = pageActive[0].innerText;
-      let pageNum = pageActiveText - 1;
-      let calPage = pageNum * pageText;
-      this.total_index = calPage;
     },
     showModal() {
       this.$modal.show("account");

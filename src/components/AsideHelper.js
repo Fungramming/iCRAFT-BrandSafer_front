@@ -27,7 +27,6 @@ export function clickFunc() {
 }
 
 export function activingFunc(e) {
-  console.log(e);
   let title = e.toElement.innerText;
   let subTabTitle =
     e.toElement.parentNode.parentNode.parentNode.parentNode.className;
@@ -61,4 +60,32 @@ export function activingFunc(e) {
   }
 
   return title;
+}
+
+export function redirectTabFunc(_this) {
+  let routeUrl = _this.$route.name;
+  let tabList = document.getElementsByClassName("tab-btn");
+  for (let item in tabList) {
+    let tabUrl = tabList[item].name;
+    if (routeUrl == tabUrl) {
+      let switchTab = tabList[item].getElementsByClassName("switch")[0];
+      switchTab.click();
+      if (switchTab.classList.contains("step1")) {
+        switchTab.parentNode.parentNode.className = "active";
+      } else if (switchTab.classList.contains("step2")) {
+        switchTab.parentNode.parentNode.className = "active";
+        switchTab.parentNode.parentNode.parentNode.parentNode.classList.add(
+          "active"
+        );
+      } else if (switchTab.classList.contains("step3")) {
+        switchTab.parentNode.parentNode.className = "active";
+        switchTab.parentNode.parentNode.parentNode.parentNode.classList.add(
+          "active"
+        );
+        switchTab.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.classList.add(
+          "active"
+        );
+      }
+    }
+  }
 }

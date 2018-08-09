@@ -44,19 +44,19 @@
               <span class="switch step1">Dashboard</span>
           </router-link>
         </li>
-        <li @click="isActived">
+        <li v-show="tabList.tabB" @click="isActived">
           <router-link :to="{ name: 'certList' }" name="certList" class="tab-btn" >
               <v-icon>label</v-icon>
               <span class="switch step1">제품</span>
           </router-link>
         </li>
-        <li @click="isActived">
+        <li v-show="tabList.tabC" @click="isActived">
           <router-link :to="{ name: 'appv' }" name="appv" class="tab-btn" >
               <v-icon>public</v-icon>
               <span class="switch step1">App</span>
           </router-link>
         </li>
-        <li class="expandable" @click="isActived">
+        <li v-show="tabList.tabD" class="expandable" @click="isActived">
           <router-link to="" name="admin" class="tab-btn">
               <v-icon>settings</v-icon>
               <span class="switch step1">관리자</span>
@@ -90,7 +90,7 @@
                   </router-link>
                 </li>
               </ul>
-            </li>         
+            </li>
             <li>
               <router-link :to="{ name: 'blacklistApp'}" name="blacklistApp" class="tab-btn" >
                 <span class="switch step2">블랙리스트 App</span>
@@ -135,16 +135,29 @@
 </template>
 
 <script>
-import { hoverFunc, clickFunc, activingFunc } from "./AsideHelper";
+import {
+  hoverFunc,
+  clickFunc,
+  activingFunc,
+  redirectTabFunc
+} from "./AsideHelper";
 import Constant from "../constant";
 export default {
   data() {
     return {
+      userRole: "",
       compTitle: "Dashboard",
-      dialog: false
+      dialog: false,
+      tabList: {
+        tabA: true,
+        tabB: true,
+        tabC: true,
+        tabD: false
+      }
     };
   },
   mounted() {
+    this.userRole = this.$store.state.user.role;
     this.defaultTab();
   },
   methods: {
@@ -168,31 +181,11 @@ export default {
       this.compTitle = activingFunc(e);
     },
     defaultTab() {
-      let routeUrl = this.$route.name;
-      let tabList = document.getElementsByClassName("tab-btn");
-      for (let item in tabList) {
-        let tabUrl = tabList[item].name;
-        if (routeUrl == tabUrl) {
-          let switchTab = tabList[item].getElementsByClassName("switch")[0];
-          switchTab.click();
-          if (switchTab.classList.contains("step1")) {
-            switchTab.parentNode.parentNode.className = "active";
-          } else if (switchTab.classList.contains("step2")) {
-            switchTab.parentNode.parentNode.className = "active";
-            switchTab.parentNode.parentNode.parentNode.parentNode.classList.add(
-              "active"
-            );
-          } else if (switchTab.classList.contains("step3")) {
-            switchTab.parentNode.parentNode.className = "active";
-            switchTab.parentNode.parentNode.parentNode.parentNode.classList.add(
-              "active"
-            );
-            switchTab.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.classList.add(
-              "active"
-            );
-          }
-        }
+      // CustomerUser / CustomerAdmin / iCraftUser / iCraftAdministrator / iCraftSuperAdmin
+      if (this.userRole == "CustomerUser") {
+        this.tabList.tabD = true;
       }
+      redirectTabFunc(this);
     }
   }
 };
@@ -263,7 +256,7 @@ $phone: "(min-width: 0) and (max-width: 500px)";
   width: 230px;
   height: 100%;
   overflow-x: hidden;
-  z-index: 100;
+  z-index: 300;
   transition: width, left 0.3s ease;
   @media #{$phone} {
     width: 100%;
