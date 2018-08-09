@@ -78,6 +78,17 @@
           </tr>
         </template>
       </v-data-table>
+      <div class="v-datatable__actions">
+        <span>per page :</span>
+        <div class="v-datatable__actions__select">          
+          <select v-model="pagination.rowsPerPage">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="-1">All</option>
+          </select>
+        </div>
+      </div>
 
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
@@ -252,7 +263,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getSelectedFunc } from "../CompHelper.js";
+import { getSelectedFunc, getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -295,7 +306,7 @@ export default {
       selected_name_kr: "",
       selected_name_en: "",
       selected_name_zh: "",
-      selected_note: "",
+      selected_note: ""
     };
   },
   computed: {
@@ -310,7 +321,7 @@ export default {
     }
   },
   updated() {
-    this.getTotal();
+    getTotal(this);
   },
   mounted() {
     this.getDatas();
@@ -319,8 +330,6 @@ export default {
     getDatas() {
       this.$store.dispatch(Constant.FETCH_DISTRIBUTOR).then(resp => {
         this.distributors = resp.data.distributors.reverse();
-        // console.log("this.distributors :", this.distributors);
-        // console.log("this.distributors.length :", this.distributors.length);
         this.total = this.distributors.length;
       });
     },
@@ -344,12 +353,12 @@ export default {
     showEditModal(e) {
       this.$modal.show("distributors_edit");
 
-      this.selected_name_kr = e.path[2].children[3].innerText
-      
-      this.selected_index = e.target.parentNode.parentNode['sectionRowIndex']
-      this.selected_name_en = this.distributors[this.selected_index].name_en
-      this.selected_name_zh = this.distributors[this.selected_index].name_zh
-      this.selected_note = this.distributors[this.selected_index].note
+      this.selected_name_kr = e.path[2].children[3].innerText;
+
+      this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
+      this.selected_name_en = this.distributors[this.selected_index].name_en;
+      this.selected_name_zh = this.distributors[this.selected_index].name_zh;
+      this.selected_note = this.distributors[this.selected_index].note;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];
