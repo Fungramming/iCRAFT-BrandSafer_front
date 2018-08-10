@@ -67,16 +67,16 @@
         </template>
       </v-data-table>
       <div class="v-datatable__actions">
-      <span>per page :</span>
-      <div class="v-datatable__actions__select">          
-        <select v-model="pagination.rowsPerPage">
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="25">25</option>
-          <option value="-1">All</option>
-        </select>
+        <span>per page :</span>
+        <div class="v-datatable__actions__select">          
+          <select v-model="pagination.rowsPerPage">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="-1">All</option>
+          </select>
+        </div>
       </div>
-    </div>
 
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
@@ -634,7 +634,10 @@ export default {
   },
   mounted() {
     this.getDatas();
-    console.log('this.$store.state.user.modifier :', this.$store.state.user.modifier);
+    console.log(
+      "this.$store.state.user.modifier :",
+      this.$store.state.user.modifier
+    );
   },
   methods: {
     addDatas() {
@@ -642,6 +645,7 @@ export default {
         .dispatch(Constant.ADD_COMPANY, this.submitData)
         .then(resp => {
           console.log("resp :", resp);
+          this.getDatas();
         })
         .catch(err => {
           console.log("err :", err);
