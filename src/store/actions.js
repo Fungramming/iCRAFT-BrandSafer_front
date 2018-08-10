@@ -13,6 +13,7 @@ function promise(apiFunction, payload, store, constant) {
         }
         console.log(resp.data);
         resolve(resp);
+
         store.commit(Constant.SHOW_LOADING, false);
       })
       .catch(err => {

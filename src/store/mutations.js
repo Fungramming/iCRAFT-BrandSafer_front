@@ -21,6 +21,11 @@ export default {
   [Constant.SHOW_LOADING]: (state, isLoading) => {
     state.isLoading = isLoading;
   },
+  [Constant.SHOW_MODAL]: (state, payload) => {
+    console.log("payload :", payload);
+    state.isModal = payload.isModal;
+    state.modalText = payload.modalText;
+  },
   [Constant.FETCH_LIVE_STATUS]: (state, payload) => {
     state.liveStatus = payload;
   },
