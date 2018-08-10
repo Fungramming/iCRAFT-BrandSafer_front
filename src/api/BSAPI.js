@@ -202,7 +202,7 @@ export default {
     );
   },
   deleteDistributor(did) {
-    return axios.delete(CONF.DELETE_DISTRIBUTOR, did);
+    return axios.delete(CONF.DELETE_DISTRIBUTOR.replace("${did}", did));
   },
 
   fetchTagType(tagType) {
@@ -220,6 +220,7 @@ export default {
     return axios.put(CONF.UPDATE_TAG_TYPE.replace("${tid}", tid), tagType);
   },
   deleteTagType(tid) {
-    return axios.delete(CONF.DELETE_TAG_TYPE, tid);
+    console.log("tid :", tid);
+    return axios.delete(CONF.DELETE_TAG_TYPE.replace("${tid}", tid));
   }
 };

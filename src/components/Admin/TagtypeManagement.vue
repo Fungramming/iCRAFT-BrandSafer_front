@@ -82,7 +82,7 @@
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md10>
-            <v-btn color="error" dark>삭제</v-btn>
+            <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
           </v-flex>
           <v-flex d-flex xs12 sm12 md1>
             <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
@@ -317,6 +317,16 @@ export default {
         this.tag_type = resp.data.tag_type.reverse();
         this.total = this.tag_type.length;
       });
+    },
+    deleteDatas() {
+      console.log("this :", this.selected[0].idx);
+      for (let item in this.selected) {
+        this.$store
+          .dispatch(Constant.DELETE_TAG_TYPE, this.selected[item].idx)
+          .then(() => {
+            this.getDatas();
+          });
+      }
     },
     showModal() {
       this.$modal.show("tagtype");

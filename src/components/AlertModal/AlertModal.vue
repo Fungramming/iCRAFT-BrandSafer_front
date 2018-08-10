@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       y: "top",
-      x: null,
+      x: "right",
       mode: "",
       timeout: 10000
     };
