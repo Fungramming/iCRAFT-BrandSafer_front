@@ -115,7 +115,7 @@
                   <span class="text-danger">*</span>
                 </label>
                 <span class="selectbox selectbox-100">
-                  <select v-model="submitData.role" id="telephone1" class="form-control" name="telephone1">
+                  <select id="telephone1" v-model="submitData.role" class="form-control" name="telephone1">
                     <option selected value="10">iCraft 관리자</option>
                     <option value="11">iCraft 사용자</option>
                   </select>
@@ -149,7 +149,7 @@
                 <label class="input-title">이메일</label>
                 <input v-model="first_mail" class="input-text input-mail" type="mail">
                 <span class="selectbox selectbox-mail">
-                  <select v-model="last_mail" id="mail1" class="form-control" name="mail1">
+                  <select id="mail1" v-model="last_mail" class="form-control" name="mail1">
                     <option value="">직접입력</option>
                     <option value="naver.com">naver.com</option>
                     <option value="daum.net">daum.net</option>
@@ -404,34 +404,27 @@ export default {
       checkPwd: "",
 
       submitData: {
-          department: "",
-          // ?
-          dtLastConnected: "",
-          dtModified: this.$store.state.submitTime,
-          dtRegistered: this.$store.state.submitTime,
-          email: "",
-          failCount: 0,
-          id: "",
-          modifier: "",
-          name: "",
-          note: "",
-          phone: "",
-          position: "",
-          // ?
-          pwd: "",
-          registrant: this.$store.state.user.modifier,
-          role: "",
-          state: "Registered",
-          telephone: ""
+        department: "",
+        // ?
+        dtLastConnected: "",
+        dtModified: this.$store.state.submitTime,
+        dtRegistered: this.$store.state.submitTime,
+        email: "",
+        failCount: 0,
+        id: "",
+        modifier: "",
+        name: "",
+        note: "",
+        phone: "",
+        position: "",
+        // ?
+        pwd: "",
+        registrant: this.$store.state.user.modifier,
+        role: "",
+        state: "Registered",
+        telephone: ""
       }
     };
-  },
-  watch: {
-    checkPwd () {
-      if ( this.checkPwd !== this.submitData.pwd ) {
-        alert('비밀번호를 다시 확인해 주세요')
-      }
-    }
   },
   computed: {
     pages() {
@@ -444,6 +437,13 @@ export default {
       return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
   },
+  watch: {
+    checkPwd() {
+      if (this.checkPwd !== this.submitData.pwd) {
+        alert("비밀번호를 다시 확인해 주세요");
+      }
+    }
+  },
   updated() {
     getTotal(this);
     if (this.firstNum_tel && this.midNum_tel && this.lastNum_tel) {
@@ -452,19 +452,25 @@ export default {
     }
     if (this.firstNum_phone && this.midNum_phone && this.lastNum_phone) {
       this.submitData.phone =
-        this.firstNum_phone + "-" + this.midNum_phone + "-" + this.lastNum_phone;
+        this.firstNum_phone +
+        "-" +
+        this.midNum_phone +
+        "-" +
+        this.lastNum_phone;
     }
     if (this.first_mail && this.last_mail) {
-      this.submitData.email =
-        this.first_mail + "@" +this.last_mail;
+      this.submitData.email = this.first_mail + "@" + this.last_mail;
     }
   },
   mounted() {
     this.getDatas();
-    console.log('this.$store.state.user.modifier :', this.$store.state.user.modifier);
+    console.log(
+      "this.$store.state.user.modifier :",
+      this.$store.state.user.modifier
+    );
   },
   methods: {
-    addDatas(){
+    addDatas() {
       this.$store
         .dispatch(Constant.ADD_ICRAFT_USER, this.submitData)
         .then(resp => {

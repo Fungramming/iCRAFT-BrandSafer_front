@@ -96,11 +96,12 @@
               ></v-checkbox>
             </td>
             <td class="text-xs-left">{{ total - props.index - total_index }}</td>
-            <td class="text-xs-left">{{ props.item.customer }}</td>
-            <td class="text-xs-left">{{ props.item.customer_code }}</td>
-            <td class="text-xs-left">{{ props.item.address }}</td>
-            <td class="text-xs-left">{{ props.item.exponent }}</td>
-            <td class="text-xs-left">{{ props.item.call_number }}</td>
+            <td class="text-xs-left">{{ props.item.dtAttempted }}</td>
+            <td class="text-xs-left">{{ props.item.role_name }}</td>
+            <td class="text-xs-left">{{ props.item.id }}</td>
+            <td class="text-xs-left">{{ props.item.name }}</td>
+            <td class="text-xs-left">{{ props.item.resultCode }}</td>
+            <td class="text-xs-left">{{ props.item.remoteAddr }}</td>
           </tr>
         </template>
       </v-data-table>
@@ -171,24 +172,27 @@ export default {
         }
       },
       total: "",
+      total_index: "",
       selected: [],
       headers: [
+        { text: "번호", align: "left", value: "idx", sortable: false },
+
         {
           text: "로그인 일시",
           align: "left",
-          value: "로그인 일시",
+          value: "dtAttempted",
           sortable: false
         },
-        { text: "구분", align: "left", value: "구분", sortable: false },
-        { text: "아이디", align: "left", value: "아이디", sortable: false },
-        { text: "이름", align: "left", value: "이름", sortable: false },
+        { text: "구분", align: "left", value: "role_name", sortable: false },
+        { text: "아이디", align: "left", value: "id", sortable: false },
+        { text: "이름", align: "left", value: "name", sortable: false },
         {
           text: "작업내용",
           align: "left",
-          value: "작업내용",
+          value: "resultCode",
           sortable: false
         },
-        { text: "접속 IP", align: "left", value: "접속 IP", sortable: false }
+        { text: "접속 IP", align: "left", value: "remoteAddr", sortable: false }
       ],
       logs: []
     };
@@ -237,22 +241,27 @@ export default {
         })
         .then(resp => {
           this.logs = resp.data.logs;
-          console.log("this.logs :", this.logs);
           this.total = this.logs.length;
         });
     },
     getTotal() {
-      let update_total = this.$children[0].$children[1].searchLength;
+      // let page = document.getElementsByClassName("v-select__selection");
+      // let pageActive = document.getElementsByClassName(
+      //   "v-pagination__item--active"
+      // );
+      // let pageText = page[0].innerText;
+      // let pageActiveText = pageActive[0].innerText;
+      // let pageNum = pageActiveText - 1;
+      // let calPage = pageNum * pageText;
+      // this.total_index = calPage;
+      let update_total = this.$children[0].$children[3].searchLength;
       this.total = update_total;
 
-      let page = document.getElementsByClassName("v-select__selection");
-      let pageActive = document.getElementsByClassName(
-        "v-pagination__item--active"
-      );
-      let pageText = page[0].innerText;
-      let pageActiveText = pageActive[0].innerText;
-      let pageNum = pageActiveText - 1;
-      let calPage = pageNum * pageText;
+      // 1
+      let pageNum = this.$children[0].$children[4].value - 1;
+      // 10
+      let pageActiveText = this.$children[0].$children[3].$children[1].value;
+      let calPage = pageNum * pageActiveText;
       this.total_index = calPage;
     },
     toggleAll() {

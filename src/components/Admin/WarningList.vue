@@ -95,7 +95,7 @@
             </td>
             <td class="text-xs-left">{{ total - props.index - total_index }}</td>
             <td class="text-xs-left">{{ props.item.dtTermAgreement }}</td>
-            <td class="text-xs-left">{{ props.item.app_name }}</td>
+            <td class="text-xs-left">{{ props.item.appCode }}</td>
             <td class="text-xs-left">{{ props.item.appTagType }}</td>
             <td class="text-xs-left"><a>{{ props.item.pushToken }}</a></td>
             <td class="text-xs-left">{{ props.item.times }}</td>
@@ -104,7 +104,7 @@
             <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
             <td class="text-xs-left">{{ props.item.os }}</td>
             <td class="text-xs-left">{{ props.item.model }}</td>
-            <td class="text-xs-left">{{ props.item.language }}</td>
+            <td class="text-xs-left">{{ props.item.languageCode }}</td>
           </tr>
         </template>
       </v-data-table>
@@ -134,7 +134,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getSelectedFunc, getTotal } from "../CompHelper.js";
+import { getSelectedFunc } from "../CompHelper.js";
 
 export default {
   data() {
@@ -227,7 +227,12 @@ export default {
         },
         { text: "OS", align: "left", value: "os", sortable: false },
         { text: "모델명	", align: "left", value: "model	", sortable: false },
-        { text: "언어셋", align: "left", value: "language", sortable: false }
+        {
+          text: "언어셋",
+          align: "left",
+          value: "languageCode",
+          sortable: false
+        }
       ],
       oversert: [],
       page: "",
@@ -246,12 +251,22 @@ export default {
     }
   },
   updated() {
-    getTotal(this);
+    this.getTotal();
   },
   mounted() {
     this.getDatas();
   },
   methods: {
+    getTotal() {
+      let update_total = this.$children[0].$children[3].searchLength;
+      this.total = update_total;
+      // 1
+      let pageNum = this.$children[0].$children[4].value - 1;
+      // 10
+      let pageActiveText = this.$children[0].$children[3].$children[1].value;
+      let calPage = pageNum * pageActiveText;
+      this.total_index = calPage;
+    },
     getDatas() {
       let today = new Date();
       let dd = today.getDate();

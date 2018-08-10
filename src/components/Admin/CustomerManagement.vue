@@ -309,40 +309,40 @@
                 <label class="input-title">고객사코드
                   <span class="text-danger">*</span>
                 </label>
-                <input :value="selected_code" class="input-text" type="text" required="required" placeholder="고객사코드">
+                <input v-model="updateData.code" class="input-text" type="text" required="required" placeholder="고객사코드">
               </v-flex>    
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">고객사(한국어)
                   <span class="text-danger">*</span>
                 </label>
-                <input :value="selected_name_kr" class="input-text" type="text" required="required" placeholder="고객사(한국어)">
+                <input v-model="updateData.name_kr" class="input-text" type="text" required="required" placeholder="고객사(한국어)">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">고객사(영어)</label>
-                <input :value="selected_name_en" class="input-text" type="text">
+                <input v-model="updateData.name_en" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">고객사(중국어)</label>
-                <input :value="selected_name_zh" class="input-text" type="text">
+                <input v-model="updateData.name_zh" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">주소(한국어)
                   <span class="text-danger">*</span>
                 </label>
-                <input :value="selected_addr_kr" class="input-text" type="text" required="required" placeholder="주소(한국어)">
+                <input v-model="updateData.addr_kr" class="input-text" type="text" required="required" placeholder="주소(한국어)">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">주소(영어)</label>
-                <input :value="selected_addr_en" class="input-text" type="text">
+                <input v-model="updateData.addr_en" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">주소(중국어)</label>
-                <input :value="selected_addr_zh" class="input-text" type="text">
+                <input v-model="updateData.addr_zh" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">전화번호</label>
                 <span class="selectbox">
-                  <select id="telephone1" class="form-control" name="telephone1">
+                  <select id="telephone1" v-model="selected_telephone" class="form-control" name="telephone1">
                     <option value="02">02</option>
                     <option value="031">031</option>
                     <option value="032">032</option>
@@ -364,13 +364,13 @@
                     <option value="080">080</option>
                   </select>
                 </span>
-                <input :value="selected_telephone_1" class="input-text input-tel" type="tel" maxlength="4">
-                <input :value="selected_telephone_2" class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="selected_telephone_1" class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="selected_telephone_2" class="input-text input-tel" type="tel" maxlength="4">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">팩스번호</label>
                 <span class="selectbox">
-                  <select id="telephone1" class="form-control" name="telephone1">
+                  <select id="telephone1" v-model="selected_fax" class="form-control" name="telephone1">
                     <option value="02">02</option>
                     <option value="031">031</option>
                     <option value="032">032</option>
@@ -392,28 +392,28 @@
                     <option value="080">080</option>
                   </select>
                 </span>
-                <input :value="selected_fax_1" class="input-text input-tel" type="tel" maxlength="4">
-                <input :value="selected_fax_2" class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="selected_fax_1" class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="selected_fax_2" class="input-text input-tel" type="tel" maxlength="4">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">대표자(한국어)
                   <span class="text-danger">*</span>
                 </label>
-                <input :value="selected_delegator_kr" class="input-text" type="text" required="required" placeholder="대표자(한국어)">
+                <input v-model="updateData.delegator_kr" class="input-text" type="text" required="required" placeholder="대표자(한국어)">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">대표자(영어)</label>
-                <input :value="selected_delegator_en" class="input-text" type="text" required="required">
+                <input v-model="updateData.delegator_en" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">대표자(중국어)</label>
-                <input :value="selected_delegator_zh" class="input-text" type="text" required="required">
+                <input v-model="updateData.delegator_zh" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title input-mr">사업자등록번호
                   <span class="text-danger">*</span>
                 </label>
-                <input :value="selected_registrationNumber" class="input-text" type="text">
+                <input v-model="updateData.registrationNumber" class="input-text" type="text">
                 <!-- <input class="input-text input-tri" type="tel">
                 <input class="input-text input-tri" type="tel">
                 <input class="input-text input-tri" type="tel"> -->
@@ -436,7 +436,7 @@
                 <label class="input-title">URL
                   <span class="text-danger">*</span>
                 </label>
-                <input :value="selected_url" class="input-text" type="text" required="required">
+                <input v-model="updateData.url" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">TnT로고이미지
@@ -449,15 +449,15 @@
                 <label class="input-title">설명(한국어)
                   <span class="text-danger">*</span>
                 </label>
-                <input :value="selected_description_kr" class="input-text" type="text" required="required" placeholder="설명(한국어)">
+                <input v-model="updateData.description_kr" class="input-text" type="text" required="required" placeholder="설명(한국어)">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">설명(영어)</label>
-                <input :value="selected_description_en" class="input-text" type="text" required="required">
+                <input v-model="updateData.description_en" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">설명(중국어)</label>
-                <input :value="selected_description_zh" class="input-text" type="text" required="required">
+                <input v-model="updateData.description_zh" class="input-text" type="text" required="required">
               </v-flex>
               <!-- <v-divider></v-divider>
               <v-subheader>계약 정보</v-subheader>
@@ -540,43 +540,80 @@ export default {
 
       // For edit modal
       selected_index: "",
-      selected_code: "",
-      selected_name_kr: "",
-      selected_name_en: "",
-      selected_name_zh: "",
-      selected_addr_kr: "",
-      selected_addr_en: "",
-      selected_addr_zh: "",
+      // selected_code: "",
+      // selected_name_kr: "",
+      // selected_name_en: "",
+      // selected_name_zh: "",
+      // selected_addr_kr: "",
+      // selected_addr_en: "",
+      // selected_addr_zh: "",
       selected_fax: "",
       selected_fax_1: "",
       selected_fax_2: "",
       selected_telephone: "",
       selected_telephone_1: "",
       selected_telephone_2: "",
-      selected_delegator_kr: "",
-      selected_delegator_en: "",
-      selected_delegator_zh: "",
-      selected_description_kr: "",
-      selected_description_en: "",
-      selected_description_zh: "",
-      selected_url: "",
-      selected_registrationNumber: "",
+      // selected_delegator_kr: "",
+      // selected_delegator_en: "",
+      // selected_delegator_zh: "",
+      // selected_description_kr: "",
+      // selected_description_en: "",
+      // selected_description_zh: "",
+      // selected_url: "",
+      // selected_registrationNumber: "",
 
       // For submit
       firstNum_tel: "",
       midNum_tel: "",
       lastNum_tel: "",
-      telNum: "",
       firstNum_fax: "",
       midNum_fax: "",
       lastNum_fax: "",
-      faxNum: "",
       firstNum_ragi: "",
       midNum_ragi: "",
       lastNum_ragi: "",
-      ragiNum: "",
 
+      firstNum_tel_u: "",
+      midNum_tel_u: "",
+      lastNum_tel_u: "",
+      firstNum_fax_u: "",
+      midNum_fax_u: "",
+      lastNum_fax_u: "",
+      firstNum_ragi_u: "",
+      midNum_ragi_u: "",
+      lastNum_ragi_u: "",
+
+      // add
       submitData: {
+        addr_en: "",
+        addr_kr: "",
+        addr_zh: "",
+        businessRegistrationUrl: "",
+        ci: "",
+        code: "",
+        delegator_en: "",
+        delegator_kr: "",
+        delegator_zh: "",
+        description_en: "",
+        description_kr: "",
+        description_zh: "",
+        dtModified: this.$store.state.submitTime,
+        dtRegistered: this.$store.state.submitTime,
+        fax: "",
+        modifier: this.$store.state.user.modifier,
+        name_en: "",
+        name_kr: "",
+        name_zh: "",
+        note: "",
+        registrant: this.$store.state.user.modifier,
+        registrationNumber: "",
+        state: "",
+        telephone: "",
+        tntLogoImgUrl: "",
+        url: ""
+      },
+      // update
+      updateData: {
         addr_en: "",
         addr_kr: "",
         addr_zh: "",
@@ -631,6 +668,26 @@ export default {
       this.submitData.registrationNumber =
         this.firstNum_ragi + this.midNum_ragi + this.lastNum_ragi;
     }
+    if (this.firstNum_tel_u && this.midNum_tel_u && this.lastNum_tel_u) {
+      this.updateData.telephone =
+        this.firstNum_tel_u +
+        "-" +
+        this.midNum_tel_u +
+        "-" +
+        this.lastNum_tel_u;
+    }
+    if (this.firstNum_fax_u && this.midNum_fax_u && this.lastNum_fax_u) {
+      this.updateData.fax =
+        this.firstNum_fax_u +
+        "-" +
+        this.midNum_fax_u +
+        "-" +
+        this.lastNum_fax_u;
+    }
+    if (this.firstNum_ragi_u && this.midNum_ragi_u && this.lastNum_ragi_u) {
+      this.updateData.registrationNumber =
+        this.firstNum_ragi_u + this.midNum_ragi_u + this.lastNum_ragi_u;
+    }
   },
   mounted() {
     this.getDatas();
@@ -657,20 +714,20 @@ export default {
         this.total = this.customers.length;
       });
     },
-    getTotal() {
-      let update_total = this.$children[0].$children[1].searchLength;
-      this.total = update_total;
+    // getTotal() {
+    //   let update_total = this.$children[0].$children[1].searchLength;
+    //   this.total = update_total;
 
-      let page = document.getElementsByClassName("v-select__selection");
-      let pageActive = document.getElementsByClassName(
-        "v-pagination__item--active"
-      );
-      let pageText = page[0].innerText;
-      let pageActiveText = pageActive[0].innerText;
-      let pageNum = pageActiveText - 1;
-      let calPage = pageNum * pageText;
-      this.total_index = calPage;
-    },
+    //   let page = document.getElementsByClassName("v-select__selection");
+    //   let pageActive = document.getElementsByClassName(
+    //     "v-pagination__item--active"
+    //   );
+    //   let pageText = page[0].innerText;
+    //   let pageActiveText = pageActive[0].innerText;
+    //   let pageNum = pageActiveText - 1;
+    //   let calPage = pageNum * pageText;
+    //   this.total_index = calPage;
+    // },
     showModal() {
       this.$modal.show("customer");
       // let modalWrap = document.getElementsByClassName("v--modal-box v--modal");
@@ -689,49 +746,50 @@ export default {
 
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
 
-      this.selected_code = e.path[2].children[3].innerText;
-      this.selected_name_kr = e.path[2].children[2].innerText;
-      this.selected_name_en = this.customers[this.selected_index].name_en;
-      this.selected_name_zh = this.customers[this.selected_index].name_zh;
+      this.updateData.code = e.path[2].children[3].innerText;
+      this.updateData.name_kr = e.path[2].children[2].innerText;
+      // this.selected_name_kr = e.path[2].children[2].innerText;
+      this.updateData.name_en = this.customers[this.selected_index].name_en;
+      this.updateData.name_zh = this.customers[this.selected_index].name_zh;
 
-      this.selected_addr_kr = e.path[2].children[4].innerText;
-      this.selected_addr_en = this.customers[this.selected_index].addr_en;
-      this.selected_addr_zh = this.customers[this.selected_index].addr_zh;
+      this.updateData.addr_kr = e.path[2].children[4].innerText;
+      this.updateData.addr_en = this.customers[this.selected_index].addr_en;
+      this.updateData.addr_zh = this.customers[this.selected_index].addr_zh;
 
-      this.selected_delegator_kr = e.path[2].children[5].innerText;
+      this.updateData.delegator_kr = e.path[2].children[5].innerText;
 
-      this.selected_telephone = e.path[2].children[6].innerText;
+      this.updateData.telephone = e.path[2].children[6].innerText;
       let telephone = this.selected_telephone.split("-");
       this.selected_telephone_1 = telephone[1];
       this.selected_telephone_2 = telephone[2];
 
-      this.selected_fax = this.customers[this.selected_index].fax;
+      this.updateData.fax = this.customers[this.selected_index].fax;
       let fax = this.selected_fax.split("-");
       this.selected_fax_1 = fax[1];
       this.selected_fax_2 = fax[2];
 
-      this.selected_description_kr = this.customers[
+      this.updateData.description_kr = this.customers[
         this.selected_index
       ].description_kr;
-      this.selected_description_en = this.customers[
+      this.updateData.description_en = this.customers[
         this.selected_index
       ].description_en;
-      this.selected_description_zh = this.customers[
+      this.updateData.description_zh = this.customers[
         this.selected_index
       ].description_zh;
 
-      this.selected_delegator_kr = this.customers[
+      this.updateData.delegator_kr = this.customers[
         this.selected_index
       ].delegator_kr;
-      this.selected_delegator_en = this.customers[
+      this.updateData.delegator_en = this.customers[
         this.selected_index
       ].delegator_en;
-      this.selected_delegator_zh = this.customers[
+      this.updateData.delegator_zh = this.customers[
         this.selected_index
       ].delegator_zh;
 
-      this.selected_url = this.customers[this.selected_index].url;
-      this.selected_registrationNumber = this.customers[
+      this.updateData.url = this.customers[this.selected_index].url;
+      this.updateData.registrationNumber = this.customers[
         this.selected_index
       ].registrationNumber;
     },

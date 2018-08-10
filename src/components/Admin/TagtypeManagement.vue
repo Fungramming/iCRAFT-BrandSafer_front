@@ -55,7 +55,8 @@
                 hide-details
               ></v-checkbox>
             </td>
-            <td class="text-xs-left">{{ props.item.idx }}</td>
+            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
+            <!-- <td class="text-xs-left">{{ props.item.idx }}</td> -->
             <td class="text-xs-left"><a @click.stop="showEditModal"> {{ props.item.version }} </a></td>
             <td class="text-xs-left">{{ props.item.type }}</td>
             <td class="text-xs-left">{{ props.item.width }} * {{ props.item.height }}</td>

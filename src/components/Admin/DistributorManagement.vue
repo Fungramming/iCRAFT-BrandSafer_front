@@ -313,17 +313,25 @@ export default {
       });
     },
     getTotal() {
+      // let update_total = this.$children[0].$children[1].searchLength;
+      // this.total = update_total;
+
+      // let page = document.getElementsByClassName("v-select__selection");
+      // let pageActive = document.getElementsByClassName(
+      //   "v-pagination__item--active"
+      // );
+      // let pageText = page[0].innerText;
+      // let pageActiveText = pageActive[0].innerText;
+      // let pageNum = pageActiveText - 1;
+      // let calPage = pageNum * pageText;
+      // this.total_index = calPage;
       let update_total = this.$children[0].$children[1].searchLength;
+      console.log("update_total :", update_total);
       this.total = update_total;
 
-      let page = document.getElementsByClassName("v-select__selection");
-      let pageActive = document.getElementsByClassName(
-        "v-pagination__item--active"
-      );
-      let pageText = page[0].innerText;
-      let pageActiveText = pageActive[0].innerText;
-      let pageNum = pageActiveText - 1;
-      let calPage = pageNum * pageText;
+      let pageNum = this.$children[0].$children[4].value - 1;
+      let pageActiveText = this.$children[0].$children[1].$children[1].value;
+      let calPage = pageNum * pageActiveText;
       this.total_index = calPage;
     },
     showModal() {

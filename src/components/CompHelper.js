@@ -5,6 +5,7 @@ export function getSelectedFunc(e) {
 
 export function getTotal(_this) {
   let update_total = _this.$children[0].$children[1].searchLength;
+  console.log("update_total :", update_total);
   _this.total = update_total;
 
   let pageNum = _this.$children[0].$children[4].value - 1;
