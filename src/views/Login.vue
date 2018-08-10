@@ -8,15 +8,20 @@
         <span>Welcome, please login.</span>
         <v-text-field
           v-model="id"
+          :rules="[rules.required]"
           label="ID"
           clearable
+          required
           v-on:keyup.enter="onSubmit"
         ></v-text-field>
         <v-text-field
           v-model="password"
           :type="'password'"
+          :rules="[rules.required]"
           label="PASSWORD"
           clearable
+          required
+
           v-on:keyup.enter="onSubmit"
         ></v-text-field>
         <!-- <v-radio-group v-model="selectedLang" class="lang-group" row>
@@ -56,7 +61,19 @@ export default {
       password: "",
       errors: [],
       successModal: false,
-      errorModal: false
+      errorModal: false,
+      rules: {
+        required: value => !!value || "입력해주세요",
+        counter: value => value.length <= 20 || "Max 20 characters",
+        id: value => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return pattern.test(value) || "아이디를 입력해주세요";
+        },
+        pass: value => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return pattern.test(value) || "비밀번호를 입력해주세요";
+        }
+      }
     };
   },
   mounted() {
