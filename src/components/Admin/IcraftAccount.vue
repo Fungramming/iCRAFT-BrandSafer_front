@@ -1,44 +1,5 @@
 <template>
   <div class="tableBs">
-    <!-- table top menu -->
-    <!-- <div class="tableBs-top">
-      <p>검색 조건</p>
-      <v-layout row wrap>
-        <v-flex d-flex xs12 sm12 md4>
-          <div class="selectbox">
-            <span>구분</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option selected value="전체">전체</option>
-              <option value="iCraft 관리자">iCraft 관리자</option>
-              <option value="iCraft 사용자">iCraft 사용자</option>
-            </select>
-          </div>
-        </v-flex>
-        <v-flex d-flex xs12 sm12 md4>
-          <div class="selectbox">
-            <span>상태</span>
-            <select id="select2" name="searchType" class="form-control" size="1">
-              <option selected value="전체">전체</option>
-              <option value="등록">등록</option>
-              <option value="일시정지">일시정지</option>
-              <option value="삭제">삭제</option>
-            </select>
-          </div>
-        </v-flex>
-        <v-flex d-flex xs12 sm12 md4>
-          <div class="selectbox select-search">
-            <span>검색어</span>
-            <select id="select3" name="searchType" class="form-control" size="1">
-              <option selected value="부서">부서</option>
-              <option value="아이디">아이디</option>
-              <option value="이름">이름</option>
-            </select>
-          </div>
-          <input class="input-text" type="text">
-        </v-flex>
-      </v-layout>
-    </div> -->
-    <!-- table wrap -->
     <v-app class="inspire">
       <v-card-title>
         검색조건
@@ -143,7 +104,7 @@
           <v-toolbar-title>iCraft 계정관리</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click.native="dialog = false">저장</v-btn>
+            <v-btn dark flat @click.native="addDatas">저장</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <div class="card-left">
@@ -154,9 +115,9 @@
                   <span class="text-danger">*</span>
                 </label>
                 <span class="selectbox selectbox-100">
-                  <select id="telephone1" class="form-control" name="telephone1">
-                    <option value="iCraft 관리자">iCraft 관리자</option>
-                    <option value="iCraft 사용자">iCraft 사용자</option>
+                  <select v-model="submitData.role" id="telephone1" class="form-control" name="telephone1">
+                    <option selected value="10">iCraft 관리자</option>
+                    <option value="11">iCraft 사용자</option>
                   </select>
                 </span>
               </v-flex>    
@@ -164,44 +125,44 @@
                 <label class="input-title">이름
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="text" required="required">
+                <input v-model="submitData.name" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">아이디
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="text">
+                <input v-model="submitData.id" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">비밀번호
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="text" placeholder="( * 5~15자 이내의 영/숫자 조합 )">
+                <input v-model="submitData.pwd" class="input-text" type="password" placeholder="( * 5~15자 이내의 영/숫자 조합 )">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">비밀번호 확인
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="text">
+                <input v-model="checkPwd" class="input-text" type="password">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">이메일</label>
-                <input class="input-text input-mail" type="mail">
+                <input v-model="first_mail" class="input-text input-mail" type="mail">
                 <span class="selectbox selectbox-mail">
-                  <select id="mail1" class="form-control" name="mail1">
-                    <option value="직접입력">직접입력</option>
+                  <select v-model="last_mail" id="mail1" class="form-control" name="mail1">
+                    <option value="">직접입력</option>
                     <option value="naver.com">naver.com</option>
                     <option value="daum.net">daum.net</option>
                     <option value="gmail.com">gmail.com</option>
                     <option value="nate.com">nate.com</option>
                   </select>
                 </span>
-                <input class="input-text input-mail" type="mail">
+                <input v-model="last_mail" class="input-text input-mail" type="mail">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">전화번호</label>
                 <span class="selectbox">
-                  <select id="telephone1" class="form-control" name="telephone1">
+                  <select id="telephone1" v-model="firstNum_tel" class="form-control" name="telephone1">
                     <option value="02">02</option>
                     <option value="031">031</option>
                     <option value="032">032</option>
@@ -223,13 +184,13 @@
                     <option value="080">080</option>
                   </select>
                 </span>
-                <input class="input-text input-tel" type="tel" maxlength="4">
-                <input class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="midNum_tel" class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="lastNum_tel" class="input-text input-tel" type="tel" maxlength="4">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">핸드폰번호</label>
                 <span class="selectbox">
-                  <select id="telephone1" class="form-control" name="telephone1">
+                  <select id="telephone1" v-model="firstNum_phone" class="form-control" name="telephone1">
                     <option value="010">010</option>
                     <option value="011">011</option>
                     <option value="016">016</option>
@@ -238,16 +199,16 @@
                     <option value="019">019</option>
                   </select>
                 </span>
-                <input class="input-text input-tel" type="tel" maxlength="4">
-                <input class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="midNum_phone" class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="lastNum_phone" class="input-text input-tel" type="tel" maxlength="4">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">직위</label>
-                <input class="input-text" type="text" required="required">
+                <input v-model="submitData.position" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">부서</label>
-                <input class="input-text" type="text" required="required">
+                <input v-model="submitData.department" class="input-text" type="text" required="required">
               </v-flex>
             </v-list>
           </v-card-text>
@@ -276,8 +237,8 @@
                 </label>
                 <span class="selectbox selectbox-100">
                   <select id="telephone1" class="form-control" name="telephone1">
-                    <option value="iCraft 관리자">iCraft 관리자</option>
-                    <option value="iCraft 사용자">iCraft 사용자</option>
+                    <option value="10">iCraft 관리자</option>
+                    <option value="11">iCraft 사용자</option>
                   </select>
                 </span>
               </v-flex>    
@@ -297,20 +258,20 @@
                 <label class="input-title">비밀번호
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="text" placeholder="( * 5~15자 이내의 영/숫자 조합 )">
+                <input class="input-text" type="password" placeholder="( * 5~15자 이내의 영/숫자 조합 )" maxlength="15">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">비밀번호 확인
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="text">
+                <input class="input-text" type="password" placeholder="* 비밀번호 확인" maxlength="15">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">이메일</label>
                 <input :value="selected_email_1" class="input-text input-mail" type="mail">
                 <span class="selectbox selectbox-mail">
                   <select id="mail1" class="form-control" name="mail1">
-                    <option value="직접입력">직접입력</option>
+                    <option value="">직접입력</option>
                     <option value="naver.com">naver.com</option>
                     <option value="daum.net">daum.net</option>
                     <option value="gmail.com">gmail.com</option>
@@ -429,8 +390,48 @@ export default {
       selected_name: "",
       selected_id: "",
       selected_department: "",
-      selected_state: ""
+      selected_state: "",
+
+      // For submit
+      firstNum_tel: "",
+      midNum_tel: "",
+      lastNum_tel: "",
+      firstNum_phone: "",
+      midNum_phone: "",
+      lastNum_phone: "",
+      first_mail: "",
+      last_mail: "",
+      checkPwd: "",
+
+      submitData: {
+          department: "",
+          // ?
+          dtLastConnected: "",
+          dtModified: this.$store.state.submitTime,
+          dtRegistered: this.$store.state.submitTime,
+          email: "",
+          failCount: 0,
+          id: "",
+          modifier: "",
+          name: "",
+          note: "",
+          phone: "",
+          position: "",
+          // ?
+          pwd: "",
+          registrant: this.$store.state.user.modifier,
+          role: "",
+          state: "Registered",
+          telephone: ""
+      }
     };
+  },
+  watch: {
+    checkPwd () {
+      if ( this.checkPwd !== this.submitData.pwd ) {
+        alert('비밀번호를 다시 확인해 주세요')
+      }
+    }
   },
   computed: {
     pages() {
@@ -445,11 +446,34 @@ export default {
   },
   updated() {
     getTotal(this);
+    if (this.firstNum_tel && this.midNum_tel && this.lastNum_tel) {
+      this.submitData.telephone =
+        this.firstNum_tel + "-" + this.midNum_tel + "-" + this.lastNum_tel;
+    }
+    if (this.firstNum_phone && this.midNum_phone && this.lastNum_phone) {
+      this.submitData.phone =
+        this.firstNum_phone + "-" + this.midNum_phone + "-" + this.lastNum_phone;
+    }
+    if (this.first_mail && this.last_mail) {
+      this.submitData.email =
+        this.first_mail + "@" +this.last_mail;
+    }
   },
   mounted() {
     this.getDatas();
+    console.log('this.$store.state.user.modifier :', this.$store.state.user.modifier);
   },
   methods: {
+    addDatas(){
+      this.$store
+        .dispatch(Constant.ADD_ICRAFT_USER, this.submitData)
+        .then(resp => {
+          console.log("resp :", resp);
+        })
+        .catch(err => {
+          console.log("err :", err);
+        });
+    },
     getDatas() {
       this.$store.dispatch(Constant.FETCH_ICRAFT_USER).then(resp => {
         this.account = resp.data["icrf-users"].reverse();
