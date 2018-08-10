@@ -4,12 +4,10 @@ export default {
   selectedTaB: "dashboard",
   token: "11",
   user: {
-    id: -1,
-    role: "",
-    companyCode: "",
-    companyName: ""
+    id: -1
   },
   date: "",
+  submitTime: "",
 
   //DashBoard
   liveStatus: {},

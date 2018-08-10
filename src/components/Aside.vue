@@ -74,11 +74,11 @@
                   <v-icon class="plus">keyboard_arrow_down</v-icon>
               </router-link>
               <ul class="sub-sub-tab">
-                <li @click="isActived">
+                <!-- <li @click="isActived">
                   <router-link :to="{ name: 'customerAccount'}" name="customerAccount" class="tab-btn" >
                     <span class="switch step3">고객사 계정</span>
                   </router-link>
-                </li>
+                </li> -->
                 <li @click="isActived">
                   <router-link :to="{ name: 'icraftAccount'}" name="icraftAccount" class="tab-btn" >
                     <span class="switch step3">iCraft 계정관리</span>
@@ -152,7 +152,7 @@ export default {
         tabA: true,
         tabB: true,
         tabC: true,
-        tabD: false
+        tabD: true
       }
     };
   },
@@ -181,6 +181,7 @@ export default {
       this.compTitle = activingFunc(e);
     },
     defaultTab() {
+      // CustomerUser / CustomerAdmin / iCraftUser / iCraftAdministrator / iCraftSuperAdmin
       if (this.userRole == "CustomerUser") {
         this.tabList.tabD = true;
       }
@@ -255,7 +256,7 @@ $phone: "(min-width: 0) and (max-width: 500px)";
   width: 230px;
   height: 100%;
   overflow-x: hidden;
-  z-index: 100;
+  z-index: 300;
   transition: width, left 0.3s ease;
   @media #{$phone} {
     width: 100%;

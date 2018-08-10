@@ -59,7 +59,7 @@
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
-        item-key="app"
+        item-key="idx"
         select-all
         class="elevation-1"
       >
@@ -104,6 +104,17 @@
           </tr>
         </template>
       </v-data-table>
+      <div class="v-datatable__actions">
+        <span>per page :</span>
+        <div class="v-datatable__actions__select">          
+          <select v-model="pagination.rowsPerPage">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="-1">All</option>
+          </select>
+        </div>
+      </div>
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
@@ -128,7 +139,7 @@
           <v-toolbar-title>블랙리스트 App</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat>등록</v-btn>
+            <v-btn dark flat @click.stop="addDatas">등록</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <div class="card-left">
@@ -136,7 +147,7 @@
             <v-list three-line subheader>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">푸시토큰</label>
-                <input class="input-text" type="text" required="required">
+                <input v-model="submitData.pushToken" class="input-text" type="text" required="required">
               </v-flex>
             </v-list>
           </v-card-text>
@@ -149,7 +160,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getSelectedFunc } from "../CompHelper.js";
+import { getSelectedFunc, getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -188,7 +199,16 @@ export default {
         { text: "변경일", align: "left", value: "dtModified", sortable: false },
         { text: "변경자", align: "left", value: "modifier", sortable: false }
       ],
-      blacklists: []
+      blacklists: [],
+      submitData: {
+        blType: "C",
+        delYN: "Y",
+        dtModified: this.$store.state.submitTime,
+        dtRegistered: this.$store.state.submitTime,
+        modifier: this.$store.state.user.modifier,
+        pushToken: "",
+        registrant: this.$store.state.user.modifier
+      }
     };
   },
   computed: {
@@ -203,29 +223,28 @@ export default {
     }
   },
   updated() {
-    this.getTotal();
+    getTotal(this);
   },
   mounted() {
-    this.$store.dispatch(Constant.FETCH_BLACKLIST).then(resp => {
-      this.blacklists = resp.data.blacklists.reverse();
-      console.log("blacklists :", this.blacklists);
-      this.total = this.blacklists.length;
-    });
+    this.getDatas();
   },
   methods: {
-    getTotal() {
-      let update_total = this.$children[0].$children[1].searchLength;
-      this.total = update_total;
-
-      let page = document.getElementsByClassName("v-select__selection");
-      let pageActive = document.getElementsByClassName(
-        "v-pagination__item--active"
-      );
-      let pageText = page[0].innerText;
-      let pageActiveText = pageActive[0].innerText;
-      let pageNum = pageActiveText - 1;
-      let calPage = pageNum * pageText;
-      this.total_index = calPage;
+    addDatas() {
+      this.$store
+        .dispatch(Constant.ADD_BLACKLIST, this.submitData)
+        .then(resp => {
+          console.log("resp :", resp);
+          this.getDatas();
+        })
+        .catch(err => {
+          console.log("err :", err);
+        });
+    },
+    getDatas() {
+      this.$store.dispatch(Constant.FETCH_BLACKLIST).then(resp => {
+        this.blacklists = resp.data.blacklists;
+        this.total = this.blacklists.length;
+      });
     },
     showModal() {
       this.$modal.show("blacklist");

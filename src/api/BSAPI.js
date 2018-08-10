@@ -129,14 +129,14 @@ export default {
     return axios.delete(CONF.DELETE_USER, uid);
   },
 
-  fetchAccountLog() {
-    return axios.get(CONF.FETCH_ACCOUNT_LOG);
-  },
-  // fetchAccountLog({ page, query }) {
-  //   return axios.get(CONF.FETCH_ACCOUNT_LOG, {
-  //     params: { page, query }
-  //   });
+  // fetchAccountLog() {
+  //   return axios.get(CONF.FETCH_ACCOUNT_LOG);
   // },
+  fetchAccountLog({ start, end }) {
+    return axios.get(CONF.FETCH_ACCOUNT_LOG, {
+      params: { start, end }
+    });
+  },
 
   fetchBlacklist() {
     return axios.get(CONF.FETCH_BLACKLIST);
@@ -153,9 +153,9 @@ export default {
     return axios.delete(CONF.DELETE_BLACKLIST.replace("${bid}", bid));
   },
 
-  fetchOverCert({ page, query }) {
+  fetchOverCert({ start, end }) {
     return axios.get(CONF.FETCH_OVER_CERT, {
-      params: { page, query }
+      params: { start, end }
     });
   },
 

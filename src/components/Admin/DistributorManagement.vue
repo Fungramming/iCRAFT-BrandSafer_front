@@ -70,7 +70,7 @@
             </td>
             <td class="text-xs-left">{{ total - props.index - total_index }}</td>
             <!-- <td class="text-xs-left">{{ props.item.idx}}</td> -->
-            <td class="text-xs-left">{{ props.item.name_kr }}</td>
+            <td class="text-xs-left">{{ props.item.companyCode }}</td>
             <td class="text-xs-left"><a @click.stop="showEditModal"> {{ props.item.name_kr }} </a></td>
             <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
             <td class="text-xs-left">{{ props.item.state }}</td>
@@ -78,6 +78,17 @@
           </tr>
         </template>
       </v-data-table>
+      <div class="v-datatable__actions">
+        <span>per page :</span>
+        <div class="v-datatable__actions__select">          
+          <select v-model="pagination.rowsPerPage">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="-1">All</option>
+          </select>
+        </div>
+      </div>
 
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
@@ -104,7 +115,7 @@
           <v-toolbar-title>유통업체 관리</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat>등록</v-btn>
+            <v-btn dark flat @click="submit">등록</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <div class="card-left">
@@ -115,30 +126,8 @@
                   <span class="text-danger">*</span>
                 </label>
                 <span class="selectbox selectbox-100">
-                  <select id="select1" name="searchType" class="form-control" size="1">
-                    <option selected value="선택해주세요">선택해주세요</option>
-                    <option value="블랙야크">블랙야크</option>
-                    <option value="CJ E&M">CJ E&M</option>
-                    <option value="브랜드세이퍼">브랜드세이퍼</option>
-                    <option value="LF">LF</option>
-                    <option value="아모레퍼시픽">아모레퍼시픽</option>
-                    <option value="카버코리아">카버코리아</option>
-                    <option value="엘앤피코스메틱">엘앤피코스메틱</option>
-                    <option value="파파레서피">파파레서피</option>
-                    <option value="젬나컴퍼니">젬나컴퍼니</option>
-                    <option value="(주)차바이오에프앤씨">(주)차바이오에프앤씨</option>
-                    <option value="AUDIO BANK">AUDIO BANK</option>
-                    <option value="제이준메딕스㈜">제이준메딕스㈜</option>
-                    <option value="아이시드">아이시드</option>
-                    <option value="난수발권테스트">난수발권테스트</option>
-                    <option value="TWOTSP">TWOTSP</option>
-                    <option value="엘앤피코스메틱㈜">엘앤피코스메틱㈜</option>
-                    <option value="(주)노드메이슨">(주)노드메이슨</option>
-                    <option value="제이준코스메틱㈜">제이준코스메틱㈜</option>
-                    <option value="BrandSafer">BrandSafer</option>
-                    <option value="문경오미자">문경오미자</option>
-                    <option value="문경 테스트">문경 테스트</option>
-                    <option value="오감 바이오">오감 바이오</option>
+                  <select id="select1" v-model="submitData.companyCode" name="searchType" class="form-control" size="1">
+                    <option v-for="item in companyList" :value="item.code" :key="item.code">{{item.name_kr}}</option>                    
                   </select>
                 </span>
               </v-flex>    
@@ -146,7 +135,7 @@
                 <label class="input-title">유통업체명(한국어)
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="text" required="required">
+                <input v-model="submitData.name_kr" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">유통업체명(영어)</label>
@@ -191,30 +180,8 @@
                   <span class="text-danger">*</span>
                 </label>
                 <span class="selectbox selectbox-100">
-                  <select id="select1" name="searchType" class="form-control" size="1">
-                    <option selected value="선택해주세요">선택해주세요</option>
-                    <option value="블랙야크">블랙야크</option>
-                    <option value="CJ E&M">CJ E&M</option>
-                    <option value="브랜드세이퍼">브랜드세이퍼</option>
-                    <option value="LF">LF</option>
-                    <option value="아모레퍼시픽">아모레퍼시픽</option>
-                    <option value="카버코리아">카버코리아</option>
-                    <option value="엘앤피코스메틱">엘앤피코스메틱</option>
-                    <option value="파파레서피">파파레서피</option>
-                    <option value="젬나컴퍼니">젬나컴퍼니</option>
-                    <option value="(주)차바이오에프앤씨">(주)차바이오에프앤씨</option>
-                    <option value="AUDIO BANK">AUDIO BANK</option>
-                    <option value="제이준메딕스㈜">제이준메딕스㈜</option>
-                    <option value="아이시드">아이시드</option>
-                    <option value="난수발권테스트">난수발권테스트</option>
-                    <option value="TWOTSP">TWOTSP</option>
-                    <option value="엘앤피코스메틱㈜">엘앤피코스메틱㈜</option>
-                    <option value="(주)노드메이슨">(주)노드메이슨</option>
-                    <option value="제이준코스메틱㈜">제이준코스메틱㈜</option>
-                    <option value="BrandSafer">BrandSafer</option>
-                    <option value="문경오미자">문경오미자</option>
-                    <option value="문경 테스트">문경 테스트</option>
-                    <option value="오감 바이오">오감 바이오</option>
+                  <select id="select1" v-model="submitData.companyCode" name="searchType" class="form-control" size="1" disabled>
+                    <option value="" selected>{{selected_name_kr}}</option>                  
                   </select>
                 </span>
               </v-flex>    
@@ -226,7 +193,7 @@
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">유통업체명(영어)</label>
-                <input :value="selected_name_en" class="input-text" type="text">
+                <input  :value="selected_name_en" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">유통업체명(중국어)</label>
@@ -252,11 +219,12 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getSelectedFunc } from "../CompHelper.js";
+import { getSelectedFunc, getTotal } from "../CompHelper.js";
 
 export default {
   data() {
     return {
+      companyList: [],
       search: "",
       modal_size: Constant.MODAL_SIZE,
       pagination: {
@@ -290,12 +258,25 @@ export default {
         }
       ],
       distributors: [],
-
+      submitData: {
+        companyCode: "",
+        dtModified: this.$store.state.submitTime,
+        dtRegistered: this.$store.state.submitTime,
+        headerquarterYN: "Y",
+        modifier: this.$store.state.user.modifier,
+        name_en: "",
+        name_kr: "",
+        name_zh: "",
+        note: "",
+        registrant: this.$store.state.user.modifier,
+        rtid: "",
+        state: "Registered"
+      },
       // For edit modal
       selected_name_kr: "",
       selected_name_en: "",
       selected_name_zh: "",
-      selected_note: "",
+      selected_note: ""
     };
   },
   computed: {
@@ -310,17 +291,24 @@ export default {
     }
   },
   updated() {
-    this.getTotal();
+    getTotal(this);
   },
   mounted() {
     this.getDatas();
+    this.getCompanyList();
   },
   methods: {
+    getCompanyList() {
+      this.$store.dispatch(Constant.FETCH_COMPANY).then(resp => {
+        let box = resp.data.company;
+        for (let item in box) {
+          this.companyList.push(box[item]);
+        }
+      });
+    },
     getDatas() {
       this.$store.dispatch(Constant.FETCH_DISTRIBUTOR).then(resp => {
         this.distributors = resp.data.distributors.reverse();
-        // console.log("this.distributors :", this.distributors);
-        // console.log("this.distributors.length :", this.distributors.length);
         this.total = this.distributors.length;
       });
     },
@@ -344,12 +332,12 @@ export default {
     showEditModal(e) {
       this.$modal.show("distributors_edit");
 
-      this.selected_name_kr = e.path[2].children[3].innerText
-      
-      this.selected_index = e.target.parentNode.parentNode['sectionRowIndex']
-      this.selected_name_en = this.distributors[this.selected_index].name_en
-      this.selected_name_zh = this.distributors[this.selected_index].name_zh
-      this.selected_note = this.distributors[this.selected_index].note
+      this.selected_name_kr = e.path[2].children[3].innerText;
+
+      this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
+      this.selected_name_en = this.distributors[this.selected_index].name_en;
+      this.selected_name_zh = this.distributors[this.selected_index].name_zh;
+      this.selected_note = this.distributors[this.selected_index].note;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];
@@ -365,6 +353,13 @@ export default {
         this.pagination.sortBy = column;
         this.pagination.descending = false;
       }
+    },
+    submit() {
+      this.$store
+        .dispatch(Constant.ADD_DISTRIBUTOR, this.submitData)
+        .then(resp => {
+          console.log("resp :", resp);
+        });
     }
   }
 };

@@ -56,7 +56,7 @@
 
       <v-data-table
         :headers="headers"
-        :items="logins"
+        :items="logs"
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
@@ -87,15 +87,24 @@
         </template>
 
         <template slot="items" slot-scope="props">
-          <td class="text-xs-left">{{ props.item.number }}</td>
-          <td class="text-xs-left">{{ props.item.customer }}</td>
-          <td class="text-xs-left">{{ props.item.customer_code }}</td>
-          <td class="text-xs-left">{{ props.item.address }}</td>
-          <td class="text-xs-left">{{ props.item.exponent }}</td>
-          <td class="text-xs-left">{{ props.item.call_number }}</td>
+          <tr :active="props.selected" @click="props.selected = !props.selected">
+            <td>
+              <v-checkbox
+                :input-value="props.selected"
+                primary
+                hide-details
+              ></v-checkbox>
+            </td>
+            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
+            <td class="text-xs-left">{{ props.item.customer }}</td>
+            <td class="text-xs-left">{{ props.item.customer_code }}</td>
+            <td class="text-xs-left">{{ props.item.address }}</td>
+            <td class="text-xs-left">{{ props.item.exponent }}</td>
+            <td class="text-xs-left">{{ props.item.call_number }}</td>
+          </tr>
         </template>
       </v-data-table>
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{logins.length}}</span> 건</span>
+      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <div class="text-xs-center pt-2">
           <v-pagination v-model="pagination.page" :length="pages" :total-visible="7"></v-pagination>
@@ -103,210 +112,6 @@
       </div>
     </v-app>
 
-    <v-flex d-flex xs12 sm12 md12>
-    <!-- modal dialog -->
-    <v-dialog
-      v-model="dialog"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-      scrollable
-    >
-      <!-- start modal -->
-      <v-card tile>
-        <v-toolbar card dark color="primary">
-          <v-btn icon dark @click.native="dialog = false">
-            <v-icon>close</v-icon>
-          </v-btn>
-          <v-toolbar-title>고객사 등록</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark flat @click.native="dialog = false">저장</v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-        <div class="card-left">
-          <v-card-text>
-            <v-list three-line subheader>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">고객사코드
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="고객사코드">
-              </v-flex>    
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">고객사(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="고객사(한국어)">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">고객사(영어)</label>
-                <input class="input-text" type="text">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">고객사(중국어)</label>
-                <input class="input-text" type="text">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">주소(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="주소(한국어)">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">주소(영어)</label>
-                <input class="input-text" type="text">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">주소(중국어)</label>
-                <input class="input-text" type="text">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">전화번호</label>
-                <span class="selectbox">
-                  <select id="telephone1" class="form-control" name="telephone1">
-                    <option value="02">02</option>
-                    <option value="031">031</option>
-                    <option value="032">032</option>
-                    <option value="033">033</option>
-                    <option value="041">041</option>
-                    <option value="042">042</option>
-                    <option value="043">043</option>
-                    <option value="044">044</option>
-                    <option value="051">051</option>
-                    <option value="052">052</option>
-                    <option value="053">053</option>
-                    <option value="054">054</option>
-                    <option value="055">055</option>
-                    <option value="061">061</option>
-                    <option value="062">062</option>
-                    <option value="063">063</option>
-                    <option value="064">064</option>
-                    <option value="070">070</option>
-                    <option value="080">080</option>
-                  </select>
-                </span>
-                <input class="input-text input-tel" type="tel">
-                <input class="input-text input-tel" type="tel">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">팩스번호</label>
-                <span class="selectbox">
-                  <select id="telephone1" class="form-control" name="telephone1">
-                    <option value="02">02</option>
-                    <option value="031">031</option>
-                    <option value="032">032</option>
-                    <option value="033">033</option>
-                    <option value="041">041</option>
-                    <option value="042">042</option>
-                    <option value="043">043</option>
-                    <option value="044">044</option>
-                    <option value="051">051</option>
-                    <option value="052">052</option>
-                    <option value="053">053</option>
-                    <option value="054">054</option>
-                    <option value="055">055</option>
-                    <option value="061">061</option>
-                    <option value="062">062</option>
-                    <option value="063">063</option>
-                    <option value="064">064</option>
-                    <option value="070">070</option>
-                    <option value="080">080</option>
-                  </select>
-                </span>
-                <input class="input-text input-tel" type="tel">
-                <input class="input-text input-tel" type="tel">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">대표자(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="대표자(한국어)">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">대표자(영어)</label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">대표자(중국어)</label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title input-mr">사업자등록번호
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text input-tel" type="tel">
-                <input class="input-text input-tel" type="tel">
-                <input class="input-text input-tel" type="tel">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">사업자등록증
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">CI
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">URL
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">TnT로고이미지
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">설명(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required" placeholder="설명(한국어)">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">설명(영어)</label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">설명(중국어)</label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-divider></v-divider>
-              <v-subheader>계약 정보</v-subheader>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">계약서명
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">계약기간
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">사업자등록증
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : pdf)</span>
-              </v-flex>
-            </v-list>
-          </v-card-text>
-        </div>
-      </v-card>
-    </v-dialog>
-    </v-flex>
   </div>
 </template>
 
@@ -373,189 +178,7 @@ export default {
         },
         { text: "접속 IP", align: "left", value: "접속 IP", sortable: false }
       ],
-      desserts: [
-        {
-          value: false,
-          number: "1",
-          customer: 159,
-          customer_code: 6.0,
-          address: 24,
-          exponent: 4.0,
-          call_number: "1%"
-        },
-        {
-          value: false,
-          number: "2",
-          customer: 237,
-          customer_code: 9.0,
-          address: 37,
-          exponent: 4.3,
-          call_number: "1%"
-        },
-        {
-          value: false,
-          number: "3",
-          customer: 262,
-          customer_code: 16.0,
-          address: 23,
-          exponent: 6.0,
-          call_number: "7%"
-        },
-        {
-          value: false,
-          number: "4",
-          customer: 305,
-          customer_code: 3.7,
-          address: 67,
-          exponent: 4.3,
-          call_number: "8%"
-        },
-        {
-          value: false,
-          number: "5",
-          customer: 356,
-          customer_code: 16.0,
-          address: 49,
-          exponent: 3.9,
-          call_number: "16%"
-        },
-        {
-          value: false,
-          number: "6",
-          customer: 375,
-          customer_code: 0.0,
-          address: 94,
-          exponent: 0.0,
-          call_number: "0%"
-        },
-        {
-          value: false,
-          number: "7",
-          customer: 392,
-          customer_code: 0.2,
-          address: 98,
-          exponent: 0,
-          call_number: "2%"
-        },
-        {
-          value: false,
-          number: "8",
-          customer: 408,
-          customer_code: 3.2,
-          address: 87,
-          exponent: 6.5,
-          call_number: "45%"
-        },
-        {
-          value: false,
-          number: "9",
-          customer: 452,
-          customer_code: 25.0,
-          address: 51,
-          exponent: 4.9,
-          call_number: "22%"
-        },
-        {
-          value: false,
-          number: "10",
-          customer: 518,
-          customer_code: 26.0,
-          address: 65,
-          exponent: 7,
-          call_number: "6%"
-        },
-        {
-          value: false,
-          number: "11",
-          customer: 159,
-          customer_code: 6.0,
-          address: 24,
-          exponent: 4.0,
-          call_number: "1%"
-        },
-        {
-          value: false,
-          number: "12",
-          customer: 237,
-          customer_code: 9.0,
-          address: 37,
-          exponent: 4.3,
-          call_number: "1%"
-        },
-        {
-          value: false,
-          number: "13",
-          customer: 262,
-          customer_code: 16.0,
-          address: 23,
-          exponent: 6.0,
-          call_number: "7%"
-        },
-        {
-          value: false,
-          number: "14",
-          customer: 305,
-          customer_code: 3.7,
-          address: 67,
-          exponent: 4.3,
-          call_number: "8%"
-        },
-        {
-          value: false,
-          number: "15",
-          customer: 356,
-          customer_code: 16.0,
-          address: 49,
-          exponent: 3.9,
-          call_number: "16%"
-        },
-        {
-          value: false,
-          number: "16",
-          customer: 375,
-          customer_code: 0.0,
-          address: 94,
-          exponent: 0.0,
-          call_number: "0%"
-        },
-        {
-          value: false,
-          number: "17",
-          customer: 392,
-          customer_code: 0.2,
-          address: 98,
-          exponent: 0,
-          call_number: "2%"
-        },
-        {
-          value: false,
-          number: "18",
-          customer: 408,
-          customer_code: 3.2,
-          address: 87,
-          exponent: 6.5,
-          call_number: "45%"
-        },
-        {
-          value: false,
-          number: "19",
-          customer: 452,
-          customer_code: 25.0,
-          address: 51,
-          exponent: 4.9,
-          call_number: "22%"
-        },
-        {
-          value: false,
-          number: "20",
-          customer: 518,
-          customer_code: 26.0,
-          address: 65,
-          exponent: 7,
-          call_number: "6%"
-        }
-      ],
-      logins: []
+      logs: []
     };
   },
   computed: {
@@ -566,29 +189,63 @@ export default {
       )
         return 0;
 
-      return Math.ceil(
-        this.pagination.totalItems / this.pagination.rowsPerPage
-      );
+      return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
   },
   updated() {
-    let update_total = this.$children[0].$children[1].searchLength;
-    // console.log(this.$children[0].$children[1].searchLength);
-    // console.log(update_total);
-    this.total = update_total;
+    this.getTotal();
   },
   mounted() {
-    this.$store.dispatch(Constant.FETCH_ACCOUNT_LOG).then(resp => {
-      this.logins = resp.data.logins;
-      console.log("this.logins :", this.logins);
-      // console.log("this.logins.length :", this.logins.length);
-      this.total = this.logins.length;
-    });
+    this.getDatas();
   },
   methods: {
+    getDatas() {
+      let today = new Date();
+      let dd = today.getDate();
+      let mm = today.getMonth() + 1;
+      let yyyy = today.getFullYear();
+
+      if (dd < 10) {
+        dd = "0" + dd;
+      }
+
+      if (mm < 10) {
+        mm = "0" + mm;
+      }
+      today = yyyy + "-" + mm + "-" + dd;
+
+      this.date_start = today;
+      this.date_finish = today;
+      // this.queryDateToday = today;
+
+      this.$store
+        .dispatch(Constant.FETCH_ACCOUNT_LOG, {
+          start: "2018-07-01",
+          end: "2018-07-15"
+        })
+        .then(resp => {
+          this.logs = resp.data.logs;
+          console.log("this.logs :", this.logs);
+          this.total = this.logs.length;
+        });
+    },
+    getTotal() {
+      let update_total = this.$children[0].$children[1].searchLength;
+      this.total = update_total;
+
+      let page = document.getElementsByClassName("v-select__selection");
+      let pageActive = document.getElementsByClassName(
+        "v-pagination__item--active"
+      );
+      let pageText = page[0].innerText;
+      let pageActiveText = pageActive[0].innerText;
+      let pageNum = pageActiveText - 1;
+      let calPage = pageNum * pageText;
+      this.total_index = calPage;
+    },
     toggleAll() {
       if (this.selected.length) this.selected = [];
-      else this.selected = this.apps.slice();
+      else this.selected = this.logs.slice();
     },
     changeSort(column) {
       if (this.pagination.sortBy === column) {

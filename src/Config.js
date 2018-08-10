@@ -1,5 +1,6 @@
 var BASE_URL =
     "http://brandsaferapi-env-2.bkktdgvb3w.ap-northeast-2.elasticbeanstalk.com/api/v1.0";
+// var BASE_URL = "http://localhost:5000/api/v1.0";
 
 export default {
     PAGESIZE: 5,
@@ -55,7 +56,7 @@ export default {
     UPDATE_USER: ` ${BASE_URL}/users/\${uid}`,
     DELETE_USER: `${BASE_URL}/users/\${uid}`,
 
-    FETCH_ACCOUNT_LOG: `${BASE_URL}/admin/access`, // query, page
+    FETCH_ACCOUNT_LOG: `${BASE_URL}/admin/access/`, // query, page
 
     // 권한관리 서버와 의논 필요
 

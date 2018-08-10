@@ -102,6 +102,17 @@
           </tr>
         </template>
       </v-data-table>
+      <div class="v-datatable__actions">
+        <span>per page :</span>
+        <div class="v-datatable__actions__select">          
+          <select v-model="pagination.rowsPerPage">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="-1">All</option>
+          </select>
+        </div>
+      </div>
 
 
 
@@ -223,7 +234,7 @@ export default {
       total_index: "",
       selected: [],
       headers: [
-        { text: "idx", align: "left", value: "idx", sortable: false },
+        { text: "번호", align: "left", value: "idx", sortable: false },
         {
           text: "companyName",
           align: "left",
@@ -282,31 +293,42 @@ export default {
   //   }
   // },
   updated() {
+    // let update_total = this.$children[0].$children[1].searchLength;
+    // this.total = update_total;
     this.getTotal();
   },
   mounted() {
     this.getDatas();
+    // console.log(
+    //   "this.$children[0].$children[4] :",
+    //   this.$children[0].$children[4].value
+    // );
   },
   methods: {
     getDatas() {
       this.$store.dispatch(Constant.FETCH_ADMIN_APP).then(resp => {
         this.apps = resp.data.apps;
         this.total = this.apps.length;
-        console.log("apps :", this.apps);
       });
     },
     getTotal() {
+      // let page = document.getElementsByClassName("v-select__selection");
+      // let pageActive = document.getElementsByClassName(
+      //   "v-pagination__item--active"
+      // );
+      // let pageText = page[0].innerText;
+      // let pageActiveText = pageActive[0].innerText;
+      // let pageNum = pageActiveText - 1;
+      // let calPage = pageNum * pageText;
+      // this.total_index = calPage;
       let update_total = this.$children[0].$children[1].searchLength;
       this.total = update_total;
 
-      let page = document.getElementsByClassName("v-select__selection");
-      let pageActive = document.getElementsByClassName(
-        "v-pagination__item--active"
-      );
-      let pageText = page[0].innerText;
-      let pageActiveText = pageActive[0].innerText;
-      let pageNum = pageActiveText - 1;
-      let calPage = pageNum * pageText;
+      let pageNum = this.$children[0].$children[3].value - 1;
+      console.log("pageNum :", pageNum);
+      let pageActiveText = this.$children[0].$children[1].$children[1].value;
+      console.log("pageActiveText :", pageActiveText);
+      let calPage = pageNum * pageActiveText;
       this.total_index = calPage;
     },
     showEditModal(e) {
