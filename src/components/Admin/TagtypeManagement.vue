@@ -319,7 +319,6 @@ export default {
       });
     },
     deleteDatas() {
-      console.log("this :", this.selected[0].idx);
       for (let item in this.selected) {
         this.$store
           .dispatch(Constant.DELETE_TAG_TYPE, this.selected[item].idx)

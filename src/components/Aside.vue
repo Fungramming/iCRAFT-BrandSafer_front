@@ -44,17 +44,43 @@
               <span class="switch step1">Dashboard</span>
           </router-link>
         </li>
-        <li v-show="tabList.tabB" @click="isActived">
+        <li v-show="tabList.tabB" class="expandable" @click="isActived">
           <router-link :to="{ name: 'certList' }" name="certList" class="tab-btn" >
               <v-icon>label</v-icon>
               <span class="switch step1">제품</span>
+              <v-icon class="plus">keyboard_arrow_down</v-icon>
           </router-link>
+          <ul class="sub-tab">
+            <li>
+              <router-link :to="{ name: 'certList'}" name="certList" class="tab-btn" >
+                  <span class="switch step2">제품인증 조회</span>
+              </router-link>
+            </li>
+            <li>
+              <router-link :to="{ name: 'certMap'}" name="certMap" class="tab-btn" >
+                  <span class="switch step2">제품인증 지도</span>
+              </router-link>
+            </li>
+          </ul>
         </li>
-        <li v-show="tabList.tabC" @click="isActived">
+        <li v-show="tabList.tabC" class="expandable" @click="isActived">
           <router-link :to="{ name: 'appv' }" name="appv" class="tab-btn" >
               <v-icon>public</v-icon>
               <span class="switch step1">App</span>
+              <v-icon class="plus">keyboard_arrow_down</v-icon>
           </router-link>
+          <ul class="sub-tab">
+            <li>
+              <router-link :to="{ name: 'releaseInfo'}" name="releaseInfo" class="tab-btn" >
+                  <span class="switch step2">App 출시정보</span>
+              </router-link>
+            </li>
+            <li>
+              <router-link :to="{ name: 'lookup'}" name="lookup" class="tab-btn" >
+                  <span class="switch step2">App 조회</span>
+              </router-link>
+            </li>
+          </ul>
         </li>
         <li v-show="tabList.tabD" class="expandable" @click="isActived">
           <router-link to="" name="admin" class="tab-btn">

@@ -107,11 +107,12 @@ export default {
   methods: {
     fetchLiveData() {
       this.$store.dispatch(Constant.FETCH_LIVE_STATUS).then(resp => {
-        console.log("resp :", resp);
+        console.log("dash 1 :", resp);
       });
     },
     fetchData() {
       this.$store.dispatch(Constant.FETCH_MONTHLY_STATUS).then(resp => {
+        console.log("dash 2p :", resp);
         let box = resp.data.status;
 
         // FIRST and LAST DAY
