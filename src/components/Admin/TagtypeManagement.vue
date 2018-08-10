@@ -326,6 +326,10 @@ export default {
             this.getDatas();
           });
       }
+      this.$store.commit(Constant.SHOW_MODAL, {
+        isModal: true,
+        modalText: "삭제 되었습니다."
+      });
     },
     showModal() {
       this.$modal.show("tagtype");
