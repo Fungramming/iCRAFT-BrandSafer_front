@@ -99,10 +99,13 @@
       <modal :width="modal_size" :height="modal_size" name="tagtype" transition="pop-out">
         <v-card tile>
           <v-toolbar card dark color="primary">
+            <v-btn icon dark @click.native="closeModal">
+              <v-icon>close</v-icon>
+            </v-btn>
             <v-toolbar-title>태그타입 관리</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-              <v-btn dark flat @click.stop="submit">등록</v-btn>
+              <v-btn dark flat @click.stop="addDatas">등록</v-btn>
             </v-toolbar-items>
           </v-toolbar>
           <div class="card-left">
@@ -160,6 +163,9 @@
       <modal :width="modal_size" :height="modal_size" name="tagtype_edit" transition="pop-out">
         <v-card tile>
           <v-toolbar card dark color="primary">
+            <v-btn icon dark @click.native="closeModal">
+              <v-icon>close</v-icon>
+            </v-btn>
             <v-toolbar-title>태그타입 수정</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
@@ -296,6 +302,16 @@ export default {
     this.getDatas();
   },
   methods: {
+    addDatas() {
+      this.$store.dispatch(Constant.ADD_TAG_TYPE, this.submitData).then(() => {
+        this.getDatas();
+        this.closeModal();
+        this.$store.commit(Constant.SHOW_MODAL, {
+          isModal: true,
+          modalText: "등록 되었습니다."
+        });
+      });
+    },
     getDatas() {
       this.$store.dispatch(Constant.FETCH_TAG_TYPE).then(resp => {
         this.tag_type = resp.data.tag_type.reverse();
@@ -304,6 +320,10 @@ export default {
     },
     showModal() {
       this.$modal.show("tagtype");
+    },
+    closeModal() {
+      let vModal = this.$children[1];
+      vModal.visible = false;
     },
     showEditModal(e) {
       this.$modal.show("tagtype_edit");
@@ -330,11 +350,6 @@ export default {
         this.pagination.sortBy = column;
         this.pagination.descending = false;
       }
-    },
-    submit() {
-      this.$store.dispatch(Constant.ADD_TAG_TYPE, this.submitData).then(() => {
-        console.log("11 :", 11);
-      });
     }
   }
 };

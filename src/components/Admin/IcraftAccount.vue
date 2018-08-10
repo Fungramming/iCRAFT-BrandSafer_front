@@ -222,6 +222,9 @@
       <modal :width="modal_size" :height="modal_size_height" name="account_edit" transition="pop-out">
         <v-card tile>
         <v-toolbar card dark color="primary">
+          <v-btn icon dark @click.native="closeModal">
+            <v-icon>close</v-icon>
+          </v-btn>
           <v-toolbar-title>iCraft 수정</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>

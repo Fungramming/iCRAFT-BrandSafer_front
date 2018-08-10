@@ -106,7 +106,9 @@ export default {
   },
   methods: {
     fetchLiveData() {
-      this.$store.dispatch(Constant.FETCH_LIVE_STATUS).then(() => {});
+      this.$store.dispatch(Constant.FETCH_LIVE_STATUS).then(resp => {
+        console.log("resp :", resp);
+      });
     },
     fetchData() {
       this.$store.dispatch(Constant.FETCH_MONTHLY_STATUS).then(resp => {

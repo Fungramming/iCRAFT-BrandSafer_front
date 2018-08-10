@@ -58,7 +58,7 @@
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
-        item-key="app_name"
+        item-key="idx"
         select-all
         class="elevation-1"
       >

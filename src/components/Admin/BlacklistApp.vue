@@ -52,7 +52,6 @@
       ></v-text-field>
       </v-card-title>
 
-
       <v-data-table
         :headers="headers"
         :items="blacklists"
@@ -136,6 +135,9 @@
       <modal :width="modal_size" :height="modal_size" name="blacklist" transition="pop-out">
         <v-card tile>
         <v-toolbar card dark color="primary">
+          <v-btn icon dark @click.native="closeModal">
+            <v-icon>close</v-icon>
+          </v-btn>
           <v-toolbar-title>블랙리스트 App</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
@@ -235,6 +237,11 @@ export default {
         .then(resp => {
           console.log("resp :", resp);
           this.getDatas();
+          this.closeModal();
+          this.$store.commit(Constant.SHOW_MODAL, {
+            isModal: true,
+            modalText: "등록 되었습니다."
+          });
         })
         .catch(err => {
           console.log("err :", err);
@@ -248,6 +255,10 @@ export default {
     },
     showModal() {
       this.$modal.show("blacklist");
+    },
+    closeModal() {
+      let vModal = this.$children[1];
+      vModal.visible = false;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

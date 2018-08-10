@@ -32,11 +32,13 @@ export default {
   },
   mounted() {
     this.liveStatus = this.$store.state.liveStatus;
+    console.log("this.$store.state.liveStatus :", this.$store.state.liveStatus);
     this.makeChartData();
   },
   methods: {
     makeChartData: function() {
       let box = this.liveStatus.status;
+      console.log("box :", box);
       for (let item in box) {
         let time = item.split(" ")[1];
         let obj = {

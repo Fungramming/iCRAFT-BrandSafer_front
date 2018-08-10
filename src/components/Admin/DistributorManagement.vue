@@ -112,10 +112,13 @@
       <modal :width="modal_size" :height="modal_size" name="distributors" transition="pop-out">
         <v-card tile>
         <v-toolbar card dark color="primary">
+          <v-btn icon dark @click.native="closeModal">
+            <v-icon>close</v-icon>
+          </v-btn>
           <v-toolbar-title>유통업체 관리</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click="submit">등록</v-btn>
+            <v-btn dark flat @click="addDatas">등록</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <div class="card-left">
@@ -166,6 +169,9 @@
       <modal :width="modal_size" :height="modal_size" name="distributors_edit" transition="pop-out">
         <v-card tile>
         <v-toolbar card dark color="primary">
+          <v-btn icon dark @click.native="closeModal">
+            <v-icon>close</v-icon>
+          </v-btn>
           <v-toolbar-title>유통업체 수정</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
@@ -298,6 +304,18 @@ export default {
     this.getCompanyList();
   },
   methods: {
+    addDatas() {
+      this.$store
+        .dispatch(Constant.ADD_DISTRIBUTOR, this.submitData)
+        .then(() => {
+          this.getDatas();
+          this.closeModal();
+          this.$store.commit(Constant.SHOW_MODAL, {
+            isModal: true,
+            modalText: "등록 되었습니다."
+          });
+        });
+    },
     getCompanyList() {
       this.$store.dispatch(Constant.FETCH_COMPANY).then(resp => {
         let box = resp.data.company;
@@ -337,6 +355,10 @@ export default {
     showModal() {
       this.$modal.show("distributors");
     },
+    closeModal() {
+      let vModal = this.$children[1];
+      vModal.visible = false;
+    },
     showEditModal(e) {
       this.$modal.show("distributors_edit");
 
@@ -361,13 +383,6 @@ export default {
         this.pagination.sortBy = column;
         this.pagination.descending = false;
       }
-    },
-    submit() {
-      this.$store
-        .dispatch(Constant.ADD_DISTRIBUTOR, this.submitData)
-        .then(resp => {
-          console.log("resp :", resp);
-        });
     }
   }
 };
