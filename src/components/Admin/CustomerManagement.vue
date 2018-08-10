@@ -100,6 +100,9 @@
       <modal :width="modal_size" :height="modal_size_height" name="customer" transition="pop-out">
         <v-card tile>
         <v-toolbar card dark color="primary">
+          <v-btn icon dark @click.native="closeModal">
+            <v-icon>close</v-icon>
+          </v-btn>
           <v-toolbar-title>고객사 등록</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
@@ -221,7 +224,7 @@
                 <input v-model="midNum_ragi" class="input-text input-tri" type="tel" maxlength="2">
                 <input v-model="lastNum_ragi" class="input-text input-tri" type="tel" maxlength="5">
               </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
+              <!-- <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">사업자등록증
                   <span class="text-danger">*</span>
                 </label>
@@ -234,20 +237,20 @@
                 </label>
                 <input class="input-file" type="file" required="required">
                 <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-flex>
+              </v-flex> -->
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">URL
                   <span class="text-danger">*</span>
                 </label>
                 <input v-model="submitData.url" class="input-text" type="text" required="required">
               </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
+              <!-- <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">TnT로고이미지
                   <span class="text-danger">*</span>
                 </label>
                 <input class="input-file" type="file" required="required">
                 <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-flex>
+              </v-flex> -->
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">설명(한국어)
                   <span class="text-danger">*</span>
@@ -296,6 +299,9 @@
       <modal :width="modal_size" :height="modal_size_height" name="customer_edit" transition="pop-out">
         <v-card tile>
         <v-toolbar card dark color="primary">
+          <v-btn icon dark @click.native="closeModal">
+            <v-icon>close</v-icon>
+          </v-btn>
           <v-toolbar-title>고객사 수정</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
@@ -341,59 +347,11 @@
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">전화번호</label>
-                <span class="selectbox">
-                  <select id="telephone1" v-model="selected_telephone" class="form-control" name="telephone1">
-                    <option value="02">02</option>
-                    <option value="031">031</option>
-                    <option value="032">032</option>
-                    <option value="033">033</option>
-                    <option value="041">041</option>
-                    <option value="042">042</option>
-                    <option value="043">043</option>
-                    <option value="044">044</option>
-                    <option value="051">051</option>
-                    <option value="052">052</option>
-                    <option value="053">053</option>
-                    <option value="054">054</option>
-                    <option value="055">055</option>
-                    <option value="061">061</option>
-                    <option value="062">062</option>
-                    <option value="063">063</option>
-                    <option value="064">064</option>
-                    <option value="070">070</option>
-                    <option value="080">080</option>
-                  </select>
-                </span>
-                <input v-model="selected_telephone_1" class="input-text input-tel" type="tel" maxlength="4">
-                <input v-model="selected_telephone_2" class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="updateData.telephone" class="input-text" type="tel" maxlength="13">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">팩스번호</label>
-                <span class="selectbox">
-                  <select id="telephone1" v-model="selected_fax" class="form-control" name="telephone1">
-                    <option value="02">02</option>
-                    <option value="031">031</option>
-                    <option value="032">032</option>
-                    <option value="033">033</option>
-                    <option value="041">041</option>
-                    <option value="042">042</option>
-                    <option value="043">043</option>
-                    <option value="044">044</option>
-                    <option value="051">051</option>
-                    <option value="052">052</option>
-                    <option value="053">053</option>
-                    <option value="054">054</option>
-                    <option value="055">055</option>
-                    <option value="061">061</option>
-                    <option value="062">062</option>
-                    <option value="063">063</option>
-                    <option value="064">064</option>
-                    <option value="070">070</option>
-                    <option value="080">080</option>
-                  </select>
-                </span>
-                <input v-model="selected_fax_1" class="input-text input-tel" type="tel" maxlength="4">
-                <input v-model="selected_fax_2" class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="updateData.fax" class="input-text" type="tel" maxlength="13">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">대표자(한국어)
@@ -414,11 +372,8 @@
                   <span class="text-danger">*</span>
                 </label>
                 <input v-model="updateData.registrationNumber" class="input-text" type="text">
-                <!-- <input class="input-text input-tri" type="tel">
-                <input class="input-text input-tri" type="tel">
-                <input class="input-text input-tri" type="tel"> -->
               </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
+              <!-- <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">사업자등록증
                   <span class="text-danger">*</span>
                 </label>
@@ -431,20 +386,20 @@
                 </label>
                 <input class="input-file" type="file" required="required">
                 <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-flex>
+              </v-flex> -->
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">URL
                   <span class="text-danger">*</span>
                 </label>
                 <input v-model="updateData.url" class="input-text" type="text" required="required">
               </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
+              <!-- <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">TnT로고이미지
                   <span class="text-danger">*</span>
                 </label>
                 <input class="input-file" type="file" required="required">
                 <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-flex>
+              </v-flex> -->
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">설명(한국어)
                   <span class="text-danger">*</span>
@@ -540,27 +495,6 @@ export default {
 
       // For edit modal
       selected_index: "",
-      // selected_code: "",
-      // selected_name_kr: "",
-      // selected_name_en: "",
-      // selected_name_zh: "",
-      // selected_addr_kr: "",
-      // selected_addr_en: "",
-      // selected_addr_zh: "",
-      selected_fax: "",
-      selected_fax_1: "",
-      selected_fax_2: "",
-      selected_telephone: "",
-      selected_telephone_1: "",
-      selected_telephone_2: "",
-      // selected_delegator_kr: "",
-      // selected_delegator_en: "",
-      // selected_delegator_zh: "",
-      // selected_description_kr: "",
-      // selected_description_en: "",
-      // selected_description_zh: "",
-      // selected_url: "",
-      // selected_registrationNumber: "",
 
       // For submit
       firstNum_tel: "",
@@ -572,16 +506,6 @@ export default {
       firstNum_ragi: "",
       midNum_ragi: "",
       lastNum_ragi: "",
-
-      firstNum_tel_u: "",
-      midNum_tel_u: "",
-      lastNum_tel_u: "",
-      firstNum_fax_u: "",
-      midNum_fax_u: "",
-      lastNum_fax_u: "",
-      firstNum_ragi_u: "",
-      midNum_ragi_u: "",
-      lastNum_ragi_u: "",
 
       // add
       submitData: {
@@ -604,10 +528,10 @@ export default {
         name_en: "",
         name_kr: "",
         name_zh: "",
-        note: "",
+        note: "1",
         registrant: this.$store.state.user.modifier,
         registrationNumber: "",
-        state: "",
+        state: "Registered",
         telephone: "",
         tntLogoImgUrl: "",
         url: ""
@@ -633,10 +557,10 @@ export default {
         name_en: "",
         name_kr: "",
         name_zh: "",
-        note: "",
+        note: "1",
         registrant: this.$store.state.user.modifier,
         registrationNumber: "",
-        state: "",
+        state: "Registered",
         telephone: "",
         tntLogoImgUrl: "",
         url: ""
@@ -668,26 +592,6 @@ export default {
       this.submitData.registrationNumber =
         this.firstNum_ragi + this.midNum_ragi + this.lastNum_ragi;
     }
-    if (this.firstNum_tel_u && this.midNum_tel_u && this.lastNum_tel_u) {
-      this.updateData.telephone =
-        this.firstNum_tel_u +
-        "-" +
-        this.midNum_tel_u +
-        "-" +
-        this.lastNum_tel_u;
-    }
-    if (this.firstNum_fax_u && this.midNum_fax_u && this.lastNum_fax_u) {
-      this.updateData.fax =
-        this.firstNum_fax_u +
-        "-" +
-        this.midNum_fax_u +
-        "-" +
-        this.lastNum_fax_u;
-    }
-    if (this.firstNum_ragi_u && this.midNum_ragi_u && this.lastNum_ragi_u) {
-      this.updateData.registrationNumber =
-        this.firstNum_ragi_u + this.midNum_ragi_u + this.lastNum_ragi_u;
-    }
   },
   mounted() {
     this.getDatas();
@@ -703,6 +607,11 @@ export default {
         .then(resp => {
           console.log("resp :", resp);
           this.getDatas();
+          this.closeModal();
+          this.$store.commit(Constant.SHOW_MODAL, {
+            isModal: true,
+            modalText: "등록 되었습니다."
+          });
         })
         .catch(err => {
           console.log("err :", err);
@@ -735,11 +644,10 @@ export default {
       // for (let item in modalWrap) {
       //   console.log("item :", modalWrap[item]);
       // }
-      // // modalWrap.childNodes.className = "overflow";
-      // // modalWrap.childNodes.style.overflow = "scroll";
-      // modalWrap.classList.add("overflow");
-      // console.log("modalWrap.style.overflow :", modalWrap.style);
-      // modalWrap.style.overflow = "scroll";
+    },
+    closeModal() {
+      let vModal = this.$children[1];
+      vModal.visible = false;
     },
     showEditModal(e) {
       this.$modal.show("customer_edit");
@@ -759,14 +667,14 @@ export default {
       this.updateData.delegator_kr = e.path[2].children[5].innerText;
 
       this.updateData.telephone = e.path[2].children[6].innerText;
-      let telephone = this.selected_telephone.split("-");
-      this.selected_telephone_1 = telephone[1];
-      this.selected_telephone_2 = telephone[2];
+      // let telephone = this.selected_telephone.split("-");
+      // this.selected_telephone_1 = telephone[1];
+      // this.selected_telephone_2 = telephone[2];
 
       this.updateData.fax = this.customers[this.selected_index].fax;
-      let fax = this.selected_fax.split("-");
-      this.selected_fax_1 = fax[1];
-      this.selected_fax_2 = fax[2];
+      // let fax = this.selected_fax.split("-");
+      // this.selected_fax_1 = fax[1];
+      // this.selected_fax_2 = fax[2];
 
       this.updateData.description_kr = this.customers[
         this.selected_index
