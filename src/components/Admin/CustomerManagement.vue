@@ -368,7 +368,7 @@
                 <input v-model="updateData.delegator_zh" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title input-mr">사업자등록번호
+                <label class="input-title">사업자등록번호
                   <span class="text-danger">*</span>
                 </label>
                 <input v-model="updateData.registrationNumber" class="input-text" type="text">
@@ -595,10 +595,6 @@ export default {
   },
   mounted() {
     this.getDatas();
-    console.log(
-      "this.$store.state.user.modifier :",
-      this.$store.state.user.modifier
-    );
   },
   methods: {
     addDatas() {
@@ -647,22 +643,26 @@ export default {
     },
     closeModal() {
       let vModal = this.$children[1];
-      vModal.visible = false;
+      let vModalEdit = this.$children[2];
+
+      if (vModal.visible) vModal.visible = false;
+      else if (vModalEdit.visible) vModalEdit.visible = false;
     },
     showEditModal(e) {
       this.$modal.show("customer_edit");
 
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
+      console.log('this.$children :', this.$children[0].$children[1].filteredItems[this.selected_index]);
 
       this.updateData.code = e.path[2].children[3].innerText;
       this.updateData.name_kr = e.path[2].children[2].innerText;
       // this.selected_name_kr = e.path[2].children[2].innerText;
-      this.updateData.name_en = this.customers[this.selected_index].name_en;
-      this.updateData.name_zh = this.customers[this.selected_index].name_zh;
+      this.updateData.name_en = this.$children[0].$children[1].filteredItems[this.selected_index].name_en;
+      this.updateData.name_zh = this.$children[0].$children[1].filteredItems[this.selected_index].name_zh;
 
       this.updateData.addr_kr = e.path[2].children[4].innerText;
-      this.updateData.addr_en = this.customers[this.selected_index].addr_en;
-      this.updateData.addr_zh = this.customers[this.selected_index].addr_zh;
+      this.updateData.addr_en = this.$children[0].$children[1].filteredItems[this.selected_index].addr_en;
+      this.updateData.addr_zh = this.$children[0].$children[1].filteredItems[this.selected_index].addr_zh;
 
       this.updateData.delegator_kr = e.path[2].children[5].innerText;
 
@@ -671,7 +671,7 @@ export default {
       // this.selected_telephone_1 = telephone[1];
       // this.selected_telephone_2 = telephone[2];
 
-      this.updateData.fax = this.customers[this.selected_index].fax;
+      this.updateData.fax = this.$children[0].$children[1].filteredItems[this.selected_index].fax;
       // let fax = this.selected_fax.split("-");
       // this.selected_fax_1 = fax[1];
       // this.selected_fax_2 = fax[2];
@@ -696,7 +696,7 @@ export default {
         this.selected_index
       ].delegator_zh;
 
-      this.updateData.url = this.customers[this.selected_index].url;
+      this.updateData.url = this.$children[0].$children[1].filteredItems[this.selected_index].url;
       this.updateData.registrationNumber = this.customers[
         this.selected_index
       ].registrationNumber;
