@@ -118,7 +118,8 @@ export default {
     { label: "24" }
   ],
 
-  /* ========= Modal size ========= */
+  /* ========= Modal ========= */
+  SHOW_MODAL: "showModal",
   MODAL_SIZE: "80%",
   MODAL_SIZE_HEIGHT: "95%"
 };

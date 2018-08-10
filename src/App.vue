@@ -12,19 +12,20 @@
       color="primary"
       indeterminate
     ></v-progress-circular>
+    <alert-modal></alert-modal>
   </div>
 </template>
 <script>
 import { mapGetters, mapState } from "vuex";
 import { formatDate } from "./store/helper.js";
 import AsideTab from "./components/Aside.vue";
+import AlertModal from "./components/AlertModal/AlertModal.vue";
 
 export default {
-  components: { AsideTab },
+  components: { AsideTab, AlertModal },
   data() {
     return {
-      logout: false,
-      sideBar: this.$store.state.isLoading
+      logout: false
     };
   },
   computed: {

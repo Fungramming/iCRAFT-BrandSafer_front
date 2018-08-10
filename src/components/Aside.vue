@@ -74,11 +74,11 @@
                   <v-icon class="plus">keyboard_arrow_down</v-icon>
               </router-link>
               <ul class="sub-sub-tab">
-                <li @click="isActived">
+                <!-- <li @click="isActived">
                   <router-link :to="{ name: 'customerAccount'}" name="customerAccount" class="tab-btn" >
                     <span class="switch step3">고객사 계정</span>
                   </router-link>
-                </li>
+                </li> -->
                 <li @click="isActived">
                   <router-link :to="{ name: 'icraftAccount'}" name="icraftAccount" class="tab-btn" >
                     <span class="switch step3">iCraft 계정관리</span>

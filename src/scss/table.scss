@@ -3,10 +3,10 @@ $tablet: "(min-width: 601px) and (max-width: 959px)";
 // 테이블 전체를 감싸는 wrap
 .tableBs {
     .map {
-        margin: 0 0 50px 0;
+        margin: 0 0 25px 0;
         padding: 25px;
         background-color: #fff;
-        -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+        -webkit-box-shadow: 0 2px 1px -1px rgba(233, 208, 208, 0.2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
         box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
         .map-header {
             margin-bottom: 10px;
@@ -144,22 +144,67 @@ $tablet: "(min-width: 601px) and (max-width: 959px)";
             height: 130%;
         }
     }
+    .table {
+        margin-bottom: 25px;
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            .table-cell {
+                text-align: center;
+                border: 1px solid black;
+            }
+        }
+    }
+    .card-list {
+        max-height: 588px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin: 0 0 25px 0;
+        padding-bottom: 30px;
+        background-color: #fff;
+        -webkit-box-shadow: 0 2px 1px -1px rgba(233, 208, 208, 0.2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+        box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+        .container {
+            padding: 0px;
+            .layout {
+                .flex {
+                    padding: 25px 30px 0px;
+                    .v-card {
+                        .cert {
+                            padding: 0px;
+                            margin-top: 10px;
+                            .v-btn {
+                                margin: auto;
+                                height: 30px;
+                            }
+                        }
+                        .cert-date {
+                            span {
+                                margin: auto;
+                                padding-bottom: 12px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
     // table 최상위 wrap
-    .inspire {      
+    .inspire {
         background: none;
         height: 0;
         .d-flex {
-          position: relative;
-          .span-without-selectbox {
-              position: absolute;
-              top: -30px;
-              width: 100%;
-              color: #646464;
-              font-size: 14px;
-              font-weight: 600;
-              line-height: 2.2;
-              text-align: left;
-          }
+            position: relative;
+            .span-without-selectbox {
+                position: absolute;
+                top: -30px;
+                width: 100%;
+                color: #646464;
+                font-size: 14px;
+                font-weight: 600;
+                line-height: 2.2;
+                text-align: left;
+            }
         }
         .v-table {
             td {
@@ -198,6 +243,11 @@ $tablet: "(min-width: 601px) and (max-width: 959px)";
             }
             button {
                 border-radius: 5px;
+            }
+        }
+        .v-card__title {
+            .v-input {
+                margin-top: 0px;
             }
         }
     }

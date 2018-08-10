@@ -12,5 +12,9 @@ export default {
   //DashBoard
   liveStatus: {},
   weeklyStatus: {},
-  monthlyStatus: {}
+  monthlyStatus: {},
+
+  // AlertModal
+  isModal: false,
+  modalText: ""
 };

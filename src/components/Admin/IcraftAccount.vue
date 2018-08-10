@@ -94,11 +94,11 @@
     </v-app>
 
     <!-- modal -->
-    <v-flex d-flex xs12 sm12 md12>
+    <v-flex v-if="modal" d-flex xs12 sm12 md12>
       <modal :width="modal_size" :height="modal_size" name="account" transition="pop-out">
         <v-card tile>
         <v-toolbar card dark color="primary">
-          <v-btn icon dark @click.native="dialog = false">
+          <v-btn icon dark @click.native="closeModal">
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>iCraft 계정관리</v-toolbar-title>
@@ -236,7 +236,7 @@
                   <span class="text-danger">*</span>
                 </label>
                 <span class="selectbox selectbox-100">
-                  <select id="telephone1" class="form-control" name="telephone1">
+                  <select id="telephone1" ref="roleAuth" class="form-control" name="telephone1">
                     <option value="10">iCraft 관리자</option>
                     <option value="11">iCraft 사용자</option>
                   </select>
@@ -246,13 +246,13 @@
                 <label class="input-title">이름
                   <span class="text-danger">*</span>
                 </label>
-                <input :value="selected_name" class="input-text" type="text" required="required">
+                <input ref="name" :value="selected_name" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">아이디
                   <span class="text-danger">*</span>
                 </label>
-                <input :value="selected_id" class="input-text" type="text">
+                <input ref="id" :value="selected_id" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">비밀번호
@@ -347,6 +347,7 @@ import { getSelectedFunc, getTotal } from "../CompHelper.js";
 export default {
   data() {
     return {
+      modal: true,
       search: "",
       modal_size: Constant.MODAL_SIZE,
       modal_size_height: Constant.MODAL_SIZE_HEIGHT,
@@ -464,21 +465,26 @@ export default {
   },
   mounted() {
     this.getDatas();
-    console.log(
-      "this.$store.state.user.modifier :",
-      this.$store.state.user.modifier
-    );
   },
   methods: {
     addDatas() {
+      // console.log("this.$ref :", this);
+      // if (this.$ref.roleAuth) {
       this.$store
         .dispatch(Constant.ADD_ICRAFT_USER, this.submitData)
         .then(resp => {
           console.log("resp :", resp);
+          this.getDatas();
+          this.closeModal();
+          this.$store.commit(Constant.SHOW_MODAL, {
+            isModal: true,
+            modalText: "등록 되었습니다."
+          });
         })
         .catch(err => {
           console.log("err :", err);
         });
+      // }
     },
     getDatas() {
       this.$store.dispatch(Constant.FETCH_ICRAFT_USER).then(resp => {
@@ -488,6 +494,10 @@ export default {
     },
     showModal() {
       this.$modal.show("account");
+    },
+    closeModal() {
+      let vModal = this.$children[1];
+      vModal.visible = false;
     },
     showEditModal(e) {
       this.$modal.show("account_edit");
