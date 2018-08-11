@@ -79,7 +79,7 @@
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md10>
-            <v-btn color="error" dark>삭제</v-btn>
+            <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
           </v-flex>
           <v-flex d-flex xs12 sm12 md1>
             <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
@@ -192,6 +192,12 @@ export default {
     this.getDatas();
   },
   methods: {
+    getDatas() {
+      this.$store.dispatch(Constant.FETCH_BLACKLIST).then(resp => {
+        this.blacklists = resp.data.blacklists;
+        this.total = this.blacklists.length;
+      });
+    },
     addDatas() {
       this.$store
         .dispatch(Constant.ADD_BLACKLIST, this.submitData)
@@ -208,10 +214,17 @@ export default {
           console.log("err :", err);
         });
     },
-    getDatas() {
-      this.$store.dispatch(Constant.FETCH_BLACKLIST).then(resp => {
-        this.blacklists = resp.data.blacklists;
-        this.total = this.blacklists.length;
+    deleteDatas() {
+      for (let item in this.selected) {
+        this.$store
+          .dispatch(Constant.DELETE_BLACKLIST, this.selected[item].idx)
+          .then(() => {
+            this.getDatas();
+          });
+      }
+      this.$store.commit(Constant.SHOW_MODAL, {
+        isModal: true,
+        modalText: "삭제 되었습니다."
       });
     },
     showModal() {

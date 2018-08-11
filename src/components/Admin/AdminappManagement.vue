@@ -86,7 +86,7 @@
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md11>
-            <v-btn color="error" dark>삭제</v-btn>
+            <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
           </v-flex>
         </v-layout>
         <div class="text-xs-center pt-2">
@@ -201,15 +201,15 @@ export default {
       // selected_name: "",
       // selected_tel: "",
 
-      // update 
+      // update
       updateData: {
-        companyName: "", 
-        contact: "", 
-        dtModified: this.$store.state.submitTime, 
-        dtRegistered: "", 
-        modifier: "", 
-        name: "", 
-        pushToken: "", 
+        companyName: "",
+        contact: "",
+        dtModified: this.$store.state.submitTime,
+        dtRegistered: "",
+        modifier: "",
+        name: "",
+        pushToken: "",
         state: ""
       }
     };
@@ -268,6 +268,19 @@ export default {
       let calPage = pageNum * pageActiveText;
       this.total_index = calPage;
     },
+    deleteDatas() {
+      for (let item in this.selected) {
+        this.$store
+          .dispatch(Constant.DELETE_ADMIN_APP, this.selected[item].idx)
+          .then(() => {
+            this.getDatas();
+          });
+      }
+      this.$store.commit(Constant.SHOW_MODAL, {
+        isModal: true,
+        modalText: "삭제 되었습니다."
+      });
+    },
     showEditModal(e) {
       this.$modal.show("adminapp_edit");
 
@@ -281,9 +294,15 @@ export default {
       // this.selected_name = name;
       // this.selected_tel = tel;
 
-      this.updateData.companyName = this.$children[0].$children[1].filteredItems[this.selected_index].companyName;
-      this.updateData.name = this.$children[0].$children[1].filteredItems[this.selected_index].name;
-      this.updateData.contact = this.$children[0].$children[1].filteredItems[this.selected_index].contact;
+      this.updateData.companyName = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].companyName;
+      this.updateData.name = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].name;
+      this.updateData.contact = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].contact;
     },
     closeModal() {
       let vModal = this.$children[1];

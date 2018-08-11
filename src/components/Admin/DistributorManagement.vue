@@ -80,7 +80,7 @@
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md10>
-            <v-btn color="error" dark>삭제</v-btn>
+            <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
           </v-flex>
           <v-flex d-flex xs12 sm12 md1>
             <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
@@ -273,7 +273,7 @@ export default {
         rtid: "",
         state: "Registered"
       },
-      
+
       // update
       updateData: {
         companyCode: "",
@@ -288,7 +288,7 @@ export default {
         registrant: this.$store.state.user.modifier,
         rtid: "",
         state: "Registered"
-      },
+      }
     };
   },
   computed: {
@@ -310,6 +310,12 @@ export default {
     this.getCompanyList();
   },
   methods: {
+    getDatas() {
+      this.$store.dispatch(Constant.FETCH_DISTRIBUTOR).then(resp => {
+        this.distributors = resp.data.distributors.reverse();
+        this.total = this.distributors.length;
+      });
+    },
     addDatas() {
       this.$store
         .dispatch(Constant.ADD_DISTRIBUTOR, this.submitData)
@@ -325,18 +331,13 @@ export default {
     getCompanyList() {
       this.$store.dispatch(Constant.FETCH_COMPANY).then(resp => {
         let box = resp.data.company;
-        console.log('box :', box);
+        console.log("box :", box);
         for (let item in box) {
           this.companyList.push(box[item]);
         }
       });
     },
-    getDatas() {
-      this.$store.dispatch(Constant.FETCH_DISTRIBUTOR).then(resp => {
-        this.distributors = resp.data.distributors.reverse();
-        this.total = this.distributors.length;
-      });
-    },
+
     getTotal() {
       // let update_total = this.$children[0].$children[1].searchLength;
       // this.total = update_total;
@@ -359,6 +360,19 @@ export default {
       let calPage = pageNum * pageActiveText;
       this.total_index = calPage;
     },
+    deleteDatas() {
+      for (let item in this.selected) {
+        this.$store
+          .dispatch(Constant.DELETE_DISTRIBUTOR, this.selected[item].idx)
+          .then(() => {
+            this.getDatas();
+          });
+      }
+      this.$store.commit(Constant.SHOW_MODAL, {
+        isModal: true,
+        modalText: "삭제 되었습니다."
+      });
+    },
     showModal() {
       this.$modal.show("distributors");
     },
@@ -373,12 +387,20 @@ export default {
       this.$modal.show("distributors_edit");
 
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
-      
+
       this.updateData.name_kr = e.path[2].children[3].innerText;
-      this.updateData.name_en = this.$children[0].$children[1].filteredItems[this.selected_index].name_en;
-      this.updateData.name_zh = this.$children[0].$children[1].filteredItems[this.selected_index].name_zh;
-      this.updateData.note = this.$children[0].$children[1].filteredItems[this.selected_index].note;
-      this.updateData.companyCode = this.$children[0].$children[1].filteredItems[this.selected_index].companyCode;
+      this.updateData.name_en = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].name_en;
+      this.updateData.name_zh = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].name_zh;
+      this.updateData.note = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].note;
+      this.updateData.companyCode = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].companyCode;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

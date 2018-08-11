@@ -76,7 +76,7 @@ export default {
   FETCH_ADMIN_APP: `${BASE_URL}/admin/app/`,
   ADD_ADMIN_APP: `${BASE_URL}/admin/app/`,
   UPDATE_ADMIN_APP: `${BASE_URL}/admin/app/\${aid}`,
-  // DELETE_ADMIN_APP: ${BASE_URL}/admin/app/${aid},
+  DELETE_ADMIN_APP: `${BASE_URL}/admin/app/\${aid}`,
 
   FETCH_DISTRIBUTOR: `${BASE_URL}/admin/distributor/`,
   ADD_DISTRIBUTOR: `${BASE_URL}/admin/distributor/`,
@@ -85,7 +85,7 @@ export default {
 
   FETCH_TAG_TYPE: `${BASE_URL}/admin/tag-type/`,
   ADD_TAG_TYPE: `${BASE_URL}/admin/tag-type/`,
-  UPDATE_TAG_TYPE: ` ${BASE_URL}/admin/tag-type/\${tid}`,
+  UPDATE_TAG_TYPE: `${BASE_URL}/admin/tag-type/\${tid}`,
   DELETE_TAG_TYPE: `${BASE_URL}/admin/tag-type/\${tid}`
 
   // 코스토리 유통사 코드 띠용

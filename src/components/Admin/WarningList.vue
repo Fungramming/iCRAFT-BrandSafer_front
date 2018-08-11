@@ -266,6 +266,19 @@ export default {
           this.total = this.oversert.length;
         });
     },
+    deleteDatas() {
+      for (let item in this.selected) {
+        this.$store
+          .dispatch(Constant.DELETE_TAG_TYPE, this.selected[item].idx)
+          .then(() => {
+            this.getDatas();
+          });
+      }
+      this.$store.commit(Constant.SHOW_MODAL, {
+        isModal: true,
+        modalText: "삭제 되었습니다."
+      });
+    },
     toggleAll() {
       if (this.selected.length) this.selected = [];
       else this.selected = this.oversert.slice();

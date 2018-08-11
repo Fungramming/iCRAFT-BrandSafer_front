@@ -652,17 +652,28 @@ export default {
       this.$modal.show("customer_edit");
 
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
-      console.log('this.$children :', this.$children[0].$children[1].filteredItems[this.selected_index]);
+      console.log(
+        "this.$children :",
+        this.$children[0].$children[1].filteredItems[this.selected_index]
+      );
 
       this.updateData.code = e.path[2].children[3].innerText;
       this.updateData.name_kr = e.path[2].children[2].innerText;
       // this.selected_name_kr = e.path[2].children[2].innerText;
-      this.updateData.name_en = this.$children[0].$children[1].filteredItems[this.selected_index].name_en;
-      this.updateData.name_zh = this.$children[0].$children[1].filteredItems[this.selected_index].name_zh;
+      this.updateData.name_en = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].name_en;
+      this.updateData.name_zh = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].name_zh;
 
       this.updateData.addr_kr = e.path[2].children[4].innerText;
-      this.updateData.addr_en = this.$children[0].$children[1].filteredItems[this.selected_index].addr_en;
-      this.updateData.addr_zh = this.$children[0].$children[1].filteredItems[this.selected_index].addr_zh;
+      this.updateData.addr_en = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].addr_en;
+      this.updateData.addr_zh = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].addr_zh;
 
       this.updateData.delegator_kr = e.path[2].children[5].innerText;
 
@@ -671,7 +682,9 @@ export default {
       // this.selected_telephone_1 = telephone[1];
       // this.selected_telephone_2 = telephone[2];
 
-      this.updateData.fax = this.$children[0].$children[1].filteredItems[this.selected_index].fax;
+      this.updateData.fax = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].fax;
       // let fax = this.selected_fax.split("-");
       // this.selected_fax_1 = fax[1];
       // this.selected_fax_2 = fax[2];
@@ -696,7 +709,9 @@ export default {
         this.selected_index
       ].delegator_zh;
 
-      this.updateData.url = this.$children[0].$children[1].filteredItems[this.selected_index].url;
+      this.updateData.url = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].url;
       this.updateData.registrationNumber = this.customers[
         this.selected_index
       ].registrationNumber;
