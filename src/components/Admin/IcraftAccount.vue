@@ -229,7 +229,7 @@
           <v-toolbar-title>iCraft 수정</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat>수정</v-btn>
+            <v-btn dark flat @click.stop="updateDatas">수정</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <div class="card-left">
@@ -263,13 +263,13 @@
                 <label class="input-title">비밀번호
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="password" placeholder="( * 5~15자 이내의 영/숫자 조합 )" maxlength="15">
+                <input v-model="updateData.pwd" class="input-text" type="password" placeholder="( * 5~15자 이내의 영/숫자 조합 )" maxlength="15">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">비밀번호 확인
                   <span class="text-danger">*</span>
                 </label>
-                <input class="input-text" type="password" placeholder="* 비밀번호 확인" maxlength="15">
+                <input v-model="checkPwd" class="input-text" type="password" placeholder="* 비밀번호 확인" maxlength="15">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">이메일</label>
@@ -416,7 +416,7 @@ export default {
         department: "",
         // ?
         dtLastConnected: "",
-        dtModified: this.$store.state.submitTime,
+        dtModified: "",
         dtRegistered: this.$store.state.submitTime,
         email: "",
         failCount: 0,
@@ -435,6 +435,7 @@ export default {
       },
 
       // update
+      updateIndex: "",
       updateData: {
         department: "",
         // ?
@@ -444,14 +445,14 @@ export default {
         email: "",
         failCount: 0,
         id: "",
-        modifier: "",
+        modifier: this.$store.state.user.modifier,
         name: "",
         note: "",
         phone: "",
         position: "",
         // ?
         pwd: "",
-        registrant: this.$store.state.user.modifier,
+        registrant: "",
         role: "",
         state: "Registered",
         telephone: ""
@@ -469,13 +470,7 @@ export default {
       return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
   },
-  watch: {
-    checkPwd() {
-      if (this.checkPwd !== this.submitData.pwd) {
-        alert("비밀번호를 다시 확인해 주세요");
-      }
-    }
-  },
+  watch: {},
   updated() {
     getTotal(this);
     if (this.firstNum_tel && this.midNum_tel && this.lastNum_tel) {
@@ -501,6 +496,7 @@ export default {
     addDatas() {
       // console.log("this.$ref :", this);
       // if (this.$ref.roleAuth) {
+      this.checkPassword();
       this.$store
         .dispatch(Constant.ADD_ICRAFT_USER, this.submitData)
         .then(resp => {
@@ -517,6 +513,28 @@ export default {
         });
       // }
     },
+    updateDatas({ idx, user }) {
+      idx = this.updateIndex;
+      user = this.updateData;
+      console.log("idx :", idx);
+      console.log("app :", app);
+      this.$store
+        .dispatch(Constant.UPDATE_ICRAFT_USER, {
+          uid: idx,
+          user: user
+        })
+        .then(() => {
+          this.getDatas();
+          this.closeModal();
+          this.$store.commit(Constant.SHOW_MODAL, {
+            isModal: true,
+            modalText: "수정 되었습니다."
+          });
+        })
+        .catch(err => {
+          console.log("err :", err);
+        });
+    },
     getDatas() {
       this.$store.dispatch(Constant.FETCH_ICRAFT_USER).then(resp => {
         this.account = resp.data["icrf-users"].reverse();
@@ -532,6 +550,13 @@ export default {
 
       if (vModal.visible) vModal.visible = false;
       else if (vModalEdit.visible) vModalEdit.visible = false;
+    },
+    checkPassword() {
+      if (this.checkPwd !== this.submitData.pwd) {
+        alert("비밀번호를 다시 확인해 주세요");
+      } else if (this.checkPwd !== this.updateData.pwd) {
+        alert("비밀번호를 다시 확인해 주세요");
+      }
     },
     showEditModal(e) {
       this.$modal.show("account_edit");
@@ -552,6 +577,9 @@ export default {
       this.updateData.email = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].email;
+      this.updateData.pwd = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].pwd;
       // let email = this.selected_email.split("@");
       // this.selected_email_1 = email[0];
       // this.selected_email_2 = email[1];
@@ -576,9 +604,23 @@ export default {
       this.updateData.dtRegistered = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].dtRegistered;
+      this.updateData.dtModified = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].dtModified;
       this.updateData.dtLastConnected = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].dtLastConnected;
+      this.updateData.registrant = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].registrant;
+      this.updateData.modifier = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].modifier;
+
+      // find index
+      this.updateIndex = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].idx;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

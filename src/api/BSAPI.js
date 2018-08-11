@@ -220,7 +220,6 @@ export default {
     return axios.put(CONF.UPDATE_TAG_TYPE.replace("${tid}", tid), tagType);
   },
   deleteTagType(tid) {
-    console.log("tid :", tid);
     return axios.delete(CONF.DELETE_TAG_TYPE.replace("${tid}", tid));
   }
 };

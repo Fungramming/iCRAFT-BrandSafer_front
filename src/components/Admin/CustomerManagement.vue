@@ -82,7 +82,7 @@
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md10>
-            <v-btn color="error" dark>삭제</v-btn>
+            <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
           </v-flex>
           <v-flex d-flex xs12 sm12 md1>
             <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
@@ -521,10 +521,10 @@ export default {
         description_en: "",
         description_kr: "",
         description_zh: "",
-        dtModified: this.$store.state.submitTime,
+        dtModified: "",
         dtRegistered: this.$store.state.submitTime,
         fax: "",
-        modifier: this.$store.state.user.modifier,
+        modifier: "",
         name_en: "",
         name_kr: "",
         name_zh: "",
@@ -559,7 +559,7 @@ export default {
         name_kr: "",
         name_zh: "",
         note: "1",
-        registrant: this.$store.state.user.modifier,
+        registrant: "",
         registrationNumber: "",
         state: "Registered",
         telephone: "",
@@ -626,7 +626,10 @@ export default {
       console.log("idx :", idx);
       console.log("app :", app);
       this.$store
-        .dispatch(Constant.UPDATE_COMPANY, idx, app, app)
+        .dispatch(Constant.UPDATE_COMPANY, {
+          cid: idx,
+          customer: app
+        })
         .then(() => {
           // updateData = this.updateData;
           this.getDatas();
@@ -640,7 +643,20 @@ export default {
           console.log("err :", err);
         });
     },
-    deleteDatas() {},
+    deleteDatas() {
+      for (let item in this.selected) {
+        console.log("item :", item);
+        this.$store
+          .dispatch(Constant.DELETE_COMPANY, this.selected[item].idx)
+          .then(() => {
+            this.getDatas();
+          });
+      }
+      this.$store.commit(Constant.SHOW_MODAL, {
+        isModal: true,
+        modalText: "삭제 되었습니다."
+      });
+    },
     showModal() {
       this.$modal.show("customer");
     },
@@ -683,9 +699,18 @@ export default {
       this.updateData.fax = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].fax;
+      this.updateData.dtModified = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].dtModified;
       this.updateData.dtRegistered = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].dtRegistered;
+      this.updateData.modifier = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].modifier;
+      this.updateData.registrant = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].registrant;
       // let fax = this.selected_fax.split("-");
       // this.selected_fax_1 = fax[1];
       // this.selected_fax_2 = fax[2];
@@ -716,6 +741,7 @@ export default {
       this.updateData.registrationNumber = this.customers[
         this.selected_index
       ].registrationNumber;
+
       // find index
       this.updateIndex = this.$children[0].$children[1].filteredItems[
         this.selected_index
