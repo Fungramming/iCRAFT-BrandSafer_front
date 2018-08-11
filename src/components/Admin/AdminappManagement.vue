@@ -303,6 +303,9 @@ export default {
       this.updateData.contact = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].contact;
+      this.updateData.dtRegistered = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].dtRegistered;
     },
     closeModal() {
       let vModal = this.$children[1];

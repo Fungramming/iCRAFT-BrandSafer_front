@@ -161,7 +161,7 @@
           <v-toolbar-title>유통업체 수정</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat>수정</v-btn>
+            <v-btn dark flat @click.stop="updateDatas">수정</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <div class="card-left">
@@ -261,10 +261,10 @@ export default {
       // add
       submitData: {
         companyCode: "",
-        dtModified: this.$store.state.submitTime,
+        dtModified: "",
         dtRegistered: this.$store.state.submitTime,
         headerquarterYN: "Y",
-        modifier: this.$store.state.user.modifier,
+        modifier: "",
         name_en: "",
         name_kr: "",
         name_zh: "",
@@ -275,17 +275,18 @@ export default {
       },
 
       // update
+      updateIndex: "",
       updateData: {
         companyCode: "",
         dtModified: this.$store.state.submitTime,
-        dtRegistered: this.$store.state.submitTime,
+        dtRegistered: "",
         headerquarterYN: "Y",
         modifier: this.$store.state.user.modifier,
         name_en: "",
         name_kr: "",
         name_zh: "",
         note: "",
-        registrant: this.$store.state.user.modifier,
+        registrant: "",
         rtid: "",
         state: "Registered"
       }
@@ -326,6 +327,29 @@ export default {
             isModal: true,
             modalText: "등록 되었습니다."
           });
+        });
+    },
+    updateDatas({ idx, app }) {
+      idx = this.updateIndex;
+      app = this.updateData;
+      console.log("idx :", idx);
+      console.log("app :", app);
+      this.$store
+        .dispatch(Constant.UPDATE_DISTRIBUTOR, {
+          did: idx,
+          distributor: app
+        })
+        .then(() => {
+          // updateData = this.updateData;
+          this.getDatas();
+          this.closeModal();
+          this.$store.commit(Constant.SHOW_MODAL, {
+            isModal: true,
+            modalText: "수정 되었습니다."
+          });
+        })
+        .catch(err => {
+          console.log("err :", err);
         });
     },
     getCompanyList() {
@@ -401,6 +425,23 @@ export default {
       this.updateData.companyCode = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].companyCode;
+      this.updateData.dtModified = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].dtModified;
+      this.updateData.dtRegistered = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].dtRegistered;
+      this.updateData.registrant = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].registrant;
+      this.updateData.modifier = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].modifier;
+
+      // find index
+      this.updateIndex = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].idx;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

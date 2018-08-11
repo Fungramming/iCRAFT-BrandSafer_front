@@ -82,7 +82,7 @@
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md10>
-            <v-btn color="error" dark>삭제</v-btn>
+            <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
           </v-flex>
           <v-flex d-flex xs12 sm12 md1>
             <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
@@ -305,7 +305,7 @@
           <v-toolbar-title>고객사 수정</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat>수정</v-btn>
+            <v-btn dark flat @click.stop="updateDatas">수정</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <div class="card-left">
@@ -521,10 +521,10 @@ export default {
         description_en: "",
         description_kr: "",
         description_zh: "",
-        dtModified: this.$store.state.submitTime,
+        dtModified: "",
         dtRegistered: this.$store.state.submitTime,
         fax: "",
-        modifier: this.$store.state.user.modifier,
+        modifier: "",
         name_en: "",
         name_kr: "",
         name_zh: "",
@@ -537,6 +537,7 @@ export default {
         url: ""
       },
       // update
+      updateIndex: "",
       updateData: {
         addr_en: "",
         addr_kr: "",
@@ -551,14 +552,14 @@ export default {
         description_kr: "",
         description_zh: "",
         dtModified: this.$store.state.submitTime,
-        dtRegistered: this.$store.state.submitTime,
+        dtRegistered: "",
         fax: "",
         modifier: this.$store.state.user.modifier,
         name_en: "",
         name_kr: "",
         name_zh: "",
         note: "1",
-        registrant: this.$store.state.user.modifier,
+        registrant: "",
         registrationNumber: "",
         state: "Registered",
         telephone: "",
@@ -619,27 +620,45 @@ export default {
         this.total = this.customers.length;
       });
     },
-    // getTotal() {
-    //   let update_total = this.$children[0].$children[1].searchLength;
-    //   this.total = update_total;
-
-    //   let page = document.getElementsByClassName("v-select__selection");
-    //   let pageActive = document.getElementsByClassName(
-    //     "v-pagination__item--active"
-    //   );
-    //   let pageText = page[0].innerText;
-    //   let pageActiveText = pageActive[0].innerText;
-    //   let pageNum = pageActiveText - 1;
-    //   let calPage = pageNum * pageText;
-    //   this.total_index = calPage;
-    // },
+    updateDatas({ idx, app }) {
+      idx = this.updateIndex;
+      app = this.updateData;
+      console.log("idx :", idx);
+      console.log("app :", app);
+      this.$store
+        .dispatch(Constant.UPDATE_COMPANY, {
+          cid: idx,
+          customer: app
+        })
+        .then(() => {
+          // updateData = this.updateData;
+          this.getDatas();
+          this.closeModal();
+          this.$store.commit(Constant.SHOW_MODAL, {
+            isModal: true,
+            modalText: "수정 되었습니다."
+          });
+        })
+        .catch(err => {
+          console.log("err :", err);
+        });
+    },
+    deleteDatas() {
+      for (let item in this.selected) {
+        console.log("item :", item);
+        this.$store
+          .dispatch(Constant.DELETE_COMPANY, this.selected[item].idx)
+          .then(() => {
+            this.getDatas();
+          });
+      }
+      this.$store.commit(Constant.SHOW_MODAL, {
+        isModal: true,
+        modalText: "삭제 되었습니다."
+      });
+    },
     showModal() {
       this.$modal.show("customer");
-      // let modalWrap = document.getElementsByClassName("v--modal-box v--modal");
-      // console.log("modalWrap :", typeof modalWrap);
-      // for (let item in modalWrap) {
-      //   console.log("item :", modalWrap[item]);
-      // }
     },
     closeModal() {
       let vModal = this.$children[1];
@@ -650,12 +669,7 @@ export default {
     },
     showEditModal(e) {
       this.$modal.show("customer_edit");
-
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
-      console.log(
-        "this.$children :",
-        this.$children[0].$children[1].filteredItems[this.selected_index]
-      );
 
       this.updateData.code = e.path[2].children[3].innerText;
       this.updateData.name_kr = e.path[2].children[2].innerText;
@@ -685,6 +699,18 @@ export default {
       this.updateData.fax = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].fax;
+      this.updateData.dtModified = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].dtModified;
+      this.updateData.dtRegistered = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].dtRegistered;
+      this.updateData.modifier = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].modifier;
+      this.updateData.registrant = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].registrant;
       // let fax = this.selected_fax.split("-");
       // this.selected_fax_1 = fax[1];
       // this.selected_fax_2 = fax[2];
@@ -715,6 +741,11 @@ export default {
       this.updateData.registrationNumber = this.customers[
         this.selected_index
       ].registrationNumber;
+
+      // find index
+      this.updateIndex = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].idx;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];
