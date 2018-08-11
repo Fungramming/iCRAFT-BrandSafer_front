@@ -10,28 +10,28 @@
       clipped-right
     >
       <v-toolbar-side-icon class="hamBtn"  @click.stop="clickToggle"></v-toolbar-side-icon>
-      <h2 class="component-title">{{compTitle}}</h2>
-      <!-- <v-btn class="logOutBtn" slot="activator" fixed flat @click.stop="logout" >
-        <v-icon >
-          exit_to_app
-        </v-icon>
-      </v-btn> -->     
+      <h2 class="component-title">{{compTitle}}</h2>   
     </v-toolbar>
-     <v-dialog v-model="dialog" class="logout-modal" persistent max-width="290">
-      <v-btn slot="activator" class="logOutBtn" fixed flat>
+    <div class="logout-modal">
+      <v-btn slot="activator" class="logOutBtn" fixed flat @click.stop="showModal">
         <v-icon >
           exit_to_app
         </v-icon>
       </v-btn>
-      <v-card>
-        <v-card-title class="headline">로그아웃 하시겠습니까?</v-card-title>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="green darken-1" flat @click.native="logout">로그아웃</v-btn>
-          <v-btn color="green darken-1" flat @click.native="dialog = false">취소</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+      <modal :width="300" :height="150" name="blacklist" transition="pop-out">
+        <v-card>
+          <div class="modal-header">
+            <img src="../assets/logo_small.png" alt="">
+          </div>
+          <p>로그아웃 하시겠습니까?</p>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" flat @click.native="logout">로그아웃</v-btn>
+            <v-btn color="green darken-1" flat @click.native="closeModal">취소</v-btn>
+          </v-card-actions>
+        </v-card>
+      </modal>
+    </div>
     <div class="side-bar active" @mouseover="hoverToggle">
       <div class="header">
         <img src="../assets/logo_small.png" alt="">
@@ -187,6 +187,14 @@ export default {
     this.defaultTab();
   },
   methods: {
+    showModal() {
+      this.$modal.show("blacklist");
+    },
+    closeModal() {
+      let vModal = this.$children[2];
+      console.log("vModal :", vModal);
+      vModal.visible = false;
+    },
     logout: function() {
       this.$store.dispatch(Constant.LOG_OUT).then(() => {
         this.dialog = false;
@@ -262,16 +270,28 @@ $phone: "(min-width: 0) and (max-width: 500px)";
       width: 60%;
     }
   }
-  .v-dialog {
-    background-color: white;
-    .headline {
-      font-size: 1em !important;
-      text-align: center;
-      font-weight: 600;
+  .v-card {
+    height: 100%;
+    .modal-header {
+      background-color: #607d8b;
+      height: 40px;
+      img {
+        background-color: #3c434d;
+        padding: 10px;
+      }
     }
-  }
-  .v-dialog__content--active {
-    background-color: rgba(255, 255, 255, 0.75);
+    p {
+      margin: 0;
+      padding-top: 20px;
+      text-align: center !important;
+      font-size: 22px;
+    }
+    .v-card__actions {
+      width: 100%;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+    }
   }
 }
 .side-bar {
