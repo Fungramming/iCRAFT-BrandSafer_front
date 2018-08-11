@@ -1,17 +1,5 @@
 <template>
   <div class="tableBs">
-    <!-- table top menu -->
-    <!-- <div class="tableBs-top">
-      <p>검색 조건</p>
-      <v-layout row wrap>
-        <v-flex mb0 d-flex xs12 sm12 md3>
-          <div class="selectbox-input">
-            <span>유통업체명</span>
-            <input class="input-text" type="text">
-          </div>
-        </v-flex>
-      </v-layout>
-    </div> -->
     <!-- table wrap -->
     <v-app class="inspire">
       <v-card-title>
@@ -25,7 +13,6 @@
       ></v-text-field>
       </v-card-title>
 
-
       <v-data-table
         :headers="headers"
         :items="distributors"
@@ -36,7 +23,6 @@
         select-all
         class="elevation-1"
       >
-
         <template slot="headers" slot-scope="props">
           <tr>
             <th>
@@ -85,7 +71,7 @@
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="25">25</option>
-            <option value="-1">All</option>
+            <!-- <option value="-1">All</option> -->
           </select>
         </div>
       </div>

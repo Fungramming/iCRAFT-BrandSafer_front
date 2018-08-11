@@ -1,36 +1,5 @@
 <template>
   <div class="tableBs">
-    <!-- table top menu -->
-    <!-- <div class="tableBs-top">
-      <p>검색 조건</p>
-      <v-layout row wrap>
-        <v-flex d-flex xs12 sm6 md2>
-          <span class="span-without-selectbox">기간조회</span>
-          <date-picker v-model="date_start" :lang="lang"></date-picker>
-        </v-flex>
-        <v-flex d-flex xs12 sm6 md2>
-          <date-picker v-model="date_finish" :lang="lang"></date-picker>
-        </v-flex>
-        <v-flex d-flex xs12 sm12 md4>
-          <div class="selectbox selectbox-with-date">
-            <span>제품 타입</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option selected value="전체">전체</option>
-              <option value="홀로태그">홀로태그</option>
-              <option value="하이브리드태그">하이브리드태그</option>
-              <option value="난수태그">난수태그</option>
-              <option value="SQR태그">SQR태그</option>
-            </select>
-          </div>
-        </v-flex>
-        <v-flex d-flex xs12 sm12 md4>
-          <div class="selectbox-input">
-            <span>푸시토큰</span>
-            <input class="input-text input-with-date" type="text">
-          </div>
-        </v-flex>
-      </v-layout>
-    </div> -->
     <!-- table wrap -->
     <v-app class="inspire">
       <v-card-title>
@@ -115,7 +84,7 @@
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="25">25</option>
-            <option value="-1">All</option>
+            <!-- <option value="-1">All</option> -->
           </select>
         </div>
       </div>

@@ -28,11 +28,13 @@ export function clickFunc() {
 
 export function activingFunc(e) {
   let title = e.toElement.innerText;
+  console.log("title :", title);
   let subTabTitle =
     e.toElement.parentNode.parentNode.parentNode.parentNode.className;
   let tab = document.getElementsByClassName("tab")[0];
   let subTab = document.getElementsByClassName("sub-tab")[0];
   let subSubTab = document.getElementsByClassName("sub-sub-tab")[0];
+  let activedTab = document.querySelector(".expandable.active");
   let activedList = function(target) {
     return target.querySelectorAll(".active");
   };
@@ -51,11 +53,14 @@ export function activingFunc(e) {
     }
     e.path[2].classList.add("active");
   } else if (subTabTitle == "expandable active") {
-    if (activedList(subTab).length > 0) {
-      activedList(subTab).forEach(element => {
+    console.log("activedList(subTab) :", activedList(subTab));
+    if (activedList(activedTab).length > 0) {
+      activedList(activedTab).forEach(element => {
+        console.log("11 :", 11);
         element.classList.remove("active");
       });
     }
+    console.log("1 :", 1);
     e.path[2].classList.add("active");
   }
 

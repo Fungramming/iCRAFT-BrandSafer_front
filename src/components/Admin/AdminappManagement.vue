@@ -1,28 +1,6 @@
 <template>
   <div class="tableBs">
-
-    <!-- table top menu -->
-    <!-- <div class="tableBs-top">
-      <p>검색 조건</p>
-      <v-layout row wrap>
-        <v-flex d-flex xs12 sm12 md1>
-          <div class="selectbox select-search">
-            <span>검색어</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option selected value="고객사">회사명</option>
-              <option value="이름">이름</option>
-              <option value="연락처">연락처</option>
-              <option value="푸시토큰">푸시토큰</option>
-            </select>
-          </div>
-        </v-flex>
-        <v-flex d-flex xs12 sm12 md3>
-          <input class="input-text" type="text">
-        </v-flex>
-      </v-layout>
-    </div> -->
     <!-- table wrap -->
-
     <v-app class="inspire">
       <v-card-title>
       <v-spacer></v-spacer>
@@ -46,16 +24,6 @@
         select-all
         class="elevation-1"
       >
-        <!-- <template slot="headerCell" slot-scope="props">
-          <v-tooltip bottom>
-            <span slot="activator">
-              {{ props.header.text }} 
-            </span>
-            <span>
-              {{ props.header.text }}
-            </span>
-          </v-tooltip>
-        </template> -->
 
         <template slot="headers" slot-scope="props">
           <tr>
@@ -109,54 +77,10 @@
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="25">25</option>
-            <option value="-1">All</option>
+            <!-- <option value="-1">All</option> -->
           </select>
         </div>
       </div>
-
-
-
-      <!-- <v-data-table
-        :headers="headers"
-        :items="apps"
-        :search="search"
-        :pagination.sync="pagination"
-        v-model="selected"
-        item-key="number"
-        hide-actions
-        class="elevation-1"
-        select-all
-      >
-        <template slot="headerCell" slot-scope="props">
-          <v-tooltip bottom>
-            <span slot="activator" class="item-headers">
-              {{ props.header.text }}
-            </span>
-          </v-tooltip>
-        </template>
-        <template slot="items" slot-scope="props">
-          <td @click="getSelected">
-            <v-checkbox 
-              :input-value="props.selected"
-              primary
-              hide-details
-            ></v-checkbox>
-          </td>
-          <td class="text-xs-left">{{ props.item.idx }}</td>
-          <td class="text-xs-left">{{ props.item.companyName }}</td>
-          <td class="text-xs-left"><a @click="tagtype_dialog_edit = true">{{ props.item.name }}</a></td>
-          <td class="text-xs-left">{{ props.item.contact }}</td>
-          <td class="text-xs-left">{{ props.item.pushToken }}</td>
-          <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
-          <td class="text-xs-left">{{ props.item.state }}</td>
-          <td class="text-xs-left">{{ props.item.dtModified }}</td>
-          <td class="text-xs-left">{{ props.item.modifier }}</td>
-        </template>
-        <v-alert slot="no-results" :value="true" color="error" icon="warning">
-        검색결과 "{{ search }}" 을(를) 찾지 못하였습니다.
-        </v-alert>
-      </v-data-table> -->
-
 
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
@@ -170,7 +94,6 @@
         </div>
       </div>
     </v-app>
-
 
     <!-- modal edit -->
     <v-flex d-flex xs12 sm12 md12>
