@@ -180,8 +180,10 @@ export default {
   addAdminApp({ nid, number }) {
     return axios.delete(CONF.ADD_ADMIN_APP.replace("${nid}", nid), number);
   },
-  updateAdminApp(app) {
-    return axios.put(CONF.UPDATE_ADMIN_APP, app);
+  updateAdminApp({ aid, app }) {
+    console.log("aid :", aid);
+    console.log("app :", app);
+    return axios.put(CONF.UPDATE_ADMIN_APP.replace("${aid}", aid), app);
   },
   deleteAdminApp(aid) {
     return axios.delete(CONF.DELETE_ADMIN_APP.replace("${aid}", aid));
