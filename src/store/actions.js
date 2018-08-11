@@ -160,6 +160,9 @@ export default {
   async [Constant.UPDATE_ADMIN_APP](store, payload) {
     return promise(BSAPI.updateAdminApp, payload, store, null);
   },
+  async [Constant.DELETE_ADMIN_APP](store, payload) {
+    return promise(BSAPI.deleteAdminApp, payload, store, null);
+  },
 
   async [Constant.FETCH_DISTRIBUTOR](store, payload) {
     return promise(BSAPI.fetchDistributor, payload, store, null);

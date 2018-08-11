@@ -18,7 +18,7 @@
           exit_to_app
         </v-icon>
       </v-btn>
-      <modal :width="300" :height="150" name="blacklist" transition="pop-out">
+      <modal :width="300" :height="150" name="logout" transition="pop-out">
         <v-card>
           <div class="modal-header">
             <img src="../assets/logo_small.png" alt="">
@@ -188,7 +188,7 @@ export default {
   },
   methods: {
     showModal() {
-      this.$modal.show("blacklist");
+      this.$modal.show("logout");
     },
     closeModal() {
       let vModal = this.$children[2];

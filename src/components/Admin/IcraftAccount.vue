@@ -81,7 +81,7 @@
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md10>
-            <v-btn color="error" dark>삭제</v-btn>
+            <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
           </v-flex>
           <v-flex d-flex xs12 sm12 md1>
             <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
@@ -493,6 +493,12 @@ export default {
     this.getDatas();
   },
   methods: {
+    getDatas() {
+      this.$store.dispatch(Constant.FETCH_ICRAFT_USER).then(resp => {
+        this.account = resp.data["icrf-users"].reverse();
+        this.total = this.account.length;
+      });
+    },
     addDatas() {
       // console.log("this.$ref :", this);
       // if (this.$ref.roleAuth) {
@@ -512,6 +518,19 @@ export default {
           console.log("err :", err);
         });
       // }
+    },
+    deleteDatas() {
+      for (let item in this.selected) {
+        this.$store
+          .dispatch(Constant.DELETE_ICRAFT_USER, this.selected[item].idx)
+          .then(() => {
+            this.getDatas();
+          });
+      }
+      this.$store.commit(Constant.SHOW_MODAL, {
+        isModal: true,
+        modalText: "삭제 되었습니다."
+      });
     },
     updateDatas({ idx, user }) {
       idx = this.updateIndex;
@@ -534,12 +553,6 @@ export default {
         .catch(err => {
           console.log("err :", err);
         });
-    },
-    getDatas() {
-      this.$store.dispatch(Constant.FETCH_ICRAFT_USER).then(resp => {
-        this.account = resp.data["icrf-users"].reverse();
-        this.total = this.account.length;
-      });
     },
     showModal() {
       this.$modal.show("account");

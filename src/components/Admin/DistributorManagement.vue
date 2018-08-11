@@ -80,7 +80,7 @@
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md10>
-            <v-btn color="error" dark>삭제</v-btn>
+            <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
           </v-flex>
           <v-flex d-flex xs12 sm12 md1>
             <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
@@ -311,6 +311,12 @@ export default {
     this.getCompanyList();
   },
   methods: {
+    getDatas() {
+      this.$store.dispatch(Constant.FETCH_DISTRIBUTOR).then(resp => {
+        this.distributors = resp.data.distributors.reverse();
+        this.total = this.distributors.length;
+      });
+    },
     addDatas() {
       this.$store
         .dispatch(Constant.ADD_DISTRIBUTOR, this.submitData)
@@ -355,12 +361,7 @@ export default {
         }
       });
     },
-    getDatas() {
-      this.$store.dispatch(Constant.FETCH_DISTRIBUTOR).then(resp => {
-        this.distributors = resp.data.distributors.reverse();
-        this.total = this.distributors.length;
-      });
-    },
+
     getTotal() {
       // let update_total = this.$children[0].$children[1].searchLength;
       // this.total = update_total;
@@ -382,6 +383,19 @@ export default {
       let pageActiveText = this.$children[0].$children[1].$children[1].value;
       let calPage = pageNum * pageActiveText;
       this.total_index = calPage;
+    },
+    deleteDatas() {
+      for (let item in this.selected) {
+        this.$store
+          .dispatch(Constant.DELETE_DISTRIBUTOR, this.selected[item].idx)
+          .then(() => {
+            this.getDatas();
+          });
+      }
+      this.$store.commit(Constant.SHOW_MODAL, {
+        isModal: true,
+        modalText: "삭제 되었습니다."
+      });
     },
     showModal() {
       this.$modal.show("distributors");

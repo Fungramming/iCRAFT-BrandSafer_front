@@ -108,7 +108,7 @@ export default {
     return axios.put(CONF.UPDATE_ICRAFT_USER.replace("${uid}", uid), user);
   },
   deleteIcraftUser(uid) {
-    return axios.delete(CONF.DELETE_ICRAFT_USER, uid);
+    return axios.delete(CONF.DELETE_ICRAFT_USER.replace("${uid}", uid), uid);
   },
   fetchUsers() {
     return axios.get(CONF.FETCH_USERS);
@@ -149,7 +149,7 @@ export default {
   addBlacklist(list) {
     return axios.post(CONF.ADD_BLACKLIST, list);
   },
-  deleteBlacklist({ bid }) {
+  deleteBlacklist(bid) {
     return axios.delete(CONF.DELETE_BLACKLIST.replace("${bid}", bid));
   },
 
@@ -180,8 +180,13 @@ export default {
   addAdminApp({ nid, number }) {
     return axios.delete(CONF.ADD_ADMIN_APP.replace("${nid}", nid), number);
   },
-  updateAdminApp(app) {
-    return axios.put(CONF.UPDATE_ADMIN_APP, app);
+  updateAdminApp({ aid, app }) {
+    console.log("aid :", aid);
+    console.log("app :", app);
+    return axios.put(CONF.UPDATE_ADMIN_APP.replace("${aid}", aid), app);
+  },
+  deleteAdminApp(aid) {
+    return axios.delete(CONF.DELETE_ADMIN_APP.replace("${aid}", aid));
   },
 
   fetchDistributor(distributor) {

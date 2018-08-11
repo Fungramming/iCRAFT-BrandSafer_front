@@ -86,7 +86,7 @@
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md11>
-            <v-btn color="error" dark>삭제</v-btn>
+            <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
           </v-flex>
         </v-layout>
         <div class="text-xs-center pt-2">
@@ -106,7 +106,7 @@
           <v-toolbar-title>관리자App 수정</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat>수정</v-btn>
+            <v-btn dark flat @click.stop="updateDatas">수정</v-btn>
             <!-- <v-btn dark flat @click.native="tagtype_dialog_edit = false">수정</v-btn> -->
           </v-toolbar-items>
         </v-toolbar>
@@ -127,8 +127,8 @@
               </v-flex>
               <v-flex d-flex xs12 sm12 md3>
                 <label class="input-title">상태</label>
-                <input checked="checked" class="input-radio" type="radio" name="staus" value="등록">등록
-                <input class="input-radio" type="radio" name="staus" value="승인">승인
+                <input v-model="updateData.state" checked="checked" class="input-radio" type="radio" name="staus" value="등록">등록
+                <input v-model="updateData.state" class="input-radio" type="radio" name="staus" value="승인">승인
               </v-flex>
             </v-list>
           </v-card-text>
@@ -207,7 +207,7 @@ export default {
         contact: "",
         dtModified: this.$store.state.submitTime,
         dtRegistered: "",
-        modifier: "",
+        modifier: this.$store.state.user.modifier,
         name: "",
         pushToken: "",
         state: ""
@@ -268,6 +268,40 @@ export default {
       let calPage = pageNum * pageActiveText;
       this.total_index = calPage;
     },
+    updateDatas(idx, app) {
+      idx = this.selected_index;
+      app = this.updateData;
+      this.$store
+        .dispatch(Constant.UPDATE_ADMIN_APP, {
+          aid: idx,
+          app: app
+        })
+        .then(() => {
+          // updateData = this.updateData;
+          this.getDatas();
+          this.closeModal();
+          this.$store.commit(Constant.SHOW_MODAL, {
+            isModal: true,
+            modalText: "수정 되었습니다."
+          });
+        })
+        .catch(err => {
+          console.log("err :", err);
+        });
+    },
+    deleteDatas() {
+      for (let item in this.selected) {
+        this.$store
+          .dispatch(Constant.DELETE_ADMIN_APP, this.selected[item].idx)
+          .then(() => {
+            this.getDatas();
+          });
+      }
+      this.$store.commit(Constant.SHOW_MODAL, {
+        isModal: true,
+        modalText: "삭제 되었습니다."
+      });
+    },
     showEditModal(e) {
       this.$modal.show("adminapp_edit");
 
@@ -293,6 +327,9 @@ export default {
       this.updateData.dtRegistered = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].dtRegistered;
+      this.updateData.pushToken = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].pushToken;
     },
     closeModal() {
       let vModal = this.$children[1];
