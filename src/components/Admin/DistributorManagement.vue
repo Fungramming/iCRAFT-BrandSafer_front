@@ -128,20 +128,20 @@
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">유통업체명(영어)</label>
-                <input class="input-text" type="text">
+                <input v-model="submitData.name_en" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">유통업체명(중국어)</label>
-                <input class="input-text" type="text" placeholder="( * 5~15자 이내의 영/숫자 조합 )">
+                <input v-model="submitData.name_zh" class="input-text" type="text" placeholder="( * 5~15자 이내의 영/숫자 조합 )">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">노트</label>
-                <input class="input-text" type="text">
+                <input v-model="submitData.note" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md2>
                 <label class="input-title">상태</label>
-                <input checked="checked" class="input-radio" type="radio" name="staus" value="사용">사용
-                <input class="input-radio" type="radio" name="staus" value="정지">정지
+                <input v-model="submitData.state" checked="checked" class="input-radio" type="radio" name="staus" value="Registered">사용
+                <input v-model="submitData.state" class="input-radio" type="radio" name="staus" value="Deleted">정지
               </v-flex>
             </v-list>
           </v-card-text>
@@ -197,8 +197,8 @@
               </v-flex>
               <v-flex d-flex xs12 sm12 md2>
                 <label class="input-title">상태</label>
-                <input checked="checked" class="input-radio" type="radio" name="staus" value="사용">사용
-                <input class="input-radio" type="radio" name="staus" value="정지">정지
+                <input v-model="updateData.state" checked="checked" class="input-radio" type="radio" name="staus" value="Registered">사용
+                <input v-model="updateData.state" class="input-radio" type="radio" name="staus" value="Deleted">정지
               </v-flex>
             </v-list>
           </v-card-text>
@@ -271,7 +271,7 @@ export default {
         note: "",
         registrant: this.$store.state.user.modifier,
         rtid: "",
-        state: "Registered"
+        state: ""
       },
 
       // update
@@ -288,7 +288,7 @@ export default {
         note: "",
         registrant: "",
         rtid: "",
-        state: "Registered"
+        state: ""
       }
     };
   },
@@ -423,6 +423,9 @@ export default {
       this.updateData.modifier = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].modifier;
+      this.updateData.state = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].state;
 
       // find index
       this.updateIndex = this.$children[0].$children[1].filteredItems[

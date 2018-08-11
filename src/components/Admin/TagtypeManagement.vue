@@ -169,7 +169,7 @@
             <v-toolbar-title>태그타입 수정</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-              <v-btn dark flat>수정</v-btn>
+              <v-btn dark flat @click.stop="updateDatas">수정</v-btn>
             </v-toolbar-items>
           </v-toolbar>
           <div class="card-left">
@@ -264,7 +264,7 @@ export default {
       //submitData
       submitData: {
         description: "",
-        dtModified: this.$store.state.submitTime,
+        dtModified: "",
         dtRegistered: this.$store.state.submitTime,
         height: "",
         modifier: this.$store.state.user.modifier,
@@ -280,6 +280,7 @@ export default {
       },
 
       //submitData
+      updateIndex: "",
       updateData: {
         description: "",
         dtModified: this.$store.state.submitTime,
@@ -290,7 +291,7 @@ export default {
         name_kr: "",
         name_zh: "",
         note: "",
-        registrant: this.$store.state.user.modifier,
+        registrant: "",
         state: "",
         type: "",
         version: "",
@@ -337,6 +338,29 @@ export default {
         this.tag_type = resp.data.tag_type.reverse();
         this.total = this.tag_type.length;
       });
+    },
+    updateDatas({ idx, app }) {
+      idx = this.updateIndex;
+      app = this.updateData;
+      console.log("idx :", idx);
+      console.log("app :", app);
+      this.$store
+        .dispatch(Constant.UPDATE_TAG_TYPE, {
+          tid: idx,
+          tagType: app
+        })
+        .then(() => {
+          // updateData = this.updateData;
+          this.getDatas();
+          this.closeModal();
+          this.$store.commit(Constant.SHOW_MODAL, {
+            isModal: true,
+            modalText: "수정 되었습니다."
+          });
+        })
+        .catch(err => {
+          console.log("err :", err);
+        });
     },
     deleteDatas() {
       for (let item in this.selected) {
@@ -387,15 +411,38 @@ export default {
       this.updateData.note = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].note;
+      this.updateData.name_en = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].name_en;
+      this.updateData.name_kr = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].name_kr;
+      this.updateData.name_zh = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].name_zh;
       this.updateData.description = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].description;
       this.updateData.state = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].state;
+      this.updateData.dtModified = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].dtModified;
       this.updateData.dtRegistered = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].dtRegistered;
+      this.updateData.modifier = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].modifier;
+      this.updateData.registrant = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].registrant;
+
+      // find index
+      this.updateIndex = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].idx;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];
