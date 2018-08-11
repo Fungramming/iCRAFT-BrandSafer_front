@@ -100,6 +100,9 @@
       <modal :width="modal_size" :height="modal_size" name="adminapp_edit" transition="pop-out">
         <v-card tile>
         <v-toolbar card dark color="primary">
+          <v-btn icon dark @click.native="closeModal">
+            <v-icon>close</v-icon>
+          </v-btn>
           <v-toolbar-title>관리자App 수정</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
@@ -112,22 +115,20 @@
             <v-list three-line subheader>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">회사명</label>
-                <input :value="selected_company" class="input-text" type="text" required="required" placeholder="회사명">
+                <input v-model="updateData.companyName" class="input-text" type="text" required="required" placeholder="회사명">
               </v-flex>    
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">이름</label>
-                <input :value="selected_name" class="input-text" type="text" required="required" placeholder="이름">
+                <input v-model="updateData.name" class="input-text" type="text" required="required" placeholder="이름">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">연락처</label>
-                <input :value="selected_tel" class="input-text" type="text">
+                <input v-model="updateData.contact" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md3>
                 <label class="input-title">상태</label>
-                <input checked="checked" class="input-radio" type="radio" name="staus" value="등록">
-                <span>등록</span>
-                <input class="input-radio" type="radio" name="staus" value="승인">
-                <span>승인</span>
+                <input checked="checked" class="input-radio" type="radio" name="staus" value="등록">등록
+                <input class="input-radio" type="radio" name="staus" value="승인">승인
               </v-flex>
             </v-list>
           </v-card-text>
@@ -195,9 +196,22 @@ export default {
       apps: [],
 
       // For edit modal
-      selected_company: "",
-      selected_name: "",
-      selected_tel: ""
+      selected_index: "",
+      // selected_company: "",
+      // selected_name: "",
+      // selected_tel: "",
+
+      // update 
+      updateData: {
+        companyName: "", 
+        contact: "", 
+        dtModified: this.$store.state.submitTime, 
+        dtRegistered: "", 
+        modifier: "", 
+        name: "", 
+        pushToken: "", 
+        state: ""
+      }
     };
   },
   computed: {
@@ -257,13 +271,26 @@ export default {
     showEditModal(e) {
       this.$modal.show("adminapp_edit");
 
-      let company = e.path[2].children[2].innerText;
-      let name = e.path[2].children[3].innerText;
-      let tel = e.path[2].children[4].innerText;
+      this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
 
-      this.selected_company = company;
-      this.selected_name = name;
-      this.selected_tel = tel;
+      // let company = e.path[2].children[2].innerText;
+      // let name = e.path[2].children[3].innerText;
+      // let tel = e.path[2].children[4].innerText;
+
+      // this.selected_company = company;
+      // this.selected_name = name;
+      // this.selected_tel = tel;
+
+      this.updateData.companyName = this.$children[0].$children[1].filteredItems[this.selected_index].companyName;
+      this.updateData.name = this.$children[0].$children[1].filteredItems[this.selected_index].name;
+      this.updateData.contact = this.$children[0].$children[1].filteredItems[this.selected_index].contact;
+    },
+    closeModal() {
+      let vModal = this.$children[1];
+      let vModalEdit = this.$children[2];
+
+      if (vModal.visible) vModal.visible = false;
+      else if (vModalEdit.visible) vModalEdit.visible = false;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

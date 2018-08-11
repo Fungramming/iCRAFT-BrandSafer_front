@@ -179,19 +179,19 @@
                   <label class="input-title">버전
                     <span class="text-danger">*</span>
                   </label>
-                  <input :value="selected_version" class="input-text" type="text" required="required">
+                  <input v-model="updateData.version" class="input-text" type="text" required="required">
                 </v-flex>    
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">태그타입
                     <span class="text-danger">*</span>
                   </label>
                   <span class="selectbox selectbox-100">
-                    <select id="select1" name="searchType" class="form-control" size="1">
-                      <option selected value="홀로태그">홀로태그</option>
-                      <option value="홀로태그 + QR">홀로태그 + QR</option>
-                      <option value="하이브리드태그">하이브리드태그</option>
-                      <option value="난수태그">난수태그</option>
-                      <option value="SQR태그">SQR태그</option>
+                    <select id="select1" v-model="updateData.type" name="searchType" class="form-control" size="1">
+                      <option selected value="HOLOTAG_ONLY">홀로태그</option>
+                      <option value="HOLOTAG_BARCODE">홀로태그 + QR</option>
+                      <option value="HYBRIDTAG">하이브리드태그</option>
+                      <option value="RANDOMTAG">난수태그</option>
+                      <option value="SQRTAG">SQR태그</option>
                     </select>
                   </span>
                 </v-flex>
@@ -199,21 +199,21 @@
                   <label class="input-title">사이즈
                     <span class="text-danger">*</span>
                   </label>
-                  <input :value="selected_width" class="input-text input-size" type="text" placeholder="width">
-                  <input :value="selected_height" class="input-text input-size" type="text" placeholder="height">
+                  <input v-model="updateData.width" class="input-text input-size" type="text" placeholder="width">
+                  <input v-model="updateData.height" class="input-text input-size" type="text" placeholder="height">
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">설명</label>
-                  <input class="input-text" type="text">
+                  <input v-model="updateData.description" class="input-text" type="text">
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">노트</label>
-                  <input class="input-text" type="text">
+                  <input v-model="updateData.note" class="input-text" type="text">
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md3>
                   <label class="input-title">상태</label>
-                  <input checked="checked" class="input-radio" type="radio" name="staus" value="서비스">서비스
-                  <input class="input-radio" type="radio" name="staus" value="사용정지">사용정지
+                  <input v-model="updateData.state" checked="checked" class="input-radio" type="radio" name="staus" value="Enable">서비스
+                  <input v-model="updateData.state" class="input-radio" type="radio" name="staus" value="Deleted">사용정지
                 </v-flex>
               </v-list>
             </v-card-text>
@@ -278,10 +278,30 @@ export default {
         version: "",
         width: ""
       },
+
+      //submitData
+      updateData: {
+        description: "",
+        dtModified: this.$store.state.submitTime,
+        dtRegistered: this.$store.state.submitTime,
+        height: "",
+        modifier: this.$store.state.user.modifier,
+        name_en: "",
+        name_kr: "",
+        name_zh: "",
+        note: "",
+        registrant: this.$store.state.user.modifier,
+        state: "",
+        type: "",
+        version: "",
+        width: ""
+      },
+
       // For edit modal
-      selected_version: "",
-      selected_width: "",
-      selected_height: ""
+      selected_index: "",
+      // selected_version: "",
+      // selected_width: "",
+      // selected_height: ""
     };
   },
   computed: {
@@ -336,18 +356,31 @@ export default {
     },
     closeModal() {
       let vModal = this.$children[1];
-      vModal.visible = false;
+      let vModalEdit = this.$children[2];
+
+      if (vModal.visible) vModal.visible = false;
+      else if (vModalEdit.visible) vModalEdit.visible = false;
     },
     showEditModal(e) {
       this.$modal.show("tagtype_edit");
+      
+      this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
 
-      let version = e.path[2].children[2].children[0].innerText;
-      let width = e.path[2].children[4].innerText.substring(0, 3);
-      let height = e.path[2].children[4].innerText.substring(6, 9);
+      // let version = e.path[2].children[2].children[0].innerText;
+      // let width = e.path[2].children[4].innerText.substring(0, 3);
+      // let height = e.path[2].children[4].innerText.substring(6, 9);
+      // this.updateData.version = version;
+      // this.updateData.width = width;
+      // this.updateData.height = height;
 
-      this.selected_version = version;
-      this.selected_width = width;
-      this.selected_height = height;
+      this.updateData.version = this.$children[0].$children[1].filteredItems[this.selected_index].version;
+      this.updateData.width = this.$children[0].$children[1].filteredItems[this.selected_index].width;
+      this.updateData.height = this.$children[0].$children[1].filteredItems[this.selected_index].height;
+      this.updateData.type = this.$children[0].$children[1].filteredItems[this.selected_index].type
+      this.updateData.note = this.$children[0].$children[1].filteredItems[this.selected_index].note
+      this.updateData.description = this.$children[0].$children[1].filteredItems[this.selected_index].description
+      this.updateData.state = this.$children[0].$children[1].filteredItems[this.selected_index].state
+
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

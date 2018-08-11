@@ -118,6 +118,7 @@
                   <select id="telephone1" v-model="submitData.role" class="form-control" name="telephone1">
                     <option selected value="10">iCraft 관리자</option>
                     <option value="11">iCraft 사용자</option>
+                    <option value="1">iCraft Super Admin</option>
                   </select>
                 </span>
               </v-flex>    
@@ -239,9 +240,10 @@
                   <span class="text-danger">*</span>
                 </label>
                 <span class="selectbox selectbox-100">
-                  <select id="telephone1" ref="roleAuth" class="form-control" name="telephone1">
-                    <option value="10">iCraft 관리자</option>
+                  <select id="telephone1" v-model="updateData.role" ref="roleAuth" class="form-control" name="telephone1">
+                    <option selected value="10">iCraft 관리자</option>
                     <option value="11">iCraft 사용자</option>
+                    <option value="1">iCraft Super Admin</option>
                   </select>
                 </span>
               </v-flex>    
@@ -249,13 +251,13 @@
                 <label class="input-title">이름
                   <span class="text-danger">*</span>
                 </label>
-                <input ref="name" :value="selected_name" class="input-text" type="text" required="required">
+                <input ref="name" v-model="updateData.name" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">아이디
                   <span class="text-danger">*</span>
                 </label>
-                <input ref="id" :value="selected_id" class="input-text" type="text">
+                <input ref="id" v-model="updateData.id" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">비밀번호
@@ -271,8 +273,8 @@
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">이메일</label>
-                <input :value="selected_email_1" class="input-text input-mail" type="mail">
-                <span class="selectbox selectbox-mail">
+                <input v-model="updateData.email" class="input-text" type="mail">
+                <!-- <span class="selectbox selectbox-mail">
                   <select id="mail1" class="form-control" name="mail1">
                     <option value="">직접입력</option>
                     <option value="naver.com">naver.com</option>
@@ -281,11 +283,11 @@
                     <option value="nate.com">nate.com</option>
                   </select>
                 </span>
-                <input :value="selected_email_2" class="input-text input-mail" type="mail">
+                <input v-model="selected_email_2" class="input-text input-mail" type="mail"> -->
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">전화번호</label>
-                <span class="selectbox">
+                <!-- <span class="selectbox">
                   <select id="telephone1" class="form-control" name="telephone1">
                     <option value="02">02</option>
                     <option value="031">031</option>
@@ -308,12 +310,13 @@
                     <option value="080">080</option>
                   </select>
                 </span>
-                <input :value="selected_telephone_1" class="input-text input-tel" type="tel" maxlength="4">
-                <input :value="selected_telephone_2" class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="selected_telephone_1" class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="selected_telephone_2" class="input-text input-tel" type="tel" maxlength="4"> -->
+                <input v-model="updateData.telephone" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">핸드폰번호</label>
-                <span class="selectbox">
+                <!-- <span class="selectbox">
                   <select id="telephone1" class="form-control" name="telephone1">
                     <option value="010">010</option>
                     <option value="011">011</option>
@@ -323,16 +326,17 @@
                     <option value="019">019</option>
                   </select>
                 </span>
-                <input :value="selected_phone_1" class="input-text input-tel" type="tel" maxlength="4">
-                <input :value="selected_phone_2" class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="selected_phone_1" class="input-text input-tel" type="tel" maxlength="4">
+                <input v-model="selected_phone_2" class="input-text input-tel" type="tel" maxlength="4"> -->
+                <input v-model="updateData.phone" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">직위</label>
-                <input :value="selected_position" class="input-text" type="text" required="required">
+                <input v-model="updateData.position" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">부서</label>
-                <input :value="selected_department" class="input-text" type="text" required="required">
+                <input v-model="updateData.department" class="input-text" type="text" required="required">
               </v-flex>
             </v-list>
           </v-card-text>
@@ -380,21 +384,21 @@ export default {
 
       // For edit modal
       selected_index: "",
-      selected_email: "",
-      selected_email_1: "",
-      selected_email_2: "",
-      selected_phone: "",
-      selected_phone_1: "",
-      selected_phone_2: "",
-      selected_telephone: "",
-      selected_telephone_1: "",
-      selected_telephone_2: "",
-      selected_position: "",
-      selected_role: "",
-      selected_name: "",
-      selected_id: "",
-      selected_department: "",
-      selected_state: "",
+      // selected_email: "",
+      // selected_email_1: "",
+      // selected_email_2: "",
+      // selected_phone: "",
+      // selected_phone_1: "",
+      // selected_phone_2: "",
+      // selected_telephone: "",
+      // selected_telephone_1: "",
+      // selected_telephone_2: "",
+      // selected_position: "",
+      // selected_role: "",
+      // selected_name: "",
+      // selected_id: "",
+      // selected_department: "",
+      // selected_state: "",
 
       // For submit
       firstNum_tel: "",
@@ -407,7 +411,31 @@ export default {
       last_mail: "",
       checkPwd: "",
 
+      // add
       submitData: {
+        department: "",
+        // ?
+        dtLastConnected: "",
+        dtModified: this.$store.state.submitTime,
+        dtRegistered: this.$store.state.submitTime,
+        email: "",
+        failCount: 0,
+        id: "",
+        modifier: "",
+        name: "",
+        note: "",
+        phone: "",
+        position: "",
+        // ?
+        pwd: "",
+        registrant: this.$store.state.user.modifier,
+        role: "",
+        state: "Registered",
+        telephone: ""
+      },
+
+      // update
+      updateData: {
         department: "",
         // ?
         dtLastConnected: "",
@@ -500,35 +528,40 @@ export default {
     },
     closeModal() {
       let vModal = this.$children[1];
-      vModal.visible = false;
+      let vModalEdit = this.$children[2];
+
+      if (vModal.visible) vModal.visible = false;
+      else if (vModalEdit.visible) vModalEdit.visible = false;
     },
     showEditModal(e) {
       this.$modal.show("account_edit");
 
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
+      console.log('this.selected_index :', this.selected_index);
+      console.log('this.$children :', this.$children[0].$children[1].filteredItems[this.selected_index]);
 
-      this.selected_state = e.path[2].children[7].innerText;
-      this.selected_department = e.path[2].children[5].innerText;
-      this.selected_id = e.path[2].children[4].innerText;
-      this.selected_name = e.path[2].children[3].innerText;
-      this.selected_role = e.path[2].children[2].innerText;
+      this.updateData.state = e.path[2].children[7].innerText;
+      this.updateData.department = e.path[2].children[5].innerText;
+      this.updateData.id = e.path[2].children[4].innerText;
+      this.updateData.name = e.path[2].children[3].innerText;
+      this.updateData.role = e.path[2].children[2].innerText;
 
-      this.selected_email = this.account[this.selected_index].email;
-      let email = this.selected_email.split("@");
-      this.selected_email_1 = email[0];
-      this.selected_email_2 = email[1];
+      this.updateData.email = this.$children[0].$children[1].filteredItems[this.selected_index].email;
+      // let email = this.selected_email.split("@");
+      // this.selected_email_1 = email[0];
+      // this.selected_email_2 = email[1];
 
-      this.selected_phone = this.account[this.selected_index].phone;
-      let phone = this.selected_phone.split("-");
-      this.selected_phone_1 = phone[1];
-      this.selected_phone_2 = phone[2];
+      this.updateData.phone = this.$children[0].$children[1].filteredItems[this.selected_index].phone;
+      // let phone = this.selected_phone.split("-");
+      // this.selected_phone_1 = phone[1];
+      // this.selected_phone_2 = phone[2];
 
-      this.selected_telephone = this.account[this.selected_index].telephone;
-      let telephone = this.selected_telephone.split("-");
-      this.selected_telephone_1 = telephone[1];
-      this.selected_telephone_2 = telephone[2];
+      this.updateData.telephone = this.$children[0].$children[1].filteredItems[this.selected_index].telephone;
+      // let telephone = this.selected_telephone.split("-");
+      // this.selected_telephone_1 = telephone[1];
+      // this.selected_telephone_2 = telephone[2];
 
-      this.selected_position = this.account[this.selected_index].position;
+      this.updateData.position = this.$children[0].$children[1].filteredItems[this.selected_index].position;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

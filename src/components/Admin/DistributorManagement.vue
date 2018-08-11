@@ -116,7 +116,7 @@
                 </label>
                 <span class="selectbox selectbox-100">
                   <select id="select1" v-model="submitData.companyCode" name="searchType" class="form-control" size="1">
-                    <option v-for="item in companyList" :value="item.code" :key="item.code">{{item.name_kr}}</option>                    
+                    <option v-for="item in companyList" :value="item.code" :key="item.code">{{item.name_kr}}</option>
                   </select>
                 </span>
               </v-flex>    
@@ -172,8 +172,8 @@
                   <span class="text-danger">*</span>
                 </label>
                 <span class="selectbox selectbox-100">
-                  <select id="select1" v-model="submitData.companyCode" name="searchType" class="form-control" size="1" disabled>
-                    <option value="" selected>{{selected_name_kr}}</option>                  
+                  <select id="select1" v-model="updateData.companyCode" name="searchType" class="form-control" size="1">
+                    <option v-for="item in companyList" :value="item.code" :key="item.code">{{item.name_kr}}</option>
                   </select>
                 </span>
               </v-flex>    
@@ -181,19 +181,19 @@
                 <label class="input-title">유통업체명(한국어)
                   <span class="text-danger">*</span>
                 </label>
-                <input :value="selected_name_kr" class="input-text" type="text" required="required">
+                <input v-model="updateData.name_kr" class="input-text" type="text" required="required">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">유통업체명(영어)</label>
-                <input  :value="selected_name_en" class="input-text" type="text">
+                <input  v-model="updateData.name_en" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">유통업체명(중국어)</label>
-                <input :value="selected_name_zh" class="input-text" type="text" placeholder="( * 5~15자 이내의 영/숫자 조합 )">
+                <input v-model="updateData.name_zh" class="input-text" type="text" placeholder="( * 5~15자 이내의 영/숫자 조합 )">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">노트</label>
-                <input :value="selected_note" class="input-text" type="text">
+                <input v-model="updateData.note" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md2>
                 <label class="input-title">상태</label>
@@ -250,6 +250,15 @@ export default {
         }
       ],
       distributors: [],
+
+      // For edit modal
+      selected_index: "",
+      // selected_name_kr: "",
+      // selected_name_en: "",
+      // selected_name_zh: "",
+      // selected_note: ""
+
+      // add
       submitData: {
         companyCode: "",
         dtModified: this.$store.state.submitTime,
@@ -264,11 +273,22 @@ export default {
         rtid: "",
         state: "Registered"
       },
-      // For edit modal
-      selected_name_kr: "",
-      selected_name_en: "",
-      selected_name_zh: "",
-      selected_note: ""
+      
+      // update
+      updateData: {
+        companyCode: "",
+        dtModified: this.$store.state.submitTime,
+        dtRegistered: this.$store.state.submitTime,
+        headerquarterYN: "Y",
+        modifier: this.$store.state.user.modifier,
+        name_en: "",
+        name_kr: "",
+        name_zh: "",
+        note: "",
+        registrant: this.$store.state.user.modifier,
+        rtid: "",
+        state: "Registered"
+      },
     };
   },
   computed: {
@@ -305,6 +325,7 @@ export default {
     getCompanyList() {
       this.$store.dispatch(Constant.FETCH_COMPANY).then(resp => {
         let box = resp.data.company;
+        console.log('box :', box);
         for (let item in box) {
           this.companyList.push(box[item]);
         }
@@ -343,17 +364,21 @@ export default {
     },
     closeModal() {
       let vModal = this.$children[1];
-      vModal.visible = false;
+      let vModalEdit = this.$children[2];
+
+      if (vModal.visible) vModal.visible = false;
+      else if (vModalEdit.visible) vModalEdit.visible = false;
     },
     showEditModal(e) {
       this.$modal.show("distributors_edit");
 
-      this.selected_name_kr = e.path[2].children[3].innerText;
-
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
-      this.selected_name_en = this.distributors[this.selected_index].name_en;
-      this.selected_name_zh = this.distributors[this.selected_index].name_zh;
-      this.selected_note = this.distributors[this.selected_index].note;
+      
+      this.updateData.name_kr = e.path[2].children[3].innerText;
+      this.updateData.name_en = this.$children[0].$children[1].filteredItems[this.selected_index].name_en;
+      this.updateData.name_zh = this.$children[0].$children[1].filteredItems[this.selected_index].name_zh;
+      this.updateData.note = this.$children[0].$children[1].filteredItems[this.selected_index].note;
+      this.updateData.companyCode = this.$children[0].$children[1].filteredItems[this.selected_index].companyCode;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];
