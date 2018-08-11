@@ -283,7 +283,7 @@ export default {
       updateData: {
         description: "",
         dtModified: this.$store.state.submitTime,
-        dtRegistered: this.$store.state.submitTime,
+        dtRegistered: "",
         height: "",
         modifier: this.$store.state.user.modifier,
         name_en: "",
@@ -298,7 +298,7 @@ export default {
       },
 
       // For edit modal
-      selected_index: "",
+      selected_index: ""
       // selected_version: "",
       // selected_width: "",
       // selected_height: ""
@@ -363,7 +363,6 @@ export default {
     },
     showEditModal(e) {
       this.$modal.show("tagtype_edit");
-      
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
 
       // let version = e.path[2].children[2].children[0].innerText;
@@ -373,14 +372,30 @@ export default {
       // this.updateData.width = width;
       // this.updateData.height = height;
 
-      this.updateData.version = this.$children[0].$children[1].filteredItems[this.selected_index].version;
-      this.updateData.width = this.$children[0].$children[1].filteredItems[this.selected_index].width;
-      this.updateData.height = this.$children[0].$children[1].filteredItems[this.selected_index].height;
-      this.updateData.type = this.$children[0].$children[1].filteredItems[this.selected_index].type
-      this.updateData.note = this.$children[0].$children[1].filteredItems[this.selected_index].note
-      this.updateData.description = this.$children[0].$children[1].filteredItems[this.selected_index].description
-      this.updateData.state = this.$children[0].$children[1].filteredItems[this.selected_index].state
-
+      this.updateData.version = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].version;
+      this.updateData.width = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].width;
+      this.updateData.height = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].height;
+      this.updateData.type = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].type;
+      this.updateData.note = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].note;
+      this.updateData.description = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].description;
+      this.updateData.state = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].state;
+      this.updateData.dtRegistered = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].dtRegistered;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

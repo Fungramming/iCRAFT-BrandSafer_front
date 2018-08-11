@@ -278,15 +278,15 @@ export default {
       // selected_name: "",
       // selected_tel: "",
 
-      // update 
+      // update
       updateData: {
-        companyName: "", 
-        contact: "", 
-        dtModified: this.$store.state.submitTime, 
-        dtRegistered: "", 
-        modifier: "", 
-        name: "", 
-        pushToken: "", 
+        companyName: "",
+        contact: "",
+        dtModified: this.$store.state.submitTime,
+        dtRegistered: "",
+        modifier: "",
+        name: "",
+        pushToken: "",
         state: ""
       }
     };
@@ -358,9 +358,18 @@ export default {
       // this.selected_name = name;
       // this.selected_tel = tel;
 
-      this.updateData.companyName = this.$children[0].$children[1].filteredItems[this.selected_index].companyName;
-      this.updateData.name = this.$children[0].$children[1].filteredItems[this.selected_index].name;
-      this.updateData.contact = this.$children[0].$children[1].filteredItems[this.selected_index].contact;
+      this.updateData.companyName = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].companyName;
+      this.updateData.name = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].name;
+      this.updateData.contact = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].contact;
+      this.updateData.dtRegistered = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].dtRegistered;
     },
     closeModal() {
       let vModal = this.$children[1];

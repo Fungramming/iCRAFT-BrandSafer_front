@@ -240,7 +240,7 @@
                   <span class="text-danger">*</span>
                 </label>
                 <span class="selectbox selectbox-100">
-                  <select id="telephone1" v-model="updateData.role" ref="roleAuth" class="form-control" name="telephone1">
+                  <select id="telephone1" ref="roleAuth" v-model="updateData.role" class="form-control" name="telephone1">
                     <option selected value="10">iCraft 관리자</option>
                     <option value="11">iCraft 사용자</option>
                     <option value="1">iCraft Super Admin</option>
@@ -440,7 +440,7 @@ export default {
         // ?
         dtLastConnected: "",
         dtModified: this.$store.state.submitTime,
-        dtRegistered: this.$store.state.submitTime,
+        dtRegistered: "",
         email: "",
         failCount: 0,
         id: "",
@@ -537,8 +537,11 @@ export default {
       this.$modal.show("account_edit");
 
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
-      console.log('this.selected_index :', this.selected_index);
-      console.log('this.$children :', this.$children[0].$children[1].filteredItems[this.selected_index]);
+      console.log("this.selected_index :", this.selected_index);
+      console.log(
+        "this.$children :",
+        this.$children[0].$children[1].filteredItems[this.selected_index]
+      );
 
       this.updateData.state = e.path[2].children[7].innerText;
       this.updateData.department = e.path[2].children[5].innerText;
@@ -546,22 +549,36 @@ export default {
       this.updateData.name = e.path[2].children[3].innerText;
       this.updateData.role = e.path[2].children[2].innerText;
 
-      this.updateData.email = this.$children[0].$children[1].filteredItems[this.selected_index].email;
+      this.updateData.email = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].email;
       // let email = this.selected_email.split("@");
       // this.selected_email_1 = email[0];
       // this.selected_email_2 = email[1];
 
-      this.updateData.phone = this.$children[0].$children[1].filteredItems[this.selected_index].phone;
+      this.updateData.phone = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].phone;
       // let phone = this.selected_phone.split("-");
       // this.selected_phone_1 = phone[1];
       // this.selected_phone_2 = phone[2];
 
-      this.updateData.telephone = this.$children[0].$children[1].filteredItems[this.selected_index].telephone;
+      this.updateData.telephone = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].telephone;
       // let telephone = this.selected_telephone.split("-");
       // this.selected_telephone_1 = telephone[1];
       // this.selected_telephone_2 = telephone[2];
 
-      this.updateData.position = this.$children[0].$children[1].filteredItems[this.selected_index].position;
+      this.updateData.position = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].position;
+      this.updateData.dtRegistered = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].dtRegistered;
+      this.updateData.dtLastConnected = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].dtLastConnected;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

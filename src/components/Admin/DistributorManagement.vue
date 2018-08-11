@@ -287,12 +287,12 @@ export default {
         rtid: "",
         state: "Registered"
       },
-      
+
       // update
       updateData: {
         companyCode: "",
         dtModified: this.$store.state.submitTime,
-        dtRegistered: this.$store.state.submitTime,
+        dtRegistered: "",
         headerquarterYN: "Y",
         modifier: this.$store.state.user.modifier,
         name_en: "",
@@ -302,7 +302,7 @@ export default {
         registrant: this.$store.state.user.modifier,
         rtid: "",
         state: "Registered"
-      },
+      }
     };
   },
   computed: {
@@ -339,7 +339,7 @@ export default {
     getCompanyList() {
       this.$store.dispatch(Constant.FETCH_COMPANY).then(resp => {
         let box = resp.data.company;
-        console.log('box :', box);
+        console.log("box :", box);
         for (let item in box) {
           this.companyList.push(box[item]);
         }
@@ -387,12 +387,23 @@ export default {
       this.$modal.show("distributors_edit");
 
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
-      
+
       this.updateData.name_kr = e.path[2].children[3].innerText;
-      this.updateData.name_en = this.$children[0].$children[1].filteredItems[this.selected_index].name_en;
-      this.updateData.name_zh = this.$children[0].$children[1].filteredItems[this.selected_index].name_zh;
-      this.updateData.note = this.$children[0].$children[1].filteredItems[this.selected_index].note;
-      this.updateData.companyCode = this.$children[0].$children[1].filteredItems[this.selected_index].companyCode;
+      this.updateData.name_en = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].name_en;
+      this.updateData.name_zh = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].name_zh;
+      this.updateData.note = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].note;
+      this.updateData.companyCode = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].companyCode;
+      this.updateData.dtRegistered = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].dtRegistered;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];
