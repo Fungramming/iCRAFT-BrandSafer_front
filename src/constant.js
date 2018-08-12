@@ -121,5 +121,7 @@ export default {
   /* ========= Modal ========= */
   SHOW_MODAL: "showModal",
   MODAL_SIZE: "80%",
-  MODAL_SIZE_HEIGHT: "95%"
+  MODAL_SIZE_HEIGHT: "95%",
+
+  PUSH_APP: "pushApp"
 };

@@ -34,5 +34,9 @@ export default {
   },
   [Constant.FETCH_MONTHLY_STATUS]: (state, payload) => {
     state.monthlyStatus = payload;
+  },
+  [Constant.PUSH_APP]: (state, payload) => {
+    console.log("payload :", payload);
+    state.PUSH_APP = payload;
   }
 };

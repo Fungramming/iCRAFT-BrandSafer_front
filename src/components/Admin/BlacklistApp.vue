@@ -56,7 +56,7 @@
             <td class="text-xs-left">{{ total - props.index - total_index }}</td>
             <td class="text-xs-left">{{ props.item.app }}</td>
             <td class="text-xs-left">{{ props.item.blType }}</td>
-            <td class="text-xs-left"><a>{{ props.item.pushToken }}</a></td>
+            <td class="text-xs-left" @click="linkPushToken"><a>{{ props.item.pushToken }}</a></td>
             <td class="text-xs-left">{{ props.item.delYN }}</td>
             <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
             <td class="text-xs-left">{{ props.item.dtModified}}</td>
@@ -240,6 +240,14 @@ export default {
     },
     getSelected: function(e) {
       getSelectedFunc(e);
+    },
+    linkPushToken() {
+      let _this = this;
+      function test() {
+        _this.$router.push({ name: "lookup" });
+        return _this.$store.commit(Constant.PUSH_APP, _this.selected[0]);
+      }
+      setTimeout(test, 10);
     },
     changeSort(column) {
       if (this.pagination.sortBy === column) {
