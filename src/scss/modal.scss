@@ -75,7 +75,11 @@
         margin: 15px 0;
         color: #999;
       }
-      
+      // disabled
+      .not-allowed {
+        cursor: not-allowed;
+        background: #eee;
+      }
       // label text title
       .input-title {
         color: #646464;

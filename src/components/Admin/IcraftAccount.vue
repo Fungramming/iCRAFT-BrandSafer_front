@@ -251,13 +251,13 @@
                 <label class="input-title">이름
                   <span class="text-danger">*</span>
                 </label>
-                <input ref="name" v-model="updateData.name" class="input-text" type="text" required="required">
+                <input ref="name" v-model="updateData.name" class="input-text not-allowed" type="text" required="required" disabled>
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">아이디
                   <span class="text-danger">*</span>
                 </label>
-                <input ref="id" v-model="updateData.id" class="input-text" type="text">
+                <input ref="id" v-model="updateData.id" class="input-text not-allowed" type="text" disabled>
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">비밀번호

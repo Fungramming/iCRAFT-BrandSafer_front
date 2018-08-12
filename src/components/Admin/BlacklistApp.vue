@@ -194,7 +194,7 @@ export default {
   methods: {
     getDatas() {
       this.$store.dispatch(Constant.FETCH_BLACKLIST).then(resp => {
-        this.blacklists = resp.data.blacklists;
+        this.blacklists = resp.data.blacklists.reverse();
         this.total = this.blacklists.length;
       });
     },

@@ -116,7 +116,7 @@
                 <label class="input-title">고객사코드
                   <span class="text-danger">*</span>
                 </label>
-                <input v-model="submitData.code" class="input-text" type="text" required="required" placeholder="고객사코드">
+                <input v-model="submitData.code" class="input-text" type="text" required="required" placeholder="고객사코드" maxlength="6">
               </v-flex>    
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">고객사(한국어)
@@ -315,13 +315,13 @@
                 <label class="input-title">고객사코드
                   <span class="text-danger">*</span>
                 </label>
-                <input v-model="updateData.code" class="input-text" type="text" required="required" placeholder="고객사코드">
+                <input v-model="updateData.code" class="input-text not-allowed" type="text" required="required" placeholder="고객사코드" disabled>
               </v-flex>    
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">고객사(한국어)
                   <span class="text-danger">*</span>
                 </label>
-                <input v-model="updateData.name_kr" class="input-text" type="text" required="required" placeholder="고객사(한국어)">
+                <input v-model="updateData.name_kr" class="input-text not-allowed" type="text" required="required" placeholder="고객사(한국어)" disabled>
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">고객사(영어)</label>

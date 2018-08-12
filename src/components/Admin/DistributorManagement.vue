@@ -390,12 +390,12 @@ export default {
           .dispatch(Constant.DELETE_DISTRIBUTOR, this.selected[item].idx)
           .then(() => {
             this.getDatas();
+            this.$store.commit(Constant.SHOW_MODAL, {
+              isModal: true,
+              modalText: "삭제 되었습니다."
+            });
           });
       }
-      this.$store.commit(Constant.SHOW_MODAL, {
-        isModal: true,
-        modalText: "삭제 되었습니다."
-      });
     },
     showModal() {
       this.$modal.show("distributors");
