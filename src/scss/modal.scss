@@ -1,4 +1,21 @@
 // modal wrap
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-2px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(2px, 0, 0);
+  }
+}
 .overflow {
   overflow: scroll;
 }
@@ -17,6 +34,9 @@
   //     box-shadow: none;
   //   }
   // }
+  .v-card {
+    height: 100%;
+  }
   .card-left {
     background: #fff;
     .v-list--three-line {
@@ -27,13 +47,28 @@
       .d-flex {
         margin-bottom: 7px;
         position: relative;
+        input, select {
+          transition: all .3s ease
+        }
+        &.required {
+          input, select {
+            border: 1px solid #ff776d;
+            animation: shake 0.52s cubic-bezier(.36,.07,.19,.97) both;
+            transform: translate3d(0, 0, 0);
+          }          
+          .required-notice {
+            display: inline-block;
+          
+          }
+        }
         .required-notice {
+          display: none;
           position: absolute;
           right: -130px;
           bottom: 30%;
           font-size: 12px;
           text-align: right;
-          color: red;
+          color: #ff776d;
         }
       }
       .v-subheader {

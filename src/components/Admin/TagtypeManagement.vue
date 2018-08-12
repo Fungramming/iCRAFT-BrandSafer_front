@@ -95,8 +95,8 @@
     </v-app>
 
     <!-- modal -->
-    <v-flex d-flex xs12 sm12 md12>
-      <modal :width="modal_size" :height="modal_size" name="tagtype" transition="pop-out">
+    <v-flex d-flex xs12 sm12 requiredInputd12>
+      <modal :width="modal_size.width" :height="modal_size.height" name="tagtype" transition="pop-out">
         <v-card tile>
           <v-toolbar card dark color="primary">
             <v-btn icon dark @click.native="closeModal">
@@ -111,35 +111,33 @@
           <div class="card-left">
             <v-card-text>
               <v-list three-line subheader>
-                <v-flex d-flex xs12 sm12 md5>
+                <v-flex d-flex xs12 sm12 md5 >
                   <label class="input-title">버전
                     <span class="text-danger">*</span>
                   </label>
-                  <input v-model="submitData.version" class="input-text" type="text" required="required">
-                  <span class="required-notice">{{ required_notice }}</span>
+                  <input v-model="submitData.version" class="input-text require-input" type="text">  
+                  <span class="required-notice">*필수입력사항입니다.</span>
                 </v-flex>    
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">태그타입
                     <span class="text-danger">*</span>
                   </label>
-                  <span class="selectbox selectbox-100">
-                    <select id="select1" ref="required" v-model="submitData.type" name="searchType" class="form-control" size="1">
-                      <option value="HOLOTAG_ONLY">홀로태그</option>
-                      <option value="HOLOTAG_BARCODE">홀로태그 + QR</option>
-                      <option value="HYBRIDTAG">하이브리드태그</option>
-                      <option value="RANDOMTAG">난수태그</option>
-                      <option value="SQRTAG">SQR태그</option>
-                    </select>
-                    <span class="required-notice">{{ required_notice }}</span>
-                  </span>
+                  <select id="select1" v-model="submitData.type" name="searchType" class="form-control selectbox selectbox-100 require-input" size="1">
+                    <option value="HOLOTAG_ONLY">홀로태그</option>
+                    <option value="HOLOTAG_BARCODE">홀로태그 + QR</option>
+                    <option value="HYBRIDTAG">하이브리드태그</option>
+                    <option value="RANDOMTAG">난수태그</option>
+                    <option value="SQRTAG">SQR태그</option>
+                  </select>          
+                  <span class="required-notice">*필수입력사항입니다.</span>
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">사이즈
                     <span class="text-danger">*</span>
                   </label>
-                  <input v-model="submitData.width" class="input-text input-size" type="text" placeholder="width">
-                  <input v-model="submitData.height" class="input-text input-size" type="text" placeholder="height">
-                  <span class="required-notice">{{ required_notice }}</span>
+                  <input v-model="submitData.width" class="input-text input-size require-input" type="text" placeholder="width">
+                  <input v-model="submitData.height" class="input-text input-size require-input" type="text" placeholder="height">        
+                  <span class="required-notice">*필수입력사항입니다.</span>
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">설명</label>
@@ -163,7 +161,7 @@
 
     <!-- modal edit -->
     <v-flex d-flex xs12 sm12 md12>
-      <modal :width="modal_size" :height="modal_size" name="tagtype_edit" transition="pop-out">
+      <modal :width="modal_size.width" :height="modal_size.height" name="tagtype_edit" transition="pop-out">
         <v-card tile>
           <v-toolbar card dark color="primary">
             <v-btn icon dark @click.native="closeModal">
@@ -182,7 +180,7 @@
                   <label class="input-title">버전
                     <span class="text-danger">*</span>
                   </label>
-                  <input v-model="updateData.version" class="input-text" type="text" required="required">
+                  <input v-model="updateData.version" class="input-text" type="text">
                 </v-flex>    
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">태그타입
@@ -236,7 +234,10 @@ export default {
   data() {
     return {
       search: "",
-      modal_size: Constant.MODAL_SIZE,
+      modal_size: {
+        width: Constant.MODAL_SIZE,
+        height: 400
+      },
       pagination: {
         page: 1,
         rowsPerPage: 10
@@ -323,26 +324,51 @@ export default {
   },
   updated() {
     getTotal(this);
-    console.log("this.$refs :", this.$refs);
+    this.checkRequired();
   },
   mounted() {
     this.getDatas();
   },
   methods: {
-    addDatas() {
-      if (this.submitData.version === "") {
-        // if (this.$refs.required.value === "") {
-        this.required_notice = "*필수 입력 사항입니다.";
-        return false;
+    checkRequired() {
+      let requiredInput = document.getElementsByClassName("require-input");
+
+      for (let i = 0; i < requiredInput.length; i++) {
+        requiredInput[i].parentNode.removeClass;
+        requiredInput[i].parentNode.classList.remove("required");
+        requiredInput[i].parentNode.classList.toggle("required");
+        console.log(
+          "requiredInput[i].parentNode.classList :",
+          requiredInput[i].parentNode.classList
+        );
+        let valueLength = requiredInput[i].value.length;
+        // 항목이 비어있을때
+        if (valueLength == 0) {
+          requiredInput[i].parentNode.classList.add("required");
+        } else if (valueLength !== 0) {
+          requiredInput[i].parentNode.classList.remove("required");
+        }
       }
-      this.$store.dispatch(Constant.ADD_TAG_TYPE, this.submitData).then(() => {
-        this.getDatas();
-        this.closeModal();
-        this.$store.commit(Constant.SHOW_MODAL, {
-          isModal: true,
-          modalText: "등록 되었습니다."
-        });
-      });
+    },
+    addDatas() {
+      this.checkRequired();
+      if (
+        this.submitData.version &&
+        this.submitData.tagType &&
+        this.submitData.width &&
+        this.submitData.height
+      ) {
+        this.$store
+          .dispatch(Constant.ADD_TAG_TYPE, this.submitData)
+          .then(() => {
+            this.getDatas();
+            this.closeModal();
+            this.$store.commit(Constant.SHOW_MODAL, {
+              isModal: true,
+              modalText: "등록 되었습니다."
+            });
+          });
+      }
     },
     getDatas() {
       this.$store.dispatch(Constant.FETCH_TAG_TYPE).then(resp => {
