@@ -65,14 +65,15 @@ export default {
   },
 
   /* ========= Admin ========= */
-  fetchCompany(customer) {
-    return axios.get(CONF.FETCH_COMPANY, customer);
+  fetchCompany(company) {
+    return axios.get(CONF.FETCH_COMPANY, company);
   },
-  addCompany(customer) {
-    return axios.post(CONF.ADD_COMPANY, customer);
+  addCompany(company) {
+    console.log("cusotomer :", company);
+    return axios.post(CONF.ADD_COMPANY, company);
   },
-  updateCompany({ cid, customer }) {
-    return axios.put(CONF.UPDATE_COMPANY.replace("${cid}", cid), customer);
+  updateCompany({ cid, company }) {
+    return axios.put(CONF.UPDATE_COMPANY.replace("${cid}", cid), company);
   },
 
   fetchCustomer(customer) {
@@ -181,8 +182,6 @@ export default {
     return axios.delete(CONF.ADD_ADMIN_APP.replace("${nid}", nid), number);
   },
   updateAdminApp({ aid, app }) {
-    console.log("aid :", aid);
-    console.log("app :", app);
     return axios.put(CONF.UPDATE_ADMIN_APP.replace("${aid}", aid), app);
   },
   deleteAdminApp(aid) {
