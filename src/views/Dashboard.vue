@@ -103,16 +103,17 @@ export default {
     this.nowDate = formatDate();
     this.fetchLiveData();
     this.fetchData();
+
+    if (this.$children[1].$children[0].chartData.rows.length == 0) {
+      window.location.reload();
+    }
   },
   methods: {
     fetchLiveData() {
-      this.$store.dispatch(Constant.FETCH_LIVE_STATUS).then(resp => {
-        console.log("dash 1 :", resp);
-      });
+      this.$store.dispatch(Constant.FETCH_LIVE_STATUS).then(resp => {});
     },
     fetchData() {
       this.$store.dispatch(Constant.FETCH_MONTHLY_STATUS).then(resp => {
-        console.log("dash 2p :", resp);
         let box = resp.data.status;
 
         // FIRST and LAST DAY

@@ -14,6 +14,9 @@ export default {
   weeklyStatus: {},
   monthlyStatus: {},
 
+  //pushApp
+  pushApp: "",
+
   // AlertModal
   isModal: false,
   modalText: ""
