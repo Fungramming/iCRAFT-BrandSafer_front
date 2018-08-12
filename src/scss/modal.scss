@@ -26,11 +26,21 @@
       }
       .d-flex {
         margin-bottom: 7px;
+        position: relative;
+        .required-notice {
+          position: absolute;
+          right: -130px;
+          bottom: 30%;
+          font-size: 12px;
+          text-align: right;
+          color: red;
+        }
       }
       .v-subheader {
         margin: 15px 0;
         color: #999;
       }
+      
       // label text title
       .input-title {
         color: #646464;

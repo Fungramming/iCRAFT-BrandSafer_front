@@ -116,19 +116,21 @@
                     <span class="text-danger">*</span>
                   </label>
                   <input v-model="submitData.version" class="input-text" type="text" required="required">
+                  <span class="required-notice">{{ required_notice }}</span>
                 </v-flex>    
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">태그타입
                     <span class="text-danger">*</span>
                   </label>
                   <span class="selectbox selectbox-100">
-                    <select id="select1" v-model="submitData.type" name="searchType" class="form-control" size="1">
-                      <option selected value="HOLOTAG_ONLY">홀로태그</option>
+                    <select id="select1" ref="required" v-model="submitData.type" name="searchType" class="form-control" size="1">
+                      <option value="HOLOTAG_ONLY">홀로태그</option>
                       <option value="HOLOTAG_BARCODE">홀로태그 + QR</option>
                       <option value="HYBRIDTAG">하이브리드태그</option>
                       <option value="RANDOMTAG">난수태그</option>
                       <option value="SQRTAG">SQR태그</option>
                     </select>
+                    <span class="required-notice">{{ required_notice }}</span>
                   </span>
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md5>
@@ -137,6 +139,7 @@
                   </label>
                   <input v-model="submitData.width" class="input-text input-size" type="text" placeholder="width">
                   <input v-model="submitData.height" class="input-text input-size" type="text" placeholder="height">
+                  <span class="required-notice">{{ required_notice }}</span>
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">설명</label>
@@ -187,7 +190,7 @@
                   </label>
                   <span class="selectbox selectbox-100">
                     <select id="select1" v-model="updateData.type" name="searchType" class="form-control" size="1">
-                      <option selected value="HOLOTAG_ONLY">홀로태그</option>
+                      <option value="HOLOTAG_ONLY">홀로태그</option>
                       <option value="HOLOTAG_BARCODE">홀로태그 + QR</option>
                       <option value="HYBRIDTAG">하이브리드태그</option>
                       <option value="RANDOMTAG">난수태그</option>
@@ -238,6 +241,8 @@ export default {
         page: 1,
         rowsPerPage: 10
       },
+      required: false,
+      required_notice: "",
       total: "",
       selected: [],
       headers: [
@@ -318,12 +323,18 @@ export default {
   },
   updated() {
     getTotal(this);
+    console.log("this.$refs :", this.$refs);
   },
   mounted() {
     this.getDatas();
   },
   methods: {
     addDatas() {
+      if (this.submitData.version === "") {
+        // if (this.$refs.required.value === "") {
+        this.required_notice = "*필수 입력 사항입니다.";
+        return false;
+      }
       this.$store.dispatch(Constant.ADD_TAG_TYPE, this.submitData).then(() => {
         this.getDatas();
         this.closeModal();
