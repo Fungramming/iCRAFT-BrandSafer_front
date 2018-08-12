@@ -336,11 +336,7 @@ export default {
       for (let i = 0; i < requiredInput.length; i++) {
         requiredInput[i].parentNode.removeClass;
         requiredInput[i].parentNode.classList.remove("required");
-        requiredInput[i].parentNode.classList.toggle("required");
-        console.log(
-          "requiredInput[i].parentNode.classList :",
-          requiredInput[i].parentNode.classList
-        );
+
         let valueLength = requiredInput[i].value.length;
         // 항목이 비어있을때
         if (valueLength == 0) {
@@ -354,7 +350,7 @@ export default {
       this.checkRequired();
       if (
         this.submitData.version &&
-        this.submitData.tagType &&
+        this.submitData.type &&
         this.submitData.width &&
         this.submitData.height
       ) {
