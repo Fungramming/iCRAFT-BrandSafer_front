@@ -133,7 +133,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getSelectedFunc, getTotal } from "../CompHelper.js";
+import { getTotal } from "../CompHelper.js";
 
 export default {
   data() {

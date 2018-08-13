@@ -114,17 +114,18 @@
                 <label class="input-title">고객사
                   <span class="text-danger">*</span>
                 </label>
-                <span class="selectbox selectbox-100">
-                  <select id="select1" v-model="submitData.companyCode" name="searchType" class="form-control" size="1">
-                    <option v-for="item in companyList" :value="item.code" :key="item.code">{{item.name_kr}}</option>
-                  </select>
-                </span>
+                <span class="selectbox_arrow"></span>
+                <select id="select1" v-model="submitData.companyCode" name="searchType" class="form-control selectbox selectbox-100 require-input" size="1">
+                  <option v-for="item in companyList" :value="item.code" :key="item.code">{{item.name_kr}}</option>
+                </select>
+                <span class="required-notice">*필수 입력사항입니다.</span>
               </v-flex>    
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">유통업체명(한국어)
                   <span class="text-danger">*</span>
                 </label>
-                <input v-model="submitData.name_kr" class="input-text" type="text" required="required">
+                <input v-model="submitData.name_kr" class="input-text require-input" type="text" required="required">
+                <span class="required-notice">*필수 입력사항입니다.</span>
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">유통업체명(영어)</label>
@@ -172,7 +173,7 @@
                   <span class="text-danger">*</span>
                 </label>
                 <span class="selectbox selectbox-100">
-                  <select id="select1" v-model="updateData.companyCode" name="searchType" class="form-control" size="1">
+                  <select id="select1" v-model="updateData.companyCode" name="searchType" class="form-control not-allowed" size="1" disabled>
                     <option v-for="item in companyList" :value="item.code" :key="item.code">{{item.name_kr}}</option>
                   </select>
                 </span>
@@ -181,7 +182,8 @@
                 <label class="input-title">유통업체명(한국어)
                   <span class="text-danger">*</span>
                 </label>
-                <input v-model="updateData.name_kr" class="input-text" type="text" required="required">
+                <input v-model="updateData.name_kr" class="input-text selectbox selectbox-100 require-input" type="text" required="required">
+                <span class="required-notice">*필수 입력사항입니다.</span>
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">유통업체명(영어)</label>
@@ -211,7 +213,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getSelectedFunc, getTotal } from "../CompHelper.js";
+import { getTotal, checkRequired } from "../CompHelper.js";
 
 export default {
   data() {
@@ -305,6 +307,7 @@ export default {
   },
   updated() {
     getTotal(this);
+    checkRequired();
   },
   mounted() {
     this.getDatas();
@@ -318,16 +321,19 @@ export default {
       });
     },
     addDatas() {
-      this.$store
-        .dispatch(Constant.ADD_DISTRIBUTOR, this.submitData)
-        .then(() => {
-          this.getDatas();
-          this.closeModal();
-          this.$store.commit(Constant.SHOW_MODAL, {
-            isModal: true,
-            modalText: "등록 되었습니다."
+      checkRequired();
+      if (this.submitData.companyCode && this.submitData.name_kr) {
+        this.$store
+          .dispatch(Constant.ADD_DISTRIBUTOR, this.submitData)
+          .then(() => {
+            this.getDatas();
+            this.closeModal();
+            this.$store.commit(Constant.SHOW_MODAL, {
+              isModal: true,
+              modalText: "등록 되었습니다."
+            });
           });
-        });
+      }
     },
     updateDatas({ idx, app }) {
       idx = this.updateIndex;
@@ -449,9 +455,6 @@ export default {
     toggleAll() {
       if (this.selected.length) this.selected = [];
       else this.selected = this.distributors.slice();
-    },
-    getSelected: function(e) {
-      getSelectedFunc(e);
     },
     changeSort(column) {
       if (this.pagination.sortBy === column) {

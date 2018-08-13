@@ -103,7 +103,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getSelectedFunc } from "../CompHelper.js";
+import {} from "../CompHelper.js";
 
 export default {
   data() {
@@ -282,9 +282,6 @@ export default {
     toggleAll() {
       if (this.selected.length) this.selected = [];
       else this.selected = this.oversert.slice();
-    },
-    getSelected: function(e) {
-      getSelectedFunc(e);
     },
     changeSort(column) {
       if (this.pagination.sortBy === column) {

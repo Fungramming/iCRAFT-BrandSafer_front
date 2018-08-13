@@ -123,7 +123,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getSelectedFunc, getTotal } from "../CompHelper.js";
+import { getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -216,16 +216,17 @@ export default {
     },
     deleteDatas() {
       for (let item in this.selected) {
+        console.log("this.selected[item].idx :", this.selected[item].idx);
         this.$store
           .dispatch(Constant.DELETE_BLACKLIST, this.selected[item].idx)
           .then(() => {
             this.getDatas();
+            this.$store.commit(Constant.SHOW_MODAL, {
+              isModal: true,
+              modalText: "삭제 되었습니다."
+            });
           });
       }
-      this.$store.commit(Constant.SHOW_MODAL, {
-        isModal: true,
-        modalText: "삭제 되었습니다."
-      });
     },
     showModal() {
       this.$modal.show("blacklist");
@@ -237,9 +238,6 @@ export default {
     toggleAll() {
       if (this.selected.length) this.selected = [];
       else this.selected = this.blacklists.slice();
-    },
-    getSelected: function(e) {
-      getSelectedFunc(e);
     },
     linkPushToken() {
       let _this = this;

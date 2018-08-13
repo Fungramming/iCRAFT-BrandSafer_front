@@ -27,7 +27,7 @@
 
         <template slot="headers" slot-scope="props">
           <tr>
-            <th>
+            <!-- <th>
               <v-checkbox
                 :input-value="props.all"
                 :indeterminate="props.indeterminate"
@@ -35,7 +35,7 @@
                 hide-details
                 @click.native="toggleAll"
               ></v-checkbox>
-            </th>
+            </th> -->
             <th
               v-for="header in props.headers"
               :key="header.text"
@@ -50,13 +50,13 @@
 
         <template slot="items" slot-scope="props">
           <tr :active="props.selected" @click="props.selected = !props.selected">
-            <td>
+            <!-- <td>
               <v-checkbox
                 :input-value="props.selected"
                 primary
                 hide-details
               ></v-checkbox>
-            </td>
+            </td> -->
             <td class="text-xs-left">{{ total - props.index - total_index }}</td>
             <!-- <td class="text-xs-left">{{ props.item.idx }}</td> -->
             <td class="text-xs-left">{{ props.item.companyName }}</td>
@@ -85,9 +85,9 @@
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
-          <v-flex d-flex xs12 sm12 md1 offset-md11>
+          <!-- <v-flex d-flex xs12 sm12 md1 offset-md11>
             <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
-          </v-flex>
+          </v-flex> -->
         </v-layout>
         <div class="text-xs-center pt-2">
           <v-pagination v-model="pagination.page" :length="pages" :total-visible="7"></v-pagination>
@@ -115,20 +115,20 @@
             <v-list three-line subheader>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">회사명</label>
-                <input v-model="updateData.companyName" class="input-text" type="text" required="required" placeholder="회사명">
+                <input v-model="updateData.companyName" class="input-text not-allowed" type="text" required="required" placeholder="회사명" disabled>
               </v-flex>    
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">이름</label>
-                <input v-model="updateData.name" class="input-text" type="text" required="required" placeholder="이름">
+                <input v-model="updateData.name" class="input-text not-allowed" type="text" required="required" placeholder="이름" disabled>
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">연락처</label>
-                <input v-model="updateData.contact" class="input-text" type="text">
+                <input v-model="updateData.contact" class="input-text not-allowed" type="text" disabled>
               </v-flex>
               <v-flex d-flex xs12 sm12 md3>
                 <label class="input-title">상태</label>
-                <input v-model="updateData.state" checked="checked" class="input-radio" type="radio" name="staus" value="등록">등록
-                <input v-model="updateData.state" class="input-radio" type="radio" name="staus" value="승인">승인
+                <input v-model="updateData.state" checked="checked" class="input-radio" type="radio" name="staus" value="Registered">등록
+                <input v-model="updateData.state" class="input-radio" type="radio" name="staus" value="Approved">승인
               </v-flex>
             </v-list>
           </v-card-text>
@@ -143,7 +143,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getSelectedFunc } from "../CompHelper.js";
+import {} from "../CompHelper.js";
 
 export default {
   data() {
@@ -197,11 +197,9 @@ export default {
 
       // For edit modal
       selected_index: "",
-      // selected_company: "",
-      // selected_name: "",
-      // selected_tel: "",
 
       // update
+      updateIndex: "",
       updateData: {
         companyName: "",
         contact: "",
@@ -236,15 +234,11 @@ export default {
   },
   mounted() {
     this.getDatas();
-    // console.log(
-    //   "this.$children[0].$children[4] :",
-    //   this.$children[0].$children[4].value
-    // );
   },
   methods: {
     getDatas() {
       this.$store.dispatch(Constant.FETCH_ADMIN_APP).then(resp => {
-        this.apps = resp.data.apps;
+        this.apps = resp.data.apps.reverse();
         this.total = this.apps.length;
       });
     },
@@ -269,7 +263,7 @@ export default {
       this.total_index = calPage;
     },
     updateDatas(idx, app) {
-      idx = this.selected_index;
+      idx = this.updateIndex;
       app = this.updateData;
       this.$store
         .dispatch(Constant.UPDATE_ADMIN_APP, {
@@ -295,12 +289,12 @@ export default {
           .dispatch(Constant.DELETE_ADMIN_APP, this.selected[item].idx)
           .then(() => {
             this.getDatas();
+            this.$store.commit(Constant.SHOW_MODAL, {
+              isModal: true,
+              modalText: "삭제 되었습니다."
+            });
           });
       }
-      this.$store.commit(Constant.SHOW_MODAL, {
-        isModal: true,
-        modalText: "삭제 되었습니다."
-      });
     },
     showEditModal(e) {
       this.$modal.show("adminapp_edit");
@@ -330,6 +324,11 @@ export default {
       this.updateData.pushToken = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].pushToken;
+
+      // find index
+      this.updateIndex = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].idx;
     },
     closeModal() {
       let vModal = this.$children[1];
@@ -341,9 +340,6 @@ export default {
     toggleAll() {
       if (this.selected.length) this.selected = [];
       else this.selected = this.apps.slice();
-    },
-    getSelected(e) {
-      getSelectedFunc(e);
     },
     changeSort(column) {
       if (this.pagination.sortBy === column) {

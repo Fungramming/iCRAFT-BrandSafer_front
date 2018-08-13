@@ -150,8 +150,11 @@ export default {
   addBlacklist(list) {
     return axios.post(CONF.ADD_BLACKLIST, list);
   },
+  // deleteBlacklist(bid) {
+  //   return axios.delete(CONF.DELETE_BLACKLIST.replace("${bid}", bid));
+  // },
   deleteBlacklist(bid) {
-    return axios.delete(CONF.DELETE_BLACKLIST.replace("${bid}", bid));
+    return axios.delete(CONF.DELETE_BLACKLIST.replace("${bid}", bid), bid);
   },
 
   fetchOverCert({ start, end }) {
@@ -185,7 +188,7 @@ export default {
     return axios.put(CONF.UPDATE_ADMIN_APP.replace("${aid}", aid), app);
   },
   deleteAdminApp(aid) {
-    return axios.delete(CONF.DELETE_ADMIN_APP.replace("${aid}", aid));
+    return axios.delete(CONF.DELETE_ADMIN_APP.replace("${aid}", aid), aid);
   },
 
   fetchDistributor(distributor) {
@@ -206,7 +209,7 @@ export default {
     );
   },
   deleteDistributor(did) {
-    return axios.delete(CONF.DELETE_DISTRIBUTOR.replace("${did}", did));
+    return axios.delete(CONF.DELETE_DISTRIBUTOR.replace("${did}", did), did);
   },
 
   fetchTagType(tagType) {

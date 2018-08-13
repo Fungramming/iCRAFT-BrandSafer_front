@@ -114,37 +114,42 @@
                 <label class="input-title">권한
                   <span class="text-danger">*</span>
                 </label>
-                <span class="selectbox selectbox-100">
-                  <select id="telephone1" v-model="submitData.role" class="form-control" name="telephone1">
-                    <option selected value="10">iCraft 관리자</option>
-                    <option value="11">iCraft 사용자</option>
-                    <option value="1">iCraft Super Admin</option>
-                  </select>
-                </span>
+                <span class="selectbox_arrow"></span>
+                <select id="telephone1" v-model="submitData.role" class="form-control selectbox selectbox-100 require-input" name="telephone1">
+                  <option selected value="10">iCraft 관리자</option>
+                  <option value="11">iCraft 사용자</option>
+                  <option value="1">iCraft Super Admin</option>
+                </select>
+                <span class="required-notice">*필수 입력사항입니다.</span>                
               </v-flex>    
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">이름
                   <span class="text-danger">*</span>
                 </label>
-                <input v-model="submitData.name" class="input-text" type="text" required="required">
+                <input v-model="submitData.name" class="input-text require-input" type="text" required="required">
+                <span class="required-notice">*필수 입력사항입니다.</span>
+
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">아이디
                   <span class="text-danger">*</span>
                 </label>
-                <input v-model="submitData.id" class="input-text" type="text">
+                <input v-model="submitData.id" class="input-text require-input" type="text">
+                <span class="required-notice">*필수 입력사항입니다.</span>
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">비밀번호
                   <span class="text-danger">*</span>
                 </label>
-                <input v-model="submitData.pwd" class="input-text" type="password" placeholder="( * 5~15자 이내의 영/숫자 조합 )">
+                <input ref="pwd1" v-model="submitData.pwd" class="input-text require-input" type="password" placeholder="( * 5~15자 이내의 영/숫자 조합 )" maxlangth="15">
+                <span class="required-notice">*필수 입력사항입니다.</span>
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">비밀번호 확인
-                  <span class="text-danger">*</span>
+                  <!-- <span class="text-danger">*</span> -->
                 </label>
-                <input v-model="checkPwd" class="input-text" type="password">
+                <input ref="pwd2" class="input-text require-input" type="password" maxlangth="15">
+                <span ref="pwdNotice" class="required-notice-pwd">*비밀번호를 확인하세요.</span>
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">이메일</label>
@@ -263,13 +268,13 @@
                 <label class="input-title">비밀번호
                   <span class="text-danger">*</span>
                 </label>
-                <input v-model="updateData.pwd" class="input-text" type="password" placeholder="( * 5~15자 이내의 영/숫자 조합 )" maxlength="15">
+                <input ref="pwd1_u" v-model="updateData.pwd" class="input-text" type="password" placeholder="( * 5~15자 이내의 영/숫자 조합 )" maxlength="15">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">비밀번호 확인
-                  <span class="text-danger">*</span>
+                  <!-- <span class="text-danger">*</span> -->
                 </label>
-                <input v-model="checkPwd" class="input-text" type="password" placeholder="* 비밀번호 확인" maxlength="15">
+                <input ref="pwd2_u" v-model="updateData.pwd" class="input-text" type="password" placeholder="* 비밀번호 확인" maxlength="15">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">이메일</label>
@@ -349,7 +354,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getSelectedFunc, getTotal } from "../CompHelper.js";
+import { getTotal, checkRequired } from "../CompHelper.js";
 
 export default {
   data() {
@@ -473,6 +478,8 @@ export default {
   watch: {},
   updated() {
     getTotal(this);
+    checkRequired();
+    this.checkPassword();
     if (this.firstNum_tel && this.midNum_tel && this.lastNum_tel) {
       this.submitData.telephone =
         this.firstNum_tel + "-" + this.midNum_tel + "-" + this.lastNum_tel;
@@ -500,24 +507,29 @@ export default {
       });
     },
     addDatas() {
-      // console.log("this.$ref :", this);
-      // if (this.$ref.roleAuth) {
       this.checkPassword();
-      this.$store
-        .dispatch(Constant.ADD_ICRAFT_USER, this.submitData)
-        .then(resp => {
-          console.log("resp :", resp);
-          this.getDatas();
-          this.closeModal();
-          this.$store.commit(Constant.SHOW_MODAL, {
-            isModal: true,
-            modalText: "등록 되었습니다."
+      checkRequired();
+      if (
+        this.submitData.role &&
+        this.submitData.name &&
+        this.submitData.id &&
+        this.submitData.pwd
+      ) {
+        this.$store
+          .dispatch(Constant.ADD_ICRAFT_USER, this.submitData)
+          .then(resp => {
+            console.log("resp :", resp);
+            this.getDatas();
+            this.closeModal();
+            this.$store.commit(Constant.SHOW_MODAL, {
+              isModal: true,
+              modalText: "등록 되었습니다."
+            });
+          })
+          .catch(err => {
+            console.log("err :", err);
           });
-        })
-        .catch(err => {
-          console.log("err :", err);
-        });
-      // }
+      }
     },
     deleteDatas() {
       for (let item in this.selected) {
@@ -533,10 +545,9 @@ export default {
       });
     },
     updateDatas({ idx, user }) {
+      this.checkPassword();
       idx = this.updateIndex;
       user = this.updateData;
-      console.log("idx :", idx);
-      console.log("app :", app);
       this.$store
         .dispatch(Constant.UPDATE_ICRAFT_USER, {
           uid: idx,
@@ -565,21 +576,26 @@ export default {
       else if (vModalEdit.visible) vModalEdit.visible = false;
     },
     checkPassword() {
-      if (this.checkPwd !== this.submitData.pwd) {
-        alert("비밀번호를 다시 확인해 주세요");
-      } else if (this.checkPwd !== this.updateData.pwd) {
-        alert("비밀번호를 다시 확인해 주세요");
+      if (this.$refs.pwd1.value !== this.$refs.pwd2.value) {
+        this.$refs.pwdNotice.style.display = "inline-block";
+      } else {
+        this.$refs.pwdNotice.style.display = "none";
       }
+      // alert("비밀번호를 다시 확인해 주세요");
+      // } else if (this.checkPwd !== this.updateData.pwd) {
+      // alert("비밀번호를 다시 확인해 주세요");
+      // }
+      // if (this.checkPwd !== this.submitData.pwd) {
+      //   alert("비밀번호를 다시 확인해 주세요");
+      // } else if (this.checkPwd !== this.updateData.pwd) {
+      //   alert("비밀번호를 다시 확인해 주세요");
+      // }
     },
     showEditModal(e) {
       this.$modal.show("account_edit");
 
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
       console.log("this.selected_index :", this.selected_index);
-      console.log(
-        "this.$children :",
-        this.$children[0].$children[1].filteredItems[this.selected_index]
-      );
 
       this.updateData.state = e.path[2].children[7].innerText;
       this.updateData.department = e.path[2].children[5].innerText;
@@ -617,18 +633,18 @@ export default {
       this.updateData.dtRegistered = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].dtRegistered;
-      this.updateData.dtModified = this.$children[0].$children[1].filteredItems[
-        this.selected_index
-      ].dtModified;
+      // this.updateData.dtModified = this.$children[0].$children[1].filteredItems[
+      //   this.selected_index
+      // ].dtModified;
       this.updateData.dtLastConnected = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].dtLastConnected;
       this.updateData.registrant = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].registrant;
-      this.updateData.modifier = this.$children[0].$children[1].filteredItems[
-        this.selected_index
-      ].modifier;
+      // this.updateData.modifier = this.$children[0].$children[1].filteredItems[
+      //   this.selected_index
+      // ].modifier;
 
       // find index
       this.updateIndex = this.$children[0].$children[1].filteredItems[
@@ -638,9 +654,6 @@ export default {
     toggleAll() {
       if (this.selected.length) this.selected = [];
       else this.selected = this.account.slice();
-    },
-    getSelected: function(e) {
-      getSelectedFunc(e);
     },
     changeSort(column) {
       if (this.pagination.sortBy === column) {

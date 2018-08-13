@@ -207,7 +207,7 @@ export default {
           end: "2018-07-15"
         })
         .then(resp => {
-          this.logs = resp.data.logs;
+          this.logs = resp.data.logs.reverse();
           this.total = this.logs.length;
         });
     },
