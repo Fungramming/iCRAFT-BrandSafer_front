@@ -203,8 +203,6 @@ export default {
   //   }
   // },
   updated() {
-    // console.log("this.$children[0] :", this.$children[0].$children[0].text);
-    // console.log("this.$children[0] :", this.$children[0].$children[1].text);
     this.dateStart = this.$children[0].$children[0].text;
     this.dateFinish = this.$children[0].$children[1].text;
   },
@@ -253,26 +251,23 @@ export default {
         .dispatch(Constant.FETCH_ACCOUNT_LOG, {
           start: this.dateStart,
           end: this.dateFinish
-          // start: "2016-07-01",
-          // end: "2016-08-14"
         })
         .then(resp => {
           this.logs = resp.data.logs.reverse();
           this.total = this.logs.length;
+          this.dateFormat();
         });
-      this.dateFormat();
     },
     getDateData() {
       this.$store
         .dispatch(Constant.FETCH_ACCOUNT_LOG, {
           start: this.dateStart,
           end: this.dateFinish
-          // start: "2016-07-01",
-          // end: "2016-08-14"
         })
         .then(resp => {
           this.logs = resp.data.logs.reverse();
           this.total = this.logs.length;
+          this.dateFormat();
         });
     },
     toggleAll() {

@@ -6,11 +6,14 @@
       <v-layout row wrap>
         <v-flex d-flex xs12 sm6 md5>
           <span class="span-without-selectbox">기간조회</span>
-          <date-picker v-model="date_start" :lang="lang"></date-picker>
+          <date-picker v-model="dateStart" :lang="lang"></date-picker>
         </v-flex>
         <v-flex d-flex xs12 sm6 md5>
-          <date-picker v-model="date_finish" :lang="lang"></date-picker>
+          <date-picker v-model="dateFinish" :lang="lang"></date-picker>
         </v-flex>
+        <div class="search-btn" @click="getDateData">
+          <v-icon>search</v-icon>
+        </div>
       </v-layout>
       <v-spacer></v-spacer>
       <v-text-field
@@ -115,8 +118,8 @@ export default {
       },
 
       // date picker
-      date_start: "",
-      date_finish: "",
+      dateStart: "",
+      dateFinish: "",
       lang: {
         days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         months: [
@@ -218,6 +221,10 @@ export default {
       return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
   },
+  updated() {
+    this.dateStart = this.$children[0].$children[0].text;
+    this.dateFinish = this.$children[0].$children[1].text;
+  },
   mounted() {
     this.getDatas();
   },
@@ -237,8 +244,8 @@ export default {
       }
       today = yyyy + "-" + mm + "-" + dd;
 
-      this.date_start = today;
-      this.date_finish = today;
+      this.dateStart = today;
+      this.dateFinish = today;
     },
     dateFormat() {
       let oversert = this.oversert;
@@ -248,17 +255,30 @@ export default {
         oversert[item].dtTermAgreement = formatDate;
       }
     },
+    getDateData() {
+      this.$store
+        .dispatch(Constant.FETCH_ACCOUNT_LOG, {
+          start: this.dateStart,
+          end: this.dateFinish
+        })
+        .then(resp => {
+          this.logs = resp.data.logs.reverse();
+          this.total = this.logs.length;
+          this.dateFormat();
+        });
+    },
     getDatas() {
       this.dateSet();
       this.$store
         .dispatch(Constant.FETCH_OVER_CERT, {
-          start: "2017-05-05",
-          end: "2017-05-31"
+          start: this.dateStart,
+          end: this.dateFinish
         })
         .then(resp => {
           this.oversert = resp.data.certs.reverse();
           console.log("oversert.length :", this.oversert.length);
           this.total = this.oversert.length;
+          this.dateFormat();
         });
     },
     deleteDatas() {
