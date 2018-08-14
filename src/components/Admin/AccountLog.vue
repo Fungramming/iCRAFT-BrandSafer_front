@@ -11,6 +11,9 @@
         <v-flex d-flex xs12 sm6 md5>
           <date-picker v-model="dateFinish" :lang="lang"></date-picker>
         </v-flex>
+        <div class="search-btn" @click="getDateData">
+          <v-icon>search</v-icon>
+        </div>
       </v-layout>
       <v-spacer></v-spacer>
       <v-text-field
@@ -177,8 +180,6 @@ export default {
   },
   watch: {
     dateStart() {
-      // var dataStart = this.dateStart.substr(0, 10);
-      // var dataFinish = this.dateFinish.substr(0, 10);
       this.$store
         .dispatch(Constant.FETCH_ACCOUNT_LOG, {
           start: this.dateStart,
@@ -211,7 +212,7 @@ export default {
     this.getDatas();
   },
   methods: {
-    dataSet() {
+    dateSet() {
       let today = new Date();
       let ThreeMonthAgo = new Date();
       let dd = today.getDate();
@@ -238,8 +239,30 @@ export default {
       // this.dateStart = today;
       this.dateFinish = today;
     },
+    dateFormat() {
+      let logs = this.logs;
+      for (let item in logs) {
+        let date = new Date(logs[item].dtAttempted);
+        let formatDate = date.toLocaleDateString();
+        logs[item].dtAttempted = formatDate;
+      }
+    },
     getDatas() {
-      this.dataSet();
+      this.dateSet();
+      this.$store
+        .dispatch(Constant.FETCH_ACCOUNT_LOG, {
+          start: this.dateStart,
+          end: this.dateFinish
+          // start: "2016-07-01",
+          // end: "2016-08-14"
+        })
+        .then(resp => {
+          this.logs = resp.data.logs.reverse();
+          this.total = this.logs.length;
+        });
+      this.dateFormat();
+    },
+    getDateData() {
       this.$store
         .dispatch(Constant.FETCH_ACCOUNT_LOG, {
           start: this.dateStart,

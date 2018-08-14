@@ -192,7 +192,19 @@ export default {
       this.$store.dispatch(Constant.FETCH_BLACKLIST).then(resp => {
         this.blacklists = resp.data.blacklists.reverse();
         this.total = this.blacklists.length;
+        this.dateFormat();
       });
+    },
+    dateFormat() {
+      let blacklists = this.blacklists;
+      for (let item in blacklists) {
+        let date = new Date(blacklists[item].dtRegistered);
+        let date_2 = new Date(blacklists[item].dtModified);
+        let formatDate = date.toLocaleDateString();
+        let formatDate_2 = date_2.toLocaleDateString();
+        blacklists[item].dtRegistered = formatDate;
+        blacklists[item].dtModified = formatDate_2;
+      }
     },
     addDatas() {
       this.$store

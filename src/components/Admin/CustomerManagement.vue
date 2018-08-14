@@ -666,7 +666,16 @@ export default {
       this.$store.dispatch(Constant.FETCH_COMPANY).then(resp => {
         this.customers = resp.data.company.reverse();
         this.total = this.customers.length;
+        this.dateFormat();
       });
+    },
+    dateFormat() {
+      let customers = this.customers;
+      for (let item in customers) {
+        let date = new Date(customers[item].dtRegistered);
+        let formatDate = date.toLocaleDateString();
+        customers[item].dtRegistered = formatDate;
+      }
     },
     updateDatas({ idx, app }) {
       idx = this.updateIndex;
