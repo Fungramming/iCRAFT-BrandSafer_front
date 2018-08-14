@@ -188,8 +188,6 @@ export default {
   mounted() {
     this.$store.dispatch(Constant.FETCH_USERS).then(resp => {
       this.users = resp;
-      console.log("this.users :", this.users);
-      // console.log("this.users.length :", this.users.length);
     });
   }
 };

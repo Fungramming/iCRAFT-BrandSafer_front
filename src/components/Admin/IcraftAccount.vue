@@ -141,14 +141,14 @@
                 <label class="input-title">비밀번호
                   <span class="text-danger">*</span>
                 </label>
-                <input ref="pwd1" v-model="submitData.pwd" class="input-text require-input" type="password" placeholder="( * 5~15자 이내의 영/숫자 조합 )" maxlangth="15">
+                <input ref="pwd1" v-model="pwd" class="input-text require-input" type="password" placeholder="( * 5~15자 이내의 영/숫자 조합 )" maxlangth="15">
                 <span class="required-notice">*필수 입력사항입니다.</span>
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">비밀번호 확인
                   <!-- <span class="text-danger">*</span> -->
                 </label>
-                <input ref="pwd2" class="input-text require-input" type="password" maxlangth="15">
+                <input ref="pwd2" v-model="repwd" class="input-text require-input" type="password" maxlangth="15">
                 <span ref="pwdNotice" class="required-notice-pwd">*비밀번호를 확인하세요.</span>
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
@@ -274,7 +274,8 @@
                 <label class="input-title">비밀번호 확인
                   <!-- <span class="text-danger">*</span> -->
                 </label>
-                <input ref="pwd2_u" v-model="checkPwd" class="input-text" type="password" placeholder="* 비밀번호 확인" maxlength="15">
+                <input ref="pwd2_u" v-model="repwd" class="input-text" type="password" placeholder="* 비밀번호 확인" maxlength="15">
+                <span ref="pwdNotice" class="required-notice-pwd">*비밀번호를 확인하세요.</span>
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">이메일</label>
@@ -364,7 +365,7 @@ export default {
       modal_size: Constant.MODAL_SIZE,
       modal_size_height: Constant.MODAL_SIZE_HEIGHT,
       pagination: {
-        // page: 1
+        page: 1,
         rowsPerPage: 10
       },
       total: "",
@@ -385,7 +386,6 @@ export default {
         { text: "상태", align: "left", value: "state", sortable: false }
       ],
       account: [],
-      // account: {}
 
       // For edit modal
       selected_index: "",
@@ -414,7 +414,9 @@ export default {
       lastNum_phone: "",
       first_mail: "",
       last_mail: "",
-      checkPwd: "",
+      pwd: "",
+      repwd: "",
+      checkPwdValue: false,
 
       // add
       submitData: {
@@ -469,16 +471,23 @@ export default {
       if (
         this.pagination.rowsPerPage == null ||
         this.pagination.totalItems == null
-      )
+      ) {
         return 0;
-
+      }
       return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
   },
-  watch: {},
+  watch: {
+    pwd: function() {
+      this.submitData.pwd = this.pwd;
+      this.checkPassword();
+    },
+    repwd: function() {
+      this.checkPassword();
+    }
+  },
   updated() {
     checkRequired();
-    this.checkPassword();
     if (this.firstNum_tel && this.midNum_tel && this.lastNum_tel) {
       this.submitData.telephone =
         this.firstNum_tel + "-" + this.midNum_tel + "-" + this.lastNum_tel;
@@ -512,7 +521,8 @@ export default {
         this.submitData.role &&
         this.submitData.name &&
         this.submitData.id &&
-        this.submitData.pwd
+        this.submitData.pwd &&
+        this.checkPwdValue == true
       ) {
         this.$store
           .dispatch(Constant.ADD_ICRAFT_USER, this.submitData)
@@ -547,22 +557,30 @@ export default {
       this.checkPassword();
       idx = this.updateIndex;
       user = this.updateData;
-      this.$store
-        .dispatch(Constant.UPDATE_ICRAFT_USER, {
-          uid: idx,
-          user: user
-        })
-        .then(() => {
-          this.getDatas();
-          this.closeModal();
-          this.$store.commit(Constant.SHOW_MODAL, {
-            isModal: true,
-            modalText: "수정 되었습니다."
+      if (
+        this.updateData.role &&
+        this.updateData.name &&
+        this.updateData.id &&
+        this.updateData.pwd &&
+        this.checkPwdValue == true
+      ) {
+        this.$store
+          .dispatch(Constant.UPDATE_ICRAFT_USER, {
+            uid: idx,
+            user: user
+          })
+          .then(() => {
+            this.getDatas();
+            this.closeModal();
+            this.$store.commit(Constant.SHOW_MODAL, {
+              isModal: true,
+              modalText: "수정 되었습니다."
+            });
+          })
+          .catch(err => {
+            console.log("err :", err);
           });
-        })
-        .catch(err => {
-          console.log("err :", err);
-        });
+      }
     },
     showModal() {
       this.$modal.show("account");
@@ -575,24 +593,27 @@ export default {
       else if (vModalEdit.visible) vModalEdit.visible = false;
     },
     checkPassword() {
-      if (this.updateData.pwd) {
-        // .style.display = "inline-block";
-      } else {
-        // this.$refs.pwdNotice.style.display = "none";
+      let checkNotice = document.getElementsByClassName(
+        "required-notice-pwd"
+      )[0];
+
+      if (this.submitData.pwd == this.repwd) {
+        checkNotice.style.opacity = 0;
+        this.checkPwdValue = true;
+      } else if (this.updateData.pwd == this.repwd) {
+        checkNotice.style.opacity = 0;
+        this.checkPwdValue = true;
+      } else if (this.submitData.pwd !== this.repwd) {
+        checkNotice.style.opacity = 1;
+        this.checkPwdValue = false;
+      } else if (this.updateData.pwd !== this.repwd) {
+        checkNotice.style.opacity = 1;
+        this.checkPwdValue = false;
       }
-      // alert("비밀번호를 다시 확인해 주세요");
-      // } else if (this.checkPwd !== this.updateData.pwd) {
-      // alert("비밀번호를 다시 확인해 주세요");
-      // }
-      // if (this.checkPwd !== this.submitData.pwd) {
-      //   alert("비밀번호를 다시 확인해 주세요");
-      // } else if (this.checkPwd !== this.updateData.pwd) {
-      //   alert("비밀번호를 다시 확인해 주세요");
-      // }
     },
     showEditModal(e) {
       this.$modal.show("account_edit");
-
+      this.repwd = "";
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
 
       this.updateData.state = e.path[2].children[7].innerText;
