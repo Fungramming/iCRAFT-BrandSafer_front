@@ -6,10 +6,10 @@
       <v-layout row wrap>
         <v-flex d-flex xs12 sm6 md5>
           <span class="span-without-selectbox">기간조회</span>
-          <date-picker v-model="date_start" :lang="lang"></date-picker>
+          <date-picker v-model="dateStart" :lang="lang" @click="getSelectDate"></date-picker>
         </v-flex>
         <v-flex d-flex xs12 sm6 md5>
-          <date-picker v-model="date_finish" :lang="lang"></date-picker>
+          <date-picker v-model="dateFinish" :lang="lang"></date-picker>
         </v-flex>
       </v-layout>
       <v-spacer></v-spacer>
@@ -109,8 +109,8 @@ export default {
       },
 
       // date picker
-      date_start: "",
-      date_finish: "",
+      dateStart: "",
+      dateFinish: "",
       lang: {
         days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         months: [
@@ -175,14 +175,45 @@ export default {
       return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
   },
+  watch: {
+    dateStart() {
+      // this.dateStart = this.$children[0].$children[0].text;
+      this.$store
+        .dispatch(Constant.FETCH_ACCOUNT_LOG, {
+          start: this.dateStart,
+          end: this.dateFinish
+        })
+        .then(resp => {
+          this.logs = resp.data.logs.reverse();
+          this.total = this.logs.length;
+        });
+    },
+    dateFinish() {
+      // this.dateFinish = this.$children[0].$children[1].text;
+      this.$store
+        .dispatch(Constant.FETCH_ACCOUNT_LOG, {
+          start: this.dateStart,
+          end: this.dateFinish
+        })
+        .then(resp => {
+          this.logs = resp.data.logs.reverse();
+          this.total = this.logs.length;
+        });
+    }
+  },
   updated() {
     this.getTotal();
+
+    // console.log("this.$children[0] :", this.$children[0].$children[0].text);
+    // console.log("this.$children[0] :", this.$children[0].$children[1].text);
+    this.dateStart = this.$children[0].$children[0].text;
+    this.dateFinish = this.$children[0].$children[1].text;
   },
   mounted() {
     this.getDatas();
   },
   methods: {
-    getDatas() {
+    dataSet() {
       let today = new Date();
       let dd = today.getDate();
       let mm = today.getMonth() + 1;
@@ -197,33 +228,29 @@ export default {
       }
       today = yyyy + "-" + mm + "-" + dd;
 
-      this.date_start = today;
-      this.date_finish = today;
-      // this.queryDateToday = today;
-
+      this.dateStart = today;
+      this.dateFinish = today;
+    },
+    getDatas() {
+      this.dataSet();
       this.$store
         .dispatch(Constant.FETCH_ACCOUNT_LOG, {
-          start: "2018-07-01",
-          end: "2018-07-15"
+          start: this.dateStart,
+          end: this.dateFinish
+          // start: "2016-07-01",
+          // end: "2016-08-14"
         })
         .then(resp => {
           this.logs = resp.data.logs.reverse();
           this.total = this.logs.length;
         });
     },
+    getSelectDate() {
+      console.log("this.$children[0] :", this.$children[0]);
+    },
     getTotal() {
-      // let page = document.getElementsByClassName("v-select__selection");
-      // let pageActive = document.getElementsByClassName(
-      //   "v-pagination__item--active"
-      // );
-      // let pageText = page[0].innerText;
-      // let pageActiveText = pageActive[0].innerText;
-      // let pageNum = pageActiveText - 1;
-      // let calPage = pageNum * pageText;
-      // this.total_index = calPage;
       let update_total = this.$children[0].$children[3].searchLength;
       this.total = update_total;
-
       // 1
       let pageNum = this.$children[0].$children[4].value - 1;
       // 10
