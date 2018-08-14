@@ -234,8 +234,10 @@ export default {
           // end: "2016-08-14"
         })
         .then(resp => {
+          console.log("resp :", resp);
           this.logs = resp.data.logs.reverse();
-          this.total = this.logs.length;
+          this.total = resp.total;
+          console.log("this.total :", this.total);
         });
       this.dateFormat();
     },
@@ -249,7 +251,7 @@ export default {
         })
         .then(resp => {
           this.logs = resp.data.logs.reverse();
-          this.total = this.logs.length;
+          // this.total = this.logs.length;
         });
     },
     toggleAll() {
