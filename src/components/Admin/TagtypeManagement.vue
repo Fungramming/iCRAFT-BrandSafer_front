@@ -55,7 +55,7 @@
                 hide-details
               ></v-checkbox>
             </td>
-            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
+            <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
             <!-- <td class="text-xs-left">{{ props.item.idx }}</td> -->
             <td class="text-xs-left"><a @click.stop="showEditModal"> {{ props.item.version }} </a></td>
             <td class="text-xs-left">{{ props.item.type }}</td>
@@ -233,7 +233,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getTotal, checkRequired } from "../CompHelper.js";
+import { checkRequired } from "../CompHelper.js";
 
 export default {
   data() {
@@ -328,7 +328,6 @@ export default {
     }
   },
   updated() {
-    getTotal(this);
     checkRequired();
     // this.checkRequired();
   },

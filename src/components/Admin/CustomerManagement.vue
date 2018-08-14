@@ -55,7 +55,7 @@
                 hide-details
               ></v-checkbox>
             </td> -->
-            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
+            <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
             <!-- <td class="text-xs-left">{{ props.item.idx }}</td> -->
             <td class="text-xs-left"><a @click.stop="showEditModal"> {{ props.item.name_kr }} </a></td>
             <td class="text-xs-left">{{ props.item.code }}</td>
@@ -617,8 +617,6 @@ export default {
     }
   },
   updated() {
-    // getTotal(this);
-    this.getTotal();
     checkRequired();
 
     if (this.firstNum_tel && this.midNum_tel && this.lastNum_tel) {
@@ -707,19 +705,19 @@ export default {
         modalText: "삭제 되었습니다."
       });
     },
-    getTotal() {
-      let update_total = this.$children[0].$children[1].searchLength;
-      console.log("update_total :", update_total);
-      this.total = update_total;
+    // getTotal() {
+    //   let update_total = this.$children[0].$children[1].searchLength;
+    //   console.log("update_total :", update_total);
+    //   this.total = update_total;
 
-      // 1
-      let pageNum = this.$children[0].$children[3].value - 1;
-      // let pageActiveText = this.$children[0].$children[4].value;
-      // 10
-      let pageActiveText = this.$children[0].$children[1].$children[0].value;
-      let calPage = pageNum * pageActiveText;
-      this.total_index = calPage;
-    },
+    //   // 1
+    //   let pageNum = this.$children[0].$children[3].value - 1;
+    //   // let pageActiveText = this.$children[0].$children[4].value;
+    //   // 10
+    //   let pageActiveText = this.$children[0].$children[1].$children[0].value;
+    //   let calPage = pageNum * pageActiveText;
+    //   this.total_index = calPage;
+    // },
     showModal() {
       this.$modal.show("customer");
     },

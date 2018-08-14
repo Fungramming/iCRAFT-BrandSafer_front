@@ -6,7 +6,7 @@
       <v-layout row wrap>
         <v-flex d-flex xs12 sm6 md5>
           <span class="span-without-selectbox">기간조회</span>
-          <date-picker v-model="dateStart" :lang="lang" @click="getSelectDate"></date-picker>
+          <date-picker v-model="dateStart" :lang="lang"></date-picker>
         </v-flex>
         <v-flex d-flex xs12 sm6 md5>
           <date-picker v-model="dateFinish" :lang="lang"></date-picker>
@@ -62,7 +62,7 @@
                 hide-details
               ></v-checkbox>
             </td>
-            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
+            <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
             <td class="text-xs-left">{{ props.item.dtAttempted }}</td>
             <td class="text-xs-left">{{ props.item.role_name }}</td>
             <td class="text-xs-left">{{ props.item.id }}</td>
@@ -177,7 +177,8 @@ export default {
   },
   watch: {
     dateStart() {
-      // this.dateStart = this.$children[0].$children[0].text;
+      // var dataStart = this.dateStart.substr(0, 10);
+      // var dataFinish = this.dateFinish.substr(0, 10);
       this.$store
         .dispatch(Constant.FETCH_ACCOUNT_LOG, {
           start: this.dateStart,
@@ -189,7 +190,6 @@ export default {
         });
     },
     dateFinish() {
-      // this.dateFinish = this.$children[0].$children[1].text;
       this.$store
         .dispatch(Constant.FETCH_ACCOUNT_LOG, {
           start: this.dateStart,
@@ -202,8 +202,6 @@ export default {
     }
   },
   updated() {
-    this.getTotal();
-
     // console.log("this.$children[0] :", this.$children[0].$children[0].text);
     // console.log("this.$children[0] :", this.$children[0].$children[1].text);
     this.dateStart = this.$children[0].$children[0].text;
@@ -215,8 +213,10 @@ export default {
   methods: {
     dataSet() {
       let today = new Date();
+      let ThreeMonthAgo = new Date();
       let dd = today.getDate();
       let mm = today.getMonth() + 1;
+      let mm_3 = today.getMonth() - 2;
       let yyyy = today.getFullYear();
 
       if (dd < 10) {
@@ -226,9 +226,16 @@ export default {
       if (mm < 10) {
         mm = "0" + mm;
       }
-      today = yyyy + "-" + mm + "-" + dd;
 
-      this.dateStart = today;
+      if (mm_3 < 10) {
+        mm_3 = "0" + mm_3;
+      }
+
+      today = yyyy + "-" + mm + "-" + dd;
+      ThreeMonthAgo = yyyy + "-" + mm_3 + "-" + dd;
+
+      this.dateStart = ThreeMonthAgo;
+      // this.dateStart = today;
       this.dateFinish = today;
     },
     getDatas() {
@@ -244,19 +251,6 @@ export default {
           this.logs = resp.data.logs.reverse();
           this.total = this.logs.length;
         });
-    },
-    getSelectDate() {
-      console.log("this.$children[0] :", this.$children[0]);
-    },
-    getTotal() {
-      let update_total = this.$children[0].$children[3].searchLength;
-      this.total = update_total;
-      // 1
-      let pageNum = this.$children[0].$children[4].value - 1;
-      // 10
-      let pageActiveText = this.$children[0].$children[3].$children[1].value;
-      let calPage = pageNum * pageActiveText;
-      this.total_index = calPage;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];
