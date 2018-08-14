@@ -459,7 +459,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { checkRequired } from "../CompHelper.js";
+import { checkRequired, getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -617,6 +617,7 @@ export default {
     }
   },
   updated() {
+    getTotal(this);
     checkRequired();
 
     if (this.firstNum_tel && this.midNum_tel && this.lastNum_tel) {

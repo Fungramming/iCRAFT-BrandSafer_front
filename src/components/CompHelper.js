@@ -14,3 +14,7 @@ export function checkRequired() {
     }
   }
 }
+
+export function getTotal(_this) {
+  _this.total = _this.$children[0].$children[1].searchLength;
+}

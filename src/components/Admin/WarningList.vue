@@ -103,6 +103,7 @@
 
 <script>
 import Constant from "../../constant.js";
+import { getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -220,6 +221,9 @@ export default {
   },
   mounted() {
     this.getDatas();
+  },
+  updated() {
+    getTotal(this);
   },
   methods: {
     dateSet() {

@@ -123,6 +123,7 @@
 
 <script>
 import Constant from "../../constant.js";
+import { getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -183,6 +184,9 @@ export default {
 
       return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
+  },
+  updated() {
+    getTotal(this);
   },
   mounted() {
     this.getDatas();

@@ -213,7 +213,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { checkRequired } from "../CompHelper.js";
+import { checkRequired, getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -307,6 +307,7 @@ export default {
   },
   updated() {
     checkRequired();
+    getTotal(this);
   },
   mounted() {
     this.getDatas();

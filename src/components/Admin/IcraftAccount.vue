@@ -355,7 +355,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { checkRequired } from "../CompHelper.js";
+import { checkRequired, getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -488,6 +488,7 @@ export default {
   },
   updated() {
     checkRequired();
+    getTotal(this);
     if (this.firstNum_tel && this.midNum_tel && this.lastNum_tel) {
       this.submitData.telephone =
         this.firstNum_tel + "-" + this.midNum_tel + "-" + this.lastNum_tel;
@@ -613,8 +614,6 @@ export default {
         checkNotice.style.opacity = 0;
         this.checkPwdValue = true;
       } else if (this.submitData.pwd !== this.repwd) {
-        console.log("required :", rePwdInput);
-        console.log("123123123 :", 123123123);
         rePwdInput.classList.add("warn");
         checkNotice.style.opacity = 1;
         this.checkPwdValue = false;

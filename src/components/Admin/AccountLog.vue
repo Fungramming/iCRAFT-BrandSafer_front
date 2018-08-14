@@ -100,6 +100,7 @@
 
 <script>
 import Constant from "../../constant.js";
+import { getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -178,33 +179,9 @@ export default {
       return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
   },
-  // watch: {
-  //   dateStart() {
-  //     this.$store
-  //       .dispatch(Constant.FETCH_ACCOUNT_LOG, {
-  //         start: this.dateStart,
-  //         end: this.dateFinish
-  //       })
-  //       .then(resp => {
-  //         this.logs = resp.data.logs.reverse();
-  //         this.total = this.logs.length;
-  //       });
-  //   },
-  //   dateFinish() {
-  //     this.$store
-  //       .dispatch(Constant.FETCH_ACCOUNT_LOG, {
-  //         start: this.dateStart,
-  //         end: this.dateFinish
-  //       })
-  //       .then(resp => {
-  //         this.logs = resp.data.logs.reverse();
-  //         this.total = this.logs.length;
-  //       });
-  //   }
-  // },
   updated() {
-    // console.log("this.$children[0] :", this.$children[0].$children[0].text);
-    // console.log("this.$children[0] :", this.$children[0].$children[1].text);
+    getTotal(this);
+
     this.dateStart = this.$children[0].$children[0].text;
     this.dateFinish = this.$children[0].$children[1].text;
   },
