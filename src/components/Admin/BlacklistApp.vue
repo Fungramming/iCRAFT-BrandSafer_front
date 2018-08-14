@@ -53,7 +53,7 @@
                 hide-details
               ></v-checkbox>
             </td>
-            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
+            <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
             <td class="text-xs-left">{{ props.item.app }}</td>
             <td class="text-xs-left">{{ props.item.blType }}</td>
             <td class="text-xs-left" @click="linkPushToken"><a>{{ props.item.pushToken }}</a></td>
@@ -66,7 +66,7 @@
       </v-data-table>
       <div class="v-datatable__actions">
         <span>per page :</span>
-        <div class="v-datatable__actions__select">          
+        <div class="v-datatable__actions__select">
           <select v-model="pagination.rowsPerPage">
             <option value="5">5</option>
             <option value="10">10</option>
@@ -123,7 +123,6 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -184,9 +183,6 @@ export default {
 
       return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
-  },
-  updated() {
-    getTotal(this);
   },
   mounted() {
     this.getDatas();

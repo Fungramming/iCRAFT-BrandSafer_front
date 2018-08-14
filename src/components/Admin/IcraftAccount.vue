@@ -55,7 +55,7 @@
                 hide-details
               ></v-checkbox>
             </td>
-            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
+            <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
             <td class="text-xs-left">{{ props.item.role }}</td>
             <td class="text-xs-left">{{ props.item.name }}</td>
             <td class="text-xs-left"><a @click.stop="showEditModal">{{ props.item.id }}</a></td>
@@ -274,7 +274,7 @@
                 <label class="input-title">비밀번호 확인
                   <!-- <span class="text-danger">*</span> -->
                 </label>
-                <input ref="pwd2_u" v-model="updateData.pwd" class="input-text" type="password" placeholder="* 비밀번호 확인" maxlength="15">
+                <input ref="pwd2_u" v-model="checkPwd" class="input-text" type="password" placeholder="* 비밀번호 확인" maxlength="15">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">이메일</label>
@@ -354,7 +354,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getTotal, checkRequired } from "../CompHelper.js";
+import { checkRequired } from "../CompHelper.js";
 
 export default {
   data() {
@@ -477,7 +477,6 @@ export default {
   },
   watch: {},
   updated() {
-    getTotal(this);
     checkRequired();
     this.checkPassword();
     if (this.firstNum_tel && this.midNum_tel && this.lastNum_tel) {
@@ -576,10 +575,10 @@ export default {
       else if (vModalEdit.visible) vModalEdit.visible = false;
     },
     checkPassword() {
-      if (this.$refs.pwd1.value !== this.$refs.pwd2.value) {
-        this.$refs.pwdNotice.style.display = "inline-block";
+      if (this.updateData.pwd) {
+        // .style.display = "inline-block";
       } else {
-        this.$refs.pwdNotice.style.display = "none";
+        // this.$refs.pwdNotice.style.display = "none";
       }
       // alert("비밀번호를 다시 확인해 주세요");
       // } else if (this.checkPwd !== this.updateData.pwd) {
@@ -595,7 +594,6 @@ export default {
       this.$modal.show("account_edit");
 
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
-      console.log("this.selected_index :", this.selected_index);
 
       this.updateData.state = e.path[2].children[7].innerText;
       this.updateData.department = e.path[2].children[5].innerText;

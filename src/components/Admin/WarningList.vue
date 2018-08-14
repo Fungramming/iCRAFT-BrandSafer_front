@@ -62,7 +62,7 @@
                 hide-details
               ></v-checkbox>
             </td>
-            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
+            <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
             <td class="text-xs-left">{{ props.item.dtTermAgreement }}</td>
             <td class="text-xs-left">{{ props.item.appCode }}</td>
             <td class="text-xs-left">{{ props.item.appTagType }}</td>
@@ -103,7 +103,6 @@
 
 <script>
 import Constant from "../../constant.js";
-import {} from "../CompHelper.js";
 
 export default {
   data() {
@@ -219,23 +218,10 @@ export default {
       return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
   },
-  updated() {
-    this.getTotal();
-  },
   mounted() {
     this.getDatas();
   },
   methods: {
-    getTotal() {
-      let update_total = this.$children[0].$children[3].searchLength;
-      this.total = update_total;
-      // 1
-      let pageNum = this.$children[0].$children[4].value - 1;
-      // 10
-      let pageActiveText = this.$children[0].$children[3].$children[1].value;
-      let calPage = pageNum * pageActiveText;
-      this.total_index = calPage;
-    },
     getDatas() {
       let today = new Date();
       let dd = today.getDate();

@@ -57,7 +57,7 @@
                 hide-details
               ></v-checkbox>
             </td> -->
-            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
+            <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
             <!-- <td class="text-xs-left">{{ props.item.idx }}</td> -->
             <td class="text-xs-left">{{ props.item.companyName }}</td>
             <td class="text-xs-left"><a @click.stop="showEditModal">{{ props.item.name }}</a></td>
@@ -143,7 +143,6 @@
 
 <script>
 import Constant from "../../constant.js";
-import {} from "../CompHelper.js";
 
 export default {
   data() {
@@ -222,16 +221,6 @@ export default {
       return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
   },
-  // watch: {
-  //   app: function(e) {
-  //     console.log("this.app :", this.app);
-  //   }
-  // },
-  updated() {
-    // let update_total = this.$children[0].$children[1].searchLength;
-    // this.total = update_total;
-    this.getTotal();
-  },
   mounted() {
     this.getDatas();
   },
@@ -241,26 +230,6 @@ export default {
         this.apps = resp.data.apps.reverse();
         this.total = this.apps.length;
       });
-    },
-    getTotal() {
-      // let page = document.getElementsByClassName("v-select__selection");
-      // let pageActive = document.getElementsByClassName(
-      //   "v-pagination__item--active"
-      // );
-      // let pageText = page[0].innerText;
-      // let pageActiveText = pageActive[0].innerText;
-      // let pageNum = pageActiveText - 1;
-      // let calPage = pageNum * pageText;
-      // this.total_index = calPage;
-      let update_total = this.$children[0].$children[1].searchLength;
-      this.total = update_total;
-
-      let pageNum = this.$children[0].$children[3].value - 1;
-      console.log("pageNum :", pageNum);
-      let pageActiveText = this.$children[0].$children[1].$children[1].value;
-      console.log("pageActiveText :", pageActiveText);
-      let calPage = pageNum * pageActiveText;
-      this.total_index = calPage;
     },
     updateDatas(idx, app) {
       idx = this.updateIndex;

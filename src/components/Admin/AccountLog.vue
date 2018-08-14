@@ -62,7 +62,7 @@
                 hide-details
               ></v-checkbox>
             </td>
-            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
+            <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
             <td class="text-xs-left">{{ props.item.dtAttempted }}</td>
             <td class="text-xs-left">{{ props.item.role_name }}</td>
             <td class="text-xs-left">{{ props.item.id }}</td>
@@ -175,9 +175,6 @@ export default {
       return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
   },
-  updated() {
-    this.getTotal();
-  },
   mounted() {
     this.getDatas();
   },
@@ -210,26 +207,6 @@ export default {
           this.logs = resp.data.logs.reverse();
           this.total = this.logs.length;
         });
-    },
-    getTotal() {
-      // let page = document.getElementsByClassName("v-select__selection");
-      // let pageActive = document.getElementsByClassName(
-      //   "v-pagination__item--active"
-      // );
-      // let pageText = page[0].innerText;
-      // let pageActiveText = pageActive[0].innerText;
-      // let pageNum = pageActiveText - 1;
-      // let calPage = pageNum * pageText;
-      // this.total_index = calPage;
-      let update_total = this.$children[0].$children[3].searchLength;
-      this.total = update_total;
-
-      // 1
-      let pageNum = this.$children[0].$children[4].value - 1;
-      // 10
-      let pageActiveText = this.$children[0].$children[3].$children[1].value;
-      let calPage = pageNum * pageActiveText;
-      this.total_index = calPage;
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

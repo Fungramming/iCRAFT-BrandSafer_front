@@ -133,7 +133,6 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -185,9 +184,6 @@ export default {
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
     }
-  },
-  updated() {
-    getTotal(this);
   },
   mounted() {
     this.$store.dispatch(Constant.FETCH_USERS).then(resp => {
