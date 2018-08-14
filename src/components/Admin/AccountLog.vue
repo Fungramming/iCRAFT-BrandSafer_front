@@ -11,6 +11,9 @@
         <v-flex d-flex xs12 sm6 md5>
           <date-picker v-model="dateFinish" :lang="lang"></date-picker>
         </v-flex>
+        <div class="search-btn" @click="getDateData">
+          <v-icon>search</v-icon>
+        </div>
       </v-layout>
       <v-spacer></v-spacer>
       <v-text-field
@@ -258,6 +261,19 @@ export default {
           this.total = this.logs.length;
         });
       this.dateFormat();
+    },
+    getDateData() {
+      this.$store
+        .dispatch(Constant.FETCH_ACCOUNT_LOG, {
+          start: this.dateStart,
+          end: this.dateFinish
+          // start: "2016-07-01",
+          // end: "2016-08-14"
+        })
+        .then(resp => {
+          this.logs = resp.data.logs.reverse();
+          this.total = this.logs.length;
+        });
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];
