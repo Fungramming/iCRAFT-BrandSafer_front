@@ -178,30 +178,30 @@ export default {
       return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
   },
-  watch: {
-    dateStart() {
-      this.$store
-        .dispatch(Constant.FETCH_ACCOUNT_LOG, {
-          start: this.dateStart,
-          end: this.dateFinish
-        })
-        .then(resp => {
-          this.logs = resp.data.logs.reverse();
-          this.total = this.logs.length;
-        });
-    },
-    dateFinish() {
-      this.$store
-        .dispatch(Constant.FETCH_ACCOUNT_LOG, {
-          start: this.dateStart,
-          end: this.dateFinish
-        })
-        .then(resp => {
-          this.logs = resp.data.logs.reverse();
-          this.total = this.logs.length;
-        });
-    }
-  },
+  // watch: {
+  //   dateStart() {
+  //     this.$store
+  //       .dispatch(Constant.FETCH_ACCOUNT_LOG, {
+  //         start: this.dateStart,
+  //         end: this.dateFinish
+  //       })
+  //       .then(resp => {
+  //         this.logs = resp.data.logs.reverse();
+  //         this.total = this.logs.length;
+  //       });
+  //   },
+  //   dateFinish() {
+  //     this.$store
+  //       .dispatch(Constant.FETCH_ACCOUNT_LOG, {
+  //         start: this.dateStart,
+  //         end: this.dateFinish
+  //       })
+  //       .then(resp => {
+  //         this.logs = resp.data.logs.reverse();
+  //         this.total = this.logs.length;
+  //       });
+  //   }
+  // },
   updated() {
     // console.log("this.$children[0] :", this.$children[0].$children[0].text);
     // console.log("this.$children[0] :", this.$children[0].$children[1].text);
@@ -217,7 +217,7 @@ export default {
       let ThreeMonthAgo = new Date();
       let dd = today.getDate();
       let mm = today.getMonth() + 1;
-      let mm_3 = today.getMonth() - 2;
+      let mm_1 = today.getMonth();
       let yyyy = today.getFullYear();
 
       if (dd < 10) {
@@ -228,12 +228,12 @@ export default {
         mm = "0" + mm;
       }
 
-      if (mm_3 < 10) {
-        mm_3 = "0" + mm_3;
+      if (mm_1 < 10) {
+        mm_1 = "0" + mm_1;
       }
 
       today = yyyy + "-" + mm + "-" + dd;
-      ThreeMonthAgo = yyyy + "-" + mm_3 + "-" + dd;
+      ThreeMonthAgo = yyyy + "-" + mm_1 + "-" + dd;
 
       this.dateStart = ThreeMonthAgo;
       // this.dateStart = today;
