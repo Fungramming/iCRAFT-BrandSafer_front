@@ -223,16 +223,17 @@ export default {
     }
   },
   updated() {
+    this.getTotal();
     this.dateStart = this.$children[0].$children[0].text;
     this.dateFinish = this.$children[0].$children[1].text;
   },
   mounted() {
     this.getDatas();
   },
-  updated() {
-    getTotal(this);
-  },
   methods: {
+    getTotal() {
+      this.total = this.$children[0].$children[3].searchLength;
+    },
     dateSet() {
       let today = new Date();
       let dd = today.getDate();
@@ -266,8 +267,8 @@ export default {
           end: this.dateFinish
         })
         .then(resp => {
-          this.logs = resp.data.logs.reverse();
-          this.total = this.logs.length;
+          this.oversert = resp.data.certs.reverse();
+          this.total = this.oversert.length;
           this.dateFormat();
         });
     },
