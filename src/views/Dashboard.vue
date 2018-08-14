@@ -105,7 +105,7 @@ export default {
     this.fetchData();
 
     if (this.$children[1].$children[0].chartData.rows.length == 0) {
-      // window.location.reload();
+      window.location.reload();
     }
   },
   methods: {
