@@ -177,8 +177,6 @@ export default {
   },
   watch: {
     dateStart() {
-      // var dataStart = this.dateStart.substr(0, 10);
-      // var dataFinish = this.dateFinish.substr(0, 10);
       this.$store
         .dispatch(Constant.FETCH_ACCOUNT_LOG, {
           start: this.dateStart,
