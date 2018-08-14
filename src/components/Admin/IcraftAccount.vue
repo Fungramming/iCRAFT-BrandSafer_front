@@ -605,7 +605,7 @@ export default {
       let checkNotice = document.getElementsByClassName(
         "required-notice-pwd"
       )[0];
-
+      let rePwdInput = checkNotice.parentNode;
       if (this.submitData.pwd == this.repwd) {
         checkNotice.style.opacity = 0;
         this.checkPwdValue = true;
@@ -613,9 +613,13 @@ export default {
         checkNotice.style.opacity = 0;
         this.checkPwdValue = true;
       } else if (this.submitData.pwd !== this.repwd) {
+        console.log("required :", rePwdInput);
+        console.log("123123123 :", 123123123);
+        rePwdInput.classList.add("warn");
         checkNotice.style.opacity = 1;
         this.checkPwdValue = false;
       } else if (this.updateData.pwd !== this.repwd) {
+        rePwdInput.classList.add("warn");
         checkNotice.style.opacity = 1;
         this.checkPwdValue = false;
       }

@@ -56,12 +56,18 @@
             border: 1px solid #ff776d;
             animation: shake 0.52s cubic-bezier(.36,.07,.19,.97) both;
             transform: translate3d(0, 0, 0);
-            padding-left: 5px;
           }          
           .required-notice, .required-notice-pw {
             opacity: 1;
             animation: shake 0.52s cubic-bezier(.36,.07,.19,.97) both;
           }
+        }
+        &.warn {
+          input {
+            border: 1px solid #ff776d;
+            animation: shake 0.52s cubic-bezier(.36,.07,.19,.97) both;
+            transform: translate3d(0, 0, 0);
+          } 
         }
         .required-notice, .required-notice-pwd {
           opacity: 0;
