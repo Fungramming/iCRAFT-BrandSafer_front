@@ -40,11 +40,6 @@ Vue.use(VueGoogleMaps, {
 });
 Vue.component("GmapCluster", GmapCluster);
 
-// MOMENT.JS
-import moment from "moment";
-import VueMomentJS from "vue-momentjs";
-Vue.use(VueMomentJS, moment);
-
 new Vue({
   router,
   store,
