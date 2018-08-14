@@ -512,7 +512,16 @@ export default {
       this.$store.dispatch(Constant.FETCH_ICRAFT_USER).then(resp => {
         this.account = resp.data["icrf-users"].reverse();
         this.total = this.account.length;
+        this.dateFormat();
       });
+    },
+    dateFormat() {
+      let account = this.account;
+      for (let item in account) {
+        let date = new Date(account[item].dtLastConnected);
+        let formatDate = date.toLocaleDateString();
+        account[item].dtLastConnected = formatDate;
+      }
     },
     addDatas() {
       this.checkPassword();

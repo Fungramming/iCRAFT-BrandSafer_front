@@ -229,7 +229,19 @@ export default {
       this.$store.dispatch(Constant.FETCH_ADMIN_APP).then(resp => {
         this.apps = resp.data.apps.reverse();
         this.total = this.apps.length;
+        this.dateFormat();
       });
+    },
+    dateFormat() {
+      let apps = this.apps;
+      for (let item in apps) {
+        let date = new Date(apps[item].dtRegistered);
+        let date_2 = new Date(apps[item].dtModified);
+        let formatDate = date.toLocaleDateString();
+        let formatDate_2 = date_2.toLocaleDateString();
+        apps[item].dtRegistered = formatDate;
+        apps[item].dtModified = formatDate_2;
+      }
     },
     updateDatas(idx, app) {
       idx = this.updateIndex;

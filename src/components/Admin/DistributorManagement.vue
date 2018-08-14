@@ -317,7 +317,16 @@ export default {
       this.$store.dispatch(Constant.FETCH_DISTRIBUTOR).then(resp => {
         this.distributors = resp.data.distributors.reverse();
         this.total = this.distributors.length;
+        this.dateFormat();
       });
+    },
+    dateFormat() {
+      let distributors = this.distributors;
+      for (let item in distributors) {
+        let date = new Date(distributors[item].dtRegistered);
+        let formatDate = date.toLocaleDateString();
+        distributors[item].dtRegistered = formatDate;
+      }
     },
     addDatas() {
       checkRequired();

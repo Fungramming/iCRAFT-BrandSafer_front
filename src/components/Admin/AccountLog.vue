@@ -209,7 +209,7 @@ export default {
     this.getDatas();
   },
   methods: {
-    dataSet() {
+    dateSet() {
       let today = new Date();
       let ThreeMonthAgo = new Date();
       let dd = today.getDate();
@@ -236,8 +236,16 @@ export default {
       // this.dateStart = today;
       this.dateFinish = today;
     },
+    dateFormat() {
+      let logs = this.logs;
+      for (let item in logs) {
+        let date = new Date(logs[item].dtAttempted);
+        let formatDate = date.toLocaleDateString();
+        logs[item].dtAttempted = formatDate;
+      }
+    },
     getDatas() {
-      this.dataSet();
+      this.dateSet();
       this.$store
         .dispatch(Constant.FETCH_ACCOUNT_LOG, {
           start: this.dateStart,
@@ -249,6 +257,7 @@ export default {
           this.logs = resp.data.logs.reverse();
           this.total = this.logs.length;
         });
+      this.dateFormat();
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

@@ -393,7 +393,16 @@ export default {
       this.$store.dispatch(Constant.FETCH_TAG_TYPE).then(resp => {
         this.tag_type = resp.data.tag_type.reverse();
         this.total = this.tag_type.length;
+        this.dateFormat();
       });
+    },
+    dateFormat() {
+      let tag_type = this.tag_type;
+      for (let item in tag_type) {
+        let date = new Date(tag_type[item].dtRegistered);
+        let formatDate = date.toLocaleDateString();
+        tag_type[item].dtRegistered = formatDate;
+      }
     },
     updateDatas({ idx, app }) {
       idx = this.updateIndex;

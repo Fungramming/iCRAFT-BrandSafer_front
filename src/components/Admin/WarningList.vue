@@ -222,7 +222,7 @@ export default {
     this.getDatas();
   },
   methods: {
-    getDatas() {
+    dateSet() {
       let today = new Date();
       let dd = today.getDate();
       let mm = today.getMonth() + 1;
@@ -239,8 +239,17 @@ export default {
 
       this.date_start = today;
       this.date_finish = today;
-      // this.queryDateToday = today;
-
+    },
+    dateFormat() {
+      let oversert = this.oversert;
+      for (let item in oversert) {
+        let date = new Date(oversert[item].dtTermAgreement);
+        let formatDate = date.toLocaleDateString();
+        oversert[item].dtTermAgreement = formatDate;
+      }
+    },
+    getDatas() {
+      this.dateSet();
       this.$store
         .dispatch(Constant.FETCH_OVER_CERT, {
           start: "2017-05-05",
