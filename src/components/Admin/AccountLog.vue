@@ -147,7 +147,6 @@ export default {
       selected: [],
       headers: [
         { text: "번호", align: "left", value: "idx", sortable: false },
-
         {
           text: "로그인 일시",
           align: "left",
@@ -180,7 +179,7 @@ export default {
     }
   },
   updated() {
-    getTotal(this);
+    this.getTotal();
 
     this.dateStart = this.$children[0].$children[0].text;
     this.dateFinish = this.$children[0].$children[1].text;
@@ -189,6 +188,9 @@ export default {
     this.getDatas();
   },
   methods: {
+    getTotal() {
+      this.total = this.$children[0].$children[3].searchLength;
+    },
     dateSet() {
       let today = new Date();
       let ThreeMonthAgo = new Date();
@@ -213,7 +215,6 @@ export default {
       ThreeMonthAgo = yyyy + "-" + mm_1 + "-" + dd;
 
       this.dateStart = ThreeMonthAgo;
-      // this.dateStart = today;
       this.dateFinish = today;
     },
     dateFormat() {
@@ -236,7 +237,6 @@ export default {
           this.logs = resp.data.logs.reverse();
           this.total = this.logs.length;
           this.dateFormat();
-          this.total = resp.total;
           console.log("this.total :", this.total);
         });
     },
