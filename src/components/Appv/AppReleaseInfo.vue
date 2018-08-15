@@ -1,58 +1,121 @@
 <template>
   <div class="tableBs">
-    <div class="tableBs-top">
-      <p>검색 조건</p>
+    <div class="tableBs-top">    
       <v-layout row wrap>
-        <v-flex d-flex xs6 md3>
-          <div class="selectbox selectbox-top">
-            <span>고객사</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option value="전체" selected>전체</option>
-              <option value="고객사1">고객사1</option>
-              <option value="고객사2">고객사2</option>
-              <option value="고객사3">고객사3</option>
-            </select>
-          </div>
-        </v-flex>
-        <v-flex d-flex xs6 md3>
-          <div class="selectbox selectbox-top">
-            <span>OS</span>
-            <select id="select2" name="searchType" class="form-control" size="1">
-              <option value="전체" selected>전체</option>
-              <option value="OS1">OS1</option>
-              <option value="OS2">OS2</option>
-              <option value="OS3">OS3</option>
-            </select>
-          </div>
-        </v-flex>
-        <v-flex d-flex xs6 md3>
-          <div class="selectbox selectbox-top">
-            <span>종류</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option value="전체" selected>전체</option>
-              <option value="종류1">종류1</option>
-              <option value="종류2">종류2</option>
-              <option value="종류3">종류3</option>
-            </select>
-          </div>
-        </v-flex>
-        <v-flex d-flex xs6 md3>
-          <div class="selectbox-input">
-            <span>버전</span>
-            <input class="input-text" type="text">
-          </div>
-        </v-flex>
-      </v-layout>
+          <p class="flex md12">검색 조건</p>
+          <v-flex d-flex xs6 md3>
+            <div class="selectbox selectbox-top">
+              <span>고객사</span>
+              <select id="select1" name="searchType" class="form-control" size="1">
+                <option value="전체" selected>전체</option>
+                <option value="고객사1">고객사1</option>
+                <option value="고객사2">고객사2</option>
+                <option value="고객사3">고객사3</option>
+              </select>
+            </div>
+          </v-flex>
+          <v-flex d-flex xs6 md3>
+            <div class="selectbox selectbox-top">
+              <span>OS</span>
+              <select id="select2" name="searchType" class="form-control" size="1">
+                <option value="전체" selected>전체</option>
+                <option value="OS1">OS1</option>
+                <option value="OS2">OS2</option>
+                <option value="OS3">OS3</option>
+              </select>
+            </div>
+          </v-flex>
+          <v-flex d-flex xs6 md3>
+            <div class="selectbox selectbox-top">
+              <span>종류</span>
+              <select id="select1" name="searchType" class="form-control" size="1">
+                <option value="전체" selected>전체</option>
+                <option value="종류1">종류1</option>
+                <option value="종류2">종류2</option>
+                <option value="종류3">종류3</option>
+              </select>
+            </div>
+          </v-flex>
+          <v-flex d-flex xs6 md3>
+            <div class="selectbox-input">
+              <span>버전</span>
+              <input class="input-text" type="text">
+            </div>
+          </v-flex>
+        </v-layout>
     </div>
     <!-- table wrap -->
     <v-app class="inspire">
+       <v-text-field
+        v-model="search"
+        append-icon="search"
+        label="검색어"
+        single-line
+        hide-details
+      ></v-text-field>      
       <v-data-table
         :headers="headers"
-        :items="desserts"
+        :items="apps"
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
-        item-key="number"
+        item-key="idx"
+        select-all
+        class="elevation-1"
+      >
+
+        <template slot="headers" slot-scope="props">
+          <tr>
+            <!-- <th>
+              <v-checkbox
+                :input-value="props.all"
+                :indeterminate="props.indeterminate"
+                primary
+                hide-details
+                @click.native="toggleAll"
+              ></v-checkbox>
+            </th> -->
+            <th
+              v-for="header in props.headers"
+              :key="header.text"
+              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+              @click="changeSort(header.value)"
+            >
+              {{ header.text }}
+            </th>
+          </tr>
+        </template>
+
+
+        <template slot="items" slot-scope="props">
+          <tr :active="props.selected" @click="props.selected = !props.selected">
+            <!-- <td>
+              <v-checkbox
+                :input-value="props.selected"
+                primary
+                hide-details
+              ></v-checkbox>
+            </td> -->
+            <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
+            <!-- <td class="text-xs-left">{{ props.item.idx }}</td> -->
+            <td class="text-xs-left">{{ props.item.companyName }}</td>
+            <td class="text-xs-left"><a @click.stop="showEditModal">{{ props.item.name }}</a></td>
+            <td class="text-xs-left">{{ props.item.contact }}</td>
+            <td class="text-xs-left">{{ props.item.pushToken }}</td>
+            <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
+            <td class="text-xs-left">{{ props.item.state }}</td>
+            <td class="text-xs-left">{{ props.item.dtModified }}</td>
+            <td class="text-xs-left">{{ props.item.modifier }}</td>
+          </tr>
+        </template>
+      </v-data-table>
+      <!-- <v-data-table
+        :headers="headers"
+        :items="apps"
+        :search="search"
+        :pagination.sync="pagination"
+        v-model="selected"
+        item-key="idx"        
         select-all
         hide-actions
         class="elevation-1"
@@ -70,19 +133,30 @@
               hide-details
             ></v-checkbox>
           </td>
-          <td class="text-xs-center">{{ props.item.number }}</td>
-          <td class="text-xs-center">{{ props.item.customer }}</td>
-          <td class="text-xs-center"><a>{{ props.item.app_code }}</a></td>
-          <td class="text-xs-center">{{ props.item.app_name }}</td>
-          <td class="text-xs-center">{{ props.item.tag_type }}/td>
-          <td class="text-xs-center">{{ props.item.os }}</td>
+          <td class="text-xs-center">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
+          <td class="text-xs-center">{{ props.item.companyCode }}</td>
+          <td class="text-xs-center"><a>{{ props.item.code }}</a></td>
+          <td class="text-xs-center">{{ props.item.name_kr }}</td>
+          <td class="text-xs-center">{{ props.item.tagType }}</td>
+          <td class="text-xs-center">{{ props.item.osType }}</td>
           <td class="text-xs-center">{{ props.item.version }}</td>
           <td class="text-xs-center">{{ props.item.state }}</td>
-          <td class="text-xs-center">{{ props.item.auth_restrict }}</td>
-          <td class="text-xs-center">{{ props.item.dist_date}}</td>
+          <td class="text-xs-center">{{ props.item.limitCertCnt }}</td>
+          <td class="text-xs-center">{{ props.item.dtPublished}}</td>
         </template>
-      </v-data-table>
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
+      </v-data-table> -->
+      <div class="v-datatable__actions">
+        <span>per page :</span>
+        <div class="v-datatable__actions__select">          
+          <select v-model="pagination.rowsPerPage">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <!-- <option value="-1">All</option> -->
+          </select>
+        </div>
+      </div>
+      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
           <v-flex d-flex xs12 sm12 md1 offset-md10>
@@ -164,20 +238,21 @@
 </template>
 
 <script>
+import Constant from "../../constant.js";
+import { getTotal } from "../CompHelper.js";
+
 export default {
   data() {
     return {
       search: "",
       dialog: false,
       dialog_edit: false,
-
       pagination: {
         page: 1,
         rowsPerPage: 10
       },
-      
+      total: "",
       selected: [],
-
       headers: [
         { text: "번호", align: "center", value: "번호", sortable: false },
         { text: "고객사", align: "center", value: "고객사", sortable: false },
@@ -190,36 +265,14 @@ export default {
         { text: "인증제한 수", align: "center", value: "인증제한 수", sortable: false },
         { text: "배포일", align: "center", value: "배포일", sortable: false }
       ],
-
-      desserts: [
-        {
-          value: false,
-          number: 1,
-          customer: '(주)파파레시피',
-          app_code: 'AQCA100012',
-          app_name: 'paparecipe Q',
-          tag_type: 'SQR태그',
-          os: 'iOS',
-          version: '01.00.00',
-          state: '서비스',
-          auth_restrict: 50,
-          dist_date: '2017.11.13'
-        },
-        {
-          value: false,
-          number: 1,
-          customer: '(주)파파레시피',
-          app_code: 'AQCA100012',
-          app_name: 'paparecipe Q',
-          tag_type: 'SQR태그',
-          os: 'iOS',
-          version: '01.00.00',
-          state: '서비스',
-          auth_restrict: 50,
-          dist_date: '2017.11.13'
-        }
-      ]
+      apps: [],
     }
+  },
+  mounted(){
+    this.getDatas()
+  },
+  updated() {
+    getTotal(this);
   },
   computed: {
     pages() {
@@ -233,6 +286,22 @@ export default {
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
     }
+  },
+  methods: {
+    getDatas() {
+      this.$store.dispatch(Constant.FETCH_APP_LELEASE, this.pagination.page).then(resp=>{
+        this.apps = resp.data.apps.reverse();
+        this.dateFormat();
+      })
+    },
+    dateFormat() {
+      let apps = this.apps;
+      for (let item in apps) {
+        let date = new Date(apps[item].dtPublished);
+        let formatDate = date.toLocaleDateString();
+        apps[item].dtPublished = formatDate;
+      }
+    },
   }
 }
 </script>
