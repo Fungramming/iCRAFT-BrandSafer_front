@@ -137,24 +137,6 @@ export default {
         });
     },
 
-    <<
-    << << < HEAD
-    fetchBlacklist() {
-        return axios.get(CONF.FETCH_BLACKLIST);
-    },
-    // fetchBlacklist({ page, query }) {
-    //   return axios.get(CONF.FETCH_BLACKLIST, {
-    //     params: { page, query }
-    //   });
-    // },
-    addBlacklist(list) {
-        return axios.post(CONF.ADD_BLACKLIST, list);
-    },
-    deleteBlacklist(bid) {
-        return axios.delete(CONF.DELETE_BLACKLIST.replace("${bid}", bid));
-    },
-    ===
-    === =
     fetchBlacklist() {
         return axios.get(CONF.FETCH_BLACKLIST);
     },
@@ -172,8 +154,6 @@ export default {
     deleteBlacklist(bid) {
         return axios.delete(CONF.DELETE_BLACKLIST.replace("${bid}", bid), bid);
     },
-    >>>
-    >>> > 6 d7cc7ac4c0cab42efc29b4b4c1669f17e088fca
 
     fetchOverCert({ start, end }) {
         return axios.get(CONF.FETCH_OVER_CERT, {
@@ -196,43 +176,6 @@ export default {
         );
     },
 
-    <<
-    << << < HEAD
-    fetchAdminApp() {
-        return axios.get(CONF.FETCH_ADMIN_APP);
-    },
-    addAdminApp({ nid, number }) {
-        return axios.delete(CONF.ADD_ADMIN_APP.replace("${nid}", nid), number);
-    },
-    updateAdminApp({ aid, app }) {
-        return axios.put(CONF.UPDATE_ADMIN_APP.replace("${aid}", aid), app);
-    },
-    deleteAdminApp(aid) {
-        return axios.delete(CONF.DELETE_ADMIN_APP.replace("${aid}", aid));
-    },
-
-    fetchDistributor(distributor) {
-        return axios.get(CONF.FETCH_DISTRIBUTOR, distributor);
-    },
-    // fetchDistributor({ page, query }) {
-    //   return axios.get(CONF.FETCH_DISTRIBUTOR, {
-    //     params: { page, query }
-    //   });
-    // },
-    addDistributor(distributor) {
-        return axios.post(CONF.ADD_DISTRIBUTOR, distributor);
-    },
-    updateDistributor({ did, distributor }) {
-        return axios.put(
-            CONF.UPDATE_DISTRIBUTOR.replace("${did}", did),
-            distributor
-        );
-    },
-    deleteDistributor(did) {
-        return axios.delete(CONF.DELETE_DISTRIBUTOR.replace("${did}", did));
-    },
-    ===
-    === =
     fetchAdminApp() {
         return axios.get(CONF.FETCH_ADMIN_APP);
     },
@@ -266,8 +209,6 @@ export default {
     deleteDistributor(did) {
         return axios.delete(CONF.DELETE_DISTRIBUTOR.replace("${did}", did), did);
     },
-    >>>
-    >>> > 6 d7cc7ac4c0cab42efc29b4b4c1669f17e088fca
 
     fetchTagType(tagType) {
         return axios.get(CONF.FETCH_TAG_TYPE, tagType);
