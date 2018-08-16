@@ -73,6 +73,7 @@
         :headers="headers"
         :items="desserts"
         :search="search"
+        :total-items="pagination.total"
         :pagination.sync="pagination"
         item-key="number"
         hide-actions
@@ -84,23 +85,36 @@
           </span>
         </template>
         <template slot="items" slot-scope="props">
-          <td class="text-xs-center">{{ props.item.number }}</td>
-          <td class="text-xs-center">{{ props.item.customer }}</td>
-          <td class="text-xs-center">{{ props.item.tag_type }}</td>
-          <td class="text-xs-center">{{ props.item.image }}</td>
-          <td class="text-xs-center">{{ props.item.product }}</td>
-          <td class="text-xs-center">{{ props.item.OS }}</td>
-          <td class="text-xs-center">{{ props.item.cert_count }}</td>
+          <td class="text-xs-center">{{ props.index + 1 }}</td>
+          <td class="text-xs-center">{{ props.item.company_name }}</td>
+          <td class="text-xs-center">{{ props.item.tagType }}</td>
+          <td class="text-xs-center">
+            <img :src="prodImage(props.item.image)" alt="image" width="60">
+          </td>
+          <td class="text-xs-center">{{ props.item.tag_name }}</td>
+          <td class="text-xs-center">{{ props.item.osType }}</td>
+          <td class="text-xs-center">{{ props.item.randomCnt }}</td>
           <td class="text-xs-center">{{ props.item.distributor }}</td>
-          <td class="text-xs-center">{{ props.item.time }}</td>
-          <td class="text-xs-center">{{ props.item.cert_result }}</td>
+          <td class="text-xs-center">{{ props.item.dtCertificate }}</td>
+          <td class="text-xs-center">{{ props.item.result }}</td>
           <td class="text-xs-center">{{ props.item.location }}</td>
         </template>
       </v-data-table>
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{desserts.length}}</span> 건</span>
+      <div class="v-datatable__actions">
+        <span>per page :</span>
+        <div class="v-datatable__actions__select">          
+          <select v-model="pagination.rowsPerPage">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <!-- <option value="-1">All</option> -->
+          </select>
+        </div>
+      </div>
+      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{pagination.total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+          <v-pagination v-model="pagination.page" :length="pages" :total-visible="6" @input="getDatas()"></v-pagination>
         </div>
       </div>
     </v-app>
@@ -136,7 +150,13 @@
 </template>
 
 <script>
+import Constant from "../../constant.js";
+
 export default {
+  mounted() {
+    this.getDatas()
+  },
+
   data() {
     return {
       search: "",
@@ -175,6 +195,7 @@ export default {
 
       pagination: {
         page: 1,
+        total: 0,
         rowsPerPage: 10
       },
       headers: [
@@ -216,32 +237,32 @@ export default {
         }
       ],
       desserts: [
-        {
-          number: 5903,
-          customer: "파파레시피",
-          tag_type: "SQR태그",
-          image: "img",
-          product: "봄비 마스크팩",
-          OS: "안드로이드",
-          cert_count: "1",
-          distributor: "파파레시피 본사",
-          time: "2018-07-31 17:19:31",
-          cert_result: "(100)",
-          location: "위치보기"
-        },
-        {
-          number: 5903,
-          customer: "파파레시피",
-          tag_type: "SQR태그",
-          image: "img",
-          product: "봄비 마스크팩",
-          OS: "안드로이드",
-          cert_count: "1",
-          distributor: "파파레시피 본사",
-          time: "2018-07-31 17:19:31",
-          cert_result: "(100)",
-          location: "위치보기"
-        }
+        // {
+        //   number: 5903,
+        //   customer: "파파레시피",
+        //   tag_type: "SQR태그",
+        //   image: "img",
+        //   product: "봄비 마스크팩",
+        //   OS: "안드로이드",
+        //   cert_count: "1",
+        //   distributor: "파파레시피 본사",
+        //   time: "2018-07-31 17:19:31",
+        //   cert_result: "(100)",
+        //   location: "위치보기"
+        // },
+        // {
+        //   number: 5903,
+        //   customer: "파파레시피",
+        //   tag_type: "SQR태그",
+        //   image: "img",
+        //   product: "봄비 마스크팩",
+        //   OS: "안드로이드",
+        //   cert_count: "1",
+        //   distributor: "파파레시피 본사",
+        //   time: "2018-07-31 17:19:31",
+        //   cert_result: "(100)",
+        //   location: "위치보기"
+        // }
       ]
     };
   },
@@ -249,13 +270,27 @@ export default {
     pages() {
       if (
         this.pagination.rowsPerPage == null ||
-        this.pagination.totalItems == null
+        this.pagination.total === 0
       )
         return 0;
 
       return Math.ceil(
-        this.pagination.totalItems / this.pagination.rowsPerPage
+        this.pagination.total / this.pagination.rowsPerPage
       );
+    }
+  },
+
+  methods: {
+    getDatas() {
+      this.$store.dispatch(Constant.FETCH_PRODUCT_CERIT, {start: '2018-07-12', end: '2018-07-13', page: this.pagination.page, perPage: 10})
+      .then(resp => {
+        this.desserts = resp.data.certs;
+        this.pagination.total = resp.data.total;
+      });
+    },
+    prodImage: function(src) {
+      var imgSrc = src.replace('.png', '.jpeg')
+      return 'https://idc.brandsafer.com' + imgSrc
     }
   }
 };
