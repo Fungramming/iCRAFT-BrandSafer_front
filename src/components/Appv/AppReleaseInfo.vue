@@ -54,15 +54,15 @@
               ></v-checkbox>
             </td>
             <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
-            <td class="text-xs-center">{{ props.item.company_name }}</td>
-            <td class="text-xs-center"><a>{{ props.item.code }}</a></td>
-            <td class="text-xs-center">{{ props.item.name_kr }}</td>
-            <td class="text-xs-center">{{ props.item.tagType }}</td>
-            <td class="text-xs-center">{{ props.item.osType }}</td>
-            <td class="text-xs-center">{{ props.item.version }}</td>
-            <td class="text-xs-center">{{ props.item.state }}</td>
-            <td class="text-xs-center">{{ props.item.limitCertCnt }}</td>
-            <td class="text-xs-center">{{ props.item.dtPublished}}</td>
+            <td class="text-xs-center companyName">{{ props.item.company_name }}</td>
+            <td class="text-xs-center"><a class="code" @click.stop="showEditModal">{{ props.item.code }}</a></td>
+            <td class="text-xs-center nameKr">{{ props.item.name_kr }}</td>
+            <td class="text-xs-center tagType">{{ props.item.tagType }}</td>
+            <td class="text-xs-center osType">{{ props.item.osType }}</td>
+            <td class="text-xs-center version">{{ props.item.version }}</td>
+            <td class="text-xs-center state">{{ props.item.state }}</td>
+            <td class="text-xs-center limitCertCnt">{{ props.item.limitCertCnt }}</td>
+            <td class="text-xs-center dtPublished">{{ props.item.dtPublished}}</td>
           </tr>
         </template>
       </v-data-table>
@@ -214,6 +214,113 @@
         </v-card>
       </modal>
     </v-flex>
+    
+    <!-- modal edit -->
+    <v-flex d-flex xs12 sm12 requiredInputd12>
+      <modal :width="modal_size" :height="modal_size_height" name="releaseInfo_edit" transition="pop-out">
+        <v-card tile>
+          <v-toolbar card dark color="primary">
+            <v-btn icon dark @click.native="closeModal">
+              <v-icon>close</v-icon>
+            </v-btn>
+            <v-toolbar-title>고객사 수정</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+              <v-btn dark flat @click.stop="updateDatas">수정</v-btn>
+            </v-toolbar-items>
+          </v-toolbar>
+          <div class="card-left">
+            <v-card-text>
+              <v-list three-line subheader>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">고객사
+                  </label>
+                  <input v-model="updateData.company_name" class="input-text require-input not-allowed" type="text" disabled="disabled">  
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">태그타입
+                  </label>
+                  <input v-model="updateData.tagType" class="input-text require-input not-allowed" type="text" disabled="disabled">  
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">OS
+                  </label>
+                  <input v-model="updateData.osType" class="input-text require-input not-allowed" type="text" disabled="disabled">  
+                </v-flex>
+                <!-- <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">APP 타입
+                  </label>
+                  <input v-model="updateData.type" class="input-text require-input not-allowed" type="text" disabled="disabled">  
+                </v-flex> -->
+                <v-flex d-flex xs12 sm12 md5 class="app-code">
+                  <label class="input-title">APP 코드
+                  </label>
+                  <input v-model="updateData.code" class="input-text require-input not-allowed" type="text" disabled="disabled">  
+                </v-flex>  
+                <v-flex d-flex xs12 sm12 md5 >
+                  <label class="input-title">버전
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input v-model="updateData.version" class="input-text require-input" type="text">  
+                  <span class="required-notice">*필수 입력사항입니다.</span>
+                </v-flex>    
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">APP명(한국어)
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input v-model="updateData.name_kr" class="input-text require-input" type="text" required="required" placeholder="고객사(한국어)">
+                  <span class="required-notice">*필수 입력사항입니다.</span>
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">APP명(영어)</label>
+                  <input v-model="updateData.name_en" class="input-text" type="text">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">APP명(중국어)</label>
+                  <input v-model="updateData.name_zh" class="input-text" type="text">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">인증제한 수
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input v-model="updateData.limitCertCnt" class="input-text require-input" type="text" required="required">
+                  <span class="required-notice">*필수 입력사항입니다.</span>
+                </v-flex>
+                 <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">업데이트 URL
+                  </label>
+                  <input v-model="updateData.updateUrl" class="input-text " type="text">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">설명</label>
+                  <input v-model="updateData.description" class="input-text" type="text-area">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">배포일</label>
+                  <input v-model="updateData.dtPublished" class="input-text" type="text-area">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">노트</label>
+                  <input v-model="updateData.note" class="input-text" type="text">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">상태
+                    <span class="text-danger">*</span>
+                  </label>
+                  <span class="selectbox_arrow"></span>
+                  <select id="select_state" v-model="updateData.state" name="searchType" class="form-control selectbox selectbox-100 require-input" size="1">
+                    <option value="Enable">서비스</option>
+                    <option value="Disable">사용정지</option>
+                  </select>
+                  <span class="required-notice">*필수 입력사항입니다.</span>
+                </v-flex>
+              </v-list>
+            </v-card-text>
+          </div>
+        </v-card>
+      </modal>
+    </v-flex>
+
   </div>
 </template>
 
@@ -237,26 +344,36 @@ export default {
       total: "",
       selected: [],
       headers: [
-        { text: "번호", align: "center", value: "번호", sortable: false },
-        { text: "고객사", align: "center", value: "고객사", sortable: false },
-        { text: "App코드", align: "center", value: "App코드", sortable: false },
-        { text: "App명", align: "center", value: "App명", sortable: false },
+        { text: "번호", align: "center", value: "idx", sortable: false },
+        {
+          text: "고객사",
+          align: "center",
+          value: "company_name",
+          sortable: false
+        },
+        { text: "App코드", align: "center", value: "code", sortable: false },
+        { text: "App명", align: "center", value: "name_kr", sortable: false },
         {
           text: "태그타입",
           align: "center",
-          value: "태그타입",
+          value: "tagType",
           sortable: false
         },
-        { text: "OS", align: "center", value: "OS", sortable: false },
-        { text: "버전", align: "center", value: "버전", sortable: false },
-        { text: "상태", align: "center", value: "상태", sortable: false },
+        { text: "OS", align: "center", value: "osType", sortable: false },
+        { text: "버전", align: "center", value: "version", sortable: false },
+        { text: "상태", align: "center", value: "state", sortable: false },
         {
           text: "인증제한 수",
           align: "center",
-          value: "인증제한 수",
+          value: "limitCertCnt",
           sortable: false
         },
-        { text: "배포일", align: "center", value: "배포일", sortable: false }
+        {
+          text: "배포일",
+          align: "center",
+          value: "dtPublished",
+          sortable: false
+        }
       ],
       apps: [],
       companyList: [],
@@ -287,27 +404,26 @@ export default {
 
       updateData: {
         attachedPath: "",
-        code: "",
         companyCode: "",
         description: "",
-        dtModified: "",
-        dtPublished: "",
-        dtRegistered: "",
-        idx: "",
+        code: "",
+        dtModified: this.$store.state.submitTime,
+        dtRegistered: this.$store.state.submitTime,
+        dtPublished: this.$store.state.submitTime,
         limitCertCnt: "",
         limitCertHour: "",
-        modifier: "",
-        name_en: "",
+        modifier: this.$store.state.user.modifier,
+        name_en: null,
         name_kr: "",
-        name_zh: "",
+        name_zh: null,
         note: "",
         osType: "",
-        registrant: "",
-        state: "",
+        registrant: this.$store.state.user.modifier,
         tagType: "",
         type: "",
-        updateUrl: "",
-        version: ""
+        updateUrl: null,
+        version: "",
+        state: ""
       }
     };
   },
@@ -355,6 +471,7 @@ export default {
         this.$store
           .dispatch(Constant.ADD_APP_LELEASE, this.submitData)
           .then(() => {
+            console.log("this.submitData :", this.submitData);
             this.getDatas();
             this.closeModal();
             this.$store.commit(Constant.SHOW_MODAL, {
@@ -366,6 +483,29 @@ export default {
             console.log("err :", err);
           });
       }
+    },
+    updateDatas({ idx, app }) {
+      idx = this.updateData.idx;
+      app = this.updateData;
+      console.log("idx :", idx);
+      console.log("app :", app);
+      this.$store
+        .dispatch(Constant.UPDATE_APP_LELEASE, {
+          aid: idx,
+          app: app
+        })
+        .then(() => {
+          // updateData = this.updateData;
+          this.getDatas();
+          this.closeModal();
+          this.$store.commit(Constant.SHOW_MODAL, {
+            isModal: true,
+            modalText: "수정 되었습니다."
+          });
+        })
+        .catch(err => {
+          console.log("err :", err);
+        });
     },
     deleteDatas() {
       for (let item in this.selected) {
@@ -390,6 +530,19 @@ export default {
     },
     showModal() {
       this.$modal.show("releaseInfo");
+    },
+    showEditModal(e) {
+      this.$modal.show("releaseInfo_edit");
+      this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
+      this.updateData = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ];
+
+      for (let item in this.updateData) {
+        if (this.updateData[item] == "null") {
+          this.updateData[item] = " ";
+        }
+      }
     },
     closeModal() {
       let vModal = this.$children[1];
@@ -437,6 +590,10 @@ export default {
       }
 
       this.submitData.code = appType + tagCode + "C" + OS + companyCode;
+    },
+    toggleAll() {
+      if (this.selected.length) this.selected = [];
+      else this.selected = this.apps.slice();
     }
   }
 };
