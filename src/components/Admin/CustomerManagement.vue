@@ -305,152 +305,152 @@
     <v-flex d-flex xs12 sm12 md12>
       <modal :width="modal_size" :height="modal_size_height" name="customer_edit" transition="pop-out">
         <v-card tile>
-        <v-toolbar card dark color="primary">
-          <v-btn icon dark @click.native="closeModal">
-            <v-icon>close</v-icon>
-          </v-btn>
-          <v-toolbar-title>고객사 수정</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark flat @click.stop="updateDatas">수정</v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-        <div class="card-left">
-          <v-card-text>
-            <v-list three-line subheader>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">고객사코드
-                  <span class="text-danger">*</span>
-                </label>
-                <input v-model="updateData.code" class="input-text not-allowed" type="text" required="required" placeholder="고객사코드" disabled>
-              </v-flex>    
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">고객사(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input v-model="updateData.name_kr" class="input-text not-allowed" type="text" required="required" placeholder="고객사(한국어)" disabled>
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">고객사(영어)</label>
-                <input v-model="updateData.name_en" class="input-text" type="text">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">고객사(중국어)</label>
-                <input v-model="updateData.name_zh" class="input-text" type="text">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">주소(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input v-model="updateData.addr_kr" class="input-text require-input" type="text" required="required" placeholder="주소(한국어)">
-                <span class="required-notice">*필수 입력사항입니다.</span>
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">주소(영어)</label>
-                <input v-model="updateData.addr_en" class="input-text" type="text">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">주소(중국어)</label>
-                <input v-model="updateData.addr_zh" class="input-text" type="text">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">전화번호</label>
-                <input v-model="updateData.telephone" class="input-text" type="tel" maxlength="13">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">팩스번호</label>
-                <input v-model="updateData.fax" class="input-text" type="tel" maxlength="13">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">대표자(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input v-model="updateData.delegator_kr" class="input-text require-input" type="text" required="required" placeholder="대표자(한국어)">
-                <span class="required-notice">*필수 입력사항입니다.</span>
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">대표자(영어)</label>
-                <input v-model="updateData.delegator_en" class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">대표자(중국어)</label>
-                <input v-model="updateData.delegator_zh" class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">사업자등록번호
-                  <span class="text-danger">*</span>
-                </label>
-                <input v-model="updateData.registrationNumber" class="input-text require-input" type="text">
-                <span class="required-notice">*필수 입력사항입니다.</span>
-              </v-flex>
-              <!-- <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">사업자등록증
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">CI
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-flex> -->
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">URL
-                  <span class="text-danger">*</span>
-                </label>
-                <input v-model="updateData.url" class="input-text require-input" type="text" required="required">
-                <span class="required-notice">*필수 입력사항입니다.</span>
-              </v-flex>
-              <!-- <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">TnT로고이미지
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-flex> -->
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">설명(한국어)
-                  <span class="text-danger">*</span>
-                </label>
-                <input v-model="updateData.description_kr" class="input-text require-input" type="text" required="required" placeholder="설명(한국어)">
-                <span class="required-notice">*필수 입력사항입니다.</span>
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">설명(영어)</label>
-                <input v-model="updateData.description_en" class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">설명(중국어)</label>
-                <input v-model="updateData.description_zh" class="input-text" type="text" required="required">
-              </v-flex>
-              <!-- <v-divider></v-divider>
-              <v-subheader>계약 정보</v-subheader>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">계약서명
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">계약기간
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">사업자등록증
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : pdf)</span>
-              </v-flex> -->
-            </v-list>
-          </v-card-text>
-        </div>
-      </v-card>
+          <v-toolbar card dark color="primary">
+            <v-btn icon dark @click.native="closeModal">
+              <v-icon>close</v-icon>
+            </v-btn>
+            <v-toolbar-title>고객사 수정</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+              <v-btn dark flat @click.stop="updateDatas">수정</v-btn>
+            </v-toolbar-items>
+          </v-toolbar>
+          <div class="card-left">
+            <v-card-text>
+              <v-list three-line subheader>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">고객사코드
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input v-model="updateData.code" class="input-text not-allowed" type="text" required="required" placeholder="고객사코드" disabled>
+                </v-flex>    
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">고객사(한국어)
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input v-model="updateData.name_kr" class="input-text not-allowed" type="text" required="required" placeholder="고객사(한국어)" disabled>
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">고객사(영어)</label>
+                  <input v-model="updateData.name_en" class="input-text" type="text">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">고객사(중국어)</label>
+                  <input v-model="updateData.name_zh" class="input-text" type="text">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">주소(한국어)
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input v-model="updateData.addr_kr" class="input-text require-input" type="text" required="required" placeholder="주소(한국어)">
+                  <span class="required-notice">*필수 입력사항입니다.</span>
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">주소(영어)</label>
+                  <input v-model="updateData.addr_en" class="input-text" type="text">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">주소(중국어)</label>
+                  <input v-model="updateData.addr_zh" class="input-text" type="text">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">전화번호</label>
+                  <input v-model="updateData.telephone" class="input-text" type="tel" maxlength="13">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">팩스번호</label>
+                  <input v-model="updateData.fax" class="input-text" type="tel" maxlength="13">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">대표자(한국어)
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input v-model="updateData.delegator_kr" class="input-text require-input" type="text" required="required" placeholder="대표자(한국어)">
+                  <span class="required-notice">*필수 입력사항입니다.</span>
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">대표자(영어)</label>
+                  <input v-model="updateData.delegator_en" class="input-text" type="text" required="required">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">대표자(중국어)</label>
+                  <input v-model="updateData.delegator_zh" class="input-text" type="text" required="required">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">사업자등록번호
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input v-model="updateData.registrationNumber" class="input-text require-input" type="text">
+                  <span class="required-notice">*필수 입력사항입니다.</span>
+                </v-flex>
+                <!-- <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">사업자등록증
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input class="input-file" type="file" required="required">
+                  <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">CI
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input class="input-file" type="file" required="required">
+                  <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
+                </v-flex> -->
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">URL
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input v-model="updateData.url" class="input-text require-input" type="text" required="required">
+                  <span class="required-notice">*필수 입력사항입니다.</span>
+                </v-flex>
+                <!-- <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">TnT로고이미지
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input class="input-file" type="file" required="required">
+                  <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
+                </v-flex> -->
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">설명(한국어)
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input v-model="updateData.description_kr" class="input-text require-input" type="text" required="required" placeholder="설명(한국어)">
+                  <span class="required-notice">*필수 입력사항입니다.</span>
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">설명(영어)</label>
+                  <input v-model="updateData.description_en" class="input-text" type="text" required="required">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">설명(중국어)</label>
+                  <input v-model="updateData.description_zh" class="input-text" type="text" required="required">
+                </v-flex>
+                <!-- <v-divider></v-divider>
+                <v-subheader>계약 정보</v-subheader>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">계약서명
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input class="input-text" type="text" required="required">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">계약기간
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input class="input-text" type="text" required="required">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">사업자등록증
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input class="input-file" type="file" required="required">
+                  <span class="file-txt">(사용가능한 파일 형식 : pdf)</span>
+                </v-flex> -->
+              </v-list>
+            </v-card-text>
+          </div>
+        </v-card>
       </modal>
     </v-flex>
 
@@ -551,57 +551,31 @@ export default {
       // update
       updateIndex: "",
       updateData: {
-        // addr_en: "Republic of korea",
-        // addr_kr: "전현우123",
-        // addr_zh: "Republic of korea",
-        // businessRegistrationUrl: "",
-        // ci: "",
-        // delegator_en: "Kang",
-        // delegator_kr: "wd",
-        // delegator_zh: "Kang",
-        // description_en: "",
-        // description_kr: "",
-        // description_zh: "",
-        // dtModified: "2018-03-03 14:00:00",
-        // dtRegistered: "2018-03-03 14:00:00",
-        // fax: "02-0000-0000",
-        // modifier: "ibjung",
-        // name_en: "Blackyak",
-        // name_kr: "abc123",
-        // name_zh: "Blackyak",
-        // note: "123",
-        // registrant: "ibjung",
-        // registrationNumber: "0000000000",
-        // state: "Registered",
-        // telephone: "8888888888",
-        // tntLogoImgUrl: null,
-        // url: "www.naver.com"
-        addr_en: "",
-        addr_kr: "",
-        addr_zh: "",
+        addr_en: "jeon123",
+        addr_kr: "jeon123",
+        addr_zh: "jeon123",
         businessRegistrationUrl: "",
         ci: "",
-        // code: "",
-        delegator_en: "",
-        delegator_kr: "",
-        delegator_zh: "",
+        delegator_en: "Kang",
+        delegator_kr: "wd",
+        delegator_zh: "Kang",
         description_en: "",
         description_kr: "",
         description_zh: "",
-        dtModified: this.$store.state.submitTime,
-        dtRegistered: "",
-        fax: "",
-        modifier: this.$store.state.user.modifier,
-        name_en: "",
-        name_kr: "",
-        name_zh: "",
-        note: "1",
-        registrant: "",
-        registrationNumber: "",
+        dtModified: "2018-03-03 14:00:00",
+        dtRegistered: "2018-03-03 14:00:00",
+        fax: "02-0000-0000",
+        modifier: "ibjung",
+        name_en: "Blackyak",
+        name_kr: "abc123",
+        name_zh: "Blackyak",
+        note: "123",
+        registrant: "ibjung",
+        registrationNumber: "111111111",
         state: "Registered",
-        telephone: "",
+        telephone: "8888888888",
         tntLogoImgUrl: null,
-        url: ""
+        url: "www.youtube.com"
       }
     };
   },
@@ -686,7 +660,7 @@ export default {
       this.$store
         .dispatch(Constant.UPDATE_COMPANY, {
           cid: idx,
-          customer: app
+          company: app
         })
         .then(() => {
           // updateData = this.updateData;
@@ -743,11 +717,11 @@ export default {
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
 
       // this.updateData.code = e.path[2].children[3].innerText;
-      // this.updateData.name_kr = e.path[2].children[2].innerText;
-      // this.selected_name_kr = e.path[2].children[2].innerText;
-      // this.updateData.code = this.$children[0].$children[1].filteredItems[
-      //   this.selected_index
-      // ].code;
+      this.updateData.name_kr = e.path[2].children[2].innerText;
+      this.selected_name_kr = e.path[2].children[2].innerText;
+      this.updateData.code = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].code;
       this.updateData.name_kr = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].name_kr;

@@ -176,11 +176,7 @@ export default {
   },
   computed: {
     pages() {
-      if (
-        this.pagination.rowsPerPage == null ||
-        this.pagination.totalItems == null
-      )
-        return 0;
+      if (this.pagination.rowsPerPage == null || this.total == null) return 0;
 
       return Math.ceil(this.total / this.pagination.rowsPerPage);
     }

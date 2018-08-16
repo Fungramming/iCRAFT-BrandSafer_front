@@ -49,10 +49,8 @@ export default {
   },
 
   /* ========= App ========= */
-  fetchAppLelease({ page, query }) {
-    return axios.get(CONF.FETCH_APP_LELEASE, {
-      params: { page, query }
-    });
+  fetchAppLelease() {
+    return axios.get(CONF.FETCH_APP_LELEASE);
   },
   addAppLelease(app) {
     return axios.post(CONF.ADD_APP_LELEASE, app);
@@ -69,7 +67,6 @@ export default {
     return axios.get(CONF.FETCH_COMPANY, company);
   },
   addCompany(company) {
-    console.log("cusotomer :", company);
     return axios.post(CONF.ADD_COMPANY, company);
   },
   updateCompany({ cid, company }) {

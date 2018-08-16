@@ -92,7 +92,6 @@
         </div>
       </div>
 
-
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <div class="text-xs-center pt-2">
@@ -106,7 +105,6 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -262,7 +260,7 @@ export default {
     },
     getDateData() {
       this.$store
-        .dispatch(Constant.FETCH_ACCOUNT_LOG, {
+        .dispatch(Constant.FETCH_OVER_CERT, {
           start: this.dateStart,
           end: this.dateFinish
         })
@@ -288,11 +286,9 @@ export default {
     },
     deleteDatas() {
       for (let item in this.selected) {
-        this.$store
-          .dispatch(Constant.DELETE_TAG_TYPE, this.selected[item].idx)
-          .then(() => {
-            this.getDatas();
-          });
+        this.$store.dispatch(Constant.DEL, this.selected[item].idx).then(() => {
+          this.getDatas();
+        });
       }
       this.$store.commit(Constant.SHOW_MODAL, {
         isModal: true,
