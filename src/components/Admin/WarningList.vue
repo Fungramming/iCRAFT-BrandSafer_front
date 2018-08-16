@@ -6,11 +6,14 @@
       <v-layout row wrap>
         <v-flex d-flex xs12 sm6 md5>
           <span class="span-without-selectbox">기간조회</span>
-          <date-picker v-model="date_start" :lang="lang"></date-picker>
+          <date-picker v-model="dateStart" :lang="lang"></date-picker>
         </v-flex>
         <v-flex d-flex xs12 sm6 md5>
-          <date-picker v-model="date_finish" :lang="lang"></date-picker>
+          <date-picker v-model="dateFinish" :lang="lang"></date-picker>
         </v-flex>
+        <div class="search-btn" @click="getDateData">
+          <v-icon>search</v-icon>
+        </div>
       </v-layout>
       <v-spacer></v-spacer>
       <v-text-field
@@ -62,7 +65,7 @@
                 hide-details
               ></v-checkbox>
             </td>
-            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
+            <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
             <td class="text-xs-left">{{ props.item.dtTermAgreement }}</td>
             <td class="text-xs-left">{{ props.item.appCode }}</td>
             <td class="text-xs-left">{{ props.item.appTagType }}</td>
@@ -89,7 +92,6 @@
         </div>
       </div>
 
-
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <div class="text-xs-center pt-2">
@@ -103,7 +105,6 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getSelectedFunc } from "../CompHelper.js";
 
 export default {
   data() {
@@ -116,8 +117,8 @@ export default {
       },
 
       // date picker
-      date_start: "",
-      date_finish: "",
+      dateStart: "",
+      dateFinish: "",
       lang: {
         days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         months: [
@@ -221,22 +222,17 @@ export default {
   },
   updated() {
     this.getTotal();
+    this.dateStart = this.$children[0].$children[0].text;
+    this.dateFinish = this.$children[0].$children[1].text;
   },
   mounted() {
     this.getDatas();
   },
   methods: {
     getTotal() {
-      let update_total = this.$children[0].$children[3].searchLength;
-      this.total = update_total;
-      // 1
-      let pageNum = this.$children[0].$children[4].value - 1;
-      // 10
-      let pageActiveText = this.$children[0].$children[3].$children[1].value;
-      let calPage = pageNum * pageActiveText;
-      this.total_index = calPage;
+      this.total = this.$children[0].$children[3].searchLength;
     },
-    getDatas() {
+    dateSet() {
       let today = new Date();
       let dd = today.getDate();
       let mm = today.getMonth() + 1;
@@ -251,28 +247,48 @@ export default {
       }
       today = yyyy + "-" + mm + "-" + dd;
 
-      this.date_start = today;
-      this.date_finish = today;
-      // this.queryDateToday = today;
-
+      this.dateStart = today;
+      this.dateFinish = today;
+    },
+    dateFormat() {
+      let oversert = this.oversert;
+      for (let item in oversert) {
+        let date = new Date(oversert[item].dtTermAgreement);
+        let formatDate = date.toLocaleDateString();
+        oversert[item].dtTermAgreement = formatDate;
+      }
+    },
+    getDateData() {
       this.$store
         .dispatch(Constant.FETCH_OVER_CERT, {
-          start: "2015-05-05",
-          end: "2015-05-31"
+          start: this.dateStart,
+          end: this.dateFinish
+        })
+        .then(resp => {
+          this.oversert = resp.data.certs.reverse();
+          this.total = this.oversert.length;
+          this.dateFormat();
+        });
+    },
+    getDatas() {
+      this.dateSet();
+      this.$store
+        .dispatch(Constant.FETCH_OVER_CERT, {
+          start: this.dateStart,
+          end: this.dateFinish
         })
         .then(resp => {
           this.oversert = resp.data.certs.reverse();
           console.log("oversert.length :", this.oversert.length);
           this.total = this.oversert.length;
+          this.dateFormat();
         });
     },
     deleteDatas() {
       for (let item in this.selected) {
-        this.$store
-          .dispatch(Constant.DELETE_TAG_TYPE, this.selected[item].idx)
-          .then(() => {
-            this.getDatas();
-          });
+        this.$store.dispatch(Constant.DEL, this.selected[item].idx).then(() => {
+          this.getDatas();
+        });
       }
       this.$store.commit(Constant.SHOW_MODAL, {
         isModal: true,
@@ -282,9 +298,6 @@ export default {
     toggleAll() {
       if (this.selected.length) this.selected = [];
       else this.selected = this.oversert.slice();
-    },
-    getSelected: function(e) {
-      getSelectedFunc(e);
     },
     changeSort(column) {
       if (this.pagination.sortBy === column) {

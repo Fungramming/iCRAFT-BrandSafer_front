@@ -52,8 +52,6 @@ export default {
     },
     // Product
     async [Constant.FETCH_PRODUCT_CERIT](store, payload) {
-        console.log('abc')
-        console.log(payload)
         return promise(BSAPI.fectchProductCert, payload, store, null);
     },
     // App
@@ -77,6 +75,7 @@ export default {
         return promise(BSAPI.addCompany, payload, store, null);
     },
     async [Constant.UPDATE_COMPANY](store, payload) {
+        console.log("payload :", payload);
         return promise(BSAPI.updateCompany, payload, store, null);
     },
 

@@ -41,39 +41,50 @@ export default new Router({
       name: "dashboard",
       component: Dashboard
     },
+    // {
+    //   path: "/product",
+    //   name: "product",
+    //   component: Product,
+    //   children: [
+    //     {
+    //       path: "/product/certList",
+    //       name: "certList",
+    //       component: ProductCertList
+    //     },
+    //     {
+    //       path: "/product/certMap",
+    //       name: "certMap",
+    //       component: ProductCertMap
+    //     }
+    //   ]
+    // },
     {
-      path: "/product",
-      name: "product",
-      component: Product,
-      children: [
-        {
-          path: "/product/certList",
-          name: "certList",
-          component: ProductCertList
-        },
-        {
-          path: "/product/certMap",
-          name: "certMap",
-          component: ProductCertMap
-        }
-      ]
+      path: "/product/certList",
+      name: "certList",
+      component: ProductCertList
     },
     {
-      path: "/appv",
-      name: "appv",
-      component: Appv,
-      children: [
-        {
-          path: "/appv/releaseInfo",
-          name: "releaseInfo",
-          component: AppReleaseInfo
-        },
-        {
-          path: "/appv/lookup",
-          name: "lookup",
-          component: AppLookup
-        }
-      ]
+      path: "/product/certMap",
+      name: "certMap",
+      component: ProductCertMap
+    },
+    // {
+    //   path: "/appv",
+    //   name: "appv",
+    //   component: Appv,
+    //   children: [
+        
+    //   ]
+    // },
+    {
+      path: "/appv/releaseInfo",
+      name: "releaseInfo",
+      component: AppReleaseInfo
+    },
+    {
+      path: "/appv/lookup",
+      name: "lookup",
+      component: AppLookup
     },
     {
       path: "/admin/customerManagement",

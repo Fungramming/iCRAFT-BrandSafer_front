@@ -133,7 +133,6 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getSelectedFunc, getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -186,14 +185,9 @@ export default {
       );
     }
   },
-  updated() {
-    getTotal(this);
-  },
   mounted() {
     this.$store.dispatch(Constant.FETCH_USERS).then(resp => {
       this.users = resp;
-      console.log("this.users :", this.users);
-      // console.log("this.users.length :", this.users.length);
     });
   }
 };

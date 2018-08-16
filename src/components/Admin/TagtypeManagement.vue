@@ -55,7 +55,7 @@
                 hide-details
               ></v-checkbox>
             </td>
-            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
+            <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
             <!-- <td class="text-xs-left">{{ props.item.idx }}</td> -->
             <td class="text-xs-left"><a @click.stop="showEditModal"> {{ props.item.version }} </a></td>
             <td class="text-xs-left">{{ props.item.type }}</td>
@@ -116,20 +116,21 @@
                     <span class="text-danger">*</span>
                   </label>
                   <input v-model="submitData.version" class="input-text require-input" type="text">  
-                  <span class="required-notice">*필수입력사항입니다.</span>
+                  <span class="required-notice">*필수 입력사항입니다.</span>
                 </v-flex>    
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">태그타입
                     <span class="text-danger">*</span>
                   </label>
-                  <select id="select1" v-model="submitData.type" name="searchType" class="form-control selectbox selectbox-100 require-input" size="1">
+                  <span class="selectbox_arrow"></span>
+                  <select id="select_tagtype" v-model="submitData.type" name="searchType" class="form-control selectbox selectbox-100 require-input" size="1">
                     <option value="HOLOTAG_ONLY">홀로태그</option>
                     <option value="HOLOTAG_BARCODE">홀로태그 + QR</option>
                     <option value="HYBRIDTAG">하이브리드태그</option>
                     <option value="RANDOMTAG">난수태그</option>
                     <option value="SQRTAG">SQR태그</option>
                   </select>          
-                  <span class="required-notice">*필수입력사항입니다.</span>
+                  <span class="required-notice">*필수 입력사항입니다.</span>
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">사이즈
@@ -137,7 +138,7 @@
                   </label>
                   <input v-model="submitData.width" class="input-text input-size require-input" type="text" placeholder="width">
                   <input v-model="submitData.height" class="input-text input-size require-input" type="text" placeholder="height">        
-                  <span class="required-notice">*필수입력사항입니다.</span>
+                  <span class="required-notice">*필수 입력사항입니다.</span>
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">설명</label>
@@ -180,28 +181,32 @@
                   <label class="input-title">버전
                     <span class="text-danger">*</span>
                   </label>
-                  <input v-model="updateData.version" class="input-text" type="text">
+                  <input v-model="updateData.version" class="input-text not-allowed require-input" type="text" disabled>
+                  <span class="required-notice">*필수 입력사항입니다.</span>
                 </v-flex>    
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">태그타입
                     <span class="text-danger">*</span>
                   </label>
-                  <span class="selectbox selectbox-100">
-                    <select id="select1" v-model="updateData.type" name="searchType" class="form-control" size="1">
-                      <option value="HOLOTAG_ONLY">홀로태그</option>
-                      <option value="HOLOTAG_BARCODE">홀로태그 + QR</option>
-                      <option value="HYBRIDTAG">하이브리드태그</option>
-                      <option value="RANDOMTAG">난수태그</option>
-                      <option value="SQRTAG">SQR태그</option>
-                    </select>
-                  </span>
+                  <!-- <span class="selectbox selectbox-100"> -->
+                  <span class="selectbox_arrow"></span>
+                  <select id="select_tagtype_u" v-model="updateData.type" name="searchType" class="form-control selectbox selectbox-100 require-input" size="1">
+                    <option value="HOLOTAG_ONLY">홀로태그</option>
+                    <option value="HOLOTAG_BARCODE">홀로태그 + QR</option>
+                    <option value="HYBRIDTAG">하이브리드태그</option>
+                    <option value="RANDOMTAG">난수태그</option>
+                    <option value="SQRTAG">SQR태그</option>
+                  </select>
+                  <span class="required-notice">*필수 입력사항입니다.</span>
+                  <!-- </span> -->
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">사이즈
                     <span class="text-danger">*</span>
                   </label>
-                  <input v-model="updateData.width" class="input-text input-size" type="text" placeholder="width">
-                  <input v-model="updateData.height" class="input-text input-size" type="text" placeholder="height">
+                  <input v-model="updateData.width" class="input-text input-size require-input" type="text" placeholder="width">
+                  <input v-model="updateData.height" class="input-text input-size require-input" type="text" placeholder="height">
+                  <span class="required-notice">*필수 입력사항입니다.</span>
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">설명</label>
@@ -228,7 +233,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getSelectedFunc, getTotal } from "../CompHelper.js";
+import { checkRequired, getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -323,31 +328,32 @@ export default {
     }
   },
   updated() {
+    checkRequired();
     getTotal(this);
-    this.checkRequired();
   },
   mounted() {
     this.getDatas();
   },
   methods: {
-    checkRequired() {
-      let requiredInput = document.getElementsByClassName("require-input");
+    // checkRequired() {
+    //   let requiredInput = document.getElementsByClassName("require-input");
 
-      for (let i = 0; i < requiredInput.length; i++) {
-        requiredInput[i].parentNode.removeClass;
-        requiredInput[i].parentNode.classList.remove("required");
+    //   for (let i = 0; i < requiredInput.length; i++) {
+    //     requiredInput[i].parentNode.removeClass;
+    //     requiredInput[i].parentNode.classList.remove("required");
 
-        let valueLength = requiredInput[i].value.length;
-        // 항목이 비어있을때
-        if (valueLength == 0) {
-          requiredInput[i].parentNode.classList.add("required");
-        } else if (valueLength !== 0) {
-          requiredInput[i].parentNode.classList.remove("required");
-        }
-      }
-    },
+    //     let valueLength = requiredInput[i].value.length;
+    //     // 항목이 비어있을때
+    //     if (valueLength == 0) {
+    //       requiredInput[i].parentNode.classList.add("required");
+    //     } else if (valueLength !== 0) {
+    //       requiredInput[i].parentNode.classList.remove("required");
+    //     }
+    //   }
+    // },
     addDatas() {
-      this.checkRequired();
+      checkRequired();
+      // this.checkRequired();
       if (
         this.submitData.version &&
         this.submitData.type &&
@@ -365,12 +371,38 @@ export default {
             });
           });
       }
+      // else if (
+      //   this.updateData.version &&
+      //   this.updateData.type &&
+      //   this.updateData.width &&
+      //   this.updateData.height
+      // ) {
+      //   this.$store
+      //     .dispatch(Constant.ADD_TAG_TYPE, this.submitData)
+      //     .then(() => {
+      //       this.getDatas();
+      //       this.closeModal();
+      //       this.$store.commit(Constant.SHOW_MODAL, {
+      //         isModal: true,
+      //         modalText: "등록 되었습니다."
+      //       });
+      //     });
+      // }
     },
     getDatas() {
       this.$store.dispatch(Constant.FETCH_TAG_TYPE).then(resp => {
         this.tag_type = resp.data.tag_type.reverse();
         this.total = this.tag_type.length;
+        this.dateFormat();
       });
+    },
+    dateFormat() {
+      let tag_type = this.tag_type;
+      for (let item in tag_type) {
+        let date = new Date(tag_type[item].dtRegistered);
+        let formatDate = date.toLocaleDateString();
+        tag_type[item].dtRegistered = formatDate;
+      }
     },
     updateDatas({ idx, app }) {
       idx = this.updateIndex;
@@ -383,7 +415,6 @@ export default {
           tagType: app
         })
         .then(() => {
-          // updateData = this.updateData;
           this.getDatas();
           this.closeModal();
           this.$store.commit(Constant.SHOW_MODAL, {
@@ -480,9 +511,6 @@ export default {
     toggleAll() {
       if (this.selected.length) this.selected = [];
       else this.selected = this.tag_type.slice();
-    },
-    getSelected: function(e) {
-      getSelectedFunc(e);
     },
     changeSort(column) {
       if (this.pagination.sortBy === column) {

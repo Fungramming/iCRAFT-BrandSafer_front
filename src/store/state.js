@@ -14,7 +14,7 @@ export default {
   weeklyStatus: {},
   monthlyStatus: {},
 
-  //pushApp
+  //PushApp
   pushApp: "",
 
   // AlertModal

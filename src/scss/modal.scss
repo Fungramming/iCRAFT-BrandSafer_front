@@ -47,28 +47,37 @@
       .d-flex {
         margin-bottom: 7px;
         position: relative;
-        input, select {
+        input, select{
           transition: all .3s ease
         }
+
         &.required {
           input, select {
             border: 1px solid #ff776d;
             animation: shake 0.52s cubic-bezier(.36,.07,.19,.97) both;
             transform: translate3d(0, 0, 0);
           }          
-          .required-notice {
-            display: inline-block;
-          
+          .required-notice, .required-notice-pw {
+            opacity: 1;
+            animation: shake 0.52s cubic-bezier(.36,.07,.19,.97) both;
           }
         }
-        .required-notice {
-          display: none;
+        &.warn {
+          input {
+            border: 1px solid #ff776d;
+            animation: shake 0.52s cubic-bezier(.36,.07,.19,.97) both;
+            transform: translate3d(0, 0, 0);
+          } 
+        }
+        .required-notice, .required-notice-pwd {
+          opacity: 0;
           position: absolute;
           right: -130px;
           bottom: 30%;
           font-size: 12px;
           text-align: right;
           color: #ff776d;
+          transition: all .2s ease          
         }
       }
       .v-subheader {
@@ -135,14 +144,30 @@
         text-align: right;
       }
       // 선택 창
+      .selectbox_arrow {
+        &:after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          right: 5px;
+          width: 0;
+          height: 0;
+          margin-top: -1px;
+          border-left: 5px solid transparent;
+          border-right: 5px solid transparent;
+          border-top: 5px solid #999;
+        }
+      }
       .selectbox {
         display: inline-block;
         position: relative;
-        width: 95px;
+        // width: 100%;
+        width: 85px;
         border: 1px solid #e6e6e6;
         border-radius: 5px;
         z-index: 1;
         margin-left: 25px;
+        // padding-left: 5px;
         color: #333;
         &:before {
           content: "";

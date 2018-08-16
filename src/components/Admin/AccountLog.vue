@@ -6,11 +6,14 @@
       <v-layout row wrap>
         <v-flex d-flex xs12 sm6 md5>
           <span class="span-without-selectbox">기간조회</span>
-          <date-picker v-model="date_start" :lang="lang"></date-picker>
+          <date-picker v-model="dateStart" :lang="lang"></date-picker>
         </v-flex>
         <v-flex d-flex xs12 sm6 md5>
-          <date-picker v-model="date_finish" :lang="lang"></date-picker>
+          <date-picker v-model="dateFinish" :lang="lang"></date-picker>
         </v-flex>
+        <div class="search-btn" @click="getDateData">
+          <v-icon>search</v-icon>
+        </div>
       </v-layout>
       <v-spacer></v-spacer>
       <v-text-field
@@ -62,7 +65,7 @@
                 hide-details
               ></v-checkbox>
             </td>
-            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
+            <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
             <td class="text-xs-left">{{ props.item.dtAttempted }}</td>
             <td class="text-xs-left">{{ props.item.role_name }}</td>
             <td class="text-xs-left">{{ props.item.id }}</td>
@@ -109,8 +112,8 @@ export default {
       },
 
       // date picker
-      date_start: "",
-      date_finish: "",
+      dateStart: "",
+      dateFinish: "",
       lang: {
         days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         months: [
@@ -143,7 +146,6 @@ export default {
       selected: [],
       headers: [
         { text: "번호", align: "left", value: "idx", sortable: false },
-
         {
           text: "로그인 일시",
           align: "left",
@@ -177,15 +179,23 @@ export default {
   },
   updated() {
     this.getTotal();
+
+    this.dateStart = this.$children[0].$children[0].text;
+    this.dateFinish = this.$children[0].$children[1].text;
   },
   mounted() {
     this.getDatas();
   },
   methods: {
-    getDatas() {
+    getTotal() {
+      this.total = this.$children[0].$children[3].searchLength;
+    },
+    dateSet() {
       let today = new Date();
+      let ThreeMonthAgo = new Date();
       let dd = today.getDate();
       let mm = today.getMonth() + 1;
+      let mm_1 = today.getMonth();
       let yyyy = today.getFullYear();
 
       if (dd < 10) {
@@ -195,41 +205,51 @@ export default {
       if (mm < 10) {
         mm = "0" + mm;
       }
+
+      if (mm_1 < 10) {
+        mm_1 = "0" + mm_1;
+      }
+
       today = yyyy + "-" + mm + "-" + dd;
+      ThreeMonthAgo = yyyy + "-" + mm_1 + "-" + dd;
 
-      this.date_start = today;
-      this.date_finish = today;
-      // this.queryDateToday = today;
-
+      this.dateStart = ThreeMonthAgo;
+      this.dateFinish = today;
+    },
+    dateFormat() {
+      let logs = this.logs;
+      for (let item in logs) {
+        let date = new Date(logs[item].dtAttempted);
+        let formatDate = date.toLocaleDateString();
+        logs[item].dtAttempted = formatDate;
+      }
+    },
+    getDatas() {
+      this.dateSet();
       this.$store
         .dispatch(Constant.FETCH_ACCOUNT_LOG, {
-          start: "2018-07-01",
-          end: "2018-07-15"
+          start: this.dateStart,
+          end: this.dateFinish
         })
         .then(resp => {
-          this.logs = resp.data.logs;
+          console.log("resp :", resp);
+          this.logs = resp.data.logs.reverse();
           this.total = this.logs.length;
+          this.dateFormat();
+          console.log("this.total :", this.total);
         });
     },
-    getTotal() {
-      // let page = document.getElementsByClassName("v-select__selection");
-      // let pageActive = document.getElementsByClassName(
-      //   "v-pagination__item--active"
-      // );
-      // let pageText = page[0].innerText;
-      // let pageActiveText = pageActive[0].innerText;
-      // let pageNum = pageActiveText - 1;
-      // let calPage = pageNum * pageText;
-      // this.total_index = calPage;
-      let update_total = this.$children[0].$children[3].searchLength;
-      this.total = update_total;
-
-      // 1
-      let pageNum = this.$children[0].$children[4].value - 1;
-      // 10
-      let pageActiveText = this.$children[0].$children[3].$children[1].value;
-      let calPage = pageNum * pageActiveText;
-      this.total_index = calPage;
+    getDateData() {
+      this.$store
+        .dispatch(Constant.FETCH_ACCOUNT_LOG, {
+          start: this.dateStart,
+          end: this.dateFinish
+        })
+        .then(resp => {
+          this.logs = resp.data.logs.reverse();
+          this.total = this.logs.length;
+          this.dateFormat();
+        });
     },
     toggleAll() {
       if (this.selected.length) this.selected = [];

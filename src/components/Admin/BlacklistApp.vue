@@ -53,7 +53,7 @@
                 hide-details
               ></v-checkbox>
             </td>
-            <td class="text-xs-left">{{ total - props.index - total_index }}</td>
+            <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
             <td class="text-xs-left">{{ props.item.app }}</td>
             <td class="text-xs-left">{{ props.item.blType }}</td>
             <td class="text-xs-left" @click="linkPushToken"><a>{{ props.item.pushToken }}</a></td>
@@ -66,7 +66,7 @@
       </v-data-table>
       <div class="v-datatable__actions">
         <span>per page :</span>
-        <div class="v-datatable__actions__select">          
+        <div class="v-datatable__actions__select">
           <select v-model="pagination.rowsPerPage">
             <option value="5">5</option>
             <option value="10">10</option>
@@ -123,7 +123,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getSelectedFunc, getTotal } from "../CompHelper.js";
+import { getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -176,11 +176,7 @@ export default {
   },
   computed: {
     pages() {
-      if (
-        this.pagination.rowsPerPage == null ||
-        this.pagination.totalItems == null
-      )
-        return 0;
+      if (this.pagination.rowsPerPage == null || this.total == null) return 0;
 
       return Math.ceil(this.total / this.pagination.rowsPerPage);
     }
@@ -196,7 +192,19 @@ export default {
       this.$store.dispatch(Constant.FETCH_BLACKLIST).then(resp => {
         this.blacklists = resp.data.blacklists.reverse();
         this.total = this.blacklists.length;
+        this.dateFormat();
       });
+    },
+    dateFormat() {
+      let blacklists = this.blacklists;
+      for (let item in blacklists) {
+        let date = new Date(blacklists[item].dtRegistered);
+        let date_2 = new Date(blacklists[item].dtModified);
+        let formatDate = date.toLocaleDateString();
+        let formatDate_2 = date_2.toLocaleDateString();
+        blacklists[item].dtRegistered = formatDate;
+        blacklists[item].dtModified = formatDate_2;
+      }
     },
     addDatas() {
       this.$store
@@ -216,16 +224,17 @@ export default {
     },
     deleteDatas() {
       for (let item in this.selected) {
+        console.log("this.selected[item].idx :", this.selected[item].idx);
         this.$store
           .dispatch(Constant.DELETE_BLACKLIST, this.selected[item].idx)
           .then(() => {
             this.getDatas();
+            this.$store.commit(Constant.SHOW_MODAL, {
+              isModal: true,
+              modalText: "삭제 되었습니다."
+            });
           });
       }
-      this.$store.commit(Constant.SHOW_MODAL, {
-        isModal: true,
-        modalText: "삭제 되었습니다."
-      });
     },
     showModal() {
       this.$modal.show("blacklist");
@@ -237,9 +246,6 @@ export default {
     toggleAll() {
       if (this.selected.length) this.selected = [];
       else this.selected = this.blacklists.slice();
-    },
-    getSelected: function(e) {
-      getSelectedFunc(e);
     },
     linkPushToken() {
       let _this = this;
