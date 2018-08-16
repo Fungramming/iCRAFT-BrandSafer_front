@@ -114,20 +114,18 @@
                   <label class="input-title">고객사
                     <span class="text-danger">*</span>
                   </label>
-                  <span class="selectbox selectbox-100">
-                    <select id="select1" v-model="updateData.companyCode" name="searchType" class="form-control" size="1">
-                      <option v-for="item in companyList" :value="item.code" :key="item.code">{{item.name_kr}}</option>
-                    </select>
-                  </span>
+                  <select id="select1" v-model="submitData.companyCode" name="searchType" class="selectbox selectbox-100 form-control require-input" size="1">
+                    <option v-for="item in companyList" :value="item.code" :key="item.code">{{item.name_kr}}</option>
+                  </select>
+                  <span class="required-notice">*필수 입력사항입니다.</span>
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">태그타입
                     <span class="text-danger">*</span>
                   </label>
                   <span class="selectbox_arrow"></span>
-                  <select id="select_tagtype" v-model="submitData.type" name="searchType" class="form-control selectbox selectbox-100 require-input" size="1">
+                  <select id="select_tagtype" v-model="submitData.tagType" name="searchType" class="form-control selectbox selectbox-100 require-input" size="1">
                     <option value="HOLOTAG_ONLY">홀로태그</option>
-                    <option value="HOLOTAG_BARCODE">홀로태그 + QR</option>
                     <option value="HYBRIDTAG">하이브리드태그</option>
                     <option value="RANDOMTAG">난수태그</option>
                     <option value="SQRTAG">SQR태그</option>
@@ -156,6 +154,14 @@
                   </select>
                   <span class="required-notice">*필수 입력사항입니다.</span>
                 </v-flex>
+                <v-flex d-flex xs12 sm12 md5 class="app-code">
+                  <label class="input-title">APP 코드
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input v-model="submitData.code" class="input-text require-input not-allowed" type="text" disabled="disabled">  
+                  <v-btn class="create-code" @click.stop="createAppcode">생성</v-btn>
+                  <span class="required-notice">*필수 입력사항입니다.</span>
+                </v-flex>  
                 <v-flex d-flex xs12 sm12 md5 >
                   <label class="input-title">버전
                     <span class="text-danger">*</span>
@@ -182,21 +188,25 @@
                   <label class="input-title">인증제한 수
                     <span class="text-danger">*</span>
                   </label>
-                  <input v-model="submitData.name_kr" class="input-text require-input" type="text" required="required" placeholder="고객사(한국어)">
+                  <input v-model="submitData.limitCertCnt" class="input-text require-input" type="text" required="required">
                   <span class="required-notice">*필수 입력사항입니다.</span>
+                </v-flex>
+                 <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">업데이트 URL
+                  </label>
+                  <input v-model="submitData.updateUrl" class="input-text " type="text">
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">설명</label>
-                  <input v-model="submitData.description" class="input-text" type="text">
+                  <input v-model="submitData.description" class="input-text" type="text-area">
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md5>
+                  <label class="input-title">배포일</label>
+                  <input v-model="submitData.dtPublished" class="input-text" type="text-area">
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">노트</label>
                   <input v-model="submitData.note" class="input-text" type="text">
-                </v-flex>
-                <v-flex d-flex xs12 sm12 md3>
-                  <label class="input-title">상태</label>
-                  <input v-model="submitData.state" checked="checked" class="input-radio" type="radio" name="staus" value="Enable">서비스
-                  <input v-model="submitData.state" class="input-radio" type="radio" name="staus" value="Deleted">사용정지
                 </v-flex>
               </v-list>
             </v-card-text>
@@ -210,7 +220,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getTotal } from "../CompHelper.js";
+import { checkRequired, getTotal } from "../CompHelper.js";
 
 export default {
   data() {
@@ -254,27 +264,24 @@ export default {
       // SUBMIT DATA
       submitData: {
         attachedPath: "",
-        code: "",
         companyCode: "",
-        company_name: "",
         description: "",
-        dtModified: "",
-        dtPublished: "",
-        dtRegistered: "",
-        idx: "",
+        code: "",
+        dtModified: this.$store.state.submitTime,
+        dtRegistered: this.$store.state.submitTime,
+        dtPublished: this.$store.state.submitTime,
         limitCertCnt: "",
         limitCertHour: "",
-        modifier: "",
-        name_en: "",
+        modifier: this.$store.state.user.modifier,
+        name_en: null,
         name_kr: "",
-        name_zh: "",
+        name_zh: null,
         note: "",
         osType: "",
-        registrant: "",
-        state: "",
+        registrant: this.$store.state.user.modifier,
         tagType: "",
         type: "",
-        updateUrl: "",
+        updateUrl: null,
         version: ""
       },
 
@@ -282,7 +289,6 @@ export default {
         attachedPath: "",
         code: "",
         companyCode: "",
-        company_name: "",
         description: "",
         dtModified: "",
         dtPublished: "",
@@ -329,10 +335,49 @@ export default {
     getCompanyList() {
       this.$store.dispatch(Constant.FETCH_COMPANY).then(resp => {
         let box = resp.data.company;
-        console.log("box :", box);
         for (let item in box) {
           this.companyList.push(box[item]);
         }
+      });
+    },
+    addDatas() {
+      checkRequired();
+      if (
+        this.submitData.tagType &&
+        this.submitData.osType &&
+        this.submitData.type &&
+        this.submitData.code &&
+        this.submitData.name_kr &&
+        this.submitData.code &&
+        this.submitData.limitCertCnt &&
+        this.submitData.dtPublished
+      ) {
+        this.$store
+          .dispatch(Constant.ADD_APP_LELEASE, this.submitData)
+          .then(() => {
+            this.getDatas();
+            this.closeModal();
+            this.$store.commit(Constant.SHOW_MODAL, {
+              isModal: true,
+              modalText: "등록 되었습니다."
+            });
+          })
+          .catch(err => {
+            console.log("err :", err);
+          });
+      }
+    },
+    deleteDatas() {
+      for (let item in this.selected) {
+        this.$store
+          .dispatch(Constant.DELETE_APP_LELEASE, this.selected[item].idx)
+          .then(() => {
+            this.getDatas();
+          });
+      }
+      this.$store.commit(Constant.SHOW_MODAL, {
+        isModal: true,
+        modalText: "삭제 되었습니다."
       });
     },
     dateFormat() {
@@ -345,6 +390,53 @@ export default {
     },
     showModal() {
       this.$modal.show("releaseInfo");
+    },
+    closeModal() {
+      let vModal = this.$children[1];
+      let vModalEdit = this.$children[2];
+
+      if (vModal.visible) vModal.visible = false;
+      else if (vModalEdit.visible) vModalEdit.visible = false;
+    },
+    createAppcode() {
+      let tagCode = this.submitData.tagType;
+      let OS = this.submitData.osType;
+      let appType = this.submitData.type;
+      let companyCode = this.submitData.companyCode;
+      switch (OS) {
+        case "iOS":
+          OS = "I";
+          break;
+        case "안드로이드":
+          OS = "A";
+          break;
+      }
+
+      switch (tagCode) {
+        case "HOLOTAG_ONLY":
+          tagCode = "H";
+          break;
+        case "HYBRIDTAG":
+          tagCode = "Y";
+          break;
+        case "RANDOMTAG":
+          tagCode = "R";
+          break;
+        case "SQRTAG":
+          tagCode = "S";
+          break;
+      }
+
+      switch (appType) {
+        case "APP":
+          appType = "A";
+          break;
+        case "LIP":
+          appType = "L";
+          break;
+      }
+
+      this.submitData.code = appType + tagCode + "C" + OS + companyCode;
     }
   }
 };
@@ -353,4 +445,19 @@ export default {
 <style lang="scss" scoped>
 @import "../../scss/table";
 @import "../../scss/modal";
+.app-code {
+  .create-code {
+    background-color: #607d8b;
+    color: #fff;
+    border-radius: 0 4px 4px 0;
+    position: absolute;
+    right: -7px;
+    top: -5px;
+    min-width: 40px;
+    height: 33px;
+  }
+}
+.input-radio {
+  margin: 0 30px;
+}
 </style>

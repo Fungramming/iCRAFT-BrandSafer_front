@@ -75,7 +75,6 @@ export default {
     return promise(BSAPI.addCompany, payload, store, null);
   },
   async [Constant.UPDATE_COMPANY](store, payload) {
-    console.log("payload :", payload);
     return promise(BSAPI.updateCompany, payload, store, null);
   },
 
