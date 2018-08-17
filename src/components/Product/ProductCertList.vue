@@ -6,63 +6,58 @@
       <v-layout row wrap>
         <v-flex d-flex xs6 md3 lg2>
           <span class="span-without-selectbox">기간조회</span>
-          <date-picker v-model="date_start" :lang="lang"></date-picker>
+          <date-picker v-model="query.date_start" :lang="lang"></date-picker>
         </v-flex>
         <v-flex d-flex xs6 md3 lg2>
-          <date-picker v-model="date_finish" :lang="lang"></date-picker>
+          <date-picker v-model="query.date_finish" :lang="lang"></date-picker>
         </v-flex>
         <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox selectbox-with-date selectbox-top">
             <span>고객사</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option value="전체" selected>전체</option>
-              <option value="고객사1">고객사1</option>
-              <option value="고객사2">고객사2</option>
-              <option value="고객사3">고객사3</option>
+            <select id="select1" name="searchType" v-model="query.company" class="form-control" size="1">
+              <option value="all" selected>전체</option>
+              <option v-for="company in companys" :key="company.code" :value="company.name_en">{{company.name_kr}}</option>
             </select>
           </div>
         </v-flex>
         <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox selectbox-top">
             <span>태그타입</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option value="전체" selected>전체</option>
-              <option value="태그타입1">태그타입1</option>
-              <option value="태그타입2">태그타입2</option>
-              <option value="태그타입3">태그타입3</option>
+            <select id="select1" name="searchType" v-model="query.tag_type" class="form-control" size="1">
+              <option value="all" selected>전체</option>
+              <option v-for="tag_type in tag_types" :key="tag_type.name_en" :value="tag_type.name_en">{{tag_type.name_kr}}</option>
             </select>
           </div>
         </v-flex>
         <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox selectbox-top">
             <span>OS</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option value="전체" selected>전체</option>
-              <option value="OS1">OS1</option>
-              <option value="OS2">OS2</option>
-              <option value="OS3">OS3</option>
+            <select id="select1" name="searchType" v-model="query.os" class="form-control" size="1">
+              <option value="all" selected>전체</option>
+              <option v-for="o in os" :key="o.name_en" :value="o.name_en">{{o.name_kr}}</option>
             </select>
           </div>
         </v-flex>
         <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox selectbox-top">
             <span>인증결과</span>
-            <select id="select1" name="searchType" class="form-control" size="1">
-              <option value="전체" selected>전체</option>
-              <option value="인증결과1">인증결과1</option>
-              <option value="인증결과2">인증결과2</option>
-              <option value="인증결과3">인증결과3</option>
+            <select id="select1" name="searchType" v-model="query.cert" class="form-control" size="1">
+              <option value="all" selected>전체</option>
+              <option v-for="cert in certs" :key="cert.name_kr" :value="cert.name_en">{{cert.name_kr}}</option>
             </select>
           </div>
         </v-flex>
       </v-layout>
+      <div class="search-wrapper">
+        <v-btn color="primary" @click.stop="getDatas()">검색</v-btn>
+      </div>
     </div>
     <!-- table wrap -->
     <v-app class="inspire">
       <v-card-title>
         <v-spacer></v-spacer>
         <v-text-field
-          v-model="search"
+          v-model="query.search"
           append-icon="search"
           label="검색어"
           single-line
@@ -72,7 +67,6 @@
       <v-data-table
         :headers="headers"
         :items="desserts"
-        :search="search"
         :total-items="pagination.total"
         :pagination.sync="pagination"
         item-key="number"
@@ -119,52 +113,38 @@
       </div>
     </v-app>
   </div>
-  <!-- <section class="search">
-    <h3>검색조건</h3>
-    <v-layout row wrap align-center>
-      <v-flex sm12 lg4 xl2>
-        <select name="기간선택" id="">
-          <option disabled="disabled" selected>기간선택</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-        </select>
-      </v-flex>
-      <v-flex sm12 lg4 xl2>
-        <v-select solo items="[1, 2, 3]" label="고객사"></v-select>
-      </v-flex>
-      <v-flex sm12 lg4 xl2>
-        <v-select solo items="[1, 2, 3]" label="태그타입"></v-select>
-      </v-flex>
-      <v-flex sm12 lg4 xl2>
-        <v-select solo items="[1, 2, 3]" label="OS"></v-select>
-      </v-flex>
-      <v-flex sm12 lg4 xl2>
-        <v-select solo items="[1, 2, 3]" label="인증결과"></v-select>
-      </v-flex>
-      <v-flex sm12 lg4 xl2>
-        <v-select solo items="[1, 2, 3]" label="검색어"></v-select>
-      </v-flex>
-    </v-layout>
-    <v-btn>검색</v-btn>
-  </section> -->
 </template>
 
 <script>
 import Constant from "../../constant.js";
 
 export default {
+  updated() {
+    this.query.date_start = this.$children[0].text;
+    this.query.date_finish = this.$children[1].text;
+  },
+
   mounted() {
+    this.dateSet()
     this.getDatas()
+    this.getCompanys()
+    // this.getTagTypes()
   },
 
   data() {
     return {
-      search: "",
+      query: {
+        company: 'all',
+        tag_type: 'all',
+        os: 'all',
+        cert: 'all',
+        search: '',
+        date_start: '',
+        date_finish: ''
+      },
       dialog: false,
 
       // date picker
-      date_start: "",
-      date_finish: "",
       lang: {
         days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         months: [
@@ -192,6 +172,77 @@ export default {
           dateRange: "Select Date Range"
         }
       },
+      companys: [],
+      tag_types: [
+        {
+          name_en: 'HOLOTAG_ONLY',
+          name_kr: '홀로태그'
+        },
+        {
+          name_en: 'HYBRIDTAG',
+          name_kr: '하이브리드태그'
+        },
+        {
+          name_en: 'RANDOMTAG',
+          name_kr: '난수태그'
+        },
+        {
+          name_en: 'SQRTAG',
+          name_kr: 'SQR태그'
+        },
+      ],
+      os: [
+        {
+          name_en: 'Android',
+          name_kr: '안드로이드'
+        },
+        {
+          name_en: 'iOS',
+          name_kr: 'iOS'
+        }
+      ],
+      certs: [
+        {
+          name_en: 'Genuine',
+          name_kr: '정품'
+        },
+        {
+          name_en: 'Counterfeit',
+          name_kr: '가품'
+        },
+        {
+          name_en: 'Revalidation',
+          name_kr: '재인증'
+        },
+        {
+          name_en: 'Exprired',
+          name_kr: '기간만료'
+        },
+        {
+          name_en: 'Invalid',
+          name_kr: '무효한코드'
+        },
+        {
+          name_en: 'Retry',
+          name_kr: '재촬영'
+        },
+        {
+          name_en: 'OverCert',
+          name_kr: '인증초과'
+        },
+        {
+          name_en: 'DifferentQR',
+          name_kr: '이용안내 QR'
+        },
+        {
+          name_en: 'CommonQR',
+          name_kr: '일반 QR'
+        },
+        {
+          name_en: 'NotiOverCert',
+          name_kr: '과다인증알림'
+        }
+      ],
 
       pagination: {
         page: 1,
@@ -282,7 +333,10 @@ export default {
 
   methods: {
     getDatas() {
-      this.$store.dispatch(Constant.FETCH_PRODUCT_CERIT, {start: '2018-07-12', end: '2018-07-13', page: this.pagination.page, perPage: 10})
+      let query_data = this.query;
+      query_data.page = this.pagination.page;
+      query_data.perPage = this.pagination.rowsPerPage;
+      this.$store.dispatch(Constant.FETCH_PRODUCT_CERIT, query_data)
       .then(resp => {
         this.desserts = resp.data.certs;
         this.pagination.total = resp.data.total;
@@ -291,6 +345,44 @@ export default {
     prodImage: function(src) {
       var imgSrc = src.replace('.png', '.jpeg')
       return 'https://idc.brandsafer.com' + imgSrc
+    },
+
+    getCompanys() {
+      this.$store.dispatch(Constant.FETCH_COMPANY)
+      .then(resp => 
+      {
+        this.companys = resp.data.company;
+      });
+    },
+    getTagTypes() {
+      this.$store.dispatch(Constant.FETCH_TAG_TYPE)
+      .then(resp => 
+      {
+        this.tag_types = resp.data.tag_type;
+      })
+    },
+    dateSet() {
+      let now = new Date();
+      // let yesterday = new Date();
+      let today_date = now.getDate();
+      let yesterday_date = today_date - 1;
+      let this_month = now.getMonth() + 1;
+      let this_year = now.getFullYear();
+
+      if (today_date < 10) {
+        today_date = "0" + today_date;
+      }
+
+      if (yesterday_date < 10) {
+        yesterday_date = "0" + yesterday_date;
+      }
+
+      if (this_month < 10) {
+        this_month = "0" + this_month;
+      }
+
+      this.query.date_start = this_year + "-" + this_month + "-" + yesterday_date;
+      this.query.date_finish = this_year + "-" + this_month + "-" + today_date;
     }
   }
 };

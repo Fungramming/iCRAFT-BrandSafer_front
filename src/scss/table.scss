@@ -143,6 +143,18 @@ $tablet: "(min-width: 601px) and (max-width: 959px)";
         .v-menu__activator {
             height: 130%;
         }
+        .search-wrapper {
+            overflow: hidden;
+            @media (min-width: 0px) {
+                margin-top: 0px;
+            }
+            @media (min-width: 960px) {
+                margin-top: -77px;
+            }
+            button {
+                float: right;
+            }
+        }
     }
     .table {
         margin-bottom: 25px;
@@ -208,8 +220,8 @@ $tablet: "(min-width: 601px) and (max-width: 959px)";
         }
         // date btn
         .search-btn {
-          margin: 5px 0 0 5px;
-          cursor: pointer;
+            margin: 5px 0 0 5px;
+            cursor: pointer;
         }
         .v-table {
             td {
@@ -259,31 +271,32 @@ $tablet: "(min-width: 601px) and (max-width: 959px)";
 }
 
 .v-datatable__actions {
-  background-color: #ffffff;
-  position: relative;
-  top: -70px;
-  height: 59px;
-  span {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    color: rgba(0, 0, 0, 0.72);
-    display: inline-block;
-    padding-bottom: 7px;
-    font-size: 1.2em
-  }
-  .v-datatable__actions__select {
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    background-color: #ffffff;
     position: relative;
-    margin-right: 20px;
-    margin-left: 10px;
-    select {
-      outline: none;
-      cursor: pointer;
-      padding: 5px;
-      padding-left: 12px;
-      width: 40px;
+    top: -70px;
+    height: 59px;
+    span {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        color: rgba(0, 0, 0, 0.72);
+        display: inline-block;
+        padding-bottom: 7px;
+        font-size: 1.2em
     }
-  }
+    .v-datatable__actions__select {
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        position: relative;
+        margin-right: 20px;
+        margin-left: 10px;
+        select {
+            outline: none;
+            cursor: pointer;
+            padding: 5px;
+            padding-left: 12px;
+            width: 40px;
+        }
+    }
 }
+
 .bottom-contents-wrap {
-  margin-top: -30px;
+    margin-top: -30px;
 }

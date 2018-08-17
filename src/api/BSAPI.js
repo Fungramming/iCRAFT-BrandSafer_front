@@ -42,11 +42,23 @@ export default {
     },
 
     /* ========= Product ========= */
-    fectchProductCert({ page, start, end }) {
-        console.log(`page: ${page}`)
-        console.log(`start: ${start}`)
-        console.log(`end: ${end}`)
-        return axios.get(CONF.FETCH_PRODUCT_CERIT + `?start=${start}&end=${end}&page=${page}`);
+    fectchProductCert({ page, perPage, date_start, date_finish, company, tag_type, os, cert }) {
+        let query_str = '?';
+        if (company !== 'all') {
+            query_str += `&company=${company}`;
+        };
+        if (tag_type !== 'all') {
+            query_str += `&tag_type=${tag_type}`;
+        };
+        if (os !== 'all') {
+            query_str += `&os=${os}`;
+        };
+        if (cert !== 'all') {
+            query_str += `&cert=${cert}`;
+        };
+        query_str += `&page=${page}&perPage=${perPage}&start=${date_start}&end=${date_finish}`;
+        console.log(query_str);
+        return axios.get(CONF.FETCH_PRODUCT_CERIT + query_str);
     },
 
     /* ========= App ========= */
