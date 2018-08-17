@@ -54,10 +54,10 @@
               ></v-checkbox>
             </td>
             <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
-            <td class="text-xs-left">{{ props.item.app }}</td>
-            <td class="text-xs-left">{{ props.item.blType }}</td>
+            <td class="text-xs-left">{{ props.item.appName }}</td>
+            <td class="text-xs-left">{{ props.item.tagType }}</td>
             <td class="text-xs-left" @click="linkPushToken"><a>{{ props.item.pushToken }}</a></td>
-            <td class="text-xs-left">{{ props.item.delYN }}</td>
+            <td class="text-xs-left">{{ props.item.blType }}</td>
             <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
             <td class="text-xs-left">{{ props.item.dtModified}}</td>
             <td class="text-xs-left">{{ props.item.modifier }}</td>

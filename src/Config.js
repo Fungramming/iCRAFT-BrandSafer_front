@@ -33,7 +33,7 @@ export default {
   UPDATE_APP_LELEASE: `${BASE_URL}/apps/\${aid}`,
   DELETE_APP_LELEASE: `${BASE_URL}/apps/\${aid}`,
 
-  // FETCH_APP: ${BASE_URL}fectchApp,
+  FETCH_PUSH_TOKEN: `${BASE_URL}/app/\${pushtoken}`,
 
   FETCH_COMPANY: `${BASE_URL}/company/`,
   ADD_COMPANY: `${BASE_URL}/company/`,

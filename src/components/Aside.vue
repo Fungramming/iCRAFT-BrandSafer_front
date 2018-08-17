@@ -45,7 +45,7 @@
           </router-link>
         </li>
         <li v-show="tabList.tabB" class="expandable" @click="isActived">
-          <router-link :to="{ name: 'certList' }" name="certList" class="tab-btn" >
+          <router-link to="" name="certList" class="tab-btn" >
               <v-icon>label</v-icon>
               <span class="switch step1">제품</span>
               <v-icon class="plus">keyboard_arrow_down</v-icon>
@@ -64,7 +64,7 @@
           </ul>
         </li>
         <li v-show="tabList.tabC" class="expandable" @click="isActived">
-          <router-link :to="{ name: 'appv' }" name="appv" class="tab-btn" >
+          <router-link to="" name="appv" class="tab-btn" >
               <v-icon>public</v-icon>
               <span class="switch step1">App</span>
               <v-icon class="plus">keyboard_arrow_down</v-icon>
@@ -254,8 +254,6 @@ $phone: "(min-width: 0) and (max-width: 500px)";
 }
 // 로그아웃 모달
 .logout-modal {
-  width: 100vw;
-  height: 100vh;
   .logOutBtn {
     color: white;
     top: 15px;

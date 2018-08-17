@@ -1,185 +1,284 @@
 <template>
   <div class="tableBs">
-    <div class="tableBs-top">
-      <p>검색 조건</p>
-      <form class="form-inline" action="" method="get" enctype="application/json">
-        <label class="control-label" for="pushToken">푸시토큰</label>
-        <input class="form-control" type="text" name="query-name" id="pushToken" value="입력이 안됨">
-        <input class="submit-btn" type="submit" value="검색도 안됨">
-      </form>
-    </div>
-    <div class="table">
-      <table style="width: 100%;">
-        <colgroup>
-          <col width="11%"/>
-          <col width="9%"/>
-          <col width="7%"/>
-          <col width="12%"/>
-          <col width="10%"/>
-          <col width="5%"/>
-          <col width="9%"/>
-          <col width="4%"/>
-          <col width="5%"/>
-          <col width="3%"/>
-          <col width="3%"/>
-          <col width="4%"/>
-          <col width="4%"/>
-          <col width="4%"/>
-          <col width="3%"/>
-        </colgroup>
-        <thead>
-          <tr height="80" bgcolor="#a1cfec">
-            <th class="table-cell">App명</th>
-            <th class="table-cell">등록일</th>
-            <th class="table-cell" colspan="2">최초/마지막 인증 일시</th>
-            <th class="table-cell">블랙/관리</th>
-            <th class="table-cell">OS</th>
-            <th class="table-cell">모델명</th>
-            <th class="table-cell">언어</th>
-            <th class="table-cell" colspan="6">인증내역</th>
-            <th class="table-cell">제보</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="table-cell" rowspan="2">app명</td>
-            <td class="table-cell" rowspan="2">등록일</td>
-            <td class="table-cell" height="45">최초</td>
-            <td class="table-cell">날짜, 시간</td>
-            <td class="table-cell" rowspan="2">블랙관리</td>
-            <td class="table-cell" rowspan="2">OS</td>
-            <td class="table-cell" rowspan="2">모델명</td>
-            <td class="table-cell" rowspan="2">언어</td>
-            <td class="table-cell">정</td>
-            <td class="table-cell">가</td>
-            <td class="table-cell">재</td>
-            <td class="table-cell">초과</td>
-            <td class="table-cell">이용</td>
-            <td class="table-cell">일반</td>
-            <td class="table-cell" rowspan="2">제보</td>
-          </tr>
-          <tr>
-            <td class="table-cell" height="45">마지막</td>
-            <td class="table-cell">날짜, 시간</td>
-            <td class="table-cell">정품</td>
-            <td class="table-cell">가품</td>
-            <td class="table-cell">재인증</td>
-            <td class="table-cell">초과</td>
-            <td class="table-cell">이용</td>
-            <td class="table-cell">일반</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="map">
-      <GmapMap
-        :center="{lat: 35, lng: 118}"
-        :zoom="5"
-        map-type-id="roadmap"
-        style="height: 750px"
-      >
-        <GmapMarker
-        :key="index"
-        v-for="(m, index) in markers"
-        :position="m.position"
-        :clickable="true"
-        :draggable="false"
-        @click="center=m.position"
-        />
-      </GmapMap>
-    </div>
-    <div class="card-list">
-      <v-container fluid grid-list-md>
-        <v-layout row wrap>
-          <v-flex xs6 md3 lg2>
-            <v-card>
-              <v-card-media src="https://idc.brandsafer.com/bsrdif/images/cert_sqr/2018/08/09/_SQR_1_6e26ab9f-ff97-408c-b87a-ac5800e83d93.jpeg" height="150px"></v-card-media>
-              <v-card-actions class="cert">
-                <v-btn flat color="orange">정가품</v-btn>
-              </v-card-actions>
-              <v-card-title class="cert-date">
-                <span>날짜</span>
-              </v-card-title>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </div>
+    <v-app class="inspire">    
+      <v-card-title>
+        <label class="search-label" for="">검색어</label>
+        <v-spacer></v-spacer>
+        <v-text-field
+        v-model="pushToken"
+        class="search-field"
+        label="푸시토큰"
+        hide-details
+      ></v-text-field>
+      <div class="search-btn" @click="getDatas">
+        <v-icon>search</v-icon>
+      </div>
+      </v-card-title>
+      <div v-if="results.length > 0" class="table">
+        <table style="width: 100%;">
+          <colgroup>
+            <col width="11%"/>
+            <col width="9%"/>
+            <col width="7%"/>
+            <col width="12%"/>
+            <col width="10%"/>
+            <col width="5%"/>
+            <col width="9%"/>
+            <col width="4%"/>
+            <col width="5%"/>
+            <col width="3%"/>
+            <col width="3%"/>
+            <col width="4%"/>
+            <col width="4%"/>
+            <col width="4%"/>
+            <col width="3%"/>
+          </colgroup>
+          <thead>
+            <tr height="80" bgcolor="#a1cfec">
+              <th class="table-cell">App명</th>
+              <th class="table-cell">등록일</th>
+              <th class="table-cell" colspan="2">최초/마지막 인증 일시</th>
+              <th class="table-cell">블랙/관리</th>
+              <th class="table-cell">OS</th>
+              <th class="table-cell">모델명</th>
+              <th class="table-cell">언어</th>
+              <th class="table-cell" colspan="6">인증내역</th>
+              <th class="table-cell">제보</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="table-cell" rowspan="2">{{state.appName}}</td>
+              <td class="table-cell" rowspan="2">{{state.dtRegistered}}</td>
+              <td class="table-cell" height="45">최초</td>
+              <td class="table-cell">{{state.firstDtCertificate}}</td>
+              <td class="table-cell" rowspan="2">블랙관리</td>
+              <td class="table-cell" rowspan="2">{{state.osType}}</td>
+              <td class="table-cell" rowspan="2">{{state.model}}</td>
+              <td class="table-cell" rowspan="2">{{state.language}}</td>
+              <td class="table-cell">정</td>
+              <td class="table-cell">가</td>
+              <td class="table-cell">재</td>
+              <td class="table-cell">초과</td>
+              <td class="table-cell">이용</td>
+              <td class="table-cell">일반</td>
+              <td class="table-cell" rowspan="2">제보</td>
+            </tr>
+            <tr>
+              <td class="table-cell" height="45">마지막</td>
+              <td class="table-cell">{{state.lastDtCertificate}}</td>
+              <td class="table-cell">정품</td>
+              <td class="table-cell">가품</td>
+              <td class="table-cell">재인증</td>
+              <td class="table-cell">초과</td>
+              <td class="table-cell">이용</td>
+              <td class="table-cell">일반</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p v-if="results.length == 0" class="no-result">조회된 결과가 없습니다.</p>
+      <div v-show="results.length > 0" class="map">
+        <GmapMap
+          :center="{lat: 35, lng: 118}"
+          :zoom="5"
+          map-type-id="roadmap"
+          style="height: 750px"
+        >
+          <GmapMarker
+          v-for="(m, index) in markers"
+          :key="index"
+          :position="m.position"
+          :clickable="true"
+          :draggable="false"
+          @click="center=m.position"
+          />
+        </GmapMap>
+      </div>
+      <div class="card-list">
+        <v-container v-if="results.length > 0" fluid grid-list-md>
+          <v-layout row wrap>
+            <v-flex v-for="item in results" :key="item.idx" xs6 md3 lg2>
+              <v-card>
+                <v-card-media :src="'https://idc.brandsafer.com'+item.image" height="150px"></v-card-media>
+                <v-card-actions class="cert">
+                  <v-btn flat color="orange">{{item.result}}</v-btn>
+                </v-card-actions>
+                <v-card-title class="cert-date">
+                  <span>{{item.dtCertificate}}</span>
+                </v-card-title>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
+        <p v-if="results.length == 0" class="no-result">조회된 결과가 없습니다.</p>
+      </div>
+      <v-layout d-flex justify-end class="bottom-side">
+        <v-flex d-flex align-center>
+          <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
+        </v-flex>
+        <v-flex d-flex align-center >
+          <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
+          <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
+        </v-flex>
+      </v-layout>
+    </v-app>
   </div>
 </template>
 
 <script>
+import Constant from "../../constant.js";
+
 export default {
   data() {
     return {
+      pushToken: "",
+      state: {},
+      results: [],
+      total: "",
       markers: [
-        {position: {
-          lat: 37, 
-          lng: 127
+        {
+          position: {
+            lat: 37,
+            lng: 127
           }
         },
-        {position: {
-          lat: 30, 
-          lng: 127
+        {
+          position: {
+            lat: 30,
+            lng: 127
           }
         },
-        {position: {
-          lat: 34, 
-          lng: 127
+        {
+          position: {
+            lat: 34,
+            lng: 127
           }
         },
-        {position: {
-          lat: 40, 
-          lng: 127
+        {
+          position: {
+            lat: 40,
+            lng: 127
           }
         },
-        {position: {
-          lat: 37, 
-          lng: 126.5
+        {
+          position: {
+            lat: 37,
+            lng: 126.5
           }
         },
-        {position: {
-          lat: 37, 
-          lng: 126
+        {
+          position: {
+            lat: 37,
+            lng: 126
           }
         },
-        {position: {
-          lat: 37, 
-          lng: 125.5
+        {
+          position: {
+            lat: 37,
+            lng: 125.5
           }
         },
-        {position: {
-          lat: 37, 
-          lng: 125
+        {
+          position: {
+            lat: 37,
+            lng: 125
           }
         },
-        {position: {
-          lat: 37, 
-          lng: 124.5
+        {
+          position: {
+            lat: 37,
+            lng: 124.5
           }
         },
-        {position: {
-          lat: 37, 
-          lng: 124
+        {
+          position: {
+            lat: 37,
+            lng: 124
           }
         },
-        {position: {
-          lat: 37, 
-          lng: 123.5
+        {
+          position: {
+            lat: 37,
+            lng: 123.5
           }
         },
-        {position: {
-          lat: 37, 
-          lng: 123
+        {
+          position: {
+            lat: 37,
+            lng: 123
           }
         }
-      ]
+      ],
+
+      submitData: {
+        pushToken: ""
+      }
+    };
+  },
+  methods: {
+    getDatas() {
+      console.log("typeof this.pushToken :", this.pushToken);
+      this.$store
+        .dispatch(Constant.FETCH_PUSH_TOKEN, this.pushToken)
+        .then(resp => {
+          this.results = resp.data.app;
+          this.getState();
+        });
+    },
+    getState() {
+      this.state = {
+        appName: this.results[0].appname,
+        dtRegistered: this.results[0].dtRegistered,
+        firstDtCertificate: this.results[0].dtCertificate,
+        lastDtCertificate: this.results[this.results.length - 1].dtCertificate,
+        blackListState: "",
+        osType: this.results[0].osType,
+        model: this.results[0].model,
+        language: this.results[0].language,
+        certificate: {},
+        report: ""
+      };
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 @import "../../scss/table";
 @import "../../scss/modal";
+tbody {
+  background-color: #fdfdfd;
+}
+.search-label {
+  color: #646464;
+  display: inline-block;
+}
+.search-field {
+  margin: 0 0 0 10px;
+}
+.search-btn {
+  margin: 0;
+}
+.card-list {
+  margin-top: 20px !important;
+  padding: 20px;
+  padding-bottom: 20px !important;
+}
+.bottom-side {
+  width: 100%;
+  max-height: 100px;
+  overflow: hidden;
+}
+.bottom-total {
+  margin-top: 0 !important;
+  height: 20px;
+}
+.no-result {
+  border: 1px solid #e6e6e6;
+  background-color: #f9f9f9;
+  color: #ff812d;
+  padding: 10px;
+  margin-bottom: 0;
+}
 </style>
