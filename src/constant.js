@@ -25,7 +25,7 @@ export default {
   UPDATE_APP_LELEASE: "updateAppLelease",
   DELETE_APP_LELEASE: "deleteAppLelease",
 
-  FETCH_APP: "fectchApp",
+  FETCH_PUSH_TOKEN: "fetchPushToken",
 
   /* ========= Admin ========= */
   FETCH_COMPANY: "fetchCompany",

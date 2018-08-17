@@ -70,7 +70,7 @@
             <td class="text-xs-left">{{ props.item.role_name }}</td>
             <td class="text-xs-left">{{ props.item.id }}</td>
             <td class="text-xs-left">{{ props.item.name }}</td>
-            <td class="text-xs-left">{{ props.item.resultCode }}</td>
+            <td class="text-xs-left">{{ props.item.msg_kr }}</td>
             <td class="text-xs-left">{{ props.item.remoteAddr }}</td>
           </tr>
         </template>

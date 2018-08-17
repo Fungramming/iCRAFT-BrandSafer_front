@@ -67,6 +67,10 @@ export default {
   async [Constant.DELETE_APP_LELEASE](store, payload) {
     return promise(BSAPI.deleteAppLelease, payload, store, null);
   },
+  async [Constant.FETCH_PUSH_TOKEN](store, payload) {
+    return promise(BSAPI.fetchPushToken, payload, store, null);
+  },
+
   //Admin
   async [Constant.FETCH_COMPANY](store, payload) {
     return promise(BSAPI.fetchCompany, payload, store, null);

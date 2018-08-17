@@ -68,14 +68,11 @@ export default new Router({
       name: "certMap",
       component: ProductCertMap
     },
-    // {
-    //   path: "/appv",
-    //   name: "appv",
-    //   component: Appv,
-    //   children: [
-        
-    //   ]
-    // },
+    {
+      path: "/appv",
+      name: "appv",
+      component: AppReleaseInfo
+    },
     {
       path: "/appv/releaseInfo",
       name: "releaseInfo",

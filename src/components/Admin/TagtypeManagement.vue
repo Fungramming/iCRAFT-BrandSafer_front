@@ -3,14 +3,14 @@
     <!-- table wrap -->
     <v-app class="inspire">
       <v-card-title>
-      <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="search"
-        label="검색어"
-        single-line
-        hide-details
-      ></v-text-field>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="search"
+          label="검색어"
+          single-line
+          hide-details
+        ></v-text-field>
       </v-card-title>
 
       <v-data-table

@@ -689,19 +689,6 @@ export default {
         modalText: "삭제 되었습니다."
       });
     },
-    // getTotal() {
-    //   let update_total = this.$children[0].$children[1].searchLength;
-    //   console.log("update_total :", update_total);
-    //   this.total = update_total;
-
-    //   // 1
-    //   let pageNum = this.$children[0].$children[3].value - 1;
-    //   // let pageActiveText = this.$children[0].$children[4].value;
-    //   // 10
-    //   let pageActiveText = this.$children[0].$children[1].$children[0].value;
-    //   let calPage = pageNum * pageActiveText;
-    //   this.total_index = calPage;
-    // },
     showModal() {
       this.$modal.show("customer");
     },
