@@ -1,4 +1,3 @@
-import "@fortawesome/fontawesome-free/css/all.css";
 import Vue from "vue";
 import App from "./App.vue";
 import ES6Promise from "es6-promise";
@@ -13,12 +12,7 @@ import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 import "vuetify/dist/vuetify.min.js";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
-Vue.use(Vuetify, {
-    iconfont: "fa",
-    icons: {
-        "map-marker": "fas fa-map-marker-alt"
-    }
-});
+Vue.use(Vuetify);
 
 // CALENDAR
 import DatePicker from "vue2-datepicker";
