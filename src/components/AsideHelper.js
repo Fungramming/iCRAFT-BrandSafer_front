@@ -31,7 +31,6 @@ export function activingFunc(e) {
   let subTabTitle =
     e.toElement.parentNode.parentNode.parentNode.parentNode.className;
   let tab = document.getElementsByClassName("tab")[0];
-  let subTab = document.getElementsByClassName("sub-tab")[0];
   let subSubTab = document.getElementsByClassName("sub-sub-tab")[0];
   let activedTab = document.querySelector(".expandable.active");
   let activedList = function(target) {
@@ -66,6 +65,8 @@ export function activingFunc(e) {
 export function redirectTabFunc(_this) {
   let routeUrl = _this.$route.name;
   let tabList = document.getElementsByClassName("tab-btn");
+  let actived = document.getElementsByClassName("active");
+
   for (let item in tabList) {
     let tabUrl = tabList[item].name;
     if (routeUrl == tabUrl) {

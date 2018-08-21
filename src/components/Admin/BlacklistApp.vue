@@ -124,7 +124,7 @@
 <script>
 import Constant from "../../constant.js";
 import { getTotal, dateFormat } from "../CompHelper.js";
-
+import { redirectTabFunc } from "../AsideHelper";
 export default {
   data() {
     return {
@@ -243,6 +243,7 @@ export default {
       let _this = this;
       function test() {
         _this.$router.push({ name: "lookup" });
+        redirectTabFunc(_this);
         return _this.$store.commit(Constant.PUSH_APP, _this.selected[0]);
       }
       setTimeout(test, 10);

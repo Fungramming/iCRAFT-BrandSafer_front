@@ -34,6 +34,9 @@ export default {
   },
   mounted() {
     this.$store.state.date = formatDate();
+  },
+  updated() {
+    this.$store.state.urlName = this.$route.name;
   }
 };
 </script>
