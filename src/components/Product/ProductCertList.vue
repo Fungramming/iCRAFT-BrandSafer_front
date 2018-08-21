@@ -6,17 +6,17 @@
       <v-layout row wrap>
         <v-flex d-flex xs6 md3 lg2>
           <span class="span-without-selectbox">기간조회</span>
-          <date-picker v-model="query.date_start" :lang="lang"></date-picker>
+          <date-picker v-model="start_date" :lang="lang"></date-picker>
         </v-flex>
         <v-flex d-flex xs6 md3 lg2>
-          <date-picker v-model="query.date_finish" :lang="lang"></date-picker>
+          <date-picker v-model="end_date" :lang="lang"></date-picker>
         </v-flex>
         <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox selectbox-with-date selectbox-top">
             <span>고객사</span>
             <select id="select1" name="searchType" v-model="query.company" class="form-control" size="1">
               <option value="all" selected>전체</option>
-              <option v-for="company in companys" :key="company.code" :value="company.name_en">{{company.name_kr}}</option>
+              <option v-for="company in companys" :key="company.code" :value="company.code">{{company.name_kr}}</option>
             </select>
           </div>
         </v-flex>
@@ -49,7 +49,7 @@
         </v-flex>
       </v-layout>
       <div class="search-wrapper">
-        <v-btn color="primary" @click.stop="getDatas()">검색</v-btn>
+        <v-btn color="primary" @click.stop="searchQuery()">검색</v-btn>
       </div>
     </div>
     <!-- table wrap -->
@@ -71,7 +71,7 @@
         :pagination.sync="pagination"
         item-key="number"
         hide-actions
-        class="elevation-1"
+        class="elevation-1 table"
       >
         <template slot="headerCell" slot-scope="props">
           <span slot="activator" class="item-headers">
@@ -79,21 +79,25 @@
           </span>
         </template>
         <template slot="items" slot-scope="props">
-          <td class="text-xs-center">{{ props.index + 1 }}</td>
+          <td class="text-xs-center">{{ pagination.total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
           <td class="text-xs-center">{{ props.item.company_name }}</td>
-          <td class="text-xs-center">{{ props.item.tagType }}</td>
+          <td class="text-xs-center">{{ tagToKor(props.item.tagType) }}</td>
           <td class="text-xs-center">
-            <img :src="prodImage(props.item.image)" alt="image" width="60">
+            <img :src="checkImage(props.item.image, props.item.tagType)" alt="image" height="120">
           </td>
           <td class="text-xs-center">{{ props.item.tag_name }}</td>
           <td class="text-xs-center">{{ props.item.osType }}</td>
           <td class="text-xs-center">{{ props.item.randomCnt }}</td>
           <td class="text-xs-center">{{ props.item.distributor }}</td>
-          <td class="text-xs-center">{{ props.item.dtCertificate }}</td>
-          <td class="text-xs-center">{{ props.item.result }}</td>
+          <td class="text-xs-center">{{ dateFormat(props.item.dtCertificate) }}</td>
+          <td class="text-xs-center">
+            <v-chip :color="badgeColor(props.item.result)" :dark="true" :small="true" text-color="white">
+              {{ certToKor(props.item.result) }}
+            </v-chip>
+          </td>
           <td class="text-xs-center">
             <v-btn icon @click.native="showSpotModal">
-              <v-icon v-text="'$vuetify.icons.map-marker'"></v-icon>
+              <v-icon>location_on</v-icon>
             </v-btn>
           </td>
         </template>
@@ -101,7 +105,7 @@
       <div class="v-datatable__actions">
         <span>per page :</span>
         <div class="v-datatable__actions__select">          
-          <select v-model="pagination.rowsPerPage">
+          <select v-model="pagination.rowsPerPage" @change.stop="firstPageData()">
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="25">25</option>
@@ -112,7 +116,7 @@
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{pagination.total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages" :total-visible="6" @input="getDatas()"></v-pagination>
+          <v-pagination v-model="pagination.page" :length="pages" :total-visible="6" @input.stop="getDatas()"></v-pagination>
         </div>
       </div>
 
@@ -168,12 +172,14 @@ import Constant from "../../constant.js";
 
 export default {
   updated() {
-    this.query.date_start = this.$children[0].text;
-    this.query.date_finish = this.$children[1].text;
+    this.start_date = this.$children[0].text;
+    this.end_date = this.$children[1].text;
   },
 
   mounted() {
     this.dateSet()
+    this.query.date_start = this.start_date;
+    this.query.date_finish = this.end_date;
     this.getDatas()
     this.getCompanys()
     // this.getTagTypes()
@@ -181,6 +187,8 @@ export default {
 
   data() {
     return {
+      start_date: '',
+      end_date: '',
       query: {
         company: 'all',
         tag_type: 'all',
@@ -344,12 +352,11 @@ export default {
           lat: 35,
           lng: 118
         },
-        images: ['https://idc.brandsafer.com/bsrdif/images/cert_sqr/2018/07/01/_SQR_0_a2b22361-d374-45bf-b5ea-153c095c6cb5.png',
-        'https://idc.brandsafer.com/bsrdif/images/cert_sqr/2018/07/01/_SQR_0_a2b22361-d374-45bf-b5ea-153c095c6cb5.jpeg'],
-        prod: 'abc',
-        cert: 'good',
-        date: '2018-08-12',
-        push_token: 'afgafgdjgal;-dfgjaklghjrio;au49032rlkg4380tjsal;'
+        images: [],
+        prod: '',
+        cert: '',
+        date: '',
+        push_token: ''
       }
     };
   },
@@ -388,6 +395,17 @@ export default {
       return 'https://idc.brandsafer.com' + src
     },
 
+    checkImage(src, tag) {
+      let imgSrc = src;
+      if (tag === 'SQRTAG') {
+        imgSrc = this.prodImage(imgSrc);
+      } else {
+        imgSrc = this.sqrImage(imgSrc);
+      }
+
+      return imgSrc
+    },
+
     getCompanys() {
       this.$store.dispatch(Constant.FETCH_COMPANY)
       .then(resp => 
@@ -422,24 +440,70 @@ export default {
         this_month = "0" + this_month;
       }
 
-      this.query.date_start = this_year + "-" + this_month + "-" + yesterday_date;
-      this.query.date_finish = this_year + "-" + this_month + "-" + today_date;
+      this.start_date = this_year + "-" + this_month + "-" + yesterday_date;
+      this.end_date = this_year + "-" + this_month + "-" + today_date;
     },
     showSpotModal(e) {
       this.$modal.show("spot");
       let index = e.target.parentNode.parentNode.parentNode.parentNode["sectionRowIndex"];
-      let {image: image, tag_name: prod, result: cert, dtCertificate: date, deviceID: push_token, latitude: lat, longitude: lng } 
+      let {image: image, tagType: tag, tag_name: prod, result: cert, dtCertificate: date, deviceID: push_token, latitude: lat, longitude: lng } 
         = this.$children[3].$children[0].filteredItems[index];
       
       this.modal_data.prod = prod || '-';
-      this.modal_data.cert = cert;
-      this.modal_data.date = date;
+      this.modal_data.cert = this.certToKor(cert);
+      this.modal_data.date = this.dateFormat(date);
       this.modal_data.push_token = push_token;
       // lat, lng 서버에서 정보를 주면 작업 시작
       let images = new Array();
       images.push(this.sqrImage(image));
-      images.push(this.prodImage(image));
+      if (tag === 'SQRTAG') {
+        images.push(this.prodImage(image));
+      }
       this.modal_data.images = images;
+    },
+
+    tagToKor(tag_en) {
+      let tags = new Map();
+      tags.set('HOLOTAG_ONLY', '홀로태그'); tags.set('HYBRIDTAG', '하이브리드태그');
+      tags.set('RANDOMTAG', '난수태그'); tags.set('SQRTAG', 'SQR태그');
+
+      return tags.get(tag_en) || tag_en
+    },
+
+    certToKor(cert_en) {
+      let certs = new Map();
+      certs.set('Genuine', '정품'); certs.set('Counterfeit', '가품'); certs.set('Revalidation', '재인증'); certs.set('Exprired', '기간만료');
+      certs.set('Invalid', '무효한코드'); certs.set('Retry', '재촬영'); certs.set('OverCert', '인증초과'); certs.set('DifferentQR', '이용안내QR');
+      certs.set('CommonQR', '일반QR'); certs.set('NotiOverCert', '과다인증알림');
+
+      return certs.get(cert_en) || cert_en
+    },
+
+    dateFormat(date_str) {
+      let date = new Date(date_str);
+      return date.toLocaleString();
+    },
+
+    badgeColor(cert) {
+      let colors = new Map();
+      colors.set('Genuine', 'green'); colors.set('Counterfeit', 'red'); colors.set('Revalidation', 'yellow');
+      colors.set('Exprired', 'yellow'); colors.set('Invalid', 'blue'); colors.set('Retry', 'yellow');
+      colors.set('OverCert', 'primary'); colors.set('DifferentQR', 'secondary'); colors.set('CommonQR', 'pink');
+      colors.set('NotiOverCert', 'purple');
+
+      return colors.get(cert)
+    },
+
+    searchQuery() {
+      this.pagination.page = 1;
+      this.query.date_start = this.start_date;
+      this.query.date_finish = this.end_date;
+      this.getDatas();
+    },
+
+    firstPageData() {
+      this.pagination.page = 1;
+      this.getDatas();
     }
   }
 };
