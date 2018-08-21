@@ -89,10 +89,10 @@ a {
   left: 0;
 }
 .contents {
-  height: 100%;
   padding-left: 250px;
   padding-right: 20px;
   padding-top: 85px;
+  padding-bottom: 30px;
   @media #{$phone} {
     padding-left: 10px;
     padding-right: 10px;

@@ -22,7 +22,6 @@ export default {
     state.isLoading = isLoading;
   },
   [Constant.SHOW_MODAL]: (state, payload) => {
-    console.log("payload :", payload);
     state.isModal = payload.isModal;
     state.modalText = payload.modalText;
   },
@@ -36,7 +35,6 @@ export default {
     state.monthlyStatus = payload;
   },
   [Constant.PUSH_APP]: (state, payload) => {
-    console.log("payload :", payload);
     state.PUSH_APP = payload;
   }
 };

@@ -26,13 +26,13 @@
         <template slot="headers" slot-scope="props">
           <tr>
             <th>
-              <v-checkbox
+              <!-- <v-checkbox
                 :input-value="props.all"
                 :indeterminate="props.indeterminate"
                 primary
                 hide-details
                 @click.native="toggleAll"
-              ></v-checkbox>
+              ></v-checkbox> -->
             </th>
             <th
               v-for="header in props.headers"
