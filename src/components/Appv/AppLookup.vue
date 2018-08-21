@@ -134,6 +134,10 @@ import { dateFormat } from "../CompHelper.js";
 export default {
   data() {
     return {
+      pagination: {
+        page: 1,
+        rowsPerPage: 10
+      },
       pushToken: this.$store.state.pushToken,
       state: {},
       results: [],
@@ -219,9 +223,8 @@ export default {
     };
   },
   mounted() {
-    console.log("this.$store.state.pushToken :", this.$store.state.pushToken);
     if (this.pushToken) {
-      console.log("this.pushToken :", this.pushToken);
+      this.getDatas();
     }
   },
   methods: {
@@ -276,13 +279,15 @@ export default {
         return "N";
       } else if (type == "C") {
         return "C";
+      } else if (type == "O") {
+        return "O";
       }
     },
     editBlacklist() {
       let blType = this.state.blackListState;
       if (blType == null) {
         this.$store.dispatch(Constant.ADD_BLACKLIST).then(() => {});
-      } else if (blType == "C") {
+      } else if (blType == "C" || blType == "O") {
         this.$store.dispatch(Constant.UPDA).then(() => {});
       }
     }
@@ -307,7 +312,7 @@ tbody {
   margin: 0;
 }
 .card-list {
-  margin-top: 20px !important;
+  margin-top: 0px !important;
   padding: 20px;
   padding-bottom: 20px !important;
 }
