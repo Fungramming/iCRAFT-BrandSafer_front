@@ -36,5 +36,7 @@ export default {
   },
   [Constant.PUSH_APP]: (state, payload) => {
     state.PUSH_APP = payload;
+    console.log("payload :", payload);
+    console.log("state.PUSH_APP.pushToken :", state.PUSH_APP.pushToken);
   }
 };

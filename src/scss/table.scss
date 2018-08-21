@@ -254,8 +254,13 @@ $tablet: "(min-width: 601px) and (max-width: 959px)";
             }
         }
         .bottom-contents-wrap {
-            .text-xs-center {
-                margin-bottom: 50px;
+            .v-pagination {
+              @media #{$phone} {
+                margin: 15px;
+              }
+              @media #{$tablet} {
+                margin: 15px;
+              }
             }
             button {
                 border-radius: 5px;
