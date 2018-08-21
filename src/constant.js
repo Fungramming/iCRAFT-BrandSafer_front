@@ -123,5 +123,5 @@ export default {
   MODAL_SIZE: "80%",
   MODAL_SIZE_HEIGHT: "95%",
 
-  PUSH_APP: "pushApp"
+  PUSH_APP: "pushToken"
 };

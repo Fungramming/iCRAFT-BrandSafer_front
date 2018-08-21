@@ -26,13 +26,13 @@
         <template slot="headers" slot-scope="props">
           <tr>
             <th>
-              <v-checkbox
+              <!-- <v-checkbox
                 :input-value="props.all"
                 :indeterminate="props.indeterminate"
                 primary
                 hide-details
                 @click.native="toggleAll"
-              ></v-checkbox>
+              ></v-checkbox> -->
             </th>
             <th
               v-for="header in props.headers"
@@ -471,7 +471,6 @@ export default {
         this.$store
           .dispatch(Constant.ADD_APP_LELEASE, this.submitData)
           .then(() => {
-            console.log("this.submitData :", this.submitData);
             this.getDatas();
             this.closeModal();
             this.$store.commit(Constant.SHOW_MODAL, {
@@ -487,8 +486,6 @@ export default {
     updateDatas({ idx, app }) {
       idx = this.updateData.idx;
       app = this.updateData;
-      console.log("idx :", idx);
-      console.log("app :", app);
       this.$store
         .dispatch(Constant.UPDATE_APP_LELEASE, {
           aid: idx,

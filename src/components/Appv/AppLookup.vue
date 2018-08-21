@@ -9,6 +9,7 @@
         class="search-field"
         label="푸시토큰"
         hide-details
+        @keydown.enter="getDatas"
       ></v-text-field>
       <div class="search-btn" @click="getDatas">
         <v-icon>search</v-icon>
@@ -52,7 +53,7 @@
               <td class="table-cell" rowspan="2">{{state.dtRegistered}}</td>
               <td class="table-cell" height="45">최초</td>
               <td class="table-cell">{{state.firstDtCertificate}}</td>
-              <td class="table-cell" rowspan="2">블랙관리</td>
+              <td class="table-cell" rowspan="2">{{prodBlType(state.blackListState)}}/N</td>
               <td class="table-cell" rowspan="2">{{state.osType}}</td>
               <td class="table-cell" rowspan="2">{{state.model}}</td>
               <td class="table-cell" rowspan="2">{{state.language}}</td>
@@ -62,17 +63,17 @@
               <td class="table-cell">초과</td>
               <td class="table-cell">이용</td>
               <td class="table-cell">일반</td>
-              <td class="table-cell" rowspan="2">제보</td>
+              <td class="table-cell" rowspan="2">{{state.count_cert.Report}}</td>
             </tr>
             <tr>
               <td class="table-cell" height="45">마지막</td>
               <td class="table-cell">{{state.lastDtCertificate}}</td>
-              <td class="table-cell">정품</td>
-              <td class="table-cell">가품</td>
-              <td class="table-cell">재인증</td>
-              <td class="table-cell">초과</td>
-              <td class="table-cell">이용</td>
-              <td class="table-cell">일반</td>
+              <td class="table-cell">{{state.count_cert.Genuine}}</td>
+              <td class="table-cell">{{state.count_cert.Counterfeit}}</td>
+              <td class="table-cell">{{state.count_cert.Revalidation}}</td>
+              <td class="table-cell">{{state.count_cert.OverCert}}</td>
+              <td class="table-cell">{{state.count_cert.Genuine}}</td>
+              <td class="table-cell">{{state.count_cert.Genuine}}</td>
             </tr>
           </tbody>
         </table>
@@ -100,7 +101,7 @@
           <v-layout row wrap>
             <v-flex v-for="item in results" :key="item.idx" xs6 md3 lg2>
               <v-card>
-                <v-card-media :src="'https://idc.brandsafer.com'+item.image" height="150px"></v-card-media>
+                <v-card-media :src="prodImage(item.image)" height="150px"></v-card-media>
                 <v-card-actions class="cert">
                   <v-btn flat color="orange">{{item.result}}</v-btn>
                 </v-card-actions>
@@ -118,8 +119,8 @@
           <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
         </v-flex>
         <v-flex d-flex align-center >
-          <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
-          <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
+          <v-btn color="red lighten-1" dark @click.stop="deleteDatas">블랙리스트-과다인증 등록</v-btn>
+          <v-btn color="red lighten-1" dark @click.stop="showModal">블랙리스트-가품제조 등록</v-btn>
         </v-flex>
       </v-layout>
     </v-app>
@@ -128,11 +129,12 @@
 
 <script>
 import Constant from "../../constant.js";
+import { dateFormat } from "../CompHelper.js";
 
 export default {
   data() {
     return {
-      pushToken: "",
+      pushToken: this.$store.state.pushToken,
       state: {},
       results: [],
       total: "",
@@ -216,29 +218,73 @@ export default {
       }
     };
   },
+  mounted() {
+    console.log("this.$store.state.pushToken :", this.$store.state.pushToken);
+    if (this.pushToken) {
+      console.log("this.pushToken :", this.pushToken);
+    }
+  },
   methods: {
     getDatas() {
-      console.log("typeof this.pushToken :", this.pushToken);
       this.$store
         .dispatch(Constant.FETCH_PUSH_TOKEN, this.pushToken)
         .then(resp => {
+          this.total = resp.data.total;
           this.results = resp.data.app;
-          this.getState();
+
+          dateFormat(this.results, "dtCertificate");
+          dateFormat(this.results, "dtRegistered");
+          this.getState(resp);
+          this.defineResult();
         });
     },
-    getState() {
+    getState(resp) {
       this.state = {
         appName: this.results[0].appname,
         dtRegistered: this.results[0].dtRegistered,
         firstDtCertificate: this.results[0].dtCertificate,
         lastDtCertificate: this.results[this.results.length - 1].dtCertificate,
-        blackListState: "",
+        blackListState: this.results[0].dlType,
         osType: this.results[0].osType,
         model: this.results[0].model,
         language: this.results[0].language,
-        certificate: {},
-        report: ""
+        count_cert: resp.data.count_cert
       };
+    },
+    defineResult() {
+      for (let item in this.results) {
+        let result = this.results[item].result;
+        if (result == "Genuine") {
+          this.results[item].result = "진품";
+        } else if (result == "Counterfeit") {
+          this.results[item].result = "가품";
+        } else if (result == "CommonQR") {
+          this.results[item].result = "일반 QR";
+        } else if (result == "Revalidation") {
+          this.results[item].result = "재입증";
+        } else if (result == "OverCert") {
+          this.results[item].result = "인증초과";
+        }
+      }
+    },
+    prodImage(src) {
+      let imgSrc = src.replace(".png", ".jpeg");
+      return "https://idc.brandsafer.com" + imgSrc;
+    },
+    prodBlType(type) {
+      if (type == null) {
+        return "N";
+      } else if (type == "C") {
+        return "C";
+      }
+    },
+    editBlacklist() {
+      let blType = this.state.blackListState;
+      if (blType == null) {
+        this.$store.dispatch(Constant.ADD_BLACKLIST).then(() => {});
+      } else if (blType == "C") {
+        this.$store.dispatch(Constant.UPDA).then(() => {});
+      }
     }
   }
 };
@@ -280,5 +326,8 @@ tbody {
   color: #ff812d;
   padding: 10px;
   margin-bottom: 0;
+}
+.v-card__title {
+  padding: 5px;
 }
 </style>

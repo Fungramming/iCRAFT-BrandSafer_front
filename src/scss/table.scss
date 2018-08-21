@@ -248,18 +248,25 @@ $tablet: "(min-width: 601px) and (max-width: 959px)";
         // 페이지네이션, 삭제, 등록 버튼 wrap
         .bottom-total {
             text-align: left;
-            margin-top: -40px;
             &-result {
                 font-weight: 600;
                 color: blue;
             }
         }
         .bottom-contents-wrap {
-            .text-xs-center {
-                margin-bottom: 50px;
+            .v-pagination {
+              @media #{$phone} {
+                margin: 15px;
+              }
+              @media #{$tablet} {
+                margin: 15px;
+              }
             }
             button {
                 border-radius: 5px;
+            }
+            button + button {
+              margin-left: 10px;
             }
         }
         .v-card__title {

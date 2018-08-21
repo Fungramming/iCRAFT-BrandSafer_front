@@ -78,19 +78,18 @@
         </div>
       </div>
 
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
-          <!-- <v-flex d-flex xs12 sm12 md1 offset-md10>
-            <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
-          </v-flex> -->
-          <v-flex d-flex xs12 sm12 md1 offset-md11>
+          <v-flex d-flex align-center xs12 md2>
+            <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
+          </v-flex>
+          <v-flex d-flex align-center justify-center xs12 md8>
+            <v-pagination v-model="pagination.page" :length="pages" :total-visible="7" class="justify-center"></v-pagination>
+          </v-flex>
+          <v-flex d-flex align-center xs12 md2>
             <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
           </v-flex>
         </v-layout>
-        <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages" :total-visible="7"></v-pagination>
-        </div>
       </div>
     </v-app>
 
@@ -551,31 +550,31 @@ export default {
       // update
       updateIndex: "",
       updateData: {
-        addr_en: "jeon123",
-        addr_kr: "jeon123",
-        addr_zh: "jeon123",
+        addr_en: "",
+        addr_kr: "",
+        addr_zh: "",
         businessRegistrationUrl: "",
         ci: "",
-        delegator_en: "Kang",
-        delegator_kr: "wd",
-        delegator_zh: "Kang",
+        delegator_en: "",
+        delegator_kr: "",
+        delegator_zh: "",
         description_en: "",
         description_kr: "",
         description_zh: "",
-        dtModified: "2018-03-03 14:00:00",
-        dtRegistered: "2018-03-03 14:00:00",
-        fax: "02-0000-0000",
-        modifier: "ibjung",
-        name_en: "Blackyak",
-        name_kr: "abc123",
-        name_zh: "Blackyak",
-        note: "123",
-        registrant: "ibjung",
-        registrationNumber: "111111111",
-        state: "Registered",
-        telephone: "8888888888",
+        dtModified: this.$store.state.submitTime,
+        dtRegistered: this.$store.state.submitTime,
+        fax: "",
+        modifier: "",
+        name_en: "",
+        name_kr: "",
+        name_zh: "",
+        note: "",
+        registrant: "",
+        registrationNumber: "",
+        state: "",
+        telephone: "",
         tntLogoImgUrl: null,
-        url: "www.youtube.com"
+        url: ""
       }
     };
   },
@@ -704,8 +703,7 @@ export default {
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
 
       // this.updateData.code = e.path[2].children[3].innerText;
-      this.updateData.name_kr = e.path[2].children[2].innerText;
-      this.selected_name_kr = e.path[2].children[2].innerText;
+      // this.updateData.name_kr = e.path[2].children[2].innerText;
       this.updateData.code = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].code;
@@ -719,7 +717,10 @@ export default {
         this.selected_index
       ].name_zh;
 
-      this.updateData.addr_kr = e.path[2].children[4].innerText;
+      // this.updateData.addr_kr = e.path[2].children[4].innerText;
+      this.updateData.addr_kr = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].addr_kr;
       this.updateData.addr_en = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].addr_en;
@@ -727,13 +728,9 @@ export default {
         this.selected_index
       ].addr_zh;
 
-      this.updateData.delegator_kr = e.path[2].children[5].innerText;
-
-      this.updateData.telephone = e.path[2].children[6].innerText;
-      // let telephone = this.selected_telephone.split("-");
-      // this.selected_telephone_1 = telephone[1];
-      // this.selected_telephone_2 = telephone[2];
-
+      this.updateData.telephone = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].telephone;
       this.updateData.fax = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].fax;
@@ -749,9 +746,9 @@ export default {
       this.updateData.registrant = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].registrant;
-      // let fax = this.selected_fax.split("-");
-      // this.selected_fax_1 = fax[1];
-      // this.selected_fax_2 = fax[2];
+      this.updateData.state = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].state;
 
       this.updateData.description_kr = this.customers[
         this.selected_index

@@ -19,13 +19,13 @@
         :search="search"
         :pagination.sync="pagination"
         v-model="selected"
-        item-key="idx"
+        item-key="pushToken"
         select-all
         class="elevation-1"
       >
         <template slot="headers" slot-scope="props">
           <tr>
-            <th>
+            <!-- <th>
               <v-checkbox
                 :input-value="props.all"
                 :indeterminate="props.indeterminate"
@@ -33,7 +33,7 @@
                 hide-details
                 @click.native="toggleAll"
               ></v-checkbox>
-            </th>
+            </th> -->
             <th
               v-for="header in props.headers"
               :key="header.text"
@@ -75,19 +75,19 @@
           </select>
         </div>
       </div>
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
-          <v-flex d-flex xs12 sm12 md1 offset-md10>
-            <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
+          <v-flex d-flex align-center xs12 md2>
+            <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
           </v-flex>
-          <v-flex d-flex xs12 sm12 md1>
+          <v-flex d-flex align-center justify-center xs12 md8>
+            <v-pagination v-model="pagination.page" :length="pages" :total-visible="7" class="justify-center"></v-pagination>
+          </v-flex>
+          <v-flex d-flex align-center xs12 md2>
+            <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
             <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
           </v-flex>
         </v-layout>
-        <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages" :total-visible="7"></v-pagination>
-        </div>
       </div>
     </v-app>
 
@@ -123,7 +123,7 @@
 
 <script>
 import Constant from "../../constant.js";
-import { getTotal } from "../CompHelper.js";
+import { getTotal, dateFormat } from "../CompHelper.js";
 
 export default {
   data() {
@@ -138,12 +138,13 @@ export default {
       total_index: "",
       selected: [],
       headers: [
+        { text: "선택", align: "left", value: "select", sortable: false },
         { text: "번호", align: "left", value: "idx", sortable: false },
-        { text: "App명", align: "left", value: "app", sortable: false },
+        { text: "App명", align: "left", value: "appName", sortable: false },
         {
           text: "제품 타입",
           align: "left",
-          value: "blType",
+          value: "tagType",
           sortable: false
         },
         {
@@ -152,7 +153,7 @@ export default {
           value: "pushToken",
           sortable: false
         },
-        { text: "유형", align: "left", value: "delYN", sortable: false },
+        { text: "유형", align: "left", value: "blType", sortable: false },
         {
           text: "등록일",
           align: "left",
@@ -192,19 +193,10 @@ export default {
       this.$store.dispatch(Constant.FETCH_BLACKLIST).then(resp => {
         this.blacklists = resp.data.blacklists.reverse();
         this.total = this.blacklists.length;
-        this.dateFormat();
+        // this.dateFormat();
+        dateFormat(this.blacklists, "dtRegistered");
+        dateFormat(this.blacklists, "dtModified");
       });
-    },
-    dateFormat() {
-      let blacklists = this.blacklists;
-      for (let item in blacklists) {
-        let date = new Date(blacklists[item].dtRegistered);
-        let date_2 = new Date(blacklists[item].dtModified);
-        let formatDate = date.toLocaleDateString();
-        let formatDate_2 = date_2.toLocaleDateString();
-        blacklists[item].dtRegistered = formatDate;
-        blacklists[item].dtModified = formatDate_2;
-      }
     },
     addDatas() {
       this.$store

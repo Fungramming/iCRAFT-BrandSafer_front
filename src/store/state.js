@@ -15,7 +15,8 @@ export default {
   monthlyStatus: {},
 
   //PushApp
-  pushApp: "",
+  pushToken: "",
+  //blackList
 
   // AlertModal
   isModal: false,
