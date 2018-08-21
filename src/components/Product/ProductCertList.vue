@@ -54,7 +54,7 @@
     </div>
     <!-- table wrap -->
     <v-app class="inspire">
-      <v-card-title>
+      <!-- <v-card-title>
         <v-spacer></v-spacer>
         <v-text-field
           v-model="query.search"
@@ -63,7 +63,7 @@
           single-line
           hide-details
         ></v-text-field>
-      </v-card-title>
+      </v-card-title> -->
       <v-data-table
         :headers="headers"
         :items="desserts"
@@ -91,7 +91,11 @@
           <td class="text-xs-center">{{ props.item.distributor }}</td>
           <td class="text-xs-center">{{ props.item.dtCertificate }}</td>
           <td class="text-xs-center">{{ props.item.result }}</td>
-          <td class="text-xs-center">{{ props.item.location }}</td>
+          <td class="text-xs-center">
+            <v-btn icon @click.native="showSpotModal">
+              <v-icon v-text="'$vuetify.icons.map-marker'"></v-icon>
+            </v-btn>
+          </td>
         </template>
       </v-data-table>
       <div class="v-datatable__actions">
@@ -111,12 +115,56 @@
           <v-pagination v-model="pagination.page" :length="pages" :total-visible="6" @input="getDatas()"></v-pagination>
         </div>
       </div>
+
+      <!-- spot modal -->
+      <v-flex d-flex xs12 sm12 md12>
+        <modal :width="modal_size" :height="modal_size_height" name="spot" transition="pop-out">
+          <v-card tile>
+            <v-toolbar card dark color="primary">
+              <v-toolbar-title>위치 정보</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-btn icon dark @click.native="closeSpotModal">
+                <v-icon>close</v-icon>
+              </v-btn>
+            </v-toolbar>
+            <GmapMap
+              :center="modal_data.location"
+              :zoom="5"
+              map-type-id="roadmap"
+              style="height: 350px; width: 100%;"
+            >
+              <GmapMarker
+                :position="modal_data.location"
+                :clickable="true"
+                :draggable="false"
+                @click="center=modal_data.location"
+              />
+            </GmapMap>
+            <div class="spot-content-wrapper">
+              <div class="spot-content">
+                <img v-for="image in modal_data.images" :key="image" :src="image" alt="image">
+                <ul>
+                  <li><span>제품명:</span> {{modal_data.prod}}</li>
+                  <li><span>인증결과:</span> {{modal_data.cert}}</li>
+                  <li><span>인증일시:</span> {{modal_data.date}}</li>
+                  <li><span>푸시토큰:</span> {{modal_data.push_token}}</li>
+                </ul>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <v-btn color="success">가품제조 등록</v-btn>
+            </div>
+          </v-card>
+        </modal>
+      </v-flex>
+
     </v-app>
   </div>
 </template>
 
 <script>
 import Constant from "../../constant.js";
+// import _ from 'lodash';
 
 export default {
   updated() {
@@ -287,36 +335,25 @@ export default {
           sortable: false
         }
       ],
-      desserts: [
-        // {
-        //   number: 5903,
-        //   customer: "파파레시피",
-        //   tag_type: "SQR태그",
-        //   image: "img",
-        //   product: "봄비 마스크팩",
-        //   OS: "안드로이드",
-        //   cert_count: "1",
-        //   distributor: "파파레시피 본사",
-        //   time: "2018-07-31 17:19:31",
-        //   cert_result: "(100)",
-        //   location: "위치보기"
-        // },
-        // {
-        //   number: 5903,
-        //   customer: "파파레시피",
-        //   tag_type: "SQR태그",
-        //   image: "img",
-        //   product: "봄비 마스크팩",
-        //   OS: "안드로이드",
-        //   cert_count: "1",
-        //   distributor: "파파레시피 본사",
-        //   time: "2018-07-31 17:19:31",
-        //   cert_result: "(100)",
-        //   location: "위치보기"
-        // }
-      ]
+      desserts: [],
+      
+      modal_size: '60%',
+      modal_size_height: '700px',
+      modal_data: {
+        location: {
+          lat: 35,
+          lng: 118
+        },
+        images: ['https://idc.brandsafer.com/bsrdif/images/cert_sqr/2018/07/01/_SQR_0_a2b22361-d374-45bf-b5ea-153c095c6cb5.png',
+        'https://idc.brandsafer.com/bsrdif/images/cert_sqr/2018/07/01/_SQR_0_a2b22361-d374-45bf-b5ea-153c095c6cb5.jpeg'],
+        prod: 'abc',
+        cert: 'good',
+        date: '2018-08-12',
+        push_token: 'afgafgdjgal;-dfgjaklghjrio;au49032rlkg4380tjsal;'
+      }
     };
   },
+
   computed: {
     pages() {
       if (
@@ -345,6 +382,10 @@ export default {
     prodImage: function(src) {
       var imgSrc = src.replace('.png', '.jpeg')
       return 'https://idc.brandsafer.com' + imgSrc
+    },
+
+    sqrImage: function(src) {
+      return 'https://idc.brandsafer.com' + src
     },
 
     getCompanys() {
@@ -383,6 +424,22 @@ export default {
 
       this.query.date_start = this_year + "-" + this_month + "-" + yesterday_date;
       this.query.date_finish = this_year + "-" + this_month + "-" + today_date;
+    },
+    showSpotModal(e) {
+      this.$modal.show("spot");
+      let index = e.target.parentNode.parentNode.parentNode.parentNode["sectionRowIndex"];
+      let {image: image, tag_name: prod, result: cert, dtCertificate: date, deviceID: push_token, latitude: lat, longitude: lng } 
+        = this.$children[3].$children[0].filteredItems[index];
+      
+      this.modal_data.prod = prod || '-';
+      this.modal_data.cert = cert;
+      this.modal_data.date = date;
+      this.modal_data.push_token = push_token;
+      // lat, lng 서버에서 정보를 주면 작업 시작
+      let images = new Array();
+      images.push(this.sqrImage(image));
+      images.push(this.prodImage(image));
+      this.modal_data.images = images;
     }
   }
 };

@@ -1,212 +1,245 @@
 // modal wrap
 @keyframes shake {
-  10%, 90% {
-    transform: translate3d(-1px, 0, 0);
-  }
-
-  20%, 80% {
-    transform: translate3d(2px, 0, 0);
-  }
-
-  30%, 50%, 70% {
-    transform: translate3d(-2px, 0, 0);
-  }
-
-  40%, 60% {
-    transform: translate3d(2px, 0, 0);
-  }
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-2px, 0, 0);
+    }
+    40%,
+    60% {
+        transform: translate3d(2px, 0, 0);
+    }
 }
+
 .overflow {
-  overflow: scroll;
+    overflow: scroll;
 }
+
 .v--modal-overlay {
-  .v--modal-background-click {
-    .v--modal-box.v--model {
-      overflow: scroll !important;
+    .v--modal-background-click {
+        .v--modal-box.v--model {
+            overflow: scroll !important;
+        }
     }
-  }
-  .v-toolbar__title {
-    color: #fff;
-  }
-  // .v-card {
-  //   .v-card--tile {
-  //     -webkit-box-shadow: none;
-  //     box-shadow: none;
-  //   }
-  // }
-  .v-card {
-    height: 100%;
-  }
-  .card-left {
-    background: #fff;
-    .v-list--three-line {
-      // 각 리스트 wrap (v-list__tile, v-list__tile--avatar)
-      > div {
-        height: 35px;
-      }
-      .d-flex {
-        margin-bottom: 7px;
-        position: relative;
-        input, select{
-          transition: all .3s ease
-        }
-
-        &.required {
-          input, select {
-            border: 1px solid #ff776d;
-            animation: shake 0.52s cubic-bezier(.36,.07,.19,.97) both;
-            transform: translate3d(0, 0, 0);
-          }          
-          .required-notice, .required-notice-pw {
-            opacity: 1;
-            animation: shake 0.52s cubic-bezier(.36,.07,.19,.97) both;
-          }
-        }
-        &.warn {
-          input {
-            border: 1px solid #ff776d;
-            animation: shake 0.52s cubic-bezier(.36,.07,.19,.97) both;
-            transform: translate3d(0, 0, 0);
-          } 
-        }
-        .required-notice, .required-notice-pwd {
-          opacity: 0;
-          position: absolute;
-          right: -130px;
-          bottom: 30%;
-          font-size: 12px;
-          text-align: right;
-          color: #ff776d;
-          transition: all .2s ease          
-        }
-      }
-      .v-subheader {
-        margin: 15px 0;
-        color: #999;
-      }
-      // disabled
-      .not-allowed {
-        cursor: not-allowed;
-        background: #eee;
-      }
-      // label text title
-      .input-title {
-        color: #646464;
-        font-size: 12px;
-        text-align: left;
-        width: 130px;
-      }
-      // margin-right 15px이 필요한 Input
-      .input-mr {
-        margin-right: 15px;
-      }
-      // 필수항목 *
-      .text-danger {
-        color: #d26a5c;
-      }
-      // input 텍스트 창
-      .input-text {
-        font-size: 14px;
-        border: 1px solid #e6e6e6;
-        padding: 5px;
-        border-radius: 5px;
-        margin-left: 25px;
-        width: 100%;
-        color: #333;
-      }
-      // input type file
-      .input-file {
-        font-size: 12px;
-        width: 55%;
-      }
-      // input type tel
-      .input-tel {
-        width: 40%;
-        margin-left: 10px;
-      }
-      .input-mail {
-        width: 32%;
-      }
-      .input-size {
-        width: 47%;
-      }
-      .input-tri {
-        width: 30%;
-        margin-left: 10px;
-      }
-      .input-radio {
-        margin-right: 15px;
-      }
-      // 사용 가능한 파일 문구
-      .file-txt {
-        font-size: 10px;
-        margin-left: 20px;
-        text-align: right;
-      }
-      // 선택 창
-      .selectbox_arrow {
-        &:after {
-          content: "";
-          position: absolute;
-          top: 50%;
-          right: 5px;
-          width: 0;
-          height: 0;
-          margin-top: -1px;
-          border-left: 5px solid transparent;
-          border-right: 5px solid transparent;
-          border-top: 5px solid #999;
-        }
-      }
-      .selectbox {
-        display: inline-block;
-        position: relative;
-        // width: 100%;
-        width: 85px;
-        border: 1px solid #e6e6e6;
-        border-radius: 5px;
-        z-index: 1;
-        margin-left: 25px;
-        // padding-left: 5px;
-        color: #333;
-        &:before {
-          content: "";
-          position: absolute;
-          top: 50%;
-          right: 5px;
-          width: 0;
-          height: 0;
-          margin-top: -1px;
-          border-left: 5px solid transparent;
-          border-right: 5px solid transparent;
-          border-top: 5px solid #999;
-        }
-        select {
-          width: 100%;
-          height: auto;
-          padding: 5px;
-          border-radius: 5px;
-          -webkit-appearance: none;
-          -moz-appearance: none;
-          appearance: none;
-        }
-      }
-      .selectbox-100 {
-        width: 100%;
-      }
-      .selectbox-mail {
-        width: 25%;
-      }
+    .v-toolbar__title {
+        color: #fff;
     }
-  }
+    // .v-card {
+    //   .v-card--tile {
+    //     -webkit-box-shadow: none;
+    //     box-shadow: none;
+    //   }
+    // }
+    .v-card {
+        height: 100%;
+    }
+    .card-left {
+        background: #fff;
+        .v-list--three-line {
+            // 각 리스트 wrap (v-list__tile, v-list__tile--avatar)
+            >div {
+                height: 35px;
+            }
+            .d-flex {
+                margin-bottom: 7px;
+                position: relative;
+                input,
+                select {
+                    transition: all .3s ease
+                }
+                &.required {
+                    input,
+                    select {
+                        border: 1px solid #ff776d;
+                        animation: shake 0.52s cubic-bezier(.36, .07, .19, .97) both;
+                        transform: translate3d(0, 0, 0);
+                    }
+                    .required-notice,
+                    .required-notice-pw {
+                        opacity: 1;
+                        animation: shake 0.52s cubic-bezier(.36, .07, .19, .97) both;
+                    }
+                }
+                &.warn {
+                    input {
+                        border: 1px solid #ff776d;
+                        animation: shake 0.52s cubic-bezier(.36, .07, .19, .97) both;
+                        transform: translate3d(0, 0, 0);
+                    }
+                }
+                .required-notice,
+                .required-notice-pwd {
+                    opacity: 0;
+                    position: absolute;
+                    right: -130px;
+                    bottom: 30%;
+                    font-size: 12px;
+                    text-align: right;
+                    color: #ff776d;
+                    transition: all .2s ease
+                }
+            }
+            .v-subheader {
+                margin: 15px 0;
+                color: #999;
+            }
+            // disabled
+            .not-allowed {
+                cursor: not-allowed;
+                background: #eee;
+            }
+            // label text title
+            .input-title {
+                color: #646464;
+                font-size: 12px;
+                text-align: left;
+                width: 130px;
+            }
+            // margin-right 15px이 필요한 Input
+            .input-mr {
+                margin-right: 15px;
+            }
+            // 필수항목 *
+            .text-danger {
+                color: #d26a5c;
+            }
+            // input 텍스트 창
+            .input-text {
+                font-size: 14px;
+                border: 1px solid #e6e6e6;
+                padding: 5px;
+                border-radius: 5px;
+                margin-left: 25px;
+                width: 100%;
+                color: #333;
+            }
+            // input type file
+            .input-file {
+                font-size: 12px;
+                width: 55%;
+            }
+            // input type tel
+            .input-tel {
+                width: 40%;
+                margin-left: 10px;
+            }
+            .input-mail {
+                width: 32%;
+            }
+            .input-size {
+                width: 47%;
+            }
+            .input-tri {
+                width: 30%;
+                margin-left: 10px;
+            }
+            .input-radio {
+                margin-right: 15px;
+            }
+            // 사용 가능한 파일 문구
+            .file-txt {
+                font-size: 10px;
+                margin-left: 20px;
+                text-align: right;
+            }
+            // 선택 창
+            .selectbox_arrow {
+                &:after {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    right: 5px;
+                    width: 0;
+                    height: 0;
+                    margin-top: -1px;
+                    border-left: 5px solid transparent;
+                    border-right: 5px solid transparent;
+                    border-top: 5px solid #999;
+                }
+            }
+            .selectbox {
+                display: inline-block;
+                position: relative;
+                // width: 100%;
+                width: 85px;
+                border: 1px solid #e6e6e6;
+                border-radius: 5px;
+                z-index: 1;
+                margin-left: 25px;
+                // padding-left: 5px;
+                color: #333;
+                &:before {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    right: 5px;
+                    width: 0;
+                    height: 0;
+                    margin-top: -1px;
+                    border-left: 5px solid transparent;
+                    border-right: 5px solid transparent;
+                    border-top: 5px solid #999;
+                }
+                select {
+                    width: 100%;
+                    height: auto;
+                    padding: 5px;
+                    border-radius: 5px;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                }
+            }
+            .selectbox-100 {
+                width: 100%;
+            }
+            .selectbox-mail {
+                width: 25%;
+            }
+        }
+    }
+    .spot-content-wrapper {
+        padding: 40px 20px;
+        .spot-content {
+            overflow: hidden;
+            img {
+                float: left;
+                height: 120px;
+                margin-right: 20px;
+            }
+            ul {
+                overflow: hidden;
+                margin: 0px;
+                padding-left: 40px;
+                li {
+                    list-style-type: square;
+                    line-height: 28px;
+                    span {
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+    }
+    .modal-footer {
+        text-align: center;
+        padding-top: 15px;
+        border-top: 1px solid #f5f5f5;
+    }
 }
-
 
 //====================== modal
 // $background_color: #404142;
 // $github_color: #dba226;
 // $facebook_color: #3880ff;
-
 // .box {
 //   background: white;
 //   overflow: hidden;
@@ -217,7 +250,6 @@
 //   box-shadow: 0 0 40px black;
 //   color: #8b8c8d;
 //   font-size: 0;
-
 //   .box-part {
 //     display: inline-block;
 //     position: relative;
@@ -225,25 +257,21 @@
 //     box-sizing: border-box;
 //     height: 100%;
 //     width: 50%;
-
 //     &#bp-right {
 //       background: url("/static/panorama.jpg") no-repeat top left;
 //       border-left: 1px solid #eee;
 //     }
 //   }
-
 //   .box-messages {
 //     position: absolute;
 //     left: 0;
 //     bottom: 0;
 //     width: 100%;
 //   }
-
 //   .box-error-message {
 //     position: relative;
 //     overflow: hidden;
 //     box-sizing: border-box;
-
 //     height: 0;
 //     line-height: 32px;
 //     padding: 0 12px;
@@ -253,11 +281,9 @@
 //     color: white;
 //     background: #f38181;
 //   }
-
 //   .partition {
 //     width: 100%;
 //     height: 100%;
-
 //     .partition-title {
 //       box-sizing: border-box;
 //       padding: 30px;
@@ -267,13 +293,11 @@
 //       font-size: 20px;
 //       font-weight: 300;
 //     }
-
 //     .partition-form {
 //       padding: 0 20px;
 //       box-sizing: border-box;
 //     }
 //   }
-
 //   input[type="password"],
 //   input[type="text"] {
 //     display: block;
@@ -289,7 +313,6 @@
 //     transition: 0.5s all;
 //     outline: none;
 //   }
-
 //   button {
 //     background: white;
 //     border-radius: 4px;
@@ -312,11 +335,9 @@
 //       color: mix(#8b8c8d, black, 80%);
 //     }
 //   }
-
 //   .large-btn {
 //     width: 100%;
 //     background: white;
-
 //     span {
 //       font-weight: 600;
 //     }
@@ -324,16 +345,13 @@
 //       color: white !important;
 //     }
 //   }
-
 //   .button-set {
 //     margin-bottom: 8px;
 //   }
-
 //   #register-btn,
 //   #signin-btn {
 //     margin-left: 8px;
 //   }
-
 //   .facebook-btn {
 //     border-color: $facebook_color;
 //     color: $facebook_color;
@@ -342,7 +360,6 @@
 //       background: $facebook_color;
 //     }
 //   }
-
 //   .github-btn {
 //     border-color: $github_color;
 //     color: $github_color;
@@ -351,7 +368,6 @@
 //       background: $github_color;
 //     }
 //   }
-
 //   .autocomplete-fix {
 //     position: absolute;
 //     visibility: hidden;
@@ -363,12 +379,10 @@
 //     top: 0;
 //   }
 // }
-
 // .pop-out-enter-active,
 // .pop-out-leave-active {
 //   transition: all 0.5s;
 // }
-
 // .pop-out-enter,
 // .pop-out-leave-active {
 //   opacity: 0;

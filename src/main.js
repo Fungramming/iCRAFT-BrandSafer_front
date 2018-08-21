@@ -1,3 +1,4 @@
+import "@fortawesome/fontawesome-free/css/all.css";
 import Vue from "vue";
 import App from "./App.vue";
 import ES6Promise from "es6-promise";
@@ -12,7 +13,12 @@ import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 import "vuetify/dist/vuetify.min.js";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
-Vue.use(Vuetify);
+Vue.use(Vuetify, {
+    iconfont: "fa",
+    icons: {
+        "map-marker": "fas fa-map-marker-alt"
+    }
+});
 
 // CALENDAR
 import DatePicker from "vue2-datepicker";
@@ -33,20 +39,20 @@ Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
 
 Vue.use(VueGoogleMaps, {
-  load: {
-    key: "",
-    libraries: "places"
-  }
+    load: {
+        key: "",
+        libraries: "places"
+    }
 });
 Vue.component("GmapCluster", GmapCluster);
 
 new Vue({
-  router,
-  store,
-  created() {
-    // get auth cache
-    if (store.getters.isAuthenticated) {
-      axios.defaults.headers.common.Authorization = `basic ${btoa(
+            router,
+            store,
+            created() {
+                // get auth cache
+                if (store.getters.isAuthenticated) {
+                    axios.defaults.headers.common.Authorization = `basic ${btoa(
         `${store.state.token}:`
       )}`;
     }

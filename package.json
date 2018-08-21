@@ -30,6 +30,7 @@
     "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.2.0",
     "@vue/cli-plugin-babel": "^3.0.0-rc.5",
     "@vue/cli-plugin-eslint": "^3.0.0-rc.5",
     "@vue/cli-service": "^3.0.0-rc.5",
