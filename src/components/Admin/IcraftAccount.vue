@@ -26,7 +26,7 @@
       >
         <template slot="headers" slot-scope="props">
           <tr>
-            <th>
+            <!-- <th>
               <v-checkbox
                 :input-value="props.all"
                 :indeterminate="props.indeterminate"
@@ -34,7 +34,7 @@
                 hide-details
                 @click.native="toggleAll"
               ></v-checkbox>
-            </th>
+            </th> -->
             <th
               v-for="header in props.headers"
               :key="header.text"
@@ -77,19 +77,19 @@
         </div>
       </div>
 
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
-          <v-flex d-flex xs12 sm12 md1 offset-md10>
-            <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
+          <v-flex d-flex align-center xs12 md2>
+            <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
           </v-flex>
-          <v-flex d-flex xs12 sm12 md1>
+          <v-flex d-flex align-center justify-center xs12 md8>
+            <v-pagination v-model="pagination.page" :length="pages" :total-visible="7" class="justify-center"></v-pagination>
+          </v-flex>
+          <v-flex d-flex align-center xs12 md2>
+            <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
             <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
           </v-flex>
         </v-layout>
-        <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages" :total-visible="7"></v-pagination>
-        </div>
       </div>
     </v-app>
 
@@ -372,6 +372,7 @@ export default {
       total_index: "",
       selected: [],
       headers: [
+        { text: "선택", align: "left", value: "select", sortable: false },
         { text: "번호", align: "left", value: "idx", sortable: false },
         { text: "구분", align: "left", value: "role", sortable: false },
         { text: "이름", align: "left", value: "name", sortable: false },
@@ -389,21 +390,6 @@ export default {
 
       // For edit modal
       selected_index: "",
-      // selected_email: "",
-      // selected_email_1: "",
-      // selected_email_2: "",
-      // selected_phone: "",
-      // selected_phone_1: "",
-      // selected_phone_2: "",
-      // selected_telephone: "",
-      // selected_telephone_1: "",
-      // selected_telephone_2: "",
-      // selected_position: "",
-      // selected_role: "",
-      // selected_name: "",
-      // selected_id: "",
-      // selected_department: "",
-      // selected_state: "",
 
       // For submit
       firstNum_tel: "",
@@ -461,7 +447,7 @@ export default {
         pwd: "",
         registrant: "",
         role: "",
-        state: "Registered",
+        state: "",
         telephone: ""
       }
     };
@@ -628,54 +614,51 @@ export default {
       this.repwd = "";
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
 
-      this.updateData.state = e.path[2].children[7].innerText;
-      this.updateData.department = e.path[2].children[5].innerText;
-      this.updateData.id = e.path[2].children[4].innerText;
-      this.updateData.name = e.path[2].children[3].innerText;
-      this.updateData.role = e.path[2].children[2].innerText;
+      // this.updateData.state = e.path[2].children[7].innerText;
+      // this.updateData.department = e.path[2].children[5].innerText;
+      // this.updateData.id = e.path[2].children[4].innerText;
+      // this.updateData.name = e.path[2].children[3].innerText;
+      // this.updateData.role = e.path[2].children[2].innerText;
 
+      this.updateData.department = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].department;
+      this.updateData.id = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].id;
+      this.updateData.name = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].name;
+      this.updateData.role = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].role;
       this.updateData.email = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].email;
       this.updateData.pwd = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].pwd;
-      // let email = this.selected_email.split("@");
-      // this.selected_email_1 = email[0];
-      // this.selected_email_2 = email[1];
-
       this.updateData.phone = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].phone;
-      // let phone = this.selected_phone.split("-");
-      // this.selected_phone_1 = phone[1];
-      // this.selected_phone_2 = phone[2];
-
       this.updateData.telephone = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].telephone;
-      // let telephone = this.selected_telephone.split("-");
-      // this.selected_telephone_1 = telephone[1];
-      // this.selected_telephone_2 = telephone[2];
-
       this.updateData.position = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].position;
       this.updateData.dtRegistered = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].dtRegistered;
-      // this.updateData.dtModified = this.$children[0].$children[1].filteredItems[
-      //   this.selected_index
-      // ].dtModified;
       this.updateData.dtLastConnected = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].dtLastConnected;
       this.updateData.registrant = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].registrant;
-      // this.updateData.modifier = this.$children[0].$children[1].filteredItems[
-      //   this.selected_index
-      // ].modifier;
+      this.updateData.state = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].state;
 
       // find index
       this.updateIndex = this.$children[0].$children[1].filteredItems[

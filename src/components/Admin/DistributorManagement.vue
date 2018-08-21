@@ -25,15 +25,15 @@
       >
         <template slot="headers" slot-scope="props">
           <tr>
-            <th>
-              <!-- <v-checkbox
+            <!-- <th>
+              <v-checkbox
                 :input-value="props.all"
                 :indeterminate="props.indeterminate"
                 primary
                 hide-details
                 @click.native="toggleAll"
-              ></v-checkbox> -->
-            </th>
+              ></v-checkbox>
+            </th> -->
             <th
               v-for="header in props.headers"
               :key="header.text"
@@ -76,20 +76,18 @@
         </div>
       </div>
       <div class="bottom-contents-wrap">
-        <v-layout  row wrap btn-group>
+        <v-layout row wrap btn-group>
           <v-flex d-flex align-center xs12 md2 >
             <span d-flex class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
           </v-flex>
           <v-flex d-flex align-center justify-center xs12 md8>
-            <v-pagination v-model="pagination.page" :length="pages" :total-visible="7" class=" justify-center"></v-pagination>
+            <v-pagination v-model="pagination.page" :length="pages" :total-visible="7" class="justify-center"></v-pagination>
           </v-flex>
           <v-flex d-flex align-center xs12 md2>
             <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>    
             <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
           </v-flex>
         </v-layout>
-        <div class="text-xs-center pt-2">
-        </div>
       </div>
     </v-app>
 
@@ -230,6 +228,7 @@ export default {
       total_index: "",
       selected: [],
       headers: [
+        { text: "선택", align: "left", value: "select", sortable: false },
         { text: "번호", align: "left", value: "idx", sortable: false },
         { text: "고객사", align: "left", value: "name_kr", sortable: false },
         {
@@ -430,6 +429,9 @@ export default {
       this.updateData.modifier = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].modifier;
+      this.updateData.rtid = this.$children[0].$children[1].filteredItems[
+        this.selected_index
+      ].rtid;
       this.updateData.state = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].state;
@@ -458,7 +460,4 @@ export default {
 <style lang="scss" scoped>
 @import "../../scss/table";
 @import "../../scss/modal";
-.v-pagination {
-  width: auto !important;
-}
 </style>

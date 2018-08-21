@@ -82,16 +82,15 @@
         </div>
       </div>
 
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
-          <!-- <v-flex d-flex xs12 sm12 md1 offset-md11>
-            <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
-          </v-flex> -->
+          <v-flex d-flex align-center xs12 md2 >
+            <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
+          </v-flex>
+          <v-flex d-flex align-center justify-center xs12 md8>
+            <v-pagination v-model="pagination.page" :length="pages" :total-visible="7" class="justify-center"></v-pagination>
+          </v-flex>
         </v-layout>
-        <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages" :total-visible="7"></v-pagination>
-        </div>
       </div>
     </v-app>
 

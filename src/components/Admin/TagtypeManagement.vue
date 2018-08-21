@@ -26,7 +26,7 @@
 
         <template slot="headers" slot-scope="props">
           <tr>
-            <th>
+            <!-- <th>
               <v-checkbox
                 :input-value="props.all"
                 :indeterminate="props.indeterminate"
@@ -34,7 +34,7 @@
                 hide-details
                 @click.native="toggleAll"
               ></v-checkbox>
-            </th>
+            </th> -->
             <th
               v-for="header in props.headers"
               :key="header.text"
@@ -78,19 +78,19 @@
         </div>
       </div>
 
-      <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <v-layout row wrap btn-group>
-          <v-flex d-flex xs12 sm12 md1 offset-md10>
-            <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
+          <v-flex d-flex align-center xs12 md2 >
+            <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
           </v-flex>
-          <v-flex d-flex xs12 sm12 md1>
+          <v-flex d-flex align-center justify-center xs12 md8>
+            <v-pagination v-model="pagination.page" :length="pages" :total-visible="7" class="justify-center"></v-pagination>
+          </v-flex>
+          <v-flex d-flex align-center xs12 md2>
+            <v-btn color="error" dark @click.stop="deleteDatas">삭제</v-btn>
             <v-btn color="primary" dark @click.stop="showModal">등록</v-btn>
           </v-flex>
         </v-layout>
-        <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages" :total-visible="7"></v-pagination>
-        </div>
       </div>
     </v-app>
 
@@ -252,6 +252,7 @@ export default {
       total: "",
       selected: [],
       headers: [
+        { text: "선택", align: "left", value: "select", sortable: false },
         { text: "번호", align: "left", value: "idx", sortable: false },
         { text: "버전", align: "left", value: "version", sortable: false },
         {
