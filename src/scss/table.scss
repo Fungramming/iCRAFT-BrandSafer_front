@@ -255,18 +255,18 @@ $tablet: "(min-width: 601px) and (max-width: 959px)";
         }
         .bottom-contents-wrap {
             .v-pagination {
-              @media #{$phone} {
-                margin: 15px;
-              }
-              @media #{$tablet} {
-                margin: 15px;
-              }
+                @media #{$phone} {
+                    margin: 15px;
+                }
+                @media #{$tablet} {
+                    margin: 15px;
+                }
             }
             button {
                 border-radius: 5px;
             }
-            button + button {
-              margin-left: 10px;
+            button+button {
+                margin-left: 10px;
             }
         }
         .v-card__title {

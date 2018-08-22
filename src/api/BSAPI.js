@@ -54,13 +54,13 @@ export default {
     }) {
         let query_str = "?";
         if (company !== "all") {
-            query_str += `&companyCode=${company}`;
+            query_str += `&companycode=${company}`;
         }
         if (tag_type !== "all") {
-            query_str += `&tagType=${tag_type}`;
+            query_str += `&tag=${tag_type}`;
         }
         if (os !== "all") {
-            query_str += `&osType=${os}`;
+            query_str += `&os=${os}`;
         }
         if (cert !== "all") {
             query_str += `&result=${cert}`;

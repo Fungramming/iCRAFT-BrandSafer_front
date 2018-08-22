@@ -49,7 +49,7 @@
         </v-flex>
       </v-layout>
       <div class="search-wrapper">
-        <v-btn color="primary" @click.stop="searchQuery()">검색</v-btn>
+        <v-btn color="primary" @click="searchQuery()">검색</v-btn>
       </div>
     </div>
     <!-- table wrap -->
@@ -91,7 +91,7 @@
           <td class="text-xs-center">{{ props.item.distributor }}</td>
           <td class="text-xs-center">{{ dateFormat(props.item.dtCertificate) }}</td>
           <td class="text-xs-center">
-            <v-chip :color="badgeColor(props.item.result)" :dark="true" :small="true" text-color="white">
+            <v-chip :color="badgeColor(props.item.result)" :dark="true" :small="true" text-color="white" disabled>
               {{ certToKor(props.item.result) }}
             </v-chip>
           </td>
@@ -102,21 +102,21 @@
           </td>
         </template>
       </v-data-table>
-      <div class="v-datatable__actions">
+      <!-- <div class="v-datatable__actions" :style="pstyle">
         <span>per page :</span>
         <div class="v-datatable__actions__select">          
-          <select v-model="pagination.rowsPerPage" @change.stop="firstPageData()">
+          <select v-model="pagination.rowsPerPage" @change="firstPageData()">
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="25">25</option>
-            <!-- <option value="-1">All</option> -->
           </select>
         </div>
-      </div>
+      </div> -->
+
       <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{pagination.total}}</span> 건</span>
       <div class="bottom-contents-wrap">
         <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages" :total-visible="6" @input.stop="getDatas()"></v-pagination>
+          <v-pagination v-model="pagination.page" :length="pages" :total-visible="6" @input="getDatas()"></v-pagination>
         </div>
       </div>
 
@@ -303,7 +303,7 @@ export default {
       pagination: {
         page: 1,
         total: 0,
-        rowsPerPage: 10
+        rowsPerPage: '10'
       },
       headers: [
         { text: "번호", align: "center", value: "number", sortable: false },
@@ -373,6 +373,24 @@ export default {
         this.pagination.total / this.pagination.rowsPerPage
       );
     }
+    // pstyle() {
+    //   let data_len = this.desserts.length;
+    //   let per_page = this.pagination.rowsPerPage;
+    //   let pstylee = '';
+    //   if (!data_len) {
+    //     pstylee = 'height: 100px; top: -91px;';
+    //   } else if (per_page === '5') {
+    //     pstylee = 'height: 320px; top: -101px;';
+    //   } else if (per_page === '10') {
+    //     pstylee = 'height: 320px; top: -91px;'; 
+    //   } else if (per_page === '25') {
+    //     pstylee = 'height: 320px; top: -80px;';
+    //   } else {
+    //     pstylee = '';
+    //   }
+
+    //   return pstylee
+    // }
   },
 
   methods: {
