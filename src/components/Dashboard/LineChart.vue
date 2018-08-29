@@ -32,7 +32,6 @@ export default {
   },
   mounted() {
     this.liveStatus = this.$store.state.liveStatus;
-    console.log("this.$store.state.liveStatus :", this.$store.state.liveStatus);
     this.makeChartData();
   },
   methods: {

@@ -166,7 +166,7 @@ export default {
       blacklists: [],
       submitData: {
         blType: "C",
-        delYN: "Y",
+        delYN: "N",
         dtModified: this.$store.state.submitTime,
         dtRegistered: this.$store.state.submitTime,
         modifier: this.$store.state.user.modifier,
@@ -184,6 +184,7 @@ export default {
   },
   updated() {
     getTotal(this);
+    console.log("this.selected :", this.selected);
   },
   mounted() {
     this.getDatas();
@@ -191,7 +192,7 @@ export default {
   methods: {
     getDatas() {
       this.$store.dispatch(Constant.FETCH_BLACKLIST).then(resp => {
-        this.blacklists = resp.data.blacklists.reverse();
+        this.blacklists = resp.data.blacklists;
         this.total = this.blacklists.length;
         // this.dateFormat();
         dateFormat(this.blacklists, "dtRegistered");
@@ -202,7 +203,6 @@ export default {
       this.$store
         .dispatch(Constant.ADD_BLACKLIST, this.submitData)
         .then(resp => {
-          console.log("resp :", resp);
           this.getDatas();
           this.closeModal();
           this.$store.commit(Constant.SHOW_MODAL, {
@@ -216,9 +216,8 @@ export default {
     },
     deleteDatas() {
       for (let item in this.selected) {
-        console.log("this.selected[item].idx :", this.selected[item].idx);
         this.$store
-          .dispatch(Constant.DELETE_BLACKLIST, this.selected[item].idx)
+          .dispatch(Constant.DELETE_BLACKLIST, this.selected[item].index)
           .then(() => {
             this.getDatas();
             this.$store.commit(Constant.SHOW_MODAL, {
