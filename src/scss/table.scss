@@ -9,14 +9,41 @@ $tablet: "(min-width: 601px) and (max-width: 959px)";
         -webkit-box-shadow: 0 2px 1px -1px rgba(233, 208, 208, 0.2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
         box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
         .map-header {
-            margin-bottom: 10px;
+            padding: 0 10px;
+            margin-bottom: 0px;
+            overflow: hidden;
+            .v-input {
+                float: left;
+            }
+            .v-datatable__actions {
+                background-color: #ffffff;
+                float: right;
+                position: static;
+                height: 65px;
+                .v-datatable__actions__select {
+                    margin-right: 0px;
+                    select {
+                        width: 65px;
+                    }
+                }
+            }
+        }
+        .map-bottom {
+            margin-top: 10px;
+            padding: 10px;
+            padding-bottom: 0px;
+            overflow: hidden;
             .total {
+                float: left;
                 text-align: left;
-                margin-top: 10px;
+                margin-top: 5px;
                 &-result {
                     font-weight: 600;
                     color: blue;
                 }
+            }
+            .map-page {
+                float: right;
             }
         }
     }
