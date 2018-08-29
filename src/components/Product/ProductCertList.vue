@@ -14,7 +14,7 @@
         <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox selectbox-with-date selectbox-top">
             <span>고객사</span>
-            <select id="select1" name="searchType" v-model="query.company" class="form-control" size="1">
+            <select id="select1" name="searchType" v-model="company" class="form-control" size="1">
               <option value="all" selected>전체</option>
               <option v-for="company in companys" :key="company.code" :value="company.code">{{company.name_kr}}</option>
             </select>
@@ -23,7 +23,7 @@
         <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox selectbox-top">
             <span>태그타입</span>
-            <select id="select1" name="searchType" v-model="query.tag_type" class="form-control" size="1">
+            <select id="select1" name="searchType" v-model="tag_type" class="form-control" size="1">
               <option value="all" selected>전체</option>
               <option v-for="tag_type in tag_types" :key="tag_type.name_en" :value="tag_type.name_en">{{tag_type.name_kr}}</option>
             </select>
@@ -32,7 +32,7 @@
         <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox selectbox-top">
             <span>OS</span>
-            <select id="select1" name="searchType" v-model="query.os" class="form-control" size="1">
+            <select id="select1" name="searchType" v-model="oss" class="form-control" size="1">
               <option value="all" selected>전체</option>
               <option v-for="o in os" :key="o.name_en" :value="o.name_en">{{o.name_kr}}</option>
             </select>
@@ -41,7 +41,7 @@
         <v-flex d-flex xs12 md6 lg4>
           <div class="selectbox selectbox-top">
             <span>인증결과</span>
-            <select id="select1" name="searchType" v-model="query.cert" class="form-control" size="1">
+            <select id="select1" name="searchType" v-model="cert" class="form-control" size="1">
               <option value="all" selected>전체</option>
               <option v-for="cert in certs" :key="cert.name_kr" :value="cert.name_en">{{cert.name_kr}}</option>
             </select>
@@ -122,12 +122,12 @@
 
       <!-- spot modal -->
       <v-flex d-flex xs12 sm12 md12>
-        <modal :width="modal_size" :height="modal_size_height" name="spot" transition="pop-out">
+        <modal :width="modal_size" :height="modal_size_height" name="spot" transition="pop-out" @closed="closeSpotModal()">
           <v-card tile>
             <v-toolbar card dark color="primary">
               <v-toolbar-title>위치 정보</v-toolbar-title>
               <v-spacer></v-spacer>
-              <v-btn icon dark @click.native="closeSpotModal">
+              <v-btn icon dark @click.native="closeSpotModal()">
                 <v-icon>close</v-icon>
               </v-btn>
             </v-toolbar>
@@ -151,7 +151,7 @@
                   <li><span>제품명:</span> {{modal_data.prod}}</li>
                   <li><span>인증결과:</span> {{modal_data.cert}}</li>
                   <li><span>인증일시:</span> {{modal_data.date}}</li>
-                  <li><span>푸시토큰:</span> {{modal_data.push_token}}</li>
+                  <li><span>푸시토큰:</span> <a @click="linkPushToken()">{{modal_data.push_token}}</a></li>
                 </ul>
               </div>
             </div>
@@ -189,6 +189,10 @@ export default {
     return {
       start_date: '',
       end_date: '',
+      company: 'all',
+      tag_type: 'all',
+      oss: 'all',
+      cert: 'all',
       query: {
         company: 'all',
         tag_type: 'all',
@@ -198,7 +202,6 @@ export default {
         date_start: '',
         date_finish: ''
       },
-      dialog: false,
 
       // date picker
       lang: {
@@ -471,13 +474,24 @@ export default {
       this.modal_data.cert = this.certToKor(cert);
       this.modal_data.date = this.dateFormat(date);
       this.modal_data.push_token = push_token;
-      // lat, lng 서버에서 정보를 주면 작업 시작
+      // ----------------------------------------------------
+      // lat, lng 서버에서 정보를 주면 모달 지도에 마커 찍히게 만들어야 함
+      // modal_data.location에 {lat: num, lng: num} 데이터 매핑
+      // ----------------------------------------------------
       let images = new Array();
       images.push(this.sqrImage(image));
       if (tag === 'SQRTAG') {
         images.push(this.prodImage(image));
       }
       this.modal_data.images = images;
+    },
+    closeSpotModal() {
+      this.modal_data.prod = '';
+      this.modal_data.cert = '';
+      this.modal_data.date = '';
+      this.modal_data.push_token = '';
+      this.modal_data.images = [];
+      this.$modal.hide("spot");
     },
 
     tagToKor(tag_en) {
@@ -514,15 +528,32 @@ export default {
 
     searchQuery() {
       this.pagination.page = 1;
+      this.setQuery();
+      this.getDatas();
+    },
+    setQuery() {
       this.query.date_start = this.start_date;
       this.query.date_finish = this.end_date;
-      this.getDatas();
+      this.query.company = this.company;
+      this.query.tag_type = this.tag_type;
+      this.query.os = this.oss;
+      this.query.cert = this.cert;
     },
 
     firstPageData() {
       this.pagination.page = 1;
       this.getDatas();
-    }
+    },
+
+    linkPushToken() {
+      let _this = this;
+      function test() {
+        _this.$router.push({ name: "lookup" });
+        redirectTabFunc(_this);
+        return _this.$store.commit(Constant.PUSH_APP, _this.modal_data.push_token);
+      }
+      setTimeout(test, 10);
+    },
   }
 };
 </script>

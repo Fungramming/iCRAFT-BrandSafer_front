@@ -99,7 +99,7 @@
       <div class="card-list">
         <v-container v-if="results.length > 0" fluid grid-list-md>
           <v-layout row wrap>
-            <v-flex v-for="item in results" :key="item.idx" xs6 md3 lg2>
+            <v-flex v-for="item in results" xs6 md3 lg2>
               <v-card>
                 <v-card-media :src="prodImage(item.image)" height="150px"></v-card-media>
                 <v-card-actions class="cert">
