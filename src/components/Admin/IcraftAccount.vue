@@ -26,15 +26,6 @@
       >
         <template slot="headers" slot-scope="props">
           <tr>
-            <!-- <th>
-              <v-checkbox
-                :input-value="props.all"
-                :indeterminate="props.indeterminate"
-                primary
-                hide-details
-                @click.native="toggleAll"
-              ></v-checkbox>
-            </th> -->
             <th
               v-for="header in props.headers"
               :key="header.text"
@@ -72,7 +63,6 @@
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="25">25</option>
-            <!-- <option value="-1">All</option> -->
           </select>
         </div>
       </div>
@@ -146,7 +136,6 @@
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">비밀번호 확인
-                  <!-- <span class="text-danger">*</span> -->
                 </label>
                 <input ref="pwd2" v-model="repwd" class="input-text require-input" type="password" maxlangth="15">
                 <span ref="pwdNotice" class="required-notice-pwd">*비밀번호를 확인하세요.</span>
@@ -272,7 +261,6 @@
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">비밀번호 확인
-                  <!-- <span class="text-danger">*</span> -->
                 </label>
                 <input ref="pwd2_u" v-model="repwd" class="input-text" type="password" placeholder="* 비밀번호 확인" maxlength="15">
                 <span ref="pwdNotice" class="required-notice-pwd">*비밀번호를 확인하세요.</span>
@@ -280,60 +268,13 @@
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">이메일</label>
                 <input v-model="updateData.email" class="input-text" type="mail">
-                <!-- <span class="selectbox selectbox-mail">
-                  <select id="mail1" class="form-control" name="mail1">
-                    <option value="">직접입력</option>
-                    <option value="naver.com">naver.com</option>
-                    <option value="daum.net">daum.net</option>
-                    <option value="gmail.com">gmail.com</option>
-                    <option value="nate.com">nate.com</option>
-                  </select>
-                </span>
-                <input v-model="selected_email_2" class="input-text input-mail" type="mail"> -->
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">전화번호</label>
-                <!-- <span class="selectbox">
-                  <select id="telephone1" class="form-control" name="telephone1">
-                    <option value="02">02</option>
-                    <option value="031">031</option>
-                    <option value="032">032</option>
-                    <option value="033">033</option>
-                    <option value="041">041</option>
-                    <option value="042">042</option>
-                    <option value="043">043</option>
-                    <option value="044">044</option>
-                    <option value="051">051</option>
-                    <option value="052">052</option>
-                    <option value="053">053</option>
-                    <option value="054">054</option>
-                    <option value="055">055</option>
-                    <option value="061">061</option>
-                    <option value="062">062</option>
-                    <option value="063">063</option>
-                    <option value="064">064</option>
-                    <option value="070">070</option>
-                    <option value="080">080</option>
-                  </select>
-                </span>
-                <input v-model="selected_telephone_1" class="input-text input-tel" type="tel" maxlength="4">
-                <input v-model="selected_telephone_2" class="input-text input-tel" type="tel" maxlength="4"> -->
                 <input v-model="updateData.telephone" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">핸드폰번호</label>
-                <!-- <span class="selectbox">
-                  <select id="telephone1" class="form-control" name="telephone1">
-                    <option value="010">010</option>
-                    <option value="011">011</option>
-                    <option value="016">016</option>
-                    <option value="017">017</option>
-                    <option value="018">018</option>
-                    <option value="019">019</option>
-                  </select>
-                </span>
-                <input v-model="selected_phone_1" class="input-text input-tel" type="tel" maxlength="4">
-                <input v-model="selected_phone_2" class="input-text input-tel" type="tel" maxlength="4"> -->
                 <input v-model="updateData.phone" class="input-text" type="text">
               </v-flex>
               <v-flex d-flex xs12 sm12 md5>
@@ -613,12 +554,6 @@ export default {
       this.$modal.show("account_edit");
       this.repwd = "";
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
-
-      // this.updateData.state = e.path[2].children[7].innerText;
-      // this.updateData.department = e.path[2].children[5].innerText;
-      // this.updateData.id = e.path[2].children[4].innerText;
-      // this.updateData.name = e.path[2].children[3].innerText;
-      // this.updateData.role = e.path[2].children[2].innerText;
 
       this.updateData.department = this.$children[0].$children[1].filteredItems[
         this.selected_index

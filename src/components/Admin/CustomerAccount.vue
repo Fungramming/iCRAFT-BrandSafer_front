@@ -66,9 +66,6 @@
           <input class="input-text" type="text">
         </v-flex>
       </v-layout>
-      <!-- <v-flex d-flex xs12 sm12 md1 offset-md11>
-        <v-btn class="search-btn" color="primary" dark>검색</v-btn>
-      </v-flex> -->
     </div>
     <!-- table wrap -->
     <v-app class="inspire">

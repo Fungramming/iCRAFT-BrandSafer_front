@@ -25,15 +25,6 @@
       >
         <template slot="headers" slot-scope="props">
           <tr>
-            <!-- <th>
-              <v-checkbox
-                :input-value="props.all"
-                :indeterminate="props.indeterminate"
-                primary
-                hide-details
-                @click.native="toggleAll"
-              ></v-checkbox>
-            </th> -->
             <th
               v-for="header in props.headers"
               :key="header.text"
@@ -71,7 +62,6 @@
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="25">25</option>
-            <!-- <option value="-1">All</option> -->
           </select>
         </div>
       </div>
@@ -194,7 +184,6 @@ export default {
       this.$store.dispatch(Constant.FETCH_BLACKLIST).then(resp => {
         this.blacklists = resp.data.blacklists;
         this.total = this.blacklists.length;
-        // this.dateFormat();
         dateFormat(this.blacklists, "dtRegistered");
         dateFormat(this.blacklists, "dtModified");
       });
@@ -202,7 +191,7 @@ export default {
     addDatas() {
       this.$store
         .dispatch(Constant.ADD_BLACKLIST, this.submitData)
-        .then(resp => {
+        .then(() => {
           this.getDatas();
           this.closeModal();
           this.$store.commit(Constant.SHOW_MODAL, {

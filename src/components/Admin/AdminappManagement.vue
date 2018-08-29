@@ -27,15 +27,6 @@
 
         <template slot="headers" slot-scope="props">
           <tr>
-            <!-- <th>
-              <v-checkbox
-                :input-value="props.all"
-                :indeterminate="props.indeterminate"
-                primary
-                hide-details
-                @click.native="toggleAll"
-              ></v-checkbox>
-            </th> -->
             <th
               v-for="header in props.headers"
               :key="header.text"
@@ -50,15 +41,7 @@
 
         <template slot="items" slot-scope="props">
           <tr :active="props.selected" @click="props.selected = !props.selected">
-            <!-- <td>
-              <v-checkbox
-                :input-value="props.selected"
-                primary
-                hide-details
-              ></v-checkbox>
-            </td> -->
             <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
-            <!-- <td class="text-xs-left">{{ props.item.idx }}</td> -->
             <td class="text-xs-left">{{ props.item.companyName }}</td>
             <td class="text-xs-left"><a @click.stop="showEditModal">{{ props.item.name }}</a></td>
             <td class="text-xs-left">{{ props.item.contact }}</td>
@@ -77,7 +60,6 @@
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="25">25</option>
-            <!-- <option value="-1">All</option> -->
           </select>
         </div>
       </div>
@@ -106,7 +88,6 @@
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn dark flat @click.stop="updateDatas">수정</v-btn>
-            <!-- <v-btn dark flat @click.native="tagtype_dialog_edit = false">수정</v-btn> -->
           </v-toolbar-items>
         </v-toolbar>
         <div class="card-left">
@@ -255,7 +236,6 @@ export default {
           app: app
         })
         .then(() => {
-          // updateData = this.updateData;
           this.getDatas();
           this.closeModal();
           this.$store.commit(Constant.SHOW_MODAL, {
@@ -284,14 +264,6 @@ export default {
       this.$modal.show("adminapp_edit");
 
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
-
-      // let company = e.path[2].children[2].innerText;
-      // let name = e.path[2].children[3].innerText;
-      // let tel = e.path[2].children[4].innerText;
-
-      // this.selected_company = company;
-      // this.selected_name = name;
-      // this.selected_tel = tel;
 
       this.updateData.companyName = this.$children[0].$children[1].filteredItems[
         this.selected_index
