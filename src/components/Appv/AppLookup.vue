@@ -101,7 +101,7 @@
           <v-layout row wrap>
             <v-flex v-for="item in results" xs6 md3 lg2>
               <v-card>
-                <v-card-media :src="prodImage(item.image)" height="150px"></v-card-media>
+                <v-card-media :src="checkImage(item.image, item.tagType)" height="150px"></v-card-media>
                 <v-card-actions class="cert">
                   <v-btn flat color="orange">{{item.result}}</v-btn>
                 </v-card-actions>
@@ -119,8 +119,8 @@
           <span class="bottom-total">전체건수 : <span class="bottom-total-result">{{total}}</span> 건</span>
         </v-flex>
         <v-flex d-flex align-center >
-          <v-btn color="red lighten-1" dark @click.stop="deleteDatas">블랙리스트-과다인증 등록</v-btn>
-          <v-btn color="red lighten-1" dark @click.stop="showModal">블랙리스트-가품제조 등록</v-btn>
+          <v-btn color="red lighten-1" dark @click.stop="editBlacklist('O')">블랙리스트-과다인증 등록</v-btn>
+          <v-btn color="red lighten-1" dark @click.stop="editBlacklist('C')">블랙리스트-가품제조 등록</v-btn>
         </v-flex>
       </v-layout>
     </v-app>
@@ -243,15 +243,17 @@ export default {
     },
     getState(resp) {
       this.state = {
+        idBlack: this.results[0].idBlack,
         appName: this.results[0].appname,
         dtRegistered: this.results[0].dtRegistered,
         firstDtCertificate: this.results[0].dtCertificate,
         lastDtCertificate: this.results[this.results.length - 1].dtCertificate,
-        blackListState: this.results[0].dlType,
+        blackListState: this.results[0].blType,
         osType: this.results[0].osType,
         model: this.results[0].model,
         language: this.results[0].language,
-        count_cert: resp.data.count_cert
+        count_cert: resp.data.count_cert,
+        tagType: this.results[0].tagType
       };
     },
     defineResult() {
@@ -270,9 +272,62 @@ export default {
         }
       }
     },
-    prodImage(src) {
-      let imgSrc = src.replace(".png", ".jpeg");
+    editBlacklist(type) {
+      let blType = this.state.blackListState;
+      let bid = this.state.idBlack;
+      console.log("type :", type);
+      let blacklist = {
+        blType: "C",
+        delYN: "N",
+        dtModified: this.$store.state.submitTime,
+        dtRegistered: this.$store.state.submitTime,
+        modifier: this.$store.state.user.modifier,
+        pushToken: this.pushToken,
+        registrant: this.$store.state.user.modifier
+      };
+      if (blType == null) {
+        this.$store.dispatch(Constant.ADD_BLACKLIST, blacklist).then(() => {
+          this.getDatas();
+          this.$store.commit(Constant.SHOW_MODAL, {
+            isModal: true,
+            modalText: "등록 되었습니다."
+          });
+        });
+      } else if (blType == "C" || blType == "O") {
+        this.$store
+          .dispatch(Constant.UPDATE_BLACKLIST, {
+            bid: bid,
+            blType: {
+              blType: type
+            }
+          })
+          .then(() => {
+            this.getDatas();
+            this.$store.commit(Constant.SHOW_MODAL, {
+              isModal: true,
+              modalText: "등록 되었습니다."
+            });
+          });
+      }
+    },
+    prodImage: function(src) {
+      var imgSrc = src.replace(".png", ".jpeg");
       return "https://idc.brandsafer.com" + imgSrc;
+    },
+
+    sqrImage: function(src) {
+      return "https://idc.brandsafer.com" + src;
+    },
+
+    checkImage(src, tag) {
+      let imgSrc = src;
+      if (tag === "SQRTAG") {
+        imgSrc = this.prodImage(imgSrc);
+      } else {
+        imgSrc = this.sqrImage(imgSrc);
+      }
+
+      return imgSrc;
     },
     prodBlType(type) {
       if (type == null) {
@@ -281,14 +336,6 @@ export default {
         return "C";
       } else if (type == "O") {
         return "O";
-      }
-    },
-    editBlacklist() {
-      let blType = this.state.blackListState;
-      if (blType == null) {
-        this.$store.dispatch(Constant.ADD_BLACKLIST).then(() => {});
-      } else if (blType == "C" || blType == "O") {
-        this.$store.dispatch(Constant.UPDA).then(() => {});
       }
     }
   }

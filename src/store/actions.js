@@ -137,6 +137,9 @@ export default {
   async [Constant.ADD_BLACKLIST](store, payload) {
     return promise(BSAPI.addBlacklist, payload, store, null);
   },
+  async [Constant.UPDATE_BLACKLIST](store, payload) {
+    return promise(BSAPI.updateBlacklist, payload, store, null);
+  },
   async [Constant.DELETE_BLACKLIST](store, payload) {
     return promise(BSAPI.deleteBlacklist, payload, store, null);
   },

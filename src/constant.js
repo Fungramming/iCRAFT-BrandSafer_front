@@ -54,6 +54,7 @@ export default {
 
   FETCH_BLACKLIST: "fetchBlacklist",
   ADD_BLACKLIST: "addBlacklist",
+  UPDATE_BLACKLIST: "updateBlacklist",
   DELETE_BLACKLIST: "deleteBlacklist",
 
   FETCH_OVER_CERT: "fetchOverCert",

@@ -62,6 +62,7 @@ export default {
 
   FETCH_BLACKLIST: `${BASE_URL}/admin/blacklist/`, // query, page
   ADD_BLACKLIST: `${BASE_URL}/admin/blacklist/`,
+  UPDATE_BLACKLIST: `${BASE_URL}/admin/blacklist/\${bid}`,
   DELETE_BLACKLIST: `${BASE_URL}/admin/blacklist/\${bid}`,
 
   FETCH_OVER_CERT: ` ${BASE_URL}/admin/over-cert/`, // query, page
