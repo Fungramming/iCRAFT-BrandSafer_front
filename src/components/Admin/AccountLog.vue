@@ -36,15 +36,6 @@
       >
         <template slot="headers" slot-scope="props">
           <tr>
-            <!-- <th>
-              <v-checkbox
-                :input-value="props.all"
-                :indeterminate="props.indeterminate"
-                primary
-                hide-details
-                @click.native="toggleAll"
-              ></v-checkbox>
-            </th> -->
             <th
               v-for="header in props.headers"
               :key="header.text"
@@ -82,7 +73,6 @@
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="25">25</option>
-            <!-- <option value="-1">All</option> -->
           </select>
         </div>
       </div>

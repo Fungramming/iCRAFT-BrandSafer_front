@@ -26,15 +26,6 @@
 
         <template slot="headers" slot-scope="props">
           <tr>
-            <!-- <th>
-              <v-checkbox
-                :input-value="props.all"
-                :indeterminate="props.indeterminate"
-                primary
-                hide-details
-                @click.native="toggleAll"
-              ></v-checkbox>
-            </th> -->
             <th
               v-for="header in props.headers"
               :key="header.text"
@@ -48,15 +39,7 @@
 
         <template slot="items" slot-scope="props">
           <tr :active="props.selected" @click="props.selected = !props.selected">
-            <!-- <td>
-              <v-checkbox
-                :input-value="props.selected"
-                primary
-                hide-details
-              ></v-checkbox>
-            </td> -->
             <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
-            <!-- <td class="text-xs-left">{{ props.item.idx }}</td> -->
             <td class="text-xs-left"><a @click.stop="showEditModal"> {{ props.item.name_kr }} </a></td>
             <td class="text-xs-left">{{ props.item.code }}</td>
             <td class="text-xs-left">{{ props.item.addr_kr }}</td>
@@ -73,7 +56,6 @@
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="25">25</option>
-            <!-- <option value="-1">All</option> -->
           </select>
         </div>
       </div>
@@ -228,20 +210,6 @@
                 <input v-model="lastNum_ragi" class="input-text input-tri require-input" type="tel" maxlength="5">
                 <span class="required-notice">*필수 입력사항입니다.</span>
               </v-flex>
-              <!-- <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">사업자등록증
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">CI
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-flex> -->
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">URL
                   <span class="text-danger">*</span>
@@ -249,13 +217,6 @@
                 <input v-model="submitData.url" class="input-text require-input" type="text" required="required">
                 <span class="required-notice">*필수 입력사항입니다.</span>
               </v-flex>
-              <!-- <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">TnT로고이미지
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-              </v-flex> -->
               <v-flex d-flex xs12 sm12 md5>
                 <label class="input-title">설명(한국어)
                   <span class="text-danger">*</span>
@@ -271,27 +232,6 @@
                 <label class="input-title">설명(중국어)</label>
                 <input v-model="submitData.description_zh" class="input-text" type="text" required="required">
               </v-flex>
-              <!-- <v-divider></v-divider>
-              <v-subheader>계약 정보</v-subheader>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">계약서명
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">계약기간
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-text" type="text" required="required">
-              </v-flex>
-              <v-flex d-flex xs12 sm12 md5>
-                <label class="input-title">사업자등록증
-                  <span class="text-danger">*</span>
-                </label>
-                <input class="input-file" type="file" required="required">
-                <span class="file-txt">(사용가능한 파일 형식 : pdf)</span>
-              </v-flex> -->
             </v-list>
           </v-card-text>
         </div>
@@ -382,20 +322,6 @@
                   <input v-model="updateData.registrationNumber" class="input-text require-input" type="text">
                   <span class="required-notice">*필수 입력사항입니다.</span>
                 </v-flex>
-                <!-- <v-flex d-flex xs12 sm12 md5>
-                  <label class="input-title">사업자등록증
-                    <span class="text-danger">*</span>
-                  </label>
-                  <input class="input-file" type="file" required="required">
-                  <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-                </v-flex>
-                <v-flex d-flex xs12 sm12 md5>
-                  <label class="input-title">CI
-                    <span class="text-danger">*</span>
-                  </label>
-                  <input class="input-file" type="file" required="required">
-                  <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-                </v-flex> -->
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">URL
                     <span class="text-danger">*</span>
@@ -403,13 +329,6 @@
                   <input v-model="updateData.url" class="input-text require-input" type="text" required="required">
                   <span class="required-notice">*필수 입력사항입니다.</span>
                 </v-flex>
-                <!-- <v-flex d-flex xs12 sm12 md5>
-                  <label class="input-title">TnT로고이미지
-                    <span class="text-danger">*</span>
-                  </label>
-                  <input class="input-file" type="file" required="required">
-                  <span class="file-txt">(사용가능한 파일 형식 : jpg, gif, png)</span>
-                </v-flex> -->
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">설명(한국어)
                     <span class="text-danger">*</span>
@@ -425,27 +344,6 @@
                   <label class="input-title">설명(중국어)</label>
                   <input v-model="updateData.description_zh" class="input-text" type="text" required="required">
                 </v-flex>
-                <!-- <v-divider></v-divider>
-                <v-subheader>계약 정보</v-subheader>
-                <v-flex d-flex xs12 sm12 md5>
-                  <label class="input-title">계약서명
-                    <span class="text-danger">*</span>
-                  </label>
-                  <input class="input-text" type="text" required="required">
-                </v-flex>
-                <v-flex d-flex xs12 sm12 md5>
-                  <label class="input-title">계약기간
-                    <span class="text-danger">*</span>
-                  </label>
-                  <input class="input-text" type="text" required="required">
-                </v-flex>
-                <v-flex d-flex xs12 sm12 md5>
-                  <label class="input-title">사업자등록증
-                    <span class="text-danger">*</span>
-                  </label>
-                  <input class="input-file" type="file" required="required">
-                  <span class="file-txt">(사용가능한 파일 형식 : pdf)</span>
-                </v-flex> -->
               </v-list>
             </v-card-text>
           </div>
@@ -662,7 +560,6 @@ export default {
           company: app
         })
         .then(() => {
-          // updateData = this.updateData;
           this.getDatas();
           this.closeModal();
           this.$store.commit(Constant.SHOW_MODAL, {
@@ -702,8 +599,6 @@ export default {
       this.$modal.show("customer_edit");
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
 
-      // this.updateData.code = e.path[2].children[3].innerText;
-      // this.updateData.name_kr = e.path[2].children[2].innerText;
       this.updateData.code = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].code;
@@ -717,7 +612,6 @@ export default {
         this.selected_index
       ].name_zh;
 
-      // this.updateData.addr_kr = e.path[2].children[4].innerText;
       this.updateData.addr_kr = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].addr_kr;
@@ -734,15 +628,9 @@ export default {
       this.updateData.fax = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].fax;
-      // this.updateData.dtModified = this.$children[0].$children[1].filteredItems[
-      //   this.selected_index
-      // ].dtModified;
       this.updateData.dtRegistered = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].dtRegistered;
-      // this.updateData.modifier = this.$children[0].$children[1].filteredItems[
-      //   this.selected_index
-      // ].modifier;
       this.updateData.registrant = this.$children[0].$children[1].filteredItems[
         this.selected_index
       ].registrant;

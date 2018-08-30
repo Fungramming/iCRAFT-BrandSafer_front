@@ -25,15 +25,6 @@
       >
         <template slot="headers" slot-scope="props">
           <tr>
-            <!-- <th>
-              <v-checkbox
-                :input-value="props.all"
-                :indeterminate="props.indeterminate"
-                primary
-                hide-details
-                @click.native="toggleAll"
-              ></v-checkbox>
-            </th> -->
             <th
               v-for="header in props.headers"
               :key="header.text"
@@ -55,7 +46,6 @@
               ></v-checkbox>
             </td>
             <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
-            <!-- <td class="text-xs-left">{{ props.item.idx}}</td> -->
             <td class="text-xs-left">{{ props.item.companyCode }}</td>
             <td class="text-xs-left"><a @click.stop="showEditModal"> {{ props.item.name_kr }} </a></td>
             <td class="text-xs-left">{{ props.item.dtRegistered }}</td>
@@ -71,7 +61,6 @@
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="25">25</option>
-            <!-- <option value="-1">All</option> -->
           </select>
         </div>
       </div>
@@ -255,10 +244,6 @@ export default {
 
       // For edit modal
       selected_index: "",
-      // selected_name_kr: "",
-      // selected_name_en: "",
-      // selected_name_zh: "",
-      // selected_note: ""
 
       // add
       submitData: {
@@ -355,7 +340,6 @@ export default {
           distributor: app
         })
         .then(() => {
-          // updateData = this.updateData;
           this.getDatas();
           this.closeModal();
           this.$store.commit(Constant.SHOW_MODAL, {

@@ -26,15 +26,6 @@
 
         <template slot="headers" slot-scope="props">
           <tr>
-            <!-- <th>
-              <v-checkbox
-                :input-value="props.all"
-                :indeterminate="props.indeterminate"
-                primary
-                hide-details
-                @click.native="toggleAll"
-              ></v-checkbox>
-            </th> -->
             <th
               v-for="header in props.headers"
               :key="header.text"
@@ -56,7 +47,6 @@
               ></v-checkbox>
             </td>
             <td class="text-xs-left">{{ total - props.index - (pagination.page -1)* pagination.rowsPerPage }}</td>
-            <!-- <td class="text-xs-left">{{ props.item.idx }}</td> -->
             <td class="text-xs-left"><a @click.stop="showEditModal"> {{ props.item.version }} </a></td>
             <td class="text-xs-left">{{ props.item.type }}</td>
             <td class="text-xs-left">{{ props.item.width }} * {{ props.item.height }}</td>
@@ -73,7 +63,6 @@
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="25">25</option>
-            <!-- <option value="-1">All</option> -->
           </select>
         </div>
       </div>
@@ -188,7 +177,6 @@
                   <label class="input-title">태그타입
                     <span class="text-danger">*</span>
                   </label>
-                  <!-- <span class="selectbox selectbox-100"> -->
                   <span class="selectbox_arrow"></span>
                   <select id="select_tagtype_u" v-model="updateData.type" name="searchType" class="form-control selectbox selectbox-100 require-input" size="1">
                     <option value="HOLOTAG_ONLY">홀로태그</option>
@@ -198,7 +186,6 @@
                     <option value="SQRTAG">SQR태그</option>
                   </select>
                   <span class="required-notice">*필수 입력사항입니다.</span>
-                  <!-- </span> -->
                 </v-flex>
                 <v-flex d-flex xs12 sm12 md5>
                   <label class="input-title">사이즈
@@ -312,9 +299,6 @@ export default {
 
       // For edit modal
       selected_index: ""
-      // selected_version: "",
-      // selected_width: "",
-      // selected_height: ""
     };
   },
   computed: {
@@ -336,25 +320,8 @@ export default {
     this.getDatas();
   },
   methods: {
-    // checkRequired() {
-    //   let requiredInput = document.getElementsByClassName("require-input");
-
-    //   for (let i = 0; i < requiredInput.length; i++) {
-    //     requiredInput[i].parentNode.removeClass;
-    //     requiredInput[i].parentNode.classList.remove("required");
-
-    //     let valueLength = requiredInput[i].value.length;
-    //     // 항목이 비어있을때
-    //     if (valueLength == 0) {
-    //       requiredInput[i].parentNode.classList.add("required");
-    //     } else if (valueLength !== 0) {
-    //       requiredInput[i].parentNode.classList.remove("required");
-    //     }
-    //   }
-    // },
     addDatas() {
       checkRequired();
-      // this.checkRequired();
       if (
         this.submitData.version &&
         this.submitData.type &&
@@ -372,23 +339,6 @@ export default {
             });
           });
       }
-      // else if (
-      //   this.updateData.version &&
-      //   this.updateData.type &&
-      //   this.updateData.width &&
-      //   this.updateData.height
-      // ) {
-      //   this.$store
-      //     .dispatch(Constant.ADD_TAG_TYPE, this.submitData)
-      //     .then(() => {
-      //       this.getDatas();
-      //       this.closeModal();
-      //       this.$store.commit(Constant.SHOW_MODAL, {
-      //         isModal: true,
-      //         modalText: "등록 되었습니다."
-      //       });
-      //     });
-      // }
     },
     getDatas() {
       this.$store.dispatch(Constant.FETCH_TAG_TYPE).then(resp => {
@@ -453,13 +403,6 @@ export default {
     showEditModal(e) {
       this.$modal.show("tagtype_edit");
       this.selected_index = e.target.parentNode.parentNode["sectionRowIndex"];
-
-      // let version = e.path[2].children[2].children[0].innerText;
-      // let width = e.path[2].children[4].innerText.substring(0, 3);
-      // let height = e.path[2].children[4].innerText.substring(6, 9);
-      // this.updateData.version = version;
-      // this.updateData.width = width;
-      // this.updateData.height = height;
 
       this.updateData.version = this.$children[0].$children[1].filteredItems[
         this.selected_index
