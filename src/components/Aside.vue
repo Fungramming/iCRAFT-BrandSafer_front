@@ -44,7 +44,7 @@
               <span class="switch step1">Dashboard</span>
           </router-link>
         </li>
-        <li v-show="tabList.tabB" class="expandable" @click="isActived">
+        <li v-if="tabList.tabB" class="expandable" @click="isActived">
           <router-link to="" name="certList" class="tab-btn" >
               <v-icon>label</v-icon>
               <span class="switch step1">제품</span>
@@ -63,7 +63,7 @@
             </li>
           </ul>
         </li>
-        <li v-show="tabList.tabC" class="expandable" @click="isActived">
+        <li v-if="tabList.tabC" class="expandable" @click="isActived">
           <router-link to="" name="appv" class="tab-btn" >
               <v-icon>public</v-icon>
               <span class="switch step1">App</span>
@@ -82,7 +82,7 @@
             </li>
           </ul>
         </li>
-        <li v-show="tabList.tabD" class="expandable" @click="isActived">
+        <li v-if="tabList.tabD" class="expandable" @click="isActived">
           <router-link to="" name="admin" class="tab-btn">
               <v-icon>settings</v-icon>
               <span class="switch step1">관리자</span>
