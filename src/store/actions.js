@@ -11,7 +11,6 @@ function promise(apiFunction, payload, store, constant) {
         if (constant) {
           store.commit(constant, resp.data);
         }
-        console.log(resp.data);
         resolve(resp);
 
         store.commit(Constant.SHOW_LOADING, false);

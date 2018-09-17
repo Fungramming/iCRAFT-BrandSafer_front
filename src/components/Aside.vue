@@ -183,7 +183,7 @@ export default {
     };
   },
   mounted() {
-    this.userRole = this.$store.state.user.role;
+    this.userRole = this.$store.state.user.role_name;
     this.defaultTab();
   },
   methods: {
@@ -217,7 +217,7 @@ export default {
     defaultTab() {
       // CustomerUser / CustomerAdmin / iCraftUser / iCraftAdministrator / iCraftSuperAdmin
       if (this.userRole == "CustomerUser") {
-        this.tabList.tabD = true;
+        this.tabList.tabD = false;
       }
       redirectTabFunc(this);
     }
