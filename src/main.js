@@ -33,20 +33,24 @@ Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
 
 Vue.use(VueGoogleMaps, {
-    load: {
-        key: "",
-        libraries: "places"
-    }
+  load: {
+    key: "",
+    libraries: "places"
+  }
 });
 Vue.component("GmapCluster", GmapCluster);
 
 new Vue({
-            router,
-            store,
-            created() {
-                // get auth cache
-                if (store.getters.isAuthenticated) {
-                    axios.defaults.headers.common.Authorization = `basic ${btoa(
+  router,
+  store,
+  created() {
+    // login check
+    if (store.state.user.id == -1) {
+      router.replace({ name: "login" });
+    }
+    // get auth cache
+    if (store.getters.isAuthenticated) {
+      axios.defaults.headers.common.Authorization = `basic ${btoa(
         `${store.state.token}:`
       )}`;
     }
